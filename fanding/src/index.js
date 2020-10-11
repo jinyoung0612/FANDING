@@ -4,14 +4,50 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// // Redux
+import { createStore, applyMiddleware, compose } from 'redux'
+import rootReducer from './store/reducers/rootReducer';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+// // Firebase
+import firebase from 'firebase/app';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { createFirestoreInstance } from 'redux-firestore';
+import fbconfig from './config/fbConfig';
+
+const store = createStore(rootReducer, compose(applyMiddleware(thunk)));
+
+const rrfProps = {
+  firebase,
+  config: fbconfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance,
+};
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <App />
+    </ReactReduxFirebaseProvider>
+  </Provider>,
+  document.getElementById('root'),
+);
 serviceWorker.unregister();
+
+// // store.firebaseAuthIsReady.then(() => {
+// //   ReactDOM.render(
+// //     <React.StrictMode>
+// //         <Provider store={store}>
+// //             <ReactReduxFirebaseProvider {...rrfProps}>
+// //                     <App />
+// //             </ReactReduxFirebaseProvider>
+// //         </Provider>
+// //     </React.StrictMode>,
+// //     document.getElementById("root"),
+// // );
+// // serviceWorker.unregister();
+// // });
+
+
+
