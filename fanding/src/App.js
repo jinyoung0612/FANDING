@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
-// import  Navbar  from './layout/Nav';
+import Navbar from './components/layout/Navbar';
 import SignUp from './components/auth/SignUp';
 import SignIn from './components/auth/SignIn';
 
@@ -9,7 +9,7 @@ class App extends Component{
         return (
             <BrowserRouter>
               <div className="App">
-              {/* <Navbar /> */}
+              <Navbar />
                 <Switch>
                   <Route path="/signup" component={SignUp} />
                   <Route path="/signin" component={SignIn} />

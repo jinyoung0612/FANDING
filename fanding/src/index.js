@@ -35,19 +35,6 @@ ReactDOM.render(
 );
 serviceWorker.unregister();
 
-// // store.firebaseAuthIsReady.then(() => {
-// //   ReactDOM.render(
-// //     <React.StrictMode>
-// //         <Provider store={store}>
-// //             <ReactReduxFirebaseProvider {...rrfProps}>
-// //                     <App />
-// //             </ReactReduxFirebaseProvider>
-// //         </Provider>
-// //     </React.StrictMode>,
-// //     document.getElementById("root"),
-// // );
-// // serviceWorker.unregister();
-// // });
 
 
 
