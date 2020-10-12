@@ -1,12 +1,30 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+//import { NavLink } from 'react-router-dom';
+import {
+  Navbar,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink
+
+} from 'reactstrap';
 
 const SignedOutLinks = () => {
   return (
-    <ul className="right">
-        <li><NavLink to='/signup'>Signup</NavLink></li>
-        <li><NavLink to='/signin'>Login</NavLink></li>
-    </ul>
+    
+      <ul className="navbar-nav">
+      <NavItem>
+          <NavLink href="/signin">로그인</NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="/signup">회원가입</NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="/signupcom">업체 회원가입</NavLink>
+      </NavItem>
+      </ul>
+    
+
   )
 }
 
