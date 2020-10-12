@@ -35,7 +35,7 @@ class SignUpCom extends Component {
        
         <Container className="signform mt-auto">
         <h2>업체 회원가입</h2>
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <FormGroup>
             <Label for="companyName">상호명</Label>
             <Input type="text" name="companyName" id="companyName"
@@ -60,19 +60,19 @@ class SignUpCom extends Component {
           <FormGroup>
             <Label for="Email">이메일</Label>
             <Button color="warning" className="ml-3" onChange={this.handleClick}>이메일 인증</Button>
-            <Input type="email" name="email" id="exampleEmail" 
+            <Input type="email" name="email" id="email"
             placeholder="이메일을 입력하세요" 
             onChange={this.handleChange}/>
           </FormGroup>
           <FormGroup>
             <Label for="Password">비밀번호</Label>
-            <Input type="password" name="password" id="examplePassword" 
+            <Input type="password" name="password" id="password"
             placeholder="비밀번호를 입력하세요" 
             onChange={this.handleChange}/>
           </FormGroup>
           
           
-          <Button onSubmit={this.handleSubmit}>Submit</Button>
+          <Button>Submit</Button>
         </Form>
       </Container>
         
