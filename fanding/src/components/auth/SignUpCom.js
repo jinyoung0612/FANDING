@@ -22,6 +22,7 @@ class SignUpCom extends Component {
       e.preventDefault();
       this.props.signUpCom(this.state);
     };
+
     render() {
 
       // const { auth, authError } = this.props;
