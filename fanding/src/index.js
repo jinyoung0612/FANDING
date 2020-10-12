@@ -9,6 +9,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from './store/reducers/rootReducer';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
 // // Firebase
 import firebase from 'firebase/app';
@@ -19,7 +20,10 @@ import fbconfig from './config/fbConfig';
 //reactstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const store = createStore(rootReducer, compose(applyMiddleware(thunk)));
+
+const store = createStore(rootReducer, compose(applyMiddleware(thunk,logger)));
+
+
 
 const rrfProps = {
   firebase,
