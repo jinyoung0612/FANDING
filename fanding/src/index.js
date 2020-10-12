@@ -17,7 +17,13 @@ import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import fbconfig from './config/fbConfig';
 
+//reactstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 const store = createStore(rootReducer, compose(applyMiddleware(thunk,logger)));
+
+
 
 const rrfProps = {
   firebase,
