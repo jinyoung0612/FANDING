@@ -20,9 +20,10 @@ const NavbarTest = (props) => {
 
   //const toggle = () => setIsOpen(!isOpen);
   const { auth, profile } = props;
-  //const links = auth.uid ? <SignedInLinksTest profile={profile} /> : <SignedOutLinks />;
+  const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
 
   return (
+
     <div>
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">FANDING</NavbarBrand>
@@ -39,8 +40,7 @@ const NavbarTest = (props) => {
         </Nav>
 
         <Nav className="ml-auto" navbar>
-        <SignedInLinks/>
-        <SignedOutLinks/>
+        {links}
         </Nav>
 
       </Navbar>

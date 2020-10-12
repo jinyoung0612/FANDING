@@ -7,6 +7,7 @@ import SignIn from './components/auth/SignIn';
 import SignUpCom from './components/auth/SignUpCom';
 
 
+
 class App extends Component{
     render(){
         return (
