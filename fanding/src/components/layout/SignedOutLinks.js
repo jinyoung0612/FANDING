@@ -11,6 +11,7 @@ import {
 
 const SignedOutLinks = () => {
   return (
+
     
       <ul className="navbar-nav">
       <NavItem>
@@ -23,8 +24,7 @@ const SignedOutLinks = () => {
         <NavLink href="/signupcom">업체 회원가입</NavLink>
       </NavItem>
       </ul>
-    
-
+   
   )
 }
 

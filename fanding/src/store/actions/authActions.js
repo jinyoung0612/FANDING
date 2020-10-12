@@ -47,7 +47,6 @@ export const signUp = newUser => {
       });
   };
 
-  
 };
 
 export const signUpCom = newCompany => {
@@ -73,3 +72,4 @@ export const signUpCom = newCompany => {
     });
 }
 }
+

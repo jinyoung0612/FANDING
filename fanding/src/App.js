@@ -6,6 +6,7 @@ import SignUp from './components/auth/SignUp';
 import SignIn from './components/auth/SignIn';
 import SignUpCom from './components/auth/SignUpCom';
 
+
 class App extends Component{
     render(){
         return (
@@ -14,6 +15,7 @@ class App extends Component{
               <Navbar />
                 <Switch>
                   <Route path="/signup" component={SignUp} />
+                  <Route path="/signupcom" component={SignUpCom} />
                   <Route path="/signin" component={SignIn} />
                   <Route path="/signupcom" component={SignUpCom} />
                 </Switch>

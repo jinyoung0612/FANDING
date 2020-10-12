@@ -46,6 +46,7 @@ const NavbarTest = (props) => {
       </Navbar>
     </div>
   );
+
 }
 
 const mapStateToProps = (state) => {
