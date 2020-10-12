@@ -34,9 +34,7 @@ export const signUp = newUser => {
         return firestore
           .collection('users')
           .add({
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            initials: newUser.firstName[0] + newUser.lastName[0],
+            artist : newUser.artist
           })
           .then(() => {
             dispatch({ type: 'SIGNUP_SUCCESS' });

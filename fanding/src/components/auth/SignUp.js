@@ -21,31 +21,37 @@ import { render } from 'react-dom';
     };
     handleSubmit = e => {
       e.preventDefault();
-      this.props.signIn(this.state); // 변경된 부분
+      this.props.signUp(this.state); // 변경된 부분
     };
-  
+    
+    handleClick = e => {
+      e.preventDefault();
+      //action 추가
+    }
+
     render() {
       // const { authError, auth } = this.props;
       // if (auth.uid) return <Redirect to='/' /> 
       return (
         <Container className="signform mt-auto">
           <h2>회원가입</h2>
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for="Email">이메일</Label>
-              <Input type="email" name="email" id="exampleEmail" 
+              <Button color="warning" className="ml-3" onChange={this.handleClick}>이메일 인증</Button>
+              <Input type="email" name="email" id="email" 
               placeholder="이메일을 입력하세요" 
               onChange={this.handleChange}/>
             </FormGroup>
             <FormGroup>
               <Label for="Password">비밀번호</Label>
-              <Input type="password" name="password" id="examplePassword" 
+              <Input type="password" name="password" id="password" 
               placeholder="비밀번호를 입력하세요" 
               onChange={this.handleChange}/>
             </FormGroup>
             <FormGroup>
             <Label for="SelectMulti">관심아티스트</Label>
-            <Input type="select" name="selectMulti" id="exampleSelectMulti" multiple>
+            <Input type="select" name="selectMulti" id="artist" multiple>
               <option>BTS</option>
               <option>BLACKPINK</option>
               <option>ITZY</option>
@@ -57,7 +63,7 @@ import { render } from 'react-dom';
             </Input>
           </FormGroup>
             
-            <Button onSubmit={this.handleSubmit}>Submit</Button>
+            <Button>Submit</Button>
           </Form>
         </Container>
   

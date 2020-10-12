@@ -21,12 +21,12 @@ const SignedInLinks = (props) => {
     return (
       <ul className="right">
       
-          <li><NavLink to='/'>New Project</NavLink></li>
-          {/*} <li><a onClick={props.signOut}>Log Out</a></li>*/} 
+          {/* <li><NavLink to='/'>New Project</NavLink></li> */}
+          {/* <li><a onClick={props.signOut}>Log Out</a></li> */}
 
           <li><NavLink href='/'>New Project</NavLink></li>
           <li><NavLink href='/' onClick={props.signOut} >Logout</NavLink></li>
-          {/*<li><NavLink href='/'>Logout</NavLink></li>*/}
+          {/* <li><NavLink href='/'>Logout</NavLink></li> */}
 
 
       </ul>

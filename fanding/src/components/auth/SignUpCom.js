@@ -22,6 +22,10 @@ class SignUpCom extends Component {
       e.preventDefault();
       this.props.signUpCom(this.state);
     };
+    handleClick = e => {
+      e.preventDefault();
+      //action 추가
+    }
 
     render() {
 
@@ -40,6 +44,7 @@ class SignUpCom extends Component {
           </FormGroup>
           <FormGroup>
             <Label for="companyRegistrationNumber">사업자등록번호</Label>
+            <Button color="warning" className="ml-3" onChange={this.handleClick}>중복확인</Button>
             <Input type="text" name="companyRegistrationNumber" 
             id="companyRegistrationNumber"
             placeholder="사업자등록번호를 입력하세요"
@@ -54,6 +59,7 @@ class SignUpCom extends Component {
           </FormGroup>
           <FormGroup>
             <Label for="Email">이메일</Label>
+            <Button color="warning" className="ml-3" onChange={this.handleClick}>이메일 인증</Button>
             <Input type="email" name="email" id="exampleEmail" 
             placeholder="이메일을 입력하세요" 
             onChange={this.handleChange}/>
