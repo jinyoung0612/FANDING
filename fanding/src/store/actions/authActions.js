@@ -46,6 +46,7 @@ export const signUp = newUser => {
           });
       });
   };
+
 };
 
 export const signUpCom = newCompany => {
@@ -69,5 +70,6 @@ export const signUpCom = newCompany => {
         dispatch({ type: 'SIGNUP_ERROR', err });
       });
     });
-  };
-};
+}
+}
+

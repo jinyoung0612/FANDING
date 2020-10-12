@@ -3,14 +3,17 @@ import React,{Component} from 'react';
 import { connect } from 'react-redux';
 import { signUp } from '../../store/actions/authActions';
 
-class SignUp extends Component {
+import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
+import { render } from 'react-dom';
+  
+  class SignUp extends Component {
     state = {
       email: '',
       password: '',
-      firstName: '',
-      lastName: '',
+      artist:'',
     };
   
+    //handle click
     handleChange = e => {
       this.setState({
         [e.target.id]: e.target.value,
@@ -18,41 +21,46 @@ class SignUp extends Component {
     };
     handleSubmit = e => {
       e.preventDefault();
-      this.props.signUp(this.state);
+      this.props.signIn(this.state); // 변경된 부분
     };
+  
     render() {
-
-      // const { auth, authError } = this.props;
+      // const { authError, auth } = this.props;
       // if (auth.uid) return <Redirect to='/' /> 
       return (
-        
-        <div className="container">
-          <form onSubmit={this.handleSubmit} className="white">
-            <h5 className="grey-text text-darken-3">Sign Up</h5>
-            <div className="input-field">
-              <label htmlFor="email">Email</label>
-              <input type="email" id="email" onChange={this.handleChange} />
-            </div>
-            <div className="input-field">
-              <label htmlFor="password">Password</label>
-              <input type="password" id="password" onChange={this.handleChange} />
-            </div>
-            <div className="input-field">
-              <label htmlFor="firstName">First Name</label>
-              <input type="text" id="firstName" onChange={this.handleChange} />
-            </div>
-            <div className="input-field">
-              <label htmlFor="lastName">Last Name</label>
-              <input type="text" id="lastName" onChange={this.handleChange} />
-            </div>
-            <div className="input-field">
-              <button className="btn pink lighten-1 z-depth-0">SignUp</button>
-              {/* <div className="center red-text"> */}
-              {/* { authError ? <p>{authError}</p> : null } */}
-            {/* </div> */}
-            </div>
-          </form>
-        </div>
+        <Container className="signform mt-auto">
+          <h2>회원가입</h2>
+          <Form>
+            <FormGroup>
+              <Label for="Email">이메일</Label>
+              <Input type="email" name="email" id="exampleEmail" 
+              placeholder="이메일을 입력하세요" 
+              onChange={this.handleChange}/>
+            </FormGroup>
+            <FormGroup>
+              <Label for="Password">비밀번호</Label>
+              <Input type="password" name="password" id="examplePassword" 
+              placeholder="비밀번호를 입력하세요" 
+              onChange={this.handleChange}/>
+            </FormGroup>
+            <FormGroup>
+            <Label for="SelectMulti">관심아티스트</Label>
+            <Input type="select" name="selectMulti" id="exampleSelectMulti" multiple>
+              <option>BTS</option>
+              <option>BLACKPINK</option>
+              <option>ITZY</option>
+              <option>TWICE</option>
+              <option>GOT7</option>
+              <option>MONSTA X</option>
+              <option>NU'EST</option>
+              <option>DAY6</option>
+            </Input>
+          </FormGroup>
+            
+            <Button onSubmit={this.handleSubmit}>Submit</Button>
+          </Form>
+        </Container>
+  
       );
     }
   }
@@ -70,4 +78,12 @@ class SignUp extends Component {
     }
   }
 
-  export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+  export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+
+ 
+  
+  
+  
+  
+  
+    
