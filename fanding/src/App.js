@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
 //import Navbar from './components/layout/Navbar';
-import NavbarTest from './components/layout/NavbarTest';
+import Navbar from './components/layout/Navbar';
 import SignUp from './components/auth/SignUp';
-import SignInTest from './components/auth/SignInTest';
+import SignIn from './components/auth/SignIn';
+import SignUpCom from './components/auth/SignUpCom';
 
 class App extends Component{
     render(){
         return (
             <BrowserRouter>
               <div className="App">
-              <NavbarTest />
+              <Navbar />
                 <Switch>
                   <Route path="/signup" component={SignUp} />
-                  <Route path="/signin" component={SignInTest} />
+                  <Route path="/signin" component={SignIn} />
+                  <Route path="/signupcom" component={SignUpCom} />
                 </Switch>
               </div>
             </BrowserRouter>
