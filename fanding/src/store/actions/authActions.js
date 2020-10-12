@@ -47,3 +47,27 @@ export const signUp = newUser => {
       });
   };
 };
+
+export const signUpCom = newCompany => {
+  const firestore = firebase.firestore();
+  return (dispatch, getState)=>{
+    firebase
+    .auth()
+    .createUserWithEmailAndPassword(newCompany.email, newCompany.password)
+    .then(resp => {
+      return firestore
+      .collection('companys')
+      .add({
+        companyName : newCompany.companyName,
+        companyRegistrationNumber : newCompany.companyRegistrationNumber,
+        corporateRegistrationNumber : newCompany.corporateRegistrationNumber,
+      })
+      .then(() => {
+        dispatch({type: 'SIGNUP_SUCCESS' });
+      })
+      .catch(err => {
+        dispatch({ type: 'SIGNUP_ERROR', err });
+      });
+    });
+  };
+};
