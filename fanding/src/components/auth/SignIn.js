@@ -2,9 +2,20 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {signIn} from '../../store/actions/authActions';
 //import { Redirect } from 'react-router-dom';
+import { TwitterLoginButton } from "react-social-login-buttons";
 
 import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import { render } from 'react-dom';
+
+const ColoredLine = ({ color }) => (
+  <hr
+      style={{
+          color: color,
+          backgroundColor: color,
+          height: 5
+      }}
+  />
+);
 
 class SignIn extends Component {
   state = {
@@ -21,7 +32,7 @@ class SignIn extends Component {
     e.preventDefault();
     this.props.signIn(this.state); // 변경된 부분
   };
-  
+
   render() {
     // const { authError, auth } = this.props;
     // if (auth.uid) return <Redirect to='/' /> 
@@ -43,6 +54,13 @@ class SignIn extends Component {
           </FormGroup>
         
           <Button>Submit</Button>
+
+          <ColoredLine color="#696861" />
+
+
+          <TwitterLoginButton className="twitter mt-10" onClick={() => alert("Hello")}>
+            <span>트위터로 로그인하기</span>
+          </TwitterLoginButton>
         </Form>
       </Container>
 
