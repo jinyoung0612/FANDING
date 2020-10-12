@@ -1,8 +1,8 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { signOut } from '../../store/actions/authActions'
-
+//import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { signOut } from '../../store/actions/authActions';
+import { NavLink } from 'reactstrap';
 // const SignedInLinks = (props) => {
 //   return (
 //     <div>
@@ -17,14 +17,11 @@ import { signOut } from '../../store/actions/authActions'
 //   )
 // }
 
-const SignedInLinks = (props) => {
+const SignedInLinksTest = (props) => {
     return (
       <ul className="right">
-          <li><NavLink to='/'>New Project</NavLink></li>
-          <li><NavLink to='/'>Logout</NavLink></li>
-          <li><NavLink to='/' className='btn btn-floating pink lighten-1'>
-              {/* {props.pofile.initals} */}
-              </NavLink></li>
+          <li><NavLink href='/'>New Project</NavLink></li>
+          <li><NavLink href='/'>Logout</NavLink></li>
       </ul>
     )
   }
@@ -35,4 +32,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(SignedInLinks)
+export default connect(null, mapDispatchToProps)(SignedInLinksTest)
