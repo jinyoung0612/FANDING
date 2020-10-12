@@ -21,9 +21,8 @@ const SignedInLinks = (props) => {
     return (
       <ul className="right">
           <li><NavLink to='/'>New Project</NavLink></li>
-          <li><NavLink to='/'>Logout</NavLink></li>
+          <li><a onClick={props.signOut}>Log Out</a></li>
           <li><NavLink to='/' className='btn btn-floating pink lighten-1'>
-              JE
               {/* {props.pofile.initals} */}
               </NavLink></li>
       </ul>

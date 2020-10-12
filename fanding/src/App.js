@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar';
 import SignUp from './components/auth/SignUp';
 import SignIn from './components/auth/SignIn';
 
+
 class App extends Component{
     render(){
         return (
