@@ -28,22 +28,21 @@ class SignIn extends Component {
     return (
       <Container className="signform mt-auto">
         <h2>로그인</h2>
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <FormGroup>
             <Label for="Email">이메일</Label>
-            <Input type="email" name="email" id="exampleEmail" 
+            <Input type="email" name="email" id="email" 
             placeholder="이메일을 입력하세요" 
             onChange={this.handleChange}/>
           </FormGroup>
           <FormGroup>
             <Label for="Password">비밀번호</Label>
-            <Input type="password" name="password" id="examplePassword" 
+            <Input type="password" name="password" id="password" 
             placeholder="비밀번호를 입력하세요" 
             onChange={this.handleChange}/>
           </FormGroup>
-          
-          
-          <Button onSubmit={this.handleSubmit}>Submit</Button>
+        
+          <Button>Submit</Button>
         </Form>
       </Container>
 
