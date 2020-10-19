@@ -3,9 +3,12 @@ import {connect} from 'react-redux';
 import {signIn} from '../../store/actions/authActions';
 //import { Redirect } from 'react-router-dom';
 import { TwitterLoginButton } from "react-social-login-buttons";
+import firebase from 'firebase/app';
 
 import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import { render } from 'react-dom';
+
+
 
 const ColoredLine = ({ color }) => (
   <hr
@@ -33,6 +36,23 @@ class SignIn extends Component {
     this.props.signIn(this.state); // 변경된 부분
   };
 
+  openpopup = e =>{
+      var provider = new firebase.auth.TwitterAuthProvider();
+      firebase
+          .auth()
+          .signInWithPopup(provider)
+          .then(function(result){
+              var token = result.credential.accessToken;
+              var secret = result.credential.secret;
+              var user = result.user;
+          }).catch(function (error) {
+              console.log(error.message);
+
+      })
+
+
+  };
+
   render() {
     // const { authError, auth } = this.props;
     // if (auth.uid) return <Redirect to='/' /> 
@@ -57,8 +77,7 @@ class SignIn extends Component {
 
           <ColoredLine color="#696861" />
 
-
-          <TwitterLoginButton className="twitter mt-10" onClick={() => alert("Hello")}>
+          <TwitterLoginButton className="twitter mt-10" onClick={this.openpopup}>
             <span>트위터로 로그인하기</span>
           </TwitterLoginButton>
         </Form>
