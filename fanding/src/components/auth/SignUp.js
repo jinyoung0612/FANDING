@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { signUp } from '../../store/actions/authActions';
 
@@ -30,8 +30,8 @@ import { render } from 'react-dom';
     }
 
     render() {
-      // const { authError, auth } = this.props;
-      // if (auth.uid) return <Redirect to='/' />
+      const { authError, auth } = this.props;
+      if (auth.uid) return <Redirect to='/' />
       return (
         <Container className="signform mt-auto">
           <h2>회원가입</h2>

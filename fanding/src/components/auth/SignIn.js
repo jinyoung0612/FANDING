@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {signIn} from '../../store/actions/authActions';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { TwitterLoginButton } from "react-social-login-buttons";
 import firebase from 'firebase/app';
 import {twitterSignIn} from "../../store/actions/authActions";
@@ -42,8 +42,8 @@ class SignIn extends Component {
   }
 
   render() {
-    // const { authError, auth } = this.props;
-    // if (auth.uid) return <Redirect to='/' />
+    const { authError, auth } = this.props;
+    if (auth.uid) return <Redirect to='/' />
     return (
       <Container className="signform mt-auto">
         <h2>로그인</h2>
