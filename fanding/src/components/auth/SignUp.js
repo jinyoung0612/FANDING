@@ -31,7 +31,7 @@ import { render } from 'react-dom';
 
     render() {
       // const { authError, auth } = this.props;
-      // if (auth.uid) return <Redirect to='/' /> 
+      // if (auth.uid) return <Redirect to='/' />
       return (
         <Container className="signform mt-auto">
           <h2>회원가입</h2>

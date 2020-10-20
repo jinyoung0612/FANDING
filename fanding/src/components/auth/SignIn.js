@@ -1,10 +1,10 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {signIn} from '../../store/actions/authActions';
-//import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { TwitterLoginButton } from "react-social-login-buttons";
 import firebase from 'firebase/app';
-
+import {twitterSignIn} from "../../store/actions/authActions";
 import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import { render } from 'react-dom';
 
@@ -36,26 +36,14 @@ class SignIn extends Component {
     this.props.signIn(this.state); // 변경된 부분
   };
 
-  openpopup = e =>{
-      var provider = new firebase.auth.TwitterAuthProvider();
-      firebase
-          .auth()
-          .signInWithPopup(provider)
-          .then(function(result){
-              var token = result.credential.accessToken;
-              var secret = result.credential.secret;
-              var user = result.user;
-          }).catch(function (error) {
-              console.log(error.message);
 
-      })
-
-
-  };
+  handleTwitter = () => {
+      twitterSignIn();
+  }
 
   render() {
     // const { authError, auth } = this.props;
-    // if (auth.uid) return <Redirect to='/' /> 
+    // if (auth.uid) return <Redirect to='/' />
     return (
       <Container className="signform mt-auto">
         <h2>로그인</h2>
@@ -77,7 +65,7 @@ class SignIn extends Component {
 
           <ColoredLine color="#696861" />
 
-          <TwitterLoginButton className="twitter mt-10" onClick={this.openpopup}>
+          <TwitterLoginButton className="twitter mt-10" onClick={this.handleTwitter}>
             <span>트위터로 로그인하기</span>
           </TwitterLoginButton>
         </Form>
