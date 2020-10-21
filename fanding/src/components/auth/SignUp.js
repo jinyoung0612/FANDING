@@ -51,7 +51,7 @@ import { render } from 'react-dom';
             </FormGroup>
             <FormGroup>
             <Label for="SelectMulti">관심아티스트</Label>
-            <Input type="select" name="selectMulti" id="artist" multiple>
+            <Input type="select" name="selectMulti" id="artist" multiple onChange={this.handleChange}>
               <option>BTS</option>
               <option>BLACKPINK</option>
               <option>ITZY</option>
