@@ -5,8 +5,10 @@ import Navbar from './components/layout/Navbar';
 import SignUp from './components/auth/SignUp';
 import SignIn from './components/auth/SignIn';
 import SignUpCom from './components/auth/SignUpCom';
-
-
+import MyAccount from './components/layout/MyAccount';
+import Chongdae_auth  from './components/layout/Chongdae_auth';
+import Identity_auth  from './components/auth/Identity_auth';
+import Account_auth  from './components/auth/Account_auth';
 
 class App extends Component{
     render(){
@@ -19,7 +21,12 @@ class App extends Component{
                   <Route path="/signupcom" component={SignUpCom} />
                   <Route path="/signin" component={SignIn} />
                   <Route path="/signupcom" component={SignUpCom} />
-                </Switch>
+                  <Route path="/myaccount" component={MyAccount} />
+                  <Route path="/chongdae" component={Chongdae_auth} />
+                  <Route path="/identity_auth" component={Identity_auth}/>
+                  <Route path="/account_auth" component={Account_auth}/>
+                </Switch>         
+                
               </div>
             </BrowserRouter>
           );

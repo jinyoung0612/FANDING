@@ -42,15 +42,13 @@ const NavbarTest = (props) => {
         </Nav>
 
         <Nav className="ml-auto" navbar>
-
-
         {links}
 
           <NavItem>
             <NavLink href="#"><BsBell size={24}/></NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="#"><BsPeopleCircle size={24}/></NavLink>
+            <NavLink href="/myaccount"><BsPeopleCircle size={24}/></NavLink>
           </NavItem>
 
         <Button className="mt-4 ml-2" outline color="info">펀딩 생성</Button>
