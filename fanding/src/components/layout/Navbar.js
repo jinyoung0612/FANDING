@@ -10,9 +10,11 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Button
 
 } from 'reactstrap';
 
+import {BsPeopleCircle, BsBell} from "react-icons/bs"
 
 
 const NavbarTest = (props) => {
@@ -41,9 +43,22 @@ const NavbarTest = (props) => {
 
         <Nav className="ml-auto" navbar>
         {links}
+
+          <NavItem>
+            <NavLink href="#"><BsBell size={24}/></NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/myaccount"><BsPeopleCircle size={24}/></NavLink>
+          </NavItem>
+
+        <Button className="mt-4 ml-2" outline color="info">펀딩 생성</Button>
+        
+        
         </Nav>
 
+        
       </Navbar>
+      
     </div>
   );
 
