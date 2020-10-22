@@ -33,23 +33,24 @@ export const signUp = newUser => {
       .then(resp => {
         return firestore
           .collection('users')
-          .add({
-            user_uid:firebase.auth().currentUser.uid,
-            user_email:firebase.auth().currentUser.email,
-            nickname:"",
-            addr:"",
-            addr_detail:"",
-            zipcode:"",
-            phone_number:"",
-            email_verification:false,
-            artist_id : newUser.artist
+            .doc(newUser.email)
+            .set({
+              user_uid:firebase.auth().currentUser.uid,
+              user_email:firebase.auth().currentUser.email,
+              nickname:"",
+              addr:"",
+              addr_detail:"",
+              zipcode:"",
+              phone_number:"",
+              email_verification:false,
+              artist_id : newUser.artist
           })
-          .then(() => {
+            .then(() => {
             dispatch({ type: 'SIGNUP_SUCCESS' });
-          })
-          .catch(err => {
+            })
+            .catch(err => {
             dispatch({ type: 'SIGNUP_ERROR', err });
-          });
+            });
       });
   };
 
@@ -63,11 +64,18 @@ export const signUpCom = newCompany => {
     .createUserWithEmailAndPassword(newCompany.email, newCompany.password)
     .then(resp => {
       return firestore
-      .collection('companys')
-      .add({
-        companyName : newCompany.companyName,
-        companyRegistrationNumber : newCompany.companyRegistrationNumber,
-        corporateRegistrationNumber : newCompany.corporateRegistrationNumber,
+          .collection('companies')
+          .doc(newCompany.email)
+          .set({
+            company_uid: firebase.auth().currentUser.uid,
+            name : newCompany.companyName,
+            company_reg_num : newCompany.companyRegistrationNumber,
+            corporate_reg_num : newCompany.corporateRegistrationNumber,
+              addr : "",
+              addr2 : "",
+              email : newCompany.email,
+              email_verification:false
+
       })
       .then(() => {
         dispatch({type: 'SIGNUP_SUCCESS' });
@@ -79,20 +87,69 @@ export const signUpCom = newCompany => {
 }
 }
 
+// export const twitterSignIn = credentials =>{
+//   const provider = new firebase.auth.TwitterAuthProvider();
+//
+//   firebase
+//       .auth()
+//       .signInWithPopup(provider)
+//       .then(function (result) {
+//
+//         const token = result.credentials.accessToken;
+//         const secret = result.credentials.secret;
+//         const user = result.user;
+//   }).catch(function(error){
+//
+//   });
+// }
+
 export const twitterSignIn = credentials =>{
   const provider = new firebase.auth.TwitterAuthProvider();
+  const firestore = firebase.firestore();
 
-  firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(function (result) {
+    firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(function (result){
+          // const token=result.credentials.accessToken;
+          // const secret=result.credentials.secret;
+          // const user=result.user;
+        })
+        .then(resp => {
 
-        const token = result.credentials.accessToken;
-        const secret = result.credentials.secret;
-        const user = result.user;
-  }).catch(function(error){
+          firestore
+              .collection('users')
+              .doc(firebase.auth().currentUser.email)
+              .get()
+              .then(doc=>{
+                if(!doc.exists){
+                  firestore
+                      .collection("users")
+                      .doc(firebase.auth().currentUser.email)
+                      .set({
+                        user_uid:firebase.auth().currentUser.uid,
+                        user_email:firebase.auth().currentUser.email,
+                        nickname:"",
+                        addr:"",
+                        addr_detail:"",
+                        zipcode:"",
+                        phone_number:"",
+                        email_verification:false,
+                        artist_id : ""
+                      })
+                }
+                else{
+                  console.log("already exists");
+                }
+              })
+              .catch(err=>{
+                console.log("error",err);
+              })
 
-  });
+        });
+
+
+
 }
 
 
