@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { signUpCom } from '../../store/actions/authActions';
 import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
@@ -29,8 +29,8 @@ class SignUpCom extends Component {
 
     render() {
 
-      // const { auth, authError } = this.props;
-      // if (auth.uid) return <Redirect to='/' /> 
+      const { auth, authError } = this.props;
+      if (auth.uid) return <Redirect to='/' />
       return (
        
         <Container className="signform mt-auto">

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { signUp } from '../../store/actions/authActions';
 
@@ -30,8 +30,8 @@ import { render } from 'react-dom';
     }
 
     render() {
-      // const { authError, auth } = this.props;
-      // if (auth.uid) return <Redirect to='/' /> 
+      const { authError, auth } = this.props;
+      if (auth.uid) return <Redirect to='/' />
       return (
         <Container className="signform mt-auto">
           <h2>회원가입</h2>
@@ -51,7 +51,7 @@ import { render } from 'react-dom';
             </FormGroup>
             <FormGroup>
             <Label for="SelectMulti">관심아티스트</Label>
-            <Input type="select" name="selectMulti" id="artist" multiple>
+            <Input type="select" name="selectMulti" id="artist" multiple onChange={this.handleChange}>
               <option>BTS</option>
               <option>BLACKPINK</option>
               <option>ITZY</option>
