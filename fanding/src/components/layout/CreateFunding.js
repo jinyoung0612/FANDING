@@ -67,14 +67,14 @@ class CreateFunding extends Component {
                 <FormGroup>
                     <Label for="Radio">펀딩 유형 선택</Label>
                     <div>
-                    <CustomInput type="radio" id="CustomRadio" name="customRadio" label="리워드형 펀딩"  onChange={this.handleChange} inline/>
-                    <CustomInput type="radio" id="CustomRadio2" name="customRadio" label="모금형 펀딩"  onChange={this.handleChange} inline/>
+                    <CustomInput type="radio" id="fundingType" name="customRadio" label="리워드형 펀딩"  onChange={this.handleChange} inline/>
+                    <CustomInput type="radio" id="fundingType" name="customRadio" label="모금형 펀딩"  onChange={this.handleChange} inline/>
                     </div>
                 </FormGroup>
                 
                 <FormGroup>
                     <Label for="fundingTitle">펀딩 제목</Label>
-                    <Input type="text" name="title" id="fundingAddress" 
+                    <Input type="text" name="title" id="fundingTitle" 
                     placeholder="펀딩 제목을 입력하세요"
                     onChange={this.handleChange}/>
                 </FormGroup>
@@ -86,7 +86,7 @@ class CreateFunding extends Component {
                     <Input
                         type="date"
                         name="date"
-                        id="startDate"
+                        id="fundingStartDate"
                         placeholder="펀딩 시작일"
                         onChange={this.handleChange}
                      />
@@ -95,7 +95,7 @@ class CreateFunding extends Component {
                     <Input
                         type="time"
                         name="time"
-                        id="startTime"
+                        id="fundingStartTime"
                         placeholder="00:00"
                         onChange={this.handleChange}
                      />
@@ -105,7 +105,7 @@ class CreateFunding extends Component {
                     <Input
                         type="date"
                         name="date"
-                        id="endDate"
+                        id="fundingEndDate"
                         placeholder="펀딩 종료일"
                         onChange={this.handleChange}
                      />
@@ -114,21 +114,21 @@ class CreateFunding extends Component {
                     <Input
                         type="time"
                         name="time"
-                        id="endTime"
+                        id="fundingEndTime"
                         placeholder="00:00"
                         onChange={this.handleChange}
                      />
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleCheckbox"></Label>
-                    <CustomInput type="checkbox" id="exampleCustomInline" label="기간 제한 없음" onChange={this.handleChange}/>
+                    <CustomInput type="checkbox" id="fundingPeriodLimit" label="기간 제한 없음" onChange={this.handleChange}/>
                 </FormGroup>
                 </Form>
 
                 <Form>
                 <FormGroup>
                     <Label for="fileBrowser">썸네일 이미지 (size: 350*250)</Label>
-                    <CustomInput type="file" id="fileBrowser" name="customFile" 
+                    <CustomInput type="file" id="thumbnailImage" name="customFile" 
                     label="이미지를 업로드 하세요" 
                     onChange={this.handleChange}
                     />
