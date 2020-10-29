@@ -1,7 +1,10 @@
 import React, {Component, useState} from 'react';
 import { Link } from "react-router-dom";
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
+CardSubtitle } from 'reactstrap';
 import classnames from 'classnames';
+import TabPane3 from './TabPane3';
+
 
 const MyAccount = (props) => {
   const [activeTab, setActiveTab] = useState('1');
@@ -35,7 +38,7 @@ const MyAccount = (props) => {
             className={classnames({ active: activeTab === '3' })}
             onClick={() => { toggle('3'); }}
           >
-            생성한 펀딩 관리
+            내가 만든 펀딩 관리
           </NavLink>
         </NavItem>
         <NavItem>
@@ -43,7 +46,15 @@ const MyAccount = (props) => {
             className={classnames({ active: activeTab === '4' })}
             onClick={() => { toggle('4'); }}
           >
-            참여한 펀딩 관리
+            참여한 펀딩
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '5' })}
+            onClick={() => { toggle('5'); }}
+          >
+            마이 위시리스트
           </NavLink>
         </NavItem>
       </Nav>
@@ -73,6 +84,11 @@ const MyAccount = (props) => {
             </Col>
           </Row>
         </TabPane>
+        <TabPane tabId="3">
+          <TabPane3></TabPane3>
+        </TabPane>
+        
+        
       </TabContent>
     </div>
   );
