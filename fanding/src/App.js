@@ -9,6 +9,7 @@ import MyAccount from './components/layout/MyAccount';
 import Chongdae_auth  from './components/layout/Chongdae_auth';
 import Identity_auth  from './components/auth/Identity_auth';
 import Account_auth  from './components/auth/Account_auth';
+import CreateFunding from './components/layout/CreateFunding';
 
 class App extends Component{
     render(){
@@ -22,6 +23,7 @@ class App extends Component{
                   <Route path="/signin" component={SignIn} />
                   <Route path="/signupcom" component={SignUpCom} />
                   <Route path="/myaccount" component={MyAccount} />
+                  <Route path="/create_funding" component={CreateFunding} />
                   <Route path="/chongdae" component={Chongdae_auth} />
                   <Route path="/identity_auth" component={Identity_auth}/>
                   <Route path="/account_auth" component={Account_auth}/>

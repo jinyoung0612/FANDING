@@ -51,7 +51,10 @@ const NavbarTest = (props) => {
             <NavLink href="/myaccount"><BsPeopleCircle size={24}/></NavLink>
           </NavItem>
 
-        <Button className="mt-4 ml-2" outline color="info">펀딩 생성</Button>
+          <NavItem>
+            <NavLink href="/create_funding"><Button className="mt-4 ml-2" outline color="info">펀딩 생성</Button></NavLink>
+          </NavItem>
+        
         
         
         </Nav>
