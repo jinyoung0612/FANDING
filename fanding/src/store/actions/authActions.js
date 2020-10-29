@@ -6,7 +6,8 @@ export const signIn = (credentials) => {
       .auth()
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
-        dispatch({ type: "LOGIN_SUCCESS" });
+          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+          dispatch({ type: "LOGIN_SUCCESS" });
       })
       .catch((err) => {
         dispatch({ type: "LOGIN_ERROR", err });
@@ -57,7 +58,8 @@ export const signUp = (newUser) => {
             user
               .sendEmailVerification()
               .then(function () {
-                dispatch({ type: "EMAIL_SPENT_SUCCESS" });
+                  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                  dispatch({ type: "EMAIL_SPENT_SUCCESS" });
               })
               .catch((err) => {
                 dispatch({ type: "NOT_EMAIL_SPENT", err });
@@ -160,6 +162,8 @@ export const twitterSignIn = (credentials) => {
           } else {
             console.log("already exists");
           }
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+
         })
         .catch((err) => {
           console.log("error", err);
