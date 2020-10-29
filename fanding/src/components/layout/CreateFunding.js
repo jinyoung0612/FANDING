@@ -3,8 +3,9 @@ import { Button, Col, Form, FormGroup, Label, Input, FormText, CustomInput } fro
 import { Link } from "react-router-dom";
 import {BsStop} from "react-icons/bs"
 import { connect } from 'react-redux';
+import {firebase_funding_save} from '../../store/actions/formActions';
 
-class CreateFunding extends Component{
+class CreateFunding extends Component {
 
     state = {
         artistSelect: '',
@@ -35,13 +36,18 @@ class CreateFunding extends Component{
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.signUp(this.state); // 변경할 부분
+        this.props.firebase_funding_save(this.state); // 변경할 부분
         };
+
+    handleClick = e =>{
+        // history.replace("/");
+    }
 
     render()
     {
         //const { authError, auth } = this.props;
         //if (auth.uid) return <Redirect to='/' />
+        console.log(this.props);
         return (
             <>
             <Form>
@@ -184,7 +190,11 @@ class CreateFunding extends Component{
                 {/*배송방법추가 버튼 만들기*/}
                 
                 <Form onSubmit={this.handleSubmit}>
-                <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
+                    <Link to='/'>
+
+                        <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
+                    </Link>
+                {/*<Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>*/}
                 </Form>            
             </>
         )
@@ -193,4 +203,19 @@ class CreateFunding extends Component{
 }
 
 
-export default CreateFunding;
+const mapStateToProps = (state) => {
+    return{
+        authError: state.auth.authError,
+        auth: state.firebase.auth
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        firebase_funding_save: (creds) => dispatch(firebase_funding_save(creds))
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(CreateFunding);
