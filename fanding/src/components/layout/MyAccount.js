@@ -61,7 +61,7 @@ const MyAccount = (props) => {
               <Card body>
                 <CardTitle>본인 인증</CardTitle>
                 <CardText>펀딩을 생성하려면 본인 인증이 필요합니다.</CardText>
-                <Button color="warning">본인 인증</Button>
+                <Button color="warning" onClick={Identify_auth}>본인 인증</Button>
               </Card>
             </Col>
             <Col sm="6">
@@ -77,5 +77,11 @@ const MyAccount = (props) => {
     </div>
   );
 }
+
+function Identify_auth(){
+  const userIdentifyAuth = window.open(
+    "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=qhsl7X3L59LPtU6QfdZNv2d4jYYKKFiY8K2iw2NI&redirect_uri=http://localhost:3000/account_auth&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor"
+  )
+};
 
 export default MyAccount;
