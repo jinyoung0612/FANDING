@@ -5,7 +5,6 @@ const FUNDING_SAVE= 'FUNDING_SAVE';
 export const funding_save=createAction(FUNDING_SAVE);
 
 
-//수정이 필요함. 현재는 authAction의 복사본일 뿐입니다.
 export const firebase_funding_save = newForm => {
   const firestore = firebase.firestore();
   const user=firebase.auth().currentUser.email;

@@ -10,6 +10,8 @@ import Chongdae_auth  from './components/layout/Chongdae_auth';
 import Identity_auth  from './components/auth/Identity_auth';
 import Account_auth  from './components/auth/Account_auth';
 import CreateFunding from './components/layout/CreateFunding';
+import FindCompany from './components/layout/FindCompany';
+import FindCompanyForm from './components/layout/FindCompanyForm'
 
 class App extends Component{
     render(){
@@ -27,6 +29,8 @@ class App extends Component{
                   <Route path="/chongdae" component={Chongdae_auth} />
                   <Route path="/identity_auth" component={Identity_auth}/>
                   <Route path="/account_auth" component={Account_auth}/>
+                  <Route path="/find_company" component={FindCompany}/>
+                  <Route path="/find_company_form" component={FindCompanyForm}/>
                 </Switch>         
                 
               </div>
