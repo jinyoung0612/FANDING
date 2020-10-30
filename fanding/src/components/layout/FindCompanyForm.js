@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Link } from "react-router-dom";
 import { Button, NavLink, Col, Form, FormGroup, Label, Input, FormText, CustomInput } from 'reactstrap';
 import { connect } from 'react-redux';
-import {firebase_funding_save} from '../../store/actions/recruitCompanyActions';
+import {firebase_recruit_save} from '../../store/actions/recruitCompanyActions';
 
 class FindCompanyForm extends Component {
 
@@ -23,7 +23,7 @@ class FindCompanyForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.firebase_funding_save(this.state); // 변경할 부분
+        this.props.firebase_recruit_save(this.state); // 변경할 부분
         };
 
     handleClick = e =>{
@@ -86,11 +86,12 @@ class FindCompanyForm extends Component {
                 
                 
                 <Form onSubmit={this.handleSubmit}>
-                    <Link to='/'>
+                    {/*<Link to='/find_company'>
 
-                        <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
+                        <Button color="warning" size="lg" block>폼 만들기</Button>
                     </Link>
-                {/*<Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>*/}
+                    */}
+                <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
                 </Form>            
             </>
         )
@@ -106,7 +107,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        firebase_funding_save: (creds) => dispatch(firebase_funding_save(creds))
+        firebase_recruit_save: (creds) => dispatch(firebase_recruit_save(creds))
     };
 };
 
