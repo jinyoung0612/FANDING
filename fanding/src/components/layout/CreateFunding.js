@@ -189,12 +189,16 @@ class CreateFunding extends Component {
                 </Form>
                 {/*배송방법추가 버튼 만들기*/}
                 
-                <Form onSubmit={this.handleSubmit}>
-                    <Link to='/'>
+                {/*
+                 <Link to='/'>
 
                         <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
                     </Link>
-                {/*<Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>*/}
+                */}
+
+                <Form onSubmit={this.handleSubmit}>
+                    
+                    <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
                 </Form>            
             </>
         )
