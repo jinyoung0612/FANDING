@@ -13,14 +13,26 @@ import {
 } from "reactstrap";
 import firebase from "firebase/app";
 
+var company_check = false;
+
 class SignUpCom extends Component {
-  state = {
-    email: "",
-    password: "",
-    companyName: "",
-    companyRegistrationNumber: "",
-    corporateRegistrationNumber: "",
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      password: "",
+      companyName: "",
+      companyRegistrationNumber: "",
+      corporateRegistrationNumber: "",
+      companyRegNum_Check: false,
+    };
+
+    this.handleClick_Change = this.handleClick_Change.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
   handleChange = (e) => {
     this.setState({
@@ -30,6 +42,14 @@ class SignUpCom extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.signUpCom(this.state);
+  };
+  handleClick_Change = () => {
+    if (company_check == true) {
+      this.setState({ companyRegNum_Check: true });
+    } else if (company_check == false) {
+      this.setState({ companyRegNum_Check: false });
+    }
+    company_check = false;
   };
   handleClick = () => {
     firebase
@@ -41,7 +61,11 @@ class SignUpCom extends Component {
         querySnapshot.forEach(function (doc) {
           console.log(doc.id, "=>", doc.data());
           console.log("Duplicate Appears");
+          company_check = true;
         });
+      })
+      .then(() => {
+        this.handleClick_Change();
       })
       .catch(function (error) {
         console.log("Error getting documents: ", error);
@@ -78,6 +102,11 @@ class SignUpCom extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
+          <div>
+            {this.state.companyRegNum_Check === true ? (
+              <div>사업자등록번호가 중복입니다</div>
+            ) : null}
+          </div>
           <FormGroup>
             <Label for="corporateRegistrationNumber">법인등록번호</Label>
             <Input
