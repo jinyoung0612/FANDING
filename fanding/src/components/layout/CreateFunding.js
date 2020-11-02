@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {BsStop} from "react-icons/bs"
 import { connect } from 'react-redux';
 import {firebase_funding_save} from '../../store/actions/formActions';
+import ToastEditor from './ToastEditor';
 
 class CreateFunding extends Component {
 
@@ -136,7 +137,8 @@ class CreateFunding extends Component {
 
                 <FormGroup>
                     <Label for="detailText">상세 설명</Label>
-                    <Input type="textarea" name="text" id="detailText" onChange={this.handleChange}/>
+                    {/*<Input type="textarea" name="text" id="detailText" onChange={this.handleChange}/> */}
+                    <ToastEditor /> 
                 </FormGroup>
                 </Form>
                 
@@ -199,7 +201,9 @@ class CreateFunding extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     
                     <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
-                </Form>            
+                </Form>
+
+                           
             </>
         )
 
