@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+import { Editor } from '@toast-ui/react-editor';
+import 'tui-color-picker/dist/tui-color-picker.css';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
-
-import { Editor } from '@toast-ui/react-editor';
+import colorSyntaxPlugin from '@toast-ui/editor-plugin-color-syntax';
+import hljs from "highlight.js";
+import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highlight';
 
 
 class ToastEditor extends Component {
@@ -28,7 +31,7 @@ class ToastEditor extends Component {
         this.props.onSubmit(this.state.content);
     };
 
-
+    
     render(){
         return (
           <>
@@ -38,6 +41,7 @@ class ToastEditor extends Component {
             initialEditType="markdown"
             initialValue="hello"
             ref={this.editorRef}
+            plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin]}
           />
           <button onClick={this.handleClick}>make bold</button>
        
