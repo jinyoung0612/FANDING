@@ -56,36 +56,43 @@ class CreateFunding extends Component{
 
 
         e.preventDefault();
+        if(this.state.image!=null){
+            const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
+            uploadTask.on(
+                "state_changed",
+                snapshot => {
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    this.setState({progress: progress});
+                },
+                error => {
+                    console.log(error);
+                },
+                () => {
+                    storage
+                        .ref("images")
+                        .child(this.state.image.name)
+                        .getDownloadURL()
+                        .then(url => {
+                            this.setState({url:url});
+                            console.log(this.state.url)
+                            // console.log(this.state);
+                            this.setState({image:this.state.image.name})
+                            console.log(this.state);
+                            this.props.firebase_funding_save(this.state)
+                            this.setState({redirectToReferrer: true})
 
-        const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
-        uploadTask.on(
-            "state_changed",
-            snapshot => {
-                const progress = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
-                this.setState({progress: progress});
-            },
-            error => {
-                console.log(error);
-            },
-            () => {
-                storage
-                    .ref("images")
-                    .child(this.state.image.name)
-                    .getDownloadURL()
-                    .then(url => {
-                        this.setState({url:url});
-                        console.log(this.state.url)
-                        // console.log(this.state);
-                        this.setState({image:this.state.image.name})
-                        console.log(this.state);
-                        this.props.firebase_funding_save(this.state)
-                        this.setState({redirectToReferrer: true})
+                        })
+                }
+            )
+        }
+        else{
+            this.props.firebase_funding_save(this.state);
+            this.setState({redirectToReferrer: true})
 
-                    })
-            }
-        )
+        }
+
 
     };
 
