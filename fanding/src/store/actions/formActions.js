@@ -1,6 +1,9 @@
 import { createAction, handleActions } from 'redux-actions';
 import firebase from 'firebase/app';
+import "firebase/storage";
+import {useState} from "react";
 const FUNDING_SAVE= 'FUNDING_SAVE';
+
 
 export const funding_save=createAction(FUNDING_SAVE);
 
@@ -8,6 +11,7 @@ export const funding_save=createAction(FUNDING_SAVE);
 export const firebase_funding_save = newForm => {
   const firestore = firebase.firestore();
   const user=firebase.auth().currentUser.email;
+
 
   return (dispatch, getState) => {
     firestore
@@ -24,7 +28,7 @@ export const firebase_funding_save = newForm => {
             fundingStartTime: newForm.fundingStartTime,
             fundingEndTime: newForm.fundingEndTime,
             fundingPeriodLimit: newForm.fundingPeriodLimit,
-            thumbnailImage: newForm.thumbnailImage,
+            thumbnailImage: newForm.url,
             detailText: newForm.detailText,
             itemTitle: newForm.itemTitle,
             itemPrice: newForm.itemPrice,

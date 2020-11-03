@@ -31,6 +31,7 @@ class App extends Component{
                   <Route path="/account_auth" component={Account_auth}/>
                   <Route path="/find_company" component={FindCompany}/>
                   <Route path="/find_company_form" component={FindCompanyForm}/>
+
                 </Switch>         
                 
               </div>
