@@ -27,6 +27,8 @@ class App extends Component{
                   <Route path="/chongdae" component={Chongdae_auth} />
                   <Route path="/identity_auth" component={Identity_auth}/>
                   <Route path="/account_auth" component={Account_auth}/>
+
+
                 </Switch>         
                 
               </div>
