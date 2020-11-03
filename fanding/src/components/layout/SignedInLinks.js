@@ -2,7 +2,10 @@ import React from 'react'
 //import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { signOut } from '../../store/actions/authActions';
-import { NavLink } from 'reactstrap';
+import { NavLink, NavItem, Button } from 'reactstrap';
+import {BsPeopleCircle, BsBell} from "react-icons/bs"
+
+
 // const SignedInLinks = (props) => {
 //   return (
 //     <div>
@@ -19,17 +22,23 @@ import { NavLink } from 'reactstrap';
 
 const SignedInLinks = (props) => {
     return (
-      <ul className="right">
       
-          {/* <li><NavLink to='/'>New Project</NavLink></li> */}
-          {/* <li><a onClick={props.signOut}>Log Out</a></li> */}
 
-          <li><NavLink href='/'>New Project</NavLink></li>
-          <li><NavLink href='/' onClick={props.signOut} >Logout</NavLink></li>
-          {/* <li><NavLink href='/'>Logout</NavLink></li> */}
+          <>
+          <NavItem>
+            <NavLink href="#"><BsBell size={24}/></NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/myaccount"><BsPeopleCircle size={24}/></NavLink>
+          </NavItem>
 
+          <NavItem>
+            <NavLink href="/create_funding"><Button outline color="info">펀딩 생성</Button></NavLink>
+          </NavItem>
 
-      </ul>
+          <NavLink href='/' onClick={props.signOut} >로그아웃</NavLink>
+          </>
+      
     )
   }
 

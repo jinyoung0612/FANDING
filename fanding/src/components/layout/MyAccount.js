@@ -1,7 +1,10 @@
 import React, {Component, useState} from 'react';
 import { Link } from "react-router-dom";
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
+CardSubtitle } from 'reactstrap';
 import classnames from 'classnames';
+import TabPane3 from './TabPane3';
+
 
 const MyAccount = (props) => {
   const [activeTab, setActiveTab] = useState('1');
@@ -35,7 +38,7 @@ const MyAccount = (props) => {
             className={classnames({ active: activeTab === '3' })}
             onClick={() => { toggle('3'); }}
           >
-            생성한 펀딩 관리
+            내가 만든 펀딩 관리
           </NavLink>
         </NavItem>
         <NavItem>
@@ -43,7 +46,15 @@ const MyAccount = (props) => {
             className={classnames({ active: activeTab === '4' })}
             onClick={() => { toggle('4'); }}
           >
-            참여한 펀딩 관리
+            참여한 펀딩
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '5' })}
+            onClick={() => { toggle('5'); }}
+          >
+            마이 위시리스트
           </NavLink>
         </NavItem>
       </Nav>
@@ -61,7 +72,7 @@ const MyAccount = (props) => {
               <Card body>
                 <CardTitle>본인 인증</CardTitle>
                 <CardText>펀딩을 생성하려면 본인 인증이 필요합니다.</CardText>
-                <Button color="warning">본인 인증</Button>
+                <Button color="warning" onClick={Identify_auth}>본인 인증</Button>
               </Card>
             </Col>
             <Col sm="6">
@@ -73,9 +84,20 @@ const MyAccount = (props) => {
             </Col>
           </Row>
         </TabPane>
+        <TabPane tabId="3">
+          <TabPane3></TabPane3>
+        </TabPane>
+        
+        
       </TabContent>
     </div>
   );
 }
+
+function Identify_auth(){
+  const userIdentifyAuth = window.open(
+    "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=qhsl7X3L59LPtU6QfdZNv2d4jYYKKFiY8K2iw2NI&redirect_uri=http://localhost:3000/account_auth&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor"
+  )
+};
 
 export default MyAccount;

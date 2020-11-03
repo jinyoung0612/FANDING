@@ -31,19 +31,20 @@ const NavbarTest = (props) => {
         <NavbarBrand href="/">FANDING</NavbarBrand>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="#">리워드펀딩</NavLink>
+              <NavLink href="#">리워드 펀딩</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#">모금펀딩</NavLink>
+              <NavLink href="#">모금 펀딩</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#">업체펀딩</NavLink>
+              <NavLink href="/find_company">업체 찾기</NavLink>
             </NavItem>
         </Nav>
 
         <Nav className="ml-auto" navbar>
         {links}
 
+          {/*
           <NavItem>
             <NavLink href="#"><BsBell size={24}/></NavLink>
           </NavItem>
@@ -54,7 +55,7 @@ const NavbarTest = (props) => {
           <NavItem>
             <NavLink href="/create_funding"><Button className="mt-4 ml-2" outline color="info">펀딩 생성</Button></NavLink>
           </NavItem>
-        
+          */}
         
         
         </Nav>

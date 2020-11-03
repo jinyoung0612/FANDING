@@ -109,37 +109,38 @@ class CreateFunding extends Component{
         }
         return (
             <>
-                <Form>
-                    <FormGroup>
-                        <Label for="artistSelect">아티스트</Label>
-                        <CustomInput type="select" id="artistSelect" name="customSelect" onChange={this.handleChange}>
-                            <option value="">Select</option>
-                            <option>BTS</option>
-                            <option>BLACKPINK</option>
-                            <option>TWICE</option>
-                            <option>ITZY</option>
-                            <option>GOT7</option>
-                            <option>기타</option>
-                        </CustomInput>
-                    </FormGroup>
+            <Form>
+                <FormGroup>
+                <Label for="artistSelect">아티스트</Label>
+                <CustomInput type="select" id="artistSelect" name="customSelect" onChange={this.handleChange}>
+                    <option value="">Select</option>
+                    <option>BTS</option>
+                    <option>BLACKPINK</option>
+                    <option>TWICE</option>
+                    <option>ITZY</option>
+                    <option>GOT7</option>
+                    <option>기타</option>
+                </CustomInput>
+                </FormGroup>
 
-                    <FormGroup>
-                        <Label for="Radio">펀딩 유형 선택</Label>
-                        <div>
-                            <CustomInput type="radio" id="fundingType" name="customRadio" label="리워드형 펀딩"  onChange={this.handleChange} inline/>
-                            <CustomInput type="radio" id="fundingType" name="customRadio" label="모금형 펀딩"  onChange={this.handleChange} inline/>
-                        </div>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="fundingTitle">펀딩 제목</Label>
-                        <Input type="text" name="title" id="fundingTitle"
-                               placeholder="펀딩 제목을 입력하세요"
-                               onChange={this.handleChange}/>
-                    </FormGroup>
+                <FormGroup>
+                    <Label for="Radio">펀딩 유형 선택</Label>
+                    <div>
+                    <CustomInput type="radio" id="fundingType" name="customRadio" label="리워드형 펀딩"  onChange={this.handleChange} inline/>
+                    <CustomInput type="radio" id="fundingType" name="customRadio" label="모금형 펀딩"  onChange={this.handleChange} inline/>
+                    </div>
+                </FormGroup>
+                
+                <FormGroup>
+                    <Label for="fundingTitle">펀딩 제목</Label>
+                    <Input type="text" name="title" id="fundingTitle" 
+                    placeholder="펀딩 제목을 입력하세요"
+                    onChange={this.handleChange}/>
+                </FormGroup>
                 </Form>
 
                 <Form inline>
+
                     <FormGroup>
                         <Label for="startDate">펀딩 기간(입금 기간)</Label>
                         <Input
@@ -250,6 +251,7 @@ class CreateFunding extends Component{
                 </Form>
                 {/*배송방법추가 버튼 만들기*/}
 
+
                 <Form onSubmit={this.handleSubmit}>
                     {/*<Link to='/'>*/}
 
@@ -257,6 +259,7 @@ class CreateFunding extends Component{
                     {/*</Link>*/}
                     <Button color="warning" size="lg" block >폼 만들기</Button>
                 </Form>
+
             </>
         )
 
