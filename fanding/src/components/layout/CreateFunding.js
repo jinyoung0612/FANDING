@@ -36,12 +36,16 @@ class CreateFunding extends Component {
       };
 
     handleSubmit = e => {
-        e.preventDefault();
+        e.preventDefault(
+        e.pre);
         this.props.firebase_funding_save(this.state); // 변경할 부분
         };
 
     handleClick = e =>{
         // history.replace("/");
+    }
+    onSearchSubmit(content){
+        console.log("hi I am parent" + content);
     }
 
     render()
@@ -138,7 +142,7 @@ class CreateFunding extends Component {
                 <FormGroup>
                     <Label for="detailText">상세 설명</Label>
                     {/*<Input type="textarea" name="text" id="detailText" onChange={this.handleChange}/> */}
-                    <ToastEditor /> 
+                    <ToastEditor onSubmit={this.onSearchSubmit}/> 
                 </FormGroup>
                 </Form>
                 
