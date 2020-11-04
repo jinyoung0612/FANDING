@@ -1,18 +1,38 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
 CardSubtitle } from 'reactstrap';
 import classnames from 'classnames';
 import TabPane3 from './TabPane3';
+import MyFunding from "./MyFunding";
+import {loadTasks, setMyFunding} from "../../store/actions/userActions";
+import {useDispatch} from "react-redux";
+import {connect} from 'react-redux';
 
+
+// function render(){
+//   const instance = new MyFunding()
+//   instance.render()
+//   return instance
+// }
 
 const MyAccount = (props) => {
+
+
   const [activeTab, setActiveTab] = useState('1');
+  let myfunding=null;
 
   const toggle = tab => {
-    if(activeTab !== tab) setActiveTab(tab);
-  }
+    if (activeTab !== tab) setActiveTab(tab);
 
+    if (tab == 3) {
+      // props.load
+    }
+  }
+  const toggle2 = tab => {
+    if (activeTab !== tab) setActiveTab(tab);
+    props.load()
+  };
   //리스트 만들기
   return (
     <div>
@@ -36,7 +56,7 @@ const MyAccount = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '3' })}
-            onClick={() => { toggle('3'); }}
+            onClick={() => { toggle2('3'); }}
           >
             내가 만든 펀딩 관리
           </NavLink>
@@ -85,10 +105,14 @@ const MyAccount = (props) => {
           </Row>
         </TabPane>
         <TabPane tabId="3">
-          <TabPane3></TabPane3>
+          <MyFunding></MyFunding>
         </TabPane>
-        
-        
+
+        {/*<MyFunding tabId="3"></MyFunding>*/}
+
+
+
+
       </TabContent>
     </div>
   );
@@ -100,4 +124,23 @@ function Identify_auth(){
   )
 };
 
-export default MyAccount;
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    load: ()=> dispatch(loadTasks())
+  }
+}
+
+const mapStateToProps = (state) => {
+  return{
+    authError: state.auth.authError,
+    auth: state.firebase.auth,
+    user_data: state.user_data
+  }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MyAccount);
+
+

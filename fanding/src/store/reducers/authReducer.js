@@ -47,6 +47,12 @@ const authReducer = (state = initState, action) => {
         ...state,
         authError: null,
       };
+    case "setMyFunding":
+      console.log("funding reducer");
+      return{
+        ...state,
+        user_data:action.payload
+      }
     default:
       return state;
   }

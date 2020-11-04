@@ -12,7 +12,7 @@ import Account_auth  from './components/auth/Account_auth';
 import CreateFunding from './components/layout/CreateFunding';
 import FindCompany from './components/layout/FindCompany';
 import FindCompanyForm from './components/layout/FindCompanyForm'
-
+import test from './components/layout/test';
 class App extends Component{
     render(){
         return (
@@ -31,6 +31,8 @@ class App extends Component{
                   <Route path="/account_auth" component={Account_auth}/>
                   <Route path="/find_company" component={FindCompany}/>
                   <Route path="/find_company_form" component={FindCompanyForm}/>
+                    <Route path="/test" component={test}/>
+
 
                 </Switch>         
                 
