@@ -14,6 +14,7 @@ import {
 import firebase from "firebase/app";
 
 var company_check = false;
+var check_click = false;
 
 class SignUpCom extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class SignUpCom extends Component {
       companyName: "",
       companyRegistrationNumber: "",
       corporateRegistrationNumber: "",
-      companyRegNum_Check: false,
+      companyRegNum_Check: "",
     };
 
     this.handleClick_Change = this.handleClick_Change.bind(this);
@@ -41,7 +42,20 @@ class SignUpCom extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.signUpCom(this.state);
+    console.log(this.state.companyRegNum_Check);
+    console.log(check_click);
+    if (
+      this.state.companyRegNum_Check == false &&
+      check_click == true &&
+      this.state.companyRegistrationNumber != ""
+    ) {
+      var msg = "이메일인증이 전송되었습니다.";
+      alert(msg);
+      this.props.signUpCom(this.state);
+    } else {
+      var msg = "사업자등록번호 중복확인을 해주세요";
+      alert(msg);
+    }
   };
   handleClick_Change = () => {
     if (company_check == true) {
@@ -70,6 +84,7 @@ class SignUpCom extends Component {
       .catch(function (error) {
         console.log("Error getting documents: ", error);
       });
+    check_click = true;
   };
 
   render() {

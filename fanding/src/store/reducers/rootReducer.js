@@ -1,14 +1,16 @@
-import authReducer from './authReducer';
-import formReducer from './formReducer';
-import { combineReducers } from 'redux';
-import { firestoreReducer } from 'redux-firestore';
-import { firebaseReducer } from 'react-redux-firebase';
+import authReducer from "./authReducer";
+import formReducer from "./formReducer";
+import paymentReducer from "./paymentReducer";
+import { combineReducers } from "redux";
+import { firestoreReducer } from "redux-firestore";
+import { firebaseReducer } from "react-redux-firebase";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   form: formReducer,
+  payment: paymentReducer,
   firestore: firestoreReducer,
-  firebase: firebaseReducer
+  firebase: firebaseReducer,
 });
 
 export default rootReducer;
