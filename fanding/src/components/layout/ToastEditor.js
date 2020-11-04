@@ -10,12 +10,13 @@ import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highl
 import 'tui-chart/dist/tui-chart.css';
 import chart from '@toast-ui/editor-plugin-chart';
 
+import { Form } from 'reactstrap';
 class ToastEditor extends Component {
   editorRef = React.createRef();
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            content : ''
+            content2 : ''
         };
 
         this.saveArticle = this.saveArticle.bind(this);
@@ -30,7 +31,7 @@ class ToastEditor extends Component {
             content
         });
 
-        this.props.onSubmit(this.state.content);
+        //this.props.onSubmit(this.state.content);
     };
 
     
@@ -51,6 +52,7 @@ class ToastEditor extends Component {
             <div id="toastEditor">
                 <h1>Toast UI Editor Example</h1>
                 <div id="editSection"></div>
+                {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
                 <button onClick={this.saveArticle} className="btn_save">Save</button>
                 <div>
                     <h2>result</h2>
@@ -58,6 +60,7 @@ class ToastEditor extends Component {
                 </div>
             </div> 
             </>
+            
         );
     };
 

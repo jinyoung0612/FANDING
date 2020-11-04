@@ -4,30 +4,56 @@ import { Link } from "react-router-dom";
 import {BsStop} from "react-icons/bs"
 import { connect } from 'react-redux';
 import {firebase_funding_save} from '../../store/actions/formActions';
-import ToastEditor from './ToastEditor';
+
+//toast-ui
+import { Editor } from '@toast-ui/react-editor';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import 'codemirror/lib/codemirror.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import colorSyntaxPlugin from '@toast-ui/editor-plugin-color-syntax';
+import hljs from "highlight.js";
+import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highlight';
+//chart plugin
+import 'tui-chart/dist/tui-chart.css';
+import chart from '@toast-ui/editor-plugin-chart';
+
 
 class CreateFunding extends Component {
+    
+    constructor(props){
+            super(props);
+            this.state = {
+                artistSelect: '',
+                fundingType: '',
+                fundingTitle: '',
+                fundingStartDate: '',
+                fundingEndDate: '',
+                fundingStartTime: '',
+                fundingEndTime: '',
+                fundingPeriodLimit: '',
+                thumbnailImage: '',
+                detailText: '',
+                itemTitle:'',
+                itemPrice:'',
+                itemLimitBox:'',
+                itemRemain:'',
+                itemLimit:'',
+                shippingMethod:'',
+                shippingFee:'',
+                shippingDetail:'',
+                content: ''
+            };
 
-    state = {
-        artistSelect: '',
-        fundingType: '',
-        fundingTitle: '',
-        fundingStartDate: '',
-        fundingEndDate: '',
-        fundingStartTime: '',
-        fundingEndTime: '',
-        fundingPeriodLimit: '',
-        thumbnailImage: '',
-        detailText: '',
-        itemTitle:'',
-        itemPrice:'',
-        itemLimitBox:'',
-        itemRemain:'',
-        itemLimit:'',
-        shippingMethod:'',
-        shippingFee:'',
-        shippingDetail:''
-      };
+            this.saveArticle = this.saveArticle.bind(this);
+        };
+
+      update(value){
+          return() => {
+              this.setState({
+                  content: value
+              });
+          }
+        }
 
     handleChange = e => {
         this.setState({
@@ -41,12 +67,20 @@ class CreateFunding extends Component {
         this.props.firebase_funding_save(this.state); // 변경할 부분
         };
 
-    handleClick = e =>{
-        // history.replace("/");
-    }
-    onSearchSubmit(content){
-        console.log("hi I am parent" + content);
-    }
+    editorRef = React.createRef();
+    
+
+    saveArticle = e => {
+      e.preventDefault();
+        const content = this.editorRef.current.getInstance().getHtml();
+        console.log("I am editor" + content)
+
+        this.setState({
+            content: content
+        });
+
+        //this.props.onSubmit(this.state.content);
+    };
 
     render()
     {
@@ -141,9 +175,29 @@ class CreateFunding extends Component {
 
                 <FormGroup>
                     <Label for="detailText">상세 설명</Label>
-                    {/*<Input type="textarea" name="text" id="detailText" onChange={this.handleChange}/> */}
-                    <ToastEditor onSubmit={this.onSearchSubmit}/> 
                 </FormGroup>
+                    {/*<Input type="textarea" name="text" id="detailText" onChange={this.handleChange}/> */}
+                    <Editor
+                        previewStyle="vertical"
+                        height="400px"
+                        initialEditType="markdown"
+                        initialValue="hello"
+                        ref={this.editorRef}
+                        plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
+                    />
+                
+
+                        <div id="toastEditor">
+                            <h1>Toast UI Editor Example</h1>
+                            <div id="editSection"></div>
+                            {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
+                            <button onClick={this.saveArticle} className="btn_save">Save</button>
+                            <div>
+                                <h2>result</h2>
+                                <textarea className="tf_result" value={this.state.content} readOnly="readOnly"></textarea>
+                            </div>
+                        </div>  
+                
                 </Form>
                 
                 <Label for="itemInfo">상품정보</Label>

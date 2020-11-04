@@ -33,7 +33,9 @@ export const firebase_funding_save = newForm => {
             itemLimit: newForm.itemLimit,
             shippingMethod: newForm.shippingMethod,
             shippingFee: newForm.shippingFee,
-            shippingDetail: newForm.shippingDetail
+            shippingDetail: newForm.shippingDetail,
+            content: newForm.content
+
         })
   };
 
