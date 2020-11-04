@@ -6,7 +6,9 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import colorSyntaxPlugin from '@toast-ui/editor-plugin-color-syntax';
 import hljs from "highlight.js";
 import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highlight';
-
+//chart plugin
+import 'tui-chart/dist/tui-chart.css';
+import chart from '@toast-ui/editor-plugin-chart';
 
 class ToastEditor extends Component {
   editorRef = React.createRef();
@@ -41,7 +43,7 @@ class ToastEditor extends Component {
             initialEditType="markdown"
             initialValue="hello"
             ref={this.editorRef}
-            plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin]}
+            plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
           />
           <button onClick={this.handleClick}>make bold</button>
        
