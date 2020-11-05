@@ -228,7 +228,7 @@ class CreateFunding extends Component{
                         <Editor
                         previewStyle="vertical"
                         height="400px"
-                        initialEditType="markdown"
+                        initialEditType="wysiwyg"
                         initialValue="hello"
                         ref={this.editorRef}
                         plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
