@@ -17,11 +17,12 @@ export const firebase_recruit_save = newRecruitForm => {
             user_uid:firebase.auth().currentUser.uid,
             user_email:firebase.auth().currentUser.email,
             itemTitle: newRecruitForm.itemTitle,
-            itemImage: newRecruitForm.itemImage,
+            itemImage: newRecruitForm.url,
             detailText: newRecruitForm.detailText,
             itemPrice: newRecruitForm.itemPrice,
             itemRemain: newRecruitForm.itemRemain,
             shippingMethod: newRecruitForm.shippingMethod,
+            content: newRecruitForm.content
           })
   };
 
