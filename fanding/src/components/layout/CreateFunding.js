@@ -323,11 +323,11 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        firebase_funding_save: (creds) => dispatch(firebase_funding_save(creds))
+        firebase_funding_save: (funding) => dispatch(firebase_funding_save(funding)) //creds -> funding
     };
 };
 
 export default connect(
-    mapStateToProps,
+    mapStateToProps, //null로 고치면 어떻게 되나?
     mapDispatchToProps,
 )(CreateFunding);

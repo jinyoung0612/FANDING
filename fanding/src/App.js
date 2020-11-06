@@ -13,6 +13,8 @@ import CreateFunding from "./components/layout/CreateFunding";
 import FindCompany from "./components/layout/FindCompany";
 import FindCompanyForm from "./components/layout/FindCompanyForm";
 import Payment from "./components/payment/Payment";
+import RewardFunding from "./components/layout/RewardFunding";
+import FundingDetail from "./components/layout/FundingDetail";
 
 class App extends Component {
   render() {
@@ -33,6 +35,8 @@ class App extends Component {
             <Route path="/find_company" component={FindCompany} />
             <Route path="/find_company_form" component={FindCompanyForm} />
             <Route path="/payment" component={Payment} />
+            <Route exact path="/reward_funding" component={RewardFunding} />
+            <Route path="/reward_funding/:id" component={FundingDetail} />
           </Switch>
         </div>
       </BrowserRouter>

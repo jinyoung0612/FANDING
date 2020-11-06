@@ -9,15 +9,15 @@ export const funding_save=createAction(FUNDING_SAVE);
 
 
 export const firebase_funding_save = newForm => {
-  const firestore = firebase.firestore();
-  const user=firebase.auth().currentUser.email;
-
-
-  return (dispatch, getState) => {
-    firestore
-        .collection("fundings")
-        .doc()
-        .set({
+  //const firestore = firebase.firestore();
+  
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+      // make async call to database
+      const firestore = getFirestore();
+      const user=firebase.auth().currentUser.email;
+      firestore
+        .collection("fundings").add({
+            ...newForm,
             user_uid:firebase.auth().currentUser.uid,
             user_email:firebase.auth().currentUser.email,
             artistSelect: newForm.artistSelect,
@@ -39,11 +39,20 @@ export const firebase_funding_save = newForm => {
             shippingFee: newForm.shippingFee,
             shippingDetail: newForm.shippingDetail,
             content: newForm.content
+        }).then(() => {
+            dispatch({type: 'CREATEFORM_SUCCESS' , newForm});
+        }).catch((err) => {
+            dispatch( {type: "CREATEFORM_ERROR", err})
         })
+        //.doc()
+        /*.set({
+            
+        })*/
   };
 
 };
 
+/*
 const initialState = {
     auth: null,
     user_data: []
@@ -53,5 +62,5 @@ export default handleActions({
         return {...state }
     }
 },initialState);
-
+*/
 

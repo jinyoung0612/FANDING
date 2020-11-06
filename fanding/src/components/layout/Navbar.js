@@ -25,7 +25,7 @@ const NavbarTest = (props) => {
         <NavbarBrand href="/">FANDING</NavbarBrand>
         <Nav className="mr-auto" navbar>
           <NavItem>
-            <NavLink href="#">리워드 펀딩</NavLink>
+            <NavLink href="/reward_funding">리워드 펀딩</NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="#">모금 펀딩</NavLink>
