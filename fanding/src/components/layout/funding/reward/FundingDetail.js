@@ -5,7 +5,10 @@ import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
 //import moment from 'moment';
-
+let imgStyle = {
+    maxHeight: '400px',
+    maxWidth: '400px'
+  }
 
 const FundingDetail = (props) => {
     //const id = props.match.params.id; //route information
@@ -16,7 +19,7 @@ const FundingDetail = (props) => {
      {
          return(
             <Card sm="6">
-            <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
+            <CardImg top width="10%" src={funding.url} style={imgStyle} alt="Card image cap" />
             <CardBody>
             <CardTitle>{funding.fundingTitle}</CardTitle>
             <CardSubtitle> subtitle</CardSubtitle>

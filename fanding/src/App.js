@@ -13,8 +13,8 @@ import CreateFunding from "./components/layout/CreateFunding";
 import FindCompany from "./components/layout/FindCompany";
 import FindCompanyForm from "./components/layout/FindCompanyForm";
 import Payment from "./components/payment/Payment";
-import RewardFunding from "./components/layout/RewardFunding";
-import FundingDetail from "./components/layout/FundingDetail";
+import RewardFunding from "./components/layout/funding/reward/RewardFunding";
+import FundingDetail from "./components/layout/funding/reward/FundingDetail";
 
 class App extends Component {
   render() {

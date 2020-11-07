@@ -65,6 +65,13 @@ class CreateFunding extends Component{
         });
     };
 
+    handleRadioChange = e => {
+        this.setState({
+            fundingType: e.target.value
+        });
+        console.log(this.state.fundingType);
+    }
+    
     handleChangeEditor = e =>
     {
         const content = this.editorRef.current.getInstance().getHtml();

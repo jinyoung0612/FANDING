@@ -1,10 +1,13 @@
 import React from 'react';
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
-
+let imgStyle = {
+    maxHeight: '128px',
+    maxWidth: '128px'
+  }
 const FundingSummary = ({funding}) => {
     return(
         <Card sm="6">
-            <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
+            <CardImg top width="100%" src={funding.url} style={imgStyle} alt="Card image cap" />
             <CardBody>
             <CardTitle>{funding.fundingTitle}</CardTitle>
             <CardSubtitle>{funding.fundingType}</CardSubtitle>
