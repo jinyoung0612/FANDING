@@ -21,9 +21,12 @@ class Chongdae_auth extends Component{
 function chongdae_auth(){
   const chongdaeVerify = window.open(
     "https://testapi.openbanking.or.kr/oauth/2.0/authorize?"
-    +"response_type=code&client_id=qhsl7X3L59LPtU6QfdZNv2d4jYYKKFiY8K2iw2NI&"
+    +"response_type=code&"
+    +"client_id=qhsl7X3L59LPtU6QfdZNv2d4jYYKKFiY8K2iw2NI&"
     +"redirect_uri=http://localhost:3000/account_auth&"
-    +"scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor"
+    +"scope=login inquiry transfer&"
+    +"state=202002CAPSTONEPROJECTTEAM002A2B2"
+    +"&auth_type=0&lang=kor"
   )
 };
 
