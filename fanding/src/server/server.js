@@ -7,9 +7,13 @@ app.use(cors({
     origin:true,
     credentials:true
 }));
-
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use('/',require('./routes/index'));
+
+
+
+
 
 app.listen(port, ()=>{
     console.log(`express is running on ${port}`);
