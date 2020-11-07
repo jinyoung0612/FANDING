@@ -6,7 +6,7 @@ const FundingList=({fundings})=>{
             {fundings.map(funding=>{
                 console.log(funding)
                 return(
-                    <FundingContents funding={funding} key={funding.fundingTitle}/>
+                    <FundingContents funding={funding} key={funding.createTime}/>
                 )
             })}
         </div>
