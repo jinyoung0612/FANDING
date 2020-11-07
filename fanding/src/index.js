@@ -21,7 +21,7 @@ import fbconfig from './config/fbConfig';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const store = createStore(rootReducer, compose(applyMiddleware(thunk,logger)));
+export const store = createStore(rootReducer, compose(applyMiddleware(thunk,logger)));
 
 
 
