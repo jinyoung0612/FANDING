@@ -1,6 +1,7 @@
 // import firebase from 'firebase/app';
 const initState = {
   authError: null,
+  user_data:[]
 };
 const authReducer = (state = initState, action) => {
   switch (action.type) {
@@ -51,8 +52,9 @@ const authReducer = (state = initState, action) => {
       console.log("funding reducer");
       return{
         ...state,
-        user_data:action.payload
-      }
+        user_data:action.payload.user_data
+      };
+
     default:
       return state;
   }
