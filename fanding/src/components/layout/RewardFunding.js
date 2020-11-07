@@ -21,7 +21,9 @@ const mapStateToProps = (state) => {
 }
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([
-        { collection: 'fundings' } //data sync
+    firestoreConnect([//data sync
+        { collection: 'fundings',
+        where: ['fundingType', '==', 'reward'],
+        } 
     ])
 )(RewardFunding);

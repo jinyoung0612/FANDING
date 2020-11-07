@@ -6,29 +6,41 @@ import { Redirect } from 'react-router-dom'
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
 //import moment from 'moment';
 
+
 const FundingDetail = (props) => {
-    const id = props.match.params.id;
+    //const id = props.match.params.id; //route information
     //const { funding, auth } = props;
     //if(!auth.uid) return <Redirect to='/signin' />
-    
-        return (
+    const { funding } = props;
+    if (funding)
+     {
+         return(
             <Card sm="6">
             <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
             <CardBody>
-            <CardTitle>Fuding title1 - {id} </CardTitle>
+            <CardTitle>{funding.fundingTitle}</CardTitle>
             <CardSubtitle> subtitle</CardSubtitle>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+            <CardText>{funding.content}</CardText>
             {/*<Button>Button</Button>*/}
             </CardBody>
             </Card>
+         )
+     }
+     else{
+         return (
+           <div>
+               <p>Loading funding...</p>
+           </div>
         )
-    }
+     }
+        
+}
    
     
 
-/*
+
 const mapStateToProps = (state, ownProps) => {
-    // console.log(state);
+    console.log(state);
     const id = ownProps.match.params.id;
     const fundings = state.firestore.data.fundings;
     const funding = fundings ? fundings[id] : null
@@ -40,10 +52,7 @@ const mapStateToProps = (state, ownProps) => {
 
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([{
-        collection: 'fundings'
+    firestoreConnect(props => [{
+        collection: 'fundings', doc: props.match.params.id
     }])
 )(FundingDetail)
-*/
-
-export default FundingDetail;

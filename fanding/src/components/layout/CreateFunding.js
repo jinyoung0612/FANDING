@@ -144,6 +144,10 @@ class CreateFunding extends Component{
                     <option>TWICE</option>
                     <option>ITZY</option>
                     <option>GOT7</option>
+                    <option>NU'EST</option>
+                    <option>DAY6</option>
+                    <option>APINK</option>
+                    <option>오마이걸</option>
                     <option>기타</option>
                 </CustomInput>
                 </FormGroup>
