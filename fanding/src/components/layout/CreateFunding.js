@@ -154,10 +154,20 @@ class CreateFunding extends Component{
 
                 <FormGroup>
                     <Label for="Radio">펀딩 유형 선택</Label>
+                    
                     <div>
-                    <CustomInput type="radio" id="fundingType" name="customRadio" label="리워드형 펀딩"  onChange={this.handleChange} inline/>
-                    <CustomInput type="radio" id="fundingType" name="customRadio" label="모금형 펀딩"  onChange={this.handleChange} inline/>
+                    <CustomInput type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"  
+                    checked={this.state.fundingType === 'reward'} 
+                    onChange={this.handleRadioChange}
+                    inline/>
+                    <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"   
+                    checked={this.state.fundingType === 'collect'} 
+                    onChange={this.handleRadioChange}
+                    inline/>
                     </div>
+                    
+                    
+                    
                 </FormGroup>
                 
                 <FormGroup>
