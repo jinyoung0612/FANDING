@@ -4,6 +4,11 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
+import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import Editor from '@toast-ui/editor';
+
+
 //import moment from 'moment';
 let imgStyle = {
     maxHeight: '400px',
@@ -24,7 +29,15 @@ const FundingDetail = (props) => {
             <CardTitle>{funding.fundingTitle}</CardTitle>
             <CardSubtitle> subtitle</CardSubtitle>
             <CardText>{funding.content}</CardText>
-            {/*<Button>Button</Button>*/}
+            <body>
+                <div id="viewer">
+                    <Viewer
+                        height='600px'
+                        initialValue={funding.content}
+                    />
+                </div>
+            </body>
+
             </CardBody>
             </Card>
          )
