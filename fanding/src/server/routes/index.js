@@ -34,13 +34,15 @@ router.post('/verification', function(req, res,next){
     }
 })*/
 
-router.get('/token', function(req,res){
+router.get('/api/token', function(req,res){
     var option = {
         method: "POST",
         url: "https://testapi.openbanking.or.kr/oauth/2.0/token",
-        headers: "",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
         form: {
-            code : req.body.code,
+            code : req.query.code,
             client_id: config.client_id,
             client_secret: config.client_secret,
             redirect_uri: "http://localhost:3000/account_auth",
@@ -59,7 +61,7 @@ router.get('/token', function(req,res){
 })
 
 // 토큰 발급 - 2-legged
-router.get('/oobToken', function(req, res) {
+router.get('/api/oobToken', function(req, res) {
     var option = {
         method : "POST",
         url : "https://testapi.openbanking.or.kr/oauth/2.0/token",
