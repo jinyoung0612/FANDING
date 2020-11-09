@@ -6,16 +6,19 @@ export const loadFundings = (uid) => {
         // const user=firebase.auth().currentUser.uid;
         // console.log(user)
         // const user="LcveT8eRo9Z0dEwzJGQXl76KtPs1";
-        let rows= [];
-
+        let data= {};
+        let rows=[];
         firestore
             .collection("fundings")
             .where("user_uid","==",uid)
             .get()
             .then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
+                    let data= {};
 
-                    rows.push(doc.data())
+                    data=doc.data();
+                    data["id"]=doc.id
+                    rows.push(data)
 
                 })
 
@@ -23,7 +26,7 @@ export const loadFundings = (uid) => {
             .then(()=> {
                 dispatch({type:"setMyFunding",payload: {
                         user_data:rows
-                    }})
+                }})
             });
 
 

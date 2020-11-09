@@ -40,7 +40,6 @@ export const firebase_funding_save = newForm => {
             shippingDetail: newForm.shippingDetail,
             createTime: firebase.firestore.Timestamp.now(),
             content: newForm.content
-
         })
   };
 

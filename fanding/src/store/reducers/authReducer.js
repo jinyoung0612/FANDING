@@ -52,7 +52,8 @@ const authReducer = (state = initState, action) => {
       console.log("funding reducer");
       return{
         ...state,
-        user_data:action.payload.user_data
+        user_data:action.payload.user_data,
+        doc_id:action.payload.doc_id
       };
 
     default:
