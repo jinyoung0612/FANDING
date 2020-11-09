@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 
 //toast-ui
 import { Editor } from '@toast-ui/react-editor';
+import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -268,6 +269,21 @@ class CreateFunding extends Component{
                             </div>
                         </div>  
 
+                    {
+                        /**
+                         * <div>
+                            <Viewer
+                            //ref={this.viewerRef}
+                            initialEditType="wysiwyg"
+                            viewer = { true }
+                            height='600px'
+                            initialValue={this.state.content}
+                            />
+                            </div>
+                         * 
+                         */
+                    }
+                        
                     </FormGroup>
                 </Form>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 //import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
-import FundingSummary from './FundingSummary';
+import FundingSummary from './RewardFundingSummary';
 import { Link } from 'react-router-dom';
 
 const FundingList = ({fundings}) => {

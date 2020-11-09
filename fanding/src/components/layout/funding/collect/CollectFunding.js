@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-import FundingList from './RewardFundingList';
+import FundingList from './CollectFundingList';
 
-class RewardFunding extends Component {
+class CollectFunding extends Component {
     render(){
         const { fundings } = this.props;
 
@@ -23,7 +23,7 @@ export default compose(
     connect(mapStateToProps),
     firestoreConnect([//data sync
         { collection: 'fundings',
-        where: ['fundingType', '==', 'reward'],
+        where: ['fundingType', '==', 'collect'],
         } 
     ])
-)(RewardFunding);
+)(CollectFunding);
