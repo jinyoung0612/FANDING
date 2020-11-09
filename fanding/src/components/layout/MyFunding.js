@@ -39,11 +39,12 @@ class MyFunding extends Component {
         console.log("render");
 
         const {auth,user_data}=this.props;
-        var str ="";
         console.log(this.props);
 
         if(this.props.user_data.length!=0){
+            // console.log(user_data);
             return(
+
                 <FundingList fundings={user_data}/>
             )
         }
