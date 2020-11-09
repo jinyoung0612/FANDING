@@ -38,11 +38,14 @@ export const firebase_funding_save = newForm => {
             shippingMethod: newForm.shippingMethod,
             shippingFee: newForm.shippingFee,
             shippingDetail: newForm.shippingDetail,
+            createTime: firebase.firestore.Timestamp.now(),
             content: newForm.content
         }).then(() => {
             dispatch({type: 'CREATEFORM_SUCCESS' , newForm});
         }).catch((err) => {
             dispatch( {type: "CREATEFORM_ERROR", err})
+
+
         })
         //.doc()
         /*.set({

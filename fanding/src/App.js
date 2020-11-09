@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 //import Navbar from './components/layout/Navbar';
+
 import Navbar from "./components/layout/Navbar";
 import SignUp from "./components/auth/SignUp";
 import SignIn from "./components/auth/SignIn";
@@ -18,6 +19,8 @@ import CollectFunding from './components/layout/funding/collect/CollectFunding';
 import CollectFundingDetail from "./components/layout/funding/collect/CollectFundingDetail";
 import RecruitFormDetail from "./components/layout/company/RecruitFormDetail";
 import CompanyRecruit from "./components/layout/company/CompanyRecruit";
+import test from './components/layout/test';
+
 
 class App extends Component {
   render() {
@@ -36,7 +39,6 @@ class App extends Component {
             <Route path="/identity_auth" component={Identity_auth} />
             <Route path="/account_auth" component={Account_auth} />
             <Route exact path="/find_company" component={CompanyRecruit} />
-           
             <Route path="/find_company_form" component={FindCompanyForm} />
             <Route path="/payment" component={Payment} />
             <Route exact path="/reward_funding" component={RewardFunding} />
@@ -44,12 +46,15 @@ class App extends Component {
             <Route exact path="/collect_funding" component={CollectFunding} />
             <Route path="/collect_funding/:id" component={CollectFundingDetail} />
             <Route path="/find_company/:id" component={RecruitFormDetail} />
+            <Route path="/test" component={test}/>
+
           </Switch>
         </div>
       </BrowserRouter>
     );
   }
 }
+
 
 // class App extends React.Component {
 //

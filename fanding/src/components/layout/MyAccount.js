@@ -1,19 +1,26 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
 CardSubtitle } from 'reactstrap';
 import classnames from 'classnames';
 import TabPane3 from './TabPane3';
+import MyFunding from "./MyFunding";
+import {connect} from 'react-redux';
 
 
 const MyAccount = (props) => {
+
+
   const [activeTab, setActiveTab] = useState('1');
 
-  const toggle = tab => {
-    if(activeTab !== tab) setActiveTab(tab);
-  }
+  let myfunding=null;
 
+  const toggle = tab => {
+    if (activeTab !== tab) setActiveTab(tab);
+
+  };
   //리스트 만들기
+
   return (
     <div>
       <Nav tabs>
@@ -85,10 +92,12 @@ const MyAccount = (props) => {
           </Row>
         </TabPane>
         <TabPane tabId="3">
-          <TabPane3></TabPane3>
+          <MyFunding></MyFunding>
         </TabPane>
-        
-        
+
+
+
+
       </TabContent>
     </div>
   );
@@ -100,4 +109,17 @@ function Identify_auth(){
   )
 };
 
-export default MyAccount;
+
+const mapStateToProps = (state) => {
+  return{
+    authError: state.auth.authError,
+    auth: state.firebase.auth,
+    user_data: state.user_data
+  }
+};
+
+export default connect(
+    mapStateToProps
+)(MyAccount);
+
+

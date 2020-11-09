@@ -1,7 +1,8 @@
 
 // import firebase from 'firebase/app';
 const initState = {
-  createError: null
+  createError: null,
+  user_data:[]
 }
 const formReducer = (state = initState, action) => {
   switch(action.type){
@@ -10,14 +11,14 @@ const formReducer = (state = initState, action) => {
       return {
         ...state,
         createError: 'Create form failed'
-      }
+      };
 
     case 'CREATEFORM_SUCCESS':
       console.log('create form success');
       return {
         ...state,
         createError: null
-      }
+      };
 
     default:
       return state

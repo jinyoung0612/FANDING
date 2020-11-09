@@ -21,6 +21,8 @@ firebase.analytics();
 firebase.firestore();
 firebase.firestore().settings( {timestampsInSnapshots:true});
 var storage = firebase.storage();
+// firebase.firestore().settings({ timestampsInSnapshots: true });
+
 
 export {
         storage, firebase as default

@@ -34,6 +34,10 @@ const store = createStore(rootReducer,
 );
 
 
+//export const store = createStore(rootReducer, compose(applyMiddleware(thunk,logger)));
+
+
+
 const rrfProps = {
   firebase,
   config: fbconfig,
