@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 
 //toast-ui
 import { Editor } from '@toast-ui/react-editor';
+import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -65,6 +66,13 @@ class CreateFunding extends Component{
         });
     };
 
+    handleRadioChange = e => {
+        this.setState({
+            fundingType: e.target.value
+        });
+        console.log(this.state.fundingType);
+    }
+    
     handleChangeEditor = e =>
     {
         const content = this.editorRef.current.getInstance().getHtml();
@@ -144,16 +152,30 @@ class CreateFunding extends Component{
                     <option>TWICE</option>
                     <option>ITZY</option>
                     <option>GOT7</option>
+                    <option>NU'EST</option>
+                    <option>DAY6</option>
+                    <option>APINK</option>
+                    <option>오마이걸</option>
                     <option>기타</option>
                 </CustomInput>
                 </FormGroup>
 
                 <FormGroup>
                     <Label for="Radio">펀딩 유형 선택</Label>
+                    
                     <div>
-                    <CustomInput type="radio" id="fundingType" name="customRadio" label="리워드형 펀딩"  onChange={this.handleChange} inline/>
-                    <CustomInput type="radio" id="fundingType" name="customRadio" label="모금형 펀딩"  onChange={this.handleChange} inline/>
+                    <CustomInput type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"  
+                    checked={this.state.fundingType === 'reward'} 
+                    onChange={this.handleRadioChange}
+                    inline/>
+                    <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"   
+                    checked={this.state.fundingType === 'collect'} 
+                    onChange={this.handleRadioChange}
+                    inline/>
                     </div>
+                    
+                    
+                    
                 </FormGroup>
                 
                 <FormGroup>
@@ -247,6 +269,21 @@ class CreateFunding extends Component{
                             </div>
                         </div>  
 
+                    {
+                        /**
+                         * <div>
+                            <Viewer
+                            //ref={this.viewerRef}
+                            initialEditType="wysiwyg"
+                            viewer = { true }
+                            height='600px'
+                            initialValue={this.state.content}
+                            />
+                            </div>
+                         * 
+                         */
+                    }
+                        
                     </FormGroup>
                 </Form>
 
@@ -323,11 +360,11 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        firebase_funding_save: (creds) => dispatch(firebase_funding_save(creds))
+        firebase_funding_save: (funding) => dispatch(firebase_funding_save(funding)) //creds -> funding
     };
 };
 
 export default connect(
-    mapStateToProps,
+    mapStateToProps, //null로 고치면 어떻게 되나?
     mapDispatchToProps,
 )(CreateFunding);

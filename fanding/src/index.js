@@ -13,15 +13,28 @@ import logger from 'redux-logger';
 
 // // Firebase
 import firebase from 'firebase/app';
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import fbconfig from './config/fbConfig';
+import { reduxFirestore, getFirestore } from 'redux-firestore';
 
 //reactstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+/*
+const store = createStore(rootReducer, 
+  compose(
+    applyMiddleware(thunk,logger)));
+*/
+const store = createStore(rootReducer, 
+  compose(
+    applyMiddleware(thunk.withExtraArgument( { getFirebase, getFirestore })),
+    reduxFirestore(fbconfig),
+    ) //enhancer
+);
 
-export const store = createStore(rootReducer, compose(applyMiddleware(thunk,logger)));
+
+//export const store = createStore(rootReducer, compose(applyMiddleware(thunk,logger)));
 
 
 
