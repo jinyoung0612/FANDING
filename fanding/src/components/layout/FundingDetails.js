@@ -9,7 +9,7 @@ import ReactHtmlParser from 'react-html-parser';
 import ModalPortal from "../../ModalPortal";
 import MyModal from "../../MyModal";
 
-const FundingDetail = (props)=>{
+const FundingDetails = (props)=>{
     const doc_id=props.match.params.id;
     // console.log(doc_id)
     useFirestoreConnect([{
@@ -128,7 +128,7 @@ const FundingDetail = (props)=>{
 
 }
 
-// export default FundingDetail;
+// export default FundingDetails;
 
 const mapStateToProps = (state) => {
     return{
@@ -139,4 +139,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps
-)(FundingDetail);
+)(FundingDetails);
