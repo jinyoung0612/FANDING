@@ -50,7 +50,6 @@ const FundingDetails = (props)=>{
 
     if(funding && firebase.auth().currentUser){
         if(firebase.auth().currentUser.uid===funding.user_uid){
-            console.log("생성자");
             const content=funding.content;
 
             return(
