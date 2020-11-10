@@ -17,7 +17,7 @@ export const loadFundings = (uid) => {
                     let data= {};
 
                     data=doc.data();
-                    data["id"]=doc.id
+                    data["id"]=doc.id;
                     rows.push(data)
 
                 })
@@ -31,6 +31,38 @@ export const loadFundings = (uid) => {
 
 
     };
+};
+
+export const Participate_save = (newForm) => {
+
+    return (dispatch, getState) => {
+        // make async call to database
+        const firestore = firebase.firestore();
+        console.log(newForm);
+
+        firestore
+            .collection("participation")
+            .doc()
+            .set({
+                name:newForm.name,
+                price:newForm.price,
+                date:newForm.date,
+                time:newForm.time,
+                bank:newForm.bank,
+                accountNumber:newForm.accountNumber,
+                accountName:newForm.accountName,
+                email:newForm.email,
+                fid:newForm.fid,
+                uid:firebase.auth().currentUser.uid
+
+        }).then(() => {
+            dispatch({type: 'PARTICIPATE_SUCCESS' , newForm});
+        }).catch((err) => {
+            dispatch( {type: "PARTICIPATE_ERROR", err})
+        })
+
+    };
+
 };
 
 

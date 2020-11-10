@@ -8,8 +8,14 @@ import firebase from "firebase/app"
 import ReactHtmlParser from 'react-html-parser';
 import ModalPortal from "../../ModalPortal";
 import MyModal from "../../MyModal";
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Viewer} from '@toast-ui/react-editor';
+
 
 const FundingDetails = (props)=>{
+
+    const viewerRef = React.createRef();
+
     const doc_id=props.match.params.id;
     // console.log(doc_id)
     useFirestoreConnect([{
@@ -64,7 +70,15 @@ const FundingDetails = (props)=>{
                             <Button>수정하기</Button>
                         </CardBody>
                     </Card>
-                    <div>{ReactHtmlParser(content)}</div>
+                    <div>
+                        <Viewer
+                            height="400px"
+                            initialValue={funding.content}
+                            ref={viewerRef}
+                            previewStyle="vertical"
+                            initialEditType="wysiwyg"
+                        />
+                    </div>
                 </div>
 
             )
@@ -90,7 +104,7 @@ const FundingDetails = (props)=>{
                             <Button onClick={handleOpenModal}>펀딩 참여하기</Button>
                             {isModalOpen && (
                                 <ModalPortal>
-                                    <MyModal onClose={handleCloseModal} funding={funding}/>
+                                    <MyModal onClose={handleCloseModal} funding={funding} fid={doc_id}/>
                                 </ModalPortal>
                             )}
                             {/*참여했으면*/}
