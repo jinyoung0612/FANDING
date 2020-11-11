@@ -65,6 +65,36 @@ export const Participate_save = (newForm) => {
 
 };
 
+export const loadParticipants = (id) => {
+    return (dispatch, getState) => {
+        const firestore = firebase.firestore();
+        // const user=firebase.auth().currentUser.uid;
+        // console.log(user)
+        // const user="LcveT8eRo9Z0dEwzJGQXl76KtPs1";
+        let rows=[];
+        firestore
+            .collection("participation")
+            .where("fid","==",id)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    let data= {};
+                    data=doc.data();
+                    data["id"]=doc.id;
+                    rows.push(data)
+
+                })
+
+            })
+            .then(()=> {
+                dispatch({type:"LoadParticipants",payload: {
+                        user_data:rows
+                    }})
+            });
+
+
+    };
+};
 
 // import { createAction, handleActions } from 'redux-actions';
 // import firebase from "firebase/app";

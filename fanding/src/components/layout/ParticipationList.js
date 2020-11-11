@@ -16,7 +16,7 @@ const ParticipationList=({participation})=>{
 
     const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[fid]);
 
-    // console.log(funding);
+    console.log(funding);
 
     if(funding && participation){
         // console.log(fid)

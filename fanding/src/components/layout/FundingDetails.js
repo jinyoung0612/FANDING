@@ -33,7 +33,7 @@ const FundingDetails = (props)=>{
     }
 
     const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
-    // console.log(funding);
+    console.log(funding);
     // console.log(props.auth.uid);
     // if(firebase.auth().currentUser){
     //     console.log(firebase.auth().currentUser.uid)
@@ -47,7 +47,7 @@ const FundingDetails = (props)=>{
     // }
     // const data= find(funding);
 
-
+    //총대일 때
     if(funding && firebase.auth().currentUser){
         if(firebase.auth().currentUser.uid===funding.user_uid){
             const content=funding.content;
@@ -66,23 +66,28 @@ const FundingDetails = (props)=>{
                             <CardText>배송방법 : {funding.shippingMethod}</CardText>
                             <CardText>배송비 : {funding.shippingFee}</CardText>
                             <CardText>배송 안내 : {funding.shippingDetail}</CardText>
+                            <div>
+                                <Viewer
+                                    height="400px"
+                                    initialValue={funding.content}
+                                    ref={viewerRef}
+                                    previewStyle="vertical"
+                                    initialEditType="wysiwyg"
+                                />
+                            </div>
                             <Button>수정하기</Button>
+                            <Link to ={'../funding_state/'+doc_id} funding={funding}>
+                                <Button>참여 현황 보기</Button>
+                            </Link>
                         </CardBody>
                     </Card>
-                    <div>
-                        <Viewer
-                            height="400px"
-                            initialValue={funding.content}
-                            ref={viewerRef}
-                            previewStyle="vertical"
-                            initialEditType="wysiwyg"
-                        />
-                    </div>
+
                 </div>
 
             )
 
         }
+        // 참여자 일 때
         else{
             return(
 
@@ -98,6 +103,15 @@ const FundingDetails = (props)=>{
                             <CardText>배송방법 : {funding.shippingMethod}</CardText>
                             <CardText>배송비 : {funding.shippingFee}</CardText>
                             <CardText>배송 안내 : {funding.shippingDetail}</CardText>
+                            <div>
+                                <Viewer
+                                    height="400px"
+                                    initialValue={funding.content}
+                                    ref={viewerRef}
+                                    previewStyle="vertical"
+                                    initialEditType="wysiwyg"
+                                />
+                            </div>
                             {/*<CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
                             <Button>찜하기</Button>
                             <Button onClick={handleOpenModal}>펀딩 참여하기</Button>
