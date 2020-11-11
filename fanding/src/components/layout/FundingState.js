@@ -20,10 +20,10 @@ function StateDetail({participant}){
             <div>참여자 이메일: {participant.email}</div>
             <div>참여자 이름: {participant.name}</div>
             <div>참여자 계좌: {participant.bank} {participant.accountName} {participant.accountNumber}</div>
-            <div>임금 시간: {participant.date} {participant.time}</div>
+            <div>입금 시간: {participant.date} {participant.time}</div>
             <br/>
         </div>
-        
+
     )
 }
 const FundingState = (props)=>{
@@ -32,7 +32,6 @@ const FundingState = (props)=>{
 
     const doc_id=props.match.params.id;
     const dispatch=useDispatch();
-    const [datas,setData]=useState([]);
 
     useEffect(()=>{
         dispatch(loadParticipants(doc_id))
