@@ -7,8 +7,8 @@ const CHONGDAE_SAVE = 'CHONGDAE_SAVE';
 export const chongdae_save = createAction(CHONGDAE_SAVE);
 
 export const verifyChongdae = (newChongdae) => {
-    return (dispatch, getFiresotre) => {
-        const firestore = getFiresotre();
+    return (dispatch, getFirestore) => {
+        const firestore = getFirestore();
         const user = firebase.auth().currentUser;
 
         firestore.collection("chongdaes").add({
@@ -24,3 +24,4 @@ export const verifyChongdae = (newChongdae) => {
         })
     };
 };
+

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import { Link } from "react-router-dom";
+import { storage } from 'firebase';
+import { $CombinedState } from 'redux';
 
 class Chongdae_auth extends Component{
 
@@ -28,6 +30,16 @@ function chongdae_auth(){
     +"state=202002CAPSTONEPROJECTTEAM002A2B2"
     +"&auth_type=0&lang=kor"
   )
+
+  fetch('http://localhost:3000/api/token',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      access_token: this.state.access_token,
+    }),
+  });
 };
 
 
