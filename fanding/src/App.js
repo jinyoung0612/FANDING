@@ -37,7 +37,7 @@ class App extends Component {
             <Route path="/myaccount" component={MyAccount} />
             <Route path="/create_funding" component={CreateFunding} />
             <Route path="/chongdae" component={Chongdae_auth} />
-            <Route path="/identity_auth" component={Identity_auth} />
+            <Route path="/authResult" component={Identity_auth} />
             <Route path="/account_auth" component={Account_auth} />
             <Route exact path="/find_company" component={CompanyRecruit} />
             <Route path="/find_company_form" component={FindCompanyForm} />

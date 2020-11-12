@@ -10,6 +10,8 @@ import { Editor, Viewer} from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { BsHeart, BsChatSquareDots } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
+import ModalPortal from "../../../../ModalPortal";
+import MyModal from "../../../../MyModal";
 
 
 //import moment from 'moment';
@@ -24,6 +26,7 @@ class FundingDetail extends Component{
     super(props);
     this.state = {
       funding: this.props.funding,
+        isModalOpen:false
 
     }
     /*
@@ -36,6 +39,12 @@ class FundingDetail extends Component{
         })
         */
   }
+   handleOpenModal=()=>{
+        this.setState({isModalOpen:true})
+    }
+   handleCloseModal=()=>{
+       this.setState({isModalOpen:false})
+    }
 
   handleChangeEditor = e =>
     {
@@ -50,7 +59,7 @@ class FundingDetail extends Component{
 
   
   render(){
-    //console.log(this.state);
+    console.log(this.state.funding);
     
     
     if(this.state.funding)
@@ -68,7 +77,13 @@ class FundingDetail extends Component{
               <Progress color="info" value="80" />
               <p><b>257명</b>의 FAN</p>
               <p><b>15일</b> 남음</p>
-              <Button color="warning" size="xs" block>펀딩하기</Button>
+              {/*<Button color="warning" size="xs" block>펀딩하기</Button>*/}
+                <Button onClick={this.handleOpenModal}>펀딩 참여하기</Button>
+                {this.state.isModalOpen && (
+                    <ModalPortal>
+                        <MyModal onClose={this.handleCloseModal} funding={this.state.funding} fid={this.props.match.params.id}/>
+                    </ModalPortal>
+                )}
               <Row xs="3">
                 <Col><Button color="secondary" size="xs" block><BsHeart />350</Button></Col>
                 <Col><Button color="secondary" size="xs" block><BsChatSquareDots />문의</Button></Col>

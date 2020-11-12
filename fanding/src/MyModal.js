@@ -9,7 +9,7 @@ import {Participate_save} from "./store/actions/userActions";
 import {connect, useDispatch} from "react-redux";
 
 const MyModal = ({onClose, funding, fid}) => {
-    // console.log(fid);
+    console.log(fid);
 
     const dispatch = useDispatch();
 
@@ -31,6 +31,7 @@ const MyModal = ({onClose, funding, fid}) => {
             ...inputs,
             [name]:value
         })
+        console.log(inputs)
     };
 
     const handleSubmit = (e) =>{
