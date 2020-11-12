@@ -32,7 +32,8 @@ class FindCompanyForm extends Component {
             itemPrice:'',
             itemRemain:'',
             shippingMethod:'',
-            content:''
+            content:'',
+           // comment:''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }

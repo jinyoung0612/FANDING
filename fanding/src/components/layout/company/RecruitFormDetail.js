@@ -10,7 +10,7 @@ import { Editor, Viewer} from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { BsHeart, BsChatSquareDots } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
-
+import './company.css';
 
 //import moment from 'moment';
 let imgStyle = {
@@ -72,7 +72,20 @@ class RecruitFormDetail extends Component{
               initialEditType="wysiwyg"
               />
         </div>
+
+        <div className='Reply_div'>
+          <h4> 댓글 </h4>
+          <div className='Reply_write'>
+            <textarea rows='3' placeholder='100자 이내의 글을 입력해주세요.'
+              maxLength='100' name='write_reply'>
+              </textarea>
+              <input type='button' value='등록' id='reply_submit_button'/>
+          </div>
+
+        </div>
         </Container>
+
+        
             </>
       )
     }

@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button, Media } from "reactstrap";
 
 import { BsPeopleCircle, BsBell } from "react-icons/bs";
-import main_image from './fanding_main_image.png'
+
 
 const NavbarTest = (props) => {
   //const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +45,7 @@ const NavbarTest = (props) => {
           
         </Nav>
       </Navbar>
-      {/**<Media middle object src={main_image} class="img-fluid" alt="main_image" /> */}
+      
       {/*
         <img src="fanding_main_image.png" class="img-fluid" alt="Responsive image" />
         <img src="fanding_main_image.png" alt="fanding_main" width="500" height="600" />
