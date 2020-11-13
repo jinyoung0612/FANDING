@@ -45,7 +45,9 @@ export const signUp = (newUser) => {
             zipcode: "",
             phone_number: "",
             email_verification: firebase.auth().currentUser.emailVerified,
-            artist_id: newUser.artist,
+            artist1: newUser.artist1,
+            artist2: newUser.artist2,
+            artist3: newUser.artist3,
           })
           .then(() => {
               firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)

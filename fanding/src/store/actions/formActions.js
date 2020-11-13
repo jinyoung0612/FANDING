@@ -16,7 +16,9 @@ export const firebase_funding_save = newForm => {
       const firestore = getFirestore();
       const user=firebase.auth().currentUser.email;
       firestore
-        .collection("fundings").add({
+        .collection("fundings")
+        .doc()
+        .set({
             ...newForm,
             user_uid:firebase.auth().currentUser.uid,
             user_email:firebase.auth().currentUser.email,

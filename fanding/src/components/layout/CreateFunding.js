@@ -47,9 +47,27 @@ class CreateFunding extends Component{
             shippingFee:'',
             shippingDetail:'',
             redirectToReferrer: false,
-            content: ''
+            content: '',
+            options: [
+                {name:'없음', id:0},
+                {name:'BTS', id:1},
+                {name:'BLACKPINK', id:2},
+                {name:'APINK', id:3},
+                {name:'TXT', id:4},
+                {name:'DAY6', id:5},
+                {name:'TWICE', id:6},
+                {name:'Stray Kids', id:7},
+                {name:'B1A4', id:8},
+                {name:"NU'EST", id:9},
+                {name:'IDLE', id:10},
+                {name:'기타', id:11},
+            ]
+            
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        
+        
+        
     }
 
     handleImageChange = e => {
@@ -59,11 +77,13 @@ class CreateFunding extends Component{
         }
 
     }
+    
 
     handleChange = e => {
         this.setState({
             [e.target.id]: e.target.value,
         });
+        console.log(e.target.value);
     };
 
     handleRadioChange = e => {
@@ -131,32 +151,36 @@ class CreateFunding extends Component{
 
     editorRef = React.createRef();
     
+    
 
+        
 
     render()
     {
 
+       
+        
         if(this.state.redirectToReferrer===true){
             alert("펀딩이 생성되었습니다.");
            return  <Redirect to='/' />
         }
         return (
             <>
+            {
+                
+            }
             <Form>
                 <FormGroup>
                 <Label for="artistSelect">아티스트</Label>
-                <CustomInput type="select" id="artistSelect" name="customSelect" onChange={this.handleChange}>
-                    <option value="">Select</option>
-                    <option>BTS</option>
-                    <option>BLACKPINK</option>
-                    <option>TWICE</option>
-                    <option>ITZY</option>
-                    <option>GOT7</option>
-                    <option>NU'EST</option>
-                    <option>DAY6</option>
-                    <option>APINK</option>
-                    <option>오마이걸</option>
-                    <option>기타</option>
+                <CustomInput type="select" id="artistSelect" name="customSelect" onChange={this.handleChange} multiple>
+                    {
+                        this.state.options.map((e,key) => {
+                            return <option value={e.value}>{e.name}</option>;
+                        })
+                        
+                    }
+                   
+                    
                 </CustomInput>
                 </FormGroup>
 

@@ -34,6 +34,7 @@ class FindCompanyForm extends Component {
             shippingMethod:'',
             content:'',
             fundingType:'reward'
+
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
