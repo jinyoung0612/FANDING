@@ -1,9 +1,6 @@
 import React from 'react';
 //import { NavLink } from 'react-router-dom';
 import {
-  Navbar,
-  NavbarBrand,
-  Nav,
   NavItem,
   NavLink
 
