@@ -1,4 +1,4 @@
-import React, {Component,useState} from 'react';
+import React, {Component} from 'react';
 import { Button, Form, Input, Label } from 'reactstrap';
 import { Link } from "react-router-dom";
 import {connect,useSelector} from 'react-redux';
@@ -36,18 +36,17 @@ class Account_auth extends Component{
         this.state = {
           access_token: '',
           refresh_token: '',
-          user_seq_no: '',
+          user_seq_no: ''
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+    
+      componentDidMount(){
+        let currentComponent = this;
+        token(currentComponent);
       }
 
-    componentDidMount(){
-      
-      getToken2();
-    
-    }
-    
       handleChange = (e) => {
         this.setState({
           [e.target.id]: e.target.value,
@@ -108,12 +107,39 @@ export default connect(
   mapDispatchToProps,
 )(Account_auth);
 
-function token(){
+async function token(currentComponent){
   console.log(window.location.href);
   if(getQueryStringObjectToken()){
     var authCode = getQueryStringObjectToken()
     axios.post('/api/token',{
       code: authCode
+    })
+    .then((res)=>{
+      if(res.data.rsp_code){
+      var errCode = res.data.rsp_code
+      console.log(`arror: ${errCode}`)
+
+      currentComponent.setState({
+        access_token: 'error',
+        refresh_token: 'error',
+        user_seq_no: 'error'
+      })
+
+      }
+      else{
+      var accesstoken = res.data.access_token
+      console.log(`access_token: ${accesstoken}`)
+      var refreshtoken = res.data.refresh_token
+      console.log(`refresh_token: ${refreshtoken}`)
+      var userseqno = res.data.user_seq_no
+      console.log(`user_seq_no: ${userseqno}`)
+      
+      currentComponent.setState({
+        access_token: accesstoken,
+        refresh_token: refreshtoken,
+        user_seq_no: userseqno
+      })
+     }
     })
     .catch(function(error){
       console.log(error);
@@ -127,38 +153,6 @@ function token(){
   }
 }
 
-async function getToken(){
-  fetch('/api/returnToken')
-  .then(res=>res.json())
-  .then(data=>{
-    console.log(data);
-    this.setState({
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      user_seq_no: data.user_seq_no
-    })
-  });
-}
-
-function getToken2(){
-  return async ()=>{
-    //const data = await token();
-    //console.log(data);
-    token();
-    axios.get('/api/returnToken')
-    .then(res=>res.json())
-    .then(data=>{
-      console.log(data);
-      this.setState({
-        access_token: data.access_token,
-        refresh_token: data.refresh_token,
-        user_seq_no: data.user_seq_no
-      })
-    });
-  }
-}
-
-
 function getQueryStringObjectToken(){
   var a = window.location.href.split('&');
   if(a=="") return {};
@@ -166,5 +160,3 @@ function getQueryStringObjectToken(){
   //console.log(p[1]);
   return p[1];
 }
-
-//export default Account_auth;

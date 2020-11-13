@@ -34,6 +34,8 @@ router.post('/api/token', (req,res) =>{
         console.log('/token');
         console.log('accessTokenResult');
         console.log(accessTokenResult);
+
+        res.send(result);
     });
 })
 
