@@ -19,6 +19,16 @@ const formReducer = (state = initState, action) => {
         ...state,
         createError: null
       };
+    case 'PARTICIPATE_ERROR':
+      console.log("participate error");
+      return{
+        ...state
+      }
+    case 'PARTICIPATE_SUCCESS':
+      console.log("participate success");
+      return{
+        ...state
+      }
 
     default:
       return state

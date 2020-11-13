@@ -50,7 +50,8 @@ export const signUp = (newUser) => {
             artist3: newUser.artist3,
           })
           .then(() => {
-            dispatch({ type: "SIGNUP_SUCCESS" });
+              firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+              dispatch({ type: "SIGNUP_SUCCESS" });
           })
           .catch((err) => {
             dispatch({ type: "SIGNUP_ERROR", err });

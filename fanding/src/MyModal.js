@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
     TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
     CardSubtitle, Form, Label, Input, FormGroup
 } from 'reactstrap';
 import firebase from "firebase";
 import './MyModal.css';
-import {firebase_funding_save} from "./store/actions/formActions";
-import {connect} from "react-redux";
+import {Participate_save} from "./store/actions/userActions";
+import {connect, useDispatch} from "react-redux";
 
-const MyModal = ({onClose, funding}) => {
-    console.log(funding);
+const MyModal = ({onClose, funding, fid}) => {
+    console.log(fid);
+
+    const dispatch = useDispatch();
 
     const [inputs, setInputs]=useState({
         name:'',
@@ -19,7 +21,8 @@ const MyModal = ({onClose, funding}) => {
         bank:'',
         accountNumber:'',
         accountName:'',
-        email:firebase.auth().currentUser.email
+        email:firebase.auth().currentUser.email,
+        fid:fid
     });
 
     const handleChange = e => {
@@ -28,11 +31,22 @@ const MyModal = ({onClose, funding}) => {
             ...inputs,
             [name]:value
         })
+        console.log(inputs)
     };
 
-    const handleSubmit = e =>{
-        // console.log(inputs);
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        console.log(inputs);
+        dispatch(Participate_save(inputs));
+        alert("펀딩에 참여하였습니다.")
+        onClose();
     };
+
+    // const handleSubmit = useCallback(()=>{
+    //     dispatch(Participate_save(inputs));
+    // },[inputs,dispatch])
+
+
     // console.log(inputs)
     // if(funding.fundingType==="on"){
     //
@@ -46,7 +60,7 @@ const MyModal = ({onClose, funding}) => {
 
                 <p>닉네임 넣기</p>
 
-                <Form onSubmit={handleSubmit()}>
+                <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         <Label for="PaymentInfo">입금정보입력</Label>
                         <Input type="name" name="name" id="name"
@@ -110,30 +124,30 @@ const MyModal = ({onClose, funding}) => {
                                onChange={handleChange}
                         />
                     </FormGroup>
+                    <Button >제출</Button>
                 </Form>
-                <Button>제출</Button>
                 <Button onClick={onClose}>닫기</Button>
             </div>
         </div>
     );
 };
 
-export default MyModal;
+// export default MyModal;
 
 
-// const mapStateToProps = (state) => {
-//     return{
-//         authError: state.auth.authError,
-//         auth: state.firebase.auth
-//     }
-// }
+const mapStateToProps = (state) => {
+    return{
+        authError: state.auth.authError,
+        auth: state.firebase.auth,
+    }
+}
 // const mapDispatchToProps = (dispatch) => {
 //     return {
-//         firebase_funding_save: (creds) => dispatch(firebase_funding_save(creds))
+//         Participate_save: (inputs) => dispatch(Participate_save(inputs))
 //     };
 // };
-//
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps,
-// )(MyModal);
+
+export default connect(
+    mapStateToProps,
+    // mapDispatchToProps
+)(MyModal);

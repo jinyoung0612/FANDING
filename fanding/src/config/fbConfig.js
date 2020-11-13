@@ -19,7 +19,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 firebase.firestore();
-firebase.firestore().settings( {timestampsInSnapshots:true});
+// firebase.firestore().settings( {timestampsInSnapshots:true});
 var storage = firebase.storage();
 // firebase.firestore().settings({ timestampsInSnapshots: true });
 

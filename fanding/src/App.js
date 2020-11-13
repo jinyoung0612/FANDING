@@ -21,7 +21,9 @@ import RecruitFormDetail from "./components/layout/company/RecruitFormDetail";
 import CompanyRecruit from "./components/layout/company/CompanyRecruit";
 import test from './components/layout/test';
 import FundingDetails from "./components/layout/FundingDetails";
+import FundingState from "./components/layout/FundingState";
 import MainPage from "./components/layout/MainPage";
+
 
 class App extends Component {
   render() {
@@ -49,7 +51,8 @@ class App extends Component {
             <Route exact path="/collect_funding/:id" component={CollectFundingDetail} />
             <Route path="/find_company/:id" component={RecruitFormDetail} />
             <Route path="/test" component={test}/>
-            <Route exact path="/funding_detail/:id" component={FundingDetails} />
+            <Route path="/funding_detail/:id" component={FundingDetails} />
+            <Route path="/funding_state/:id" component={FundingState} />
 
 
           </Switch>

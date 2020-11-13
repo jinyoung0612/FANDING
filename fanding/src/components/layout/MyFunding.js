@@ -26,13 +26,15 @@ class MyFunding extends Component {
     }
 
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.auth !== prevProps.auth){
-                this.props.dispatch(loadFundings(this.props.auth.uid))
-
-        }
-        }
-
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if(this.props.auth !== prevProps.auth){
+    //             this.props.dispatch(loadFundings(this.props.auth.uid))
+    //
+    //     }
+    //     }
+    componentDidMount() {
+        this.props.dispatch(loadFundings(this.props.auth.uid))
+    }
 
 
     render(){

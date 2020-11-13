@@ -56,6 +56,12 @@ const authReducer = (state = initState, action) => {
         doc_id:action.payload.doc_id
       };
 
+    case "LoadParticipants":
+      return{
+        ...state,
+        user_data:action.payload.user_data
+      }
+
     default:
       return state;
   }

@@ -33,7 +33,8 @@ class FindCompanyForm extends Component {
             itemRemain:'',
             shippingMethod:'',
             content:'',
-           // comment:''
+            fundingType:'reward'
+
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -41,6 +42,12 @@ class FindCompanyForm extends Component {
 
     editorRef = React.createRef();
 
+    handleRadioChange = e => {
+        this.setState({
+            fundingType: e.target.value
+        });
+        // console.log(this.state.fundingType);
+    }
     handleImageChange = e => {
 
         if (e.target.files[0]) {
@@ -116,88 +123,324 @@ class FindCompanyForm extends Component {
             alert("업체 모집폼이 생성되었습니다");
            return  <Redirect to='/' />
         }
-        return (
-            <>
-            <Form>
-                <FormGroup>
-                    <Label for="itemTitle">제작할 상품 종류</Label>
-                    <Input type="text" name="title" id="itemTitle" 
-                    placeholder="제작할 상품 종류 ex)키링, 그립톡"
-                    onChange={this.handleChange}/>
-                </FormGroup>
-            </Form>
-                
-                <Form>
-                <FormGroup>
-                    <Label for="fileBrowser">예상 디자인 (size: 350*250)</Label>
-                    <CustomInput type="file" id="itemImage" name="customFile" 
-                    label="이미지를 업로드 하세요" 
-                    onChange={this.handleImageChange}
-                    />
-                </FormGroup>
-                </Form>
+        else{
+            //리워드형일 경우
+            if(this.state.fundingType ==='reward'){
+                return (
+                    <>
+                        <Form>
+                            <FormGroup>
+                                <Label for="Radio">펀딩 유형 선택</Label>
 
-                <Form>
-                <FormGroup>
-                    <Label for="detailText">상세 설명</Label>
-                    <Editor
-                        previewStyle="vertical"
-                        height="400px"
-                        initialEditType="wysiwyg"
-                        initialValue="hello"
-                        ref={this.editorRef}
-                        plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
-                        onChange = {this.handleChangeEditor}
-                        />
-                
+                                <div>
+                                    <CustomInput type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"
+                                                 checked={this.state.fundingType === 'reward'}
+                                                 onChange={this.handleRadioChange}
+                                                 inline/>
+                                    <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"
+                                                 checked={this.state.fundingType === 'collect'}
+                                                 onChange={this.handleRadioChange}
+                                                 inline/>
+                                </div>
 
-                        <div id="toastEditor">
-                            <h1>Toast UI Editor Example</h1>
-                            <div id="editSection"></div>
-                            {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
-                            <button onChange={this.handleChangeEditor} className="btn_save">Save</button>
-                            <div>
-                                <h2>result</h2>
-                                <textarea className="tf_result" value={this.state.content} readOnly="readOnly"></textarea>
-                            </div>
-                        </div>
-                </FormGroup>
-                </Form>
-                
-                <Form inline>
-                <FormGroup>
-                    <Label for="itemPrice">원하는 가격</Label>
-                    <Input type="text" name="title" id="itemPrice" placeholder="" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="itemRemain">예상 제작 개수</Label>
-                    <Input type="text" name="title" id="itemRemain" placeholder="" onChange={this.handleChange}/>
-                </FormGroup>
-                </Form>
-                
-                <Label for="shipping">배송</Label>
-                <Form>
-                    <FormGroup>
-                    <Label for="shippingMethod">원하는 배송방법</Label>
-                    <Input type="text" name="title" id="shippingMethod" 
-                    placeholder="예)택배, 준등기"
-                    onChange={this.handleChange}
-                    />
-                    </FormGroup>
-                </Form>
-                
-                
-                
-                <Form onSubmit={this.handleSubmit}>
-                    {/*<Link to='/find_company'>
+
+
+                            </FormGroup>
+
+
+                        </Form>
+                        <Form>
+                            <FormGroup>
+                                <Label for="itemTitle">제작할 상품 종류</Label>
+                                <Input type="text" name="title" id="itemTitle"
+                                       placeholder="제작할 상품 종류 ex)키링, 그립톡"
+                                       onChange={this.handleChange}/>
+                            </FormGroup>
+                        </Form>
+
+                        <Form>
+                            <FormGroup>
+                                <Label for="fileBrowser">예상 디자인 (size: 350*250)</Label>
+                                <CustomInput type="file" id="itemImage" name="customFile"
+                                             label="이미지를 업로드 하세요"
+                                             onChange={this.handleImageChange}
+                                />
+                            </FormGroup>
+                        </Form>
+
+                        <Form>
+                            <FormGroup>
+                                <Label for="detailText">상세 설명</Label>
+                                <Editor
+                                    previewStyle="vertical"
+                                    height="400px"
+                                    initialEditType="wysiwyg"
+                                    initialValue="hello"
+                                    ref={this.editorRef}
+                                    plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
+                                    onChange = {this.handleChangeEditor}
+                                />
+
+
+                                <div id="toastEditor">
+                                    <h1>Toast UI Editor Example</h1>
+                                    <div id="editSection"></div>
+                                    {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
+                                    <button onChange={this.handleChangeEditor} className="btn_save">Save</button>
+                                    <div>
+                                        <h2>result</h2>
+                                        <textarea className="tf_result" value={this.state.content} readOnly="readOnly"></textarea>
+                                    </div>
+                                </div>
+                            </FormGroup>
+                        </Form>
+
+                        <Form inline>
+                            <FormGroup>
+                                <Label for="itemPrice">원하는 가격</Label>
+                                <Input type="number" name="title" id="itemPrice" placeholder="" onChange={this.handleChange}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="itemRemain">예상 제작 개수</Label>
+                                <Input type="text" name="title" id="itemRemain" placeholder="" onChange={this.handleChange}/>
+                            </FormGroup>
+                        </Form>
+
+                        <Label for="shipping">배송</Label>
+                        <Form>
+                            <FormGroup>
+                                <Label for="shippingMethod">원하는 배송방법</Label>
+                                <Input type="text" name="title" id="shippingMethod"
+                                       placeholder="예)택배, 준등기"
+                                       onChange={this.handleChange}
+                                />
+                            </FormGroup>
+                        </Form>
+
+
+
+                        <Form onSubmit={this.handleSubmit}>
+                            {/*<Link to='/find_company'>
 
                         <Button color="warning" size="lg" block>폼 만들기</Button>
                     </Link>
                     */}
-                <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
-                </Form>            
-            </>
-        )
+                            <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
+                        </Form>
+                    </>
+                )
+            }
+            //모금형일경우
+            else{
+                return (
+                    <>
+                        <Form>
+                            <FormGroup>
+                                <Label for="Radio">펀딩 유형 선택</Label>
+
+                                <div>
+                                    <CustomInput type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"
+                                                 checked={this.state.fundingType === 'reward'}
+                                                 onChange={this.handleRadioChange}
+                                                 inline/>
+                                    <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"
+                                                 checked={this.state.fundingType === 'collect'}
+                                                 onChange={this.handleRadioChange}
+                                                 inline/>
+                                </div>
+
+
+
+                            </FormGroup>
+
+
+                        </Form>
+                        <Form>
+                            <FormGroup>
+                                <Label for="itemTitle">모금 종류</Label>
+                                <Input type="text" name="title" id="itemTitle"
+                                       placeholder="모금 종류 ex)생일광고, 도시락 서포트"
+                                       onChange={this.handleChange}/>
+                            </FormGroup>
+                        </Form>
+
+                        <Form>
+                            <FormGroup>
+                                <Label for="fileBrowser">예상 디자인 (size: 350*250)</Label>
+                                <CustomInput type="file" id="itemImage" name="customFile"
+                                             label="이미지를 업로드 하세요"
+                                             onChange={this.handleImageChange}
+                                />
+                            </FormGroup>
+                        </Form>
+
+                        <Form>
+                            <FormGroup>
+                                <Label for="detailText">상세 설명</Label>
+                                <Editor
+                                    previewStyle="vertical"
+                                    height="400px"
+                                    initialEditType="wysiwyg"
+                                    initialValue="hello"
+                                    ref={this.editorRef}
+                                    plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
+                                    onChange = {this.handleChangeEditor}
+                                />
+
+
+                                <div id="toastEditor">
+                                    <h1>Toast UI Editor Example</h1>
+                                    <div id="editSection"></div>
+                                    {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
+                                    <button onChange={this.handleChangeEditor} className="btn_save">Save</button>
+                                    <div>
+                                        <h2>result</h2>
+                                        <textarea className="tf_result" value={this.state.content} readOnly="readOnly"></textarea>
+                                    </div>
+                                </div>
+                            </FormGroup>
+                        </Form>
+
+                        <Form inline>
+                            <FormGroup>
+                                <Label for="itemPrice">원하는 가격</Label>
+                                <Input type="text" name="title" id="itemPrice" placeholder="" onChange={this.handleChange}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="itemRemain">예상 규모</Label>
+                                <Input type="text" name="title" id="itemRemain" placeholder="" onChange={this.handleChange}/>
+                            </FormGroup>
+                        </Form>
+
+                        <Label for="shipping">배송</Label>
+                        <Form>
+                            <FormGroup>
+                                <Label for="shippingMethod">원하는 배송방법</Label>
+                                <Input type="text" name="title" id="shippingMethod"
+                                       placeholder="예)택배, 준등기"
+                                       onChange={this.handleChange}
+                                />
+                            </FormGroup>
+                        </Form>
+
+
+
+                        <Form onSubmit={this.handleSubmit}>
+                            {/*<Link to='/find_company'>
+
+                        <Button color="warning" size="lg" block>폼 만들기</Button>
+                    </Link>
+                    */}
+                            <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
+                        </Form>
+                    </>
+                )
+            }
+        }
+
+        // return (
+        //     <>
+        //         <Form>
+        //             <FormGroup>
+        //                 <Label for="Radio">펀딩 유형 선택</Label>
+        //
+        //                 <div>
+        //                     <CustomInput type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"
+        //                                  checked={this.state.fundingType === 'reward'}
+        //                                  onChange={this.handleRadioChange}
+        //                                  inline/>
+        //                     <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"
+        //                                  checked={this.state.fundingType === 'collect'}
+        //                                  onChange={this.handleRadioChange}
+        //                                  inline/>
+        //                 </div>
+        //
+        //
+        //
+        //             </FormGroup>
+        //
+        //
+        //         </Form>
+        //     <Form>
+        //         <FormGroup>
+        //             <Label for="itemTitle">제작할 상품 종류</Label>
+        //             <Input type="text" name="title" id="itemTitle"
+        //             placeholder="제작할 상품 종류 ex)키링, 그립톡"
+        //             onChange={this.handleChange}/>
+        //         </FormGroup>
+        //     </Form>
+        //
+        //         <Form>
+        //         <FormGroup>
+        //             <Label for="fileBrowser">예상 디자인 (size: 350*250)</Label>
+        //             <CustomInput type="file" id="itemImage" name="customFile"
+        //             label="이미지를 업로드 하세요"
+        //             onChange={this.handleImageChange}
+        //             />
+        //         </FormGroup>
+        //         </Form>
+        //
+        //         <Form>
+        //         <FormGroup>
+        //             <Label for="detailText">상세 설명</Label>
+        //             <Editor
+        //                 previewStyle="vertical"
+        //                 height="400px"
+        //                 initialEditType="wysiwyg"
+        //                 initialValue="hello"
+        //                 ref={this.editorRef}
+        //                 plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
+        //                 onChange = {this.handleChangeEditor}
+        //                 />
+        //
+        //
+        //                 <div id="toastEditor">
+        //                     <h1>Toast UI Editor Example</h1>
+        //                     <div id="editSection"></div>
+        //                     {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
+        //                     <button onChange={this.handleChangeEditor} className="btn_save">Save</button>
+        //                     <div>
+        //                         <h2>result</h2>
+        //                         <textarea className="tf_result" value={this.state.content} readOnly="readOnly"></textarea>
+        //                     </div>
+        //                 </div>
+        //         </FormGroup>
+        //         </Form>
+        //
+        //         <Form inline>
+        //         <FormGroup>
+        //             <Label for="itemPrice">원하는 가격</Label>
+        //             <Input type="text" name="title" id="itemPrice" placeholder="" onChange={this.handleChange}/>
+        //         </FormGroup>
+        //         <FormGroup>
+        //             <Label for="itemRemain">예상 제작 개수</Label>
+        //             <Input type="text" name="title" id="itemRemain" placeholder="" onChange={this.handleChange}/>
+        //         </FormGroup>
+        //         </Form>
+        //
+        //         <Label for="shipping">배송</Label>
+        //         <Form>
+        //             <FormGroup>
+        //             <Label for="shippingMethod">원하는 배송방법</Label>
+        //             <Input type="text" name="title" id="shippingMethod"
+        //             placeholder="예)택배, 준등기"
+        //             onChange={this.handleChange}
+        //             />
+        //             </FormGroup>
+        //         </Form>
+        //
+        //
+        //
+        //         <Form onSubmit={this.handleSubmit}>
+        //             {/*<Link to='/find_company'>
+        //
+        //                 <Button color="warning" size="lg" block>폼 만들기</Button>
+        //             </Link>
+        //             */}
+        //         <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
+        //         </Form>
+        //     </>
+        // )
 
     }
 }
