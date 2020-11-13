@@ -4,8 +4,6 @@ const axios = require('axios');
 const request = require('request');
 const config = require('../../config/finConfig');
 
-var accessTokenResult = {};
-
 router.get('/api', (req,res)=> res.json({username:"jinyoung2"}));
 
 router.post('/api/token', (req,res) =>{
@@ -30,22 +28,7 @@ router.post('/api/token', (req,res) =>{
         console.log('token result');
         console.log(result);
 
-        accessTokenResult = result;
-        console.log('/token');
-        console.log('accessTokenResult');
-        console.log(accessTokenResult);
-
         res.send(result);
-    });
-})
-
-router.get('/api/returnToken', (req,res)=>{
-    console.log('/api/returnToken');
-    console.log(accessTokenResult);
-    res.json({
-        access_token: accessTokenResult.access_token,
-        refresh_token: accessTokenResult.refresh_token,
-        user_seq_no: accessTokenResult.user_seq_no
     });
 })
 
