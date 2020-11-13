@@ -13,12 +13,12 @@ class Identity_auth extends Component{
         };
     }
     //
-    // componentDidMount() {
-        // fetch('https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=fHcAK2eGVzYpQN6p860McUqC0xiku8UnU95iqRyM&redirect_uri=http://localhost:3001/api/authResult&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor')
-        //     .then(res=>res.json())
-        //     .then(data=>{
-        //         console.log(data);
-        //     });
+    componentDidMount() {
+        fetch("/api/authResult")
+            .then(data=>data.json())
+            .then(data=>{
+                console.log(data);
+            });
 
     //     let getData = () =>
     //         axios
@@ -52,10 +52,15 @@ class Identity_auth extends Component{
     //
     //             })
     //     getData();
-    // }
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //
-    // }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        fetch("api/authResult")
+            .then(data=>data.json())
+            .then(data=>{
+                console.log(data);
+            });
+    }
     // loadAuthCode = async()=>{
     //     axios.get("/api/authResult")
     //         .get(({data})=>{
@@ -67,7 +72,8 @@ class Identity_auth extends Component{
 
 
     handleClick=()=>{
-        window.open("https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=fHcAK2eGVzYpQN6p860McUqC0xiku8UnU95iqRyM&redirect_uri=http://localhost:3000/authResult&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor")
+        // window.open("https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=fHcAK2eGVzYpQN6p860McUqC0xiku8UnU95iqRyM&redirect_uri=http://localhost:3001/api/authResult&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor")
+        window.location.href = 'https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=fHcAK2eGVzYpQN6p860McUqC0xiku8UnU95iqRyM&redirect_uri=http://localhost:3000/authResult&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor';
     };
 
     render()
