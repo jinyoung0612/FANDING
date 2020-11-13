@@ -13,20 +13,19 @@ class SelectedArtist extends Component {
             selectedArtist : this.props.artist
         }
 
-        console.log("Selected Artist", this.state.selectedArtist);
+        //console.log("Selected Artist", this.state.selectedArtist);
     }
     render()
     {
         const { auth, user, fundings } = this.props;
-        /*
+        
+
+        //console.log("check artist", this.props.artist);
+        console.log("loaded funding: ", fundings);
         if(!isLoaded(fundings))
-        {   
+        {
             return <div>Loading...</div>
         }
-*/
-        console.log("check artist", this.props.artist);
-        console.log("loaded funding: ", fundings);
-        
         return(
             <div>
                 <p>{this.state.selectedArtist} 관련 펀딩</p>
@@ -39,14 +38,14 @@ class SelectedArtist extends Component {
 
 
 const mapStateToProps = (state) => {
-    console.log("mapStateToProps", state);
+    console.log("mapStateToProps 2", state);
    return {
       
-       uid: state.firebase.auth.uid,
+        uid: state.firebase.auth.uid,
        fundings: state.firestore.ordered.fundings,
-       auth: state.firebase.auth,
-       authError: state.auth.authError,
-       user: state.firestore.ordered.users
+        auth: state.firebase.auth,
+        authError: state.auth.authError,
+        user: state.firestore.ordered.users
    }
 }
 

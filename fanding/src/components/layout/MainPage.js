@@ -14,14 +14,7 @@ import SelectedArtist from "./SelectedArtist";
 
 const artistsMap = [1, 2, 3];
 class MainPage extends Component {
-    constructor(props)
-    {
-        super(props);
-        this.state={
-            artists: [],
-            artist1: 'BTS',
-        }
-    }
+
     
     
     render(){
@@ -37,17 +30,16 @@ class MainPage extends Component {
         if(!isLoaded(auth)){
             return <div>Loading...</div>
         }
-        if(!isLoaded(user))
-        {   
-            return <div>Loading...</div>
-        }
+        
+        
+        
         //this.handleArtist(this.props);
-        const mapToComponent = data => {
-            return data.map((artist, i) => {
-              return (<SelectedArtist artist={user[0].artist+{i}} key={i}/>);
-            });
-          };
-        console.log("users", user);
+        // const mapToComponent = data => {
+        //     return data.map((artist, i) => {
+        //       return (<SelectedArtist artist={user[0].artist+{i}} key={i}/>);
+        //     });
+        //   };
+        //console.log("users", user);
             if(this.props.auth.uid)
             {
                 //console.log("auth", auth);
@@ -57,30 +49,24 @@ class MainPage extends Component {
                 //console.log(this.props.fundings);
                 //console.log("auth artist: ",this.props.users.artist1);
                 
-                
-                return(
-                    <>
-                    <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
-                    {/*<MainPageFundingList artist1={user[0].artist1}/>*/}
-                    <div className="selected artist1">
+                if(!isLoaded(user))
+                {
+                   
+                    return <div>Loading...</div>
                     
-                    
-                    <div>   
-                    <SelectedArtist artist={user[0].artist1} />
-                    </div>
-                    <div>
-                    <SelectedArtist artist={user[0].artist2} /> 
-                    </div>
-                      
-                    
-                    
-                    
-                    
-                    
-                    </div>
-                    
-                    </>
-                )
+                }
+                else{
+                    return(
+                                            
+                            <div>
+                            <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
+                            <SelectedArtist artist={user[0].artist1} />
+                            <SelectedArtist artist={user[0].artist2} />  
+                                                
+                            </div>
+                    )
+                }
+                   
             }
            else
            {
@@ -119,7 +105,7 @@ const mapStateToProps = (state) => {
         return[
             {
                 collection: 'users',
-                where: [['user_email', '==', user_email]]
+                where: [['user_email', '==', user_email]],
             }
             ]
         }         

@@ -4,7 +4,7 @@ let imgStyle = {
     maxHeight: '128px',
     maxWidth: '128px'
   }
-const FundingSummary = ({funding}) => {
+const CollectFundingSummary = ({funding}) => {
     return(
         <Card sm="6">
             <CardImg top width="100%" src={funding.url} style={imgStyle} alt="Card image cap" />
@@ -18,4 +18,4 @@ const FundingSummary = ({funding}) => {
     )
 }
 
-export default FundingSummary;
+export default CollectFundingSummary;
