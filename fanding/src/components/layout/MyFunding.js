@@ -26,24 +26,27 @@ class MyFunding extends Component {
     }
 
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.auth !== prevProps.auth){
-                this.props.dispatch(loadFundings(this.props.auth.uid))
-
-        }
-        }
-
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if(this.props.auth !== prevProps.auth){
+    //             this.props.dispatch(loadFundings(this.props.auth.uid))
+    //
+    //     }
+    //     }
+    componentDidMount() {
+        this.props.dispatch(loadFundings(this.props.auth.uid))
+    }
 
 
     render(){
         console.log("render");
 
         const {auth,user_data}=this.props;
-        var str ="";
         console.log(this.props);
 
         if(this.props.user_data.length!=0){
+            // console.log(user_data);
             return(
+
                 <FundingList fundings={user_data}/>
             )
         }

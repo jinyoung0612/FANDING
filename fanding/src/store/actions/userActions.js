@@ -6,16 +6,19 @@ export const loadFundings = (uid) => {
         // const user=firebase.auth().currentUser.uid;
         // console.log(user)
         // const user="LcveT8eRo9Z0dEwzJGQXl76KtPs1";
-        let rows= [];
-
+        let data= {};
+        let rows=[];
         firestore
             .collection("fundings")
             .where("user_uid","==",uid)
             .get()
             .then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
+                    let data= {};
 
-                    rows.push(doc.data())
+                    data=doc.data();
+                    data["id"]=doc.id;
+                    rows.push(data)
 
                 })
 
@@ -23,13 +26,75 @@ export const loadFundings = (uid) => {
             .then(()=> {
                 dispatch({type:"setMyFunding",payload: {
                         user_data:rows
-                    }})
+                }})
             });
 
 
     };
 };
 
+export const Participate_save = (newForm) => {
+
+    return (dispatch, getState) => {
+        // make async call to database
+        const firestore = firebase.firestore();
+        console.log(newForm);
+
+        firestore
+            .collection("participation")
+            .doc()
+            .set({
+                name:newForm.name,
+                price:newForm.price,
+                date:newForm.date,
+                time:newForm.time,
+                bank:newForm.bank,
+                accountNumber:newForm.accountNumber,
+                accountName:newForm.accountName,
+                email:newForm.email,
+                fid:newForm.fid,
+                uid:firebase.auth().currentUser.uid
+
+        }).then(() => {
+            dispatch({type: 'PARTICIPATE_SUCCESS' , newForm});
+        }).catch((err) => {
+            dispatch( {type: "PARTICIPATE_ERROR", err})
+        })
+
+    };
+
+};
+
+export const loadParticipants = (id) => {
+    return (dispatch, getState) => {
+        const firestore = firebase.firestore();
+        // const user=firebase.auth().currentUser.uid;
+        // console.log(user)
+        // const user="LcveT8eRo9Z0dEwzJGQXl76KtPs1";
+        let rows=[];
+        firestore
+            .collection("participation")
+            .where("fid","==",id)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    let data= {};
+                    data=doc.data();
+                    data["id"]=doc.id;
+                    rows.push(data)
+
+                })
+
+            })
+            .then(()=> {
+                dispatch({type:"LoadParticipants",payload: {
+                        user_data:rows
+                    }})
+            });
+
+
+    };
+};
 
 // import { createAction, handleActions } from 'redux-actions';
 // import firebase from "firebase/app";

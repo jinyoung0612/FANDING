@@ -45,10 +45,13 @@ export const signUp = (newUser) => {
             zipcode: "",
             phone_number: "",
             email_verification: firebase.auth().currentUser.emailVerified,
-            artist_id: newUser.artist,
+            artist1: newUser.artist1,
+            artist2: newUser.artist2,
+            artist3: newUser.artist3,
           })
           .then(() => {
-            dispatch({ type: "SIGNUP_SUCCESS" });
+              firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+              dispatch({ type: "SIGNUP_SUCCESS" });
           })
           .catch((err) => {
             dispatch({ type: "SIGNUP_ERROR", err });

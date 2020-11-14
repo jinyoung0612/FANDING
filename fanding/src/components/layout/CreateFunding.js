@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 
 //toast-ui
 import { Editor } from '@toast-ui/react-editor';
+import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -46,9 +47,27 @@ class CreateFunding extends Component{
             shippingFee:'',
             shippingDetail:'',
             redirectToReferrer: false,
-            content: ''
+            content: '',
+            options: [
+                {name:'없음', id:0},
+                {name:'BTS', id:1},
+                {name:'BLACKPINK', id:2},
+                {name:'APINK', id:3},
+                {name:'TXT', id:4},
+                {name:'DAY6', id:5},
+                {name:'TWICE', id:6},
+                {name:'Stray Kids', id:7},
+                {name:'B1A4', id:8},
+                {name:"NU'EST", id:9},
+                {name:'IDLE', id:10},
+                {name:'기타', id:11},
+            ]
+            
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        
+        
+        
     }
 
     handleImageChange = e => {
@@ -58,13 +77,22 @@ class CreateFunding extends Component{
         }
 
     }
+    
 
     handleChange = e => {
         this.setState({
             [e.target.id]: e.target.value,
         });
+        console.log(e.target.value);
     };
 
+    handleRadioChange = e => {
+        this.setState({
+            fundingType: e.target.value
+        });
+        console.log(this.state.fundingType);
+    }
+    
     handleChangeEditor = e =>
     {
         const content = this.editorRef.current.getInstance().getHtml();
@@ -123,37 +151,55 @@ class CreateFunding extends Component{
 
     editorRef = React.createRef();
     
+    
 
+        
 
     render()
     {
 
+       
+        
         if(this.state.redirectToReferrer===true){
             alert("펀딩이 생성되었습니다.");
            return  <Redirect to='/' />
         }
         return (
             <>
+            {
+                
+            }
             <Form>
                 <FormGroup>
                 <Label for="artistSelect">아티스트</Label>
-                <CustomInput type="select" id="artistSelect" name="customSelect" onChange={this.handleChange}>
-                    <option value="">Select</option>
-                    <option>BTS</option>
-                    <option>BLACKPINK</option>
-                    <option>TWICE</option>
-                    <option>ITZY</option>
-                    <option>GOT7</option>
-                    <option>기타</option>
+                <CustomInput type="select" id="artistSelect" name="customSelect" onChange={this.handleChange} multiple>
+                    {
+                        this.state.options.map((e,key) => {
+                            return <option value={e.value}>{e.name}</option>;
+                        })
+                        
+                    }
+                   
+                    
                 </CustomInput>
                 </FormGroup>
 
                 <FormGroup>
                     <Label for="Radio">펀딩 유형 선택</Label>
+                    
                     <div>
-                    <CustomInput type="radio" id="fundingType" name="customRadio" label="리워드형 펀딩"  onChange={this.handleChange} inline/>
-                    <CustomInput type="radio" id="fundingType" name="customRadio" label="모금형 펀딩"  onChange={this.handleChange} inline/>
+                    <CustomInput type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"  
+                    checked={this.state.fundingType === 'reward'} 
+                    onChange={this.handleRadioChange}
+                    inline/>
+                    <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"   
+                    checked={this.state.fundingType === 'collect'} 
+                    onChange={this.handleRadioChange}
+                    inline/>
                     </div>
+                    
+                    
+                    
                 </FormGroup>
                 
                 <FormGroup>
@@ -247,6 +293,21 @@ class CreateFunding extends Component{
                             </div>
                         </div>  
 
+                    {
+                        /**
+                         * <div>
+                            <Viewer
+                            //ref={this.viewerRef}
+                            initialEditType="wysiwyg"
+                            viewer = { true }
+                            height='600px'
+                            initialValue={this.state.content}
+                            />
+                            </div>
+                         * 
+                         */
+                    }
+                        
                     </FormGroup>
                 </Form>
 
@@ -299,7 +360,6 @@ class CreateFunding extends Component{
                 </Form>
                 {/*배송방법추가 버튼 만들기*/}
 
-
                 <Form onSubmit={this.handleSubmit}>
                     {/*<Link to='/'>*/}
 
@@ -323,11 +383,11 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        firebase_funding_save: (creds) => dispatch(firebase_funding_save(creds))
+        firebase_funding_save: (funding) => dispatch(firebase_funding_save(funding)) //creds -> funding
     };
 };
 
 export default connect(
-    mapStateToProps,
+    mapStateToProps, //null로 고치면 어떻게 되나?
     mapDispatchToProps,
 )(CreateFunding);

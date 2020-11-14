@@ -4,9 +4,10 @@ import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { connect } from "react-redux";
 
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button } from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button, Media } from "reactstrap";
 
 import { BsPeopleCircle, BsBell } from "react-icons/bs";
+
 
 const NavbarTest = (props) => {
   //const [isOpen, setIsOpen] = useState(false);
@@ -25,10 +26,10 @@ const NavbarTest = (props) => {
         <NavbarBrand href="/">FANDING</NavbarBrand>
         <Nav className="mr-auto" navbar>
           <NavItem>
-            <NavLink href="#">리워드 펀딩</NavLink>
+            <NavLink href="/reward_funding">리워드 펀딩</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="#">모금 펀딩</NavLink>
+            <NavLink href="/collect_funding">모금 펀딩</NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="/find_company">업체 찾기</NavLink>
@@ -41,20 +42,17 @@ const NavbarTest = (props) => {
         <Nav className="ml-auto" navbar>
           {links}
 
-          {/*
-          <NavItem>
-            <NavLink href="#"><BsBell size={24}/></NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/myaccount"><BsPeopleCircle size={24}/></NavLink>
-          </NavItem>
-
-          <NavItem>
-            <NavLink href="/create_funding"><Button className="mt-4 ml-2" outline color="info">펀딩 생성</Button></NavLink>
-          </NavItem>
-          */}
+          
         </Nav>
       </Navbar>
+      
+      {/*
+        <img src="fanding_main_image.png" class="img-fluid" alt="Responsive image" />
+        <img src="fanding_main_image.png" alt="fanding_main" width="500" height="600" />
+      */
+      }
+      
+      
     </div>
   );
 };
