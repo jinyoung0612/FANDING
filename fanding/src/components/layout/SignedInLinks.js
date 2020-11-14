@@ -36,6 +36,10 @@ const SignedInLinks = (props) => {
             <NavLink href="/create_funding"><Button outline color="info">펀딩 생성</Button></NavLink>
           </NavItem>
 
+          <NavItem>
+            <NavLink href="/chongdae"><Button outline color="info">총대 인증</Button></NavLink>
+          </NavItem>
+
           <NavLink href='/' onClick={props.signOut} >로그아웃</NavLink>
           </>
       
