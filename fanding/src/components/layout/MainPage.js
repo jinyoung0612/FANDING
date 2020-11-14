@@ -20,13 +20,32 @@ class MainPage extends Component {
         //const { fundings } = this.props;
         const { auth, user} = this.props;
         console.log("auth", auth);
-        // console.log("users", user);
+        console.log("users", user);
         // const artist1 = user.artist1;
         //console.log(artist1);
         //this.props.auth.isLoaded
         //if (this.props.auth.isLoaded) //logined user -> show interested artists' funding
-        if(!isLoaded(auth)){
+        if(!isLoaded(auth) || !isLoaded(user)) {
             return <div>Loading...</div>
+        }
+        else{
+            if(!user[0].artistSelect){
+                console.log("artistSelect 없음")
+                return(
+                    <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
+                )
+            }
+            else{
+                console.log("artistSelect 있음")
+                console.log("ArtistSelect", user.artistSelect);
+
+                return(
+                    <div>
+                        <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
+                        <SelectedArtist artist={user[0].artistSelect}></SelectedArtist>
+                    </div>
+                )
+            }
         }
 
         //this.handleArtist(this.props);
@@ -35,44 +54,45 @@ class MainPage extends Component {
         //       return (<SelectedArtist artist={user[0].artist+{i}} key={i}/>);
         //     });
         //   };
-        //console.log("users", user);
-
-            if(this.props.auth.uid)
-            {
-                //console.log("auth", auth);
-                console.log("logined user");
+        // console.log("users", user[0].artistSelect)
+        //     if(this.props.auth.uid)
+        //     {
+        //         //console.log("auth", auth);
+        //         console.log("ArtistSelect", user.artistSelect);
+        //
+        //         console.log("logined user");
                 //const { user_data } = this.props;
                 //console.log(this.props);
                 //console.log(this.props.fundings);
                 //console.log("auth artist: ",this.props.users.artist1);
-                
-                if(!isLoaded(user))
-                {
-                   
-                    return <div>Loading...</div>
-                    
-                }
-                else{
-
-                    return(
-
-                        <div>
-                            <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
-                            <SelectedArtist artist={user[0].artistSelect}></SelectedArtist>
-                        </div>
-                    )
-                }
-                   
-            }
-           else
-           {
-                console.log("not loginned");
-                console.log(this.props);
-                return (
-                    <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
-                    //default fundings
-                )
-            }
+           //
+           //      if(!isLoaded(user))
+           //      {
+           //
+           //          return <div>Loading...</div>
+           //
+           //      }
+           //      else{
+           //
+           //          return(
+           //
+           //              <div>
+           //                  <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
+           //                  {/*<SelectedArtist artist={user[0].artistSelect}></SelectedArtist>*/}
+           //              </div>
+           //          )
+           //      }
+           //
+           //  }
+           // else
+           // {
+           //      console.log("not loginned");
+           //      console.log(this.props);
+           //      return (
+           //          <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
+           //          //default fundings
+           //      )
+           //  }
        
     }
 }
