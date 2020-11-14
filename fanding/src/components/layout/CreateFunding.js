@@ -171,10 +171,7 @@ class CreateFunding extends Component{
     };
 
     editorRef = React.createRef();
-    
-    
 
-        
 
     render()
     {
@@ -191,20 +188,21 @@ class CreateFunding extends Component{
                 
             }
             <Form>
+                {/*<FormGroup>*/}
+                {/*<Label for="artistSelect">아티스트</Label>*/}
+                {/*<CustomInput type="select" id="artistSelect" name="customSelect" onChange={this.handleChange} multiple>*/}
+                {/*    {*/}
+                {/*        this.state.options.map((e,key) => {*/}
+                {/*            return <option value={e.value}>{e.name}</option>;*/}
+                {/*        })*/}
+                {/*        */}
+                {/*    }*/}
+                {/*    */}
+                {/*</CustomInput>*/}
+                {/*</FormGroup>*/}
                 <FormGroup>
-                <Label for="artistSelect">아티스트</Label>
-                <CustomInput type="select" id="artistSelect" name="customSelect" onChange={this.handleChange} multiple>
-                    {
-                        this.state.options.map((e,key) => {
-                            return <option value={e.value}>{e.name}</option>;
-                        })
-                        
-                    }
-                    
-                </CustomInput>
-                </FormGroup>
-                <FormGroup>
-                    <Select id="artistSelect" components={this.animatedComponents} options={this.options} isMulti onChange={this.handleChangeSelect}/>
+                    <Label>아티스트</Label>
+                    <Select id="artistSelect" components={this.animatedComponents} options={this.options} menuPortalTarget={document.body} style={{menuPortal:base=>({...base,zIndex:9999})}} onChange={this.handleChangeSelect}/>
                 </FormGroup>
 
 

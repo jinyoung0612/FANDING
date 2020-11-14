@@ -67,12 +67,7 @@ const authReducer = (state = initState, action) => {
     case "loadMainPage":
       return{
         ...state,
-        user_data:action.payload.user_data
-      }
-    case "loadMainPage2":
-      return{
-        ...state,
-        user_data:{...action.payload.user_data2}
+        user_data:{...action.payload.user_data}
       }
 
     default:

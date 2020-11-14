@@ -167,7 +167,7 @@ class SignUp extends Component {
           {/*</FormGroup>*/}
             <FormGroup>
               <Label>관심 아티스트</Label>
-              <Select id="artistSelect" components={this.animatedComponents} options={this.options} isMulti onChange={this.handleChangeSelect}/>
+              <Select id="artistSelect" components={this.animatedComponents} options={this.options} menuPortalTarget={document.body} style={{menuPortal:base=>({...base,zIndex:9999})}} isMulti onChange={this.handleChangeSelect}/>
             </FormGroup>
 
             </Form>

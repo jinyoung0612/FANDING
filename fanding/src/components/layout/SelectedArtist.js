@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import {firebaseConnect, isLoaded, isEmpty} from "react-redux-firebase";
 import {connect} from "react-redux";
-import SelectedArtistFundingList from './SelectedArtistFundingList';
-import {loadMain, loadMain2} from "../../store/actions/searchActions";
+import {loadMain} from "../../store/actions/searchActions";
 import FundingContents from "./FundingContents";
 
 
@@ -33,13 +31,10 @@ class SelectedArtist extends Component {
     {
         // const { auth, user, fundings } = this.props;
 
-        console.log(this.props.user_data);
-        console.log(typeof(this.props.user_data));
-
-
+        // console.log(this.props.user_data);
 
         if(this.props.user_data.length!==0){
-            const fundings=Object.values(this.props.user_data)
+            const fundings=Object.values(this.props.user_data);
               return(
                 <div>
                     {
@@ -55,11 +50,10 @@ class SelectedArtist extends Component {
             )
         }
         else{
-            console.log("없음")
+            console.log("Loading")
             return(
                 <div>
-                    {/*<p>{this.props.artist} 관련 펀딩</p>*/}
-                    {/* <SelectedArtistDetail artist={this.state.selectedArtist}></SelectedArtistDetail>*/}
+                    Loading...
                 </div>
 
             )
