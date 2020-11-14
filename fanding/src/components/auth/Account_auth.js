@@ -2,34 +2,16 @@ import React, {Component} from 'react';
 import { Button, Form, Input, Label } from 'reactstrap';
 import { Link } from "react-router-dom";
 import {connect,useSelector} from 'react-redux';
-import {useFirestoreConnect} from 'react-redux-firebase';
+import {firestoreConnect, useFirestoreConnect} from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import ReactHtmlParser from 'react-html-parser';
 import { storage } from 'firebase';
 import axios from 'axios';
 import {verifyChongdae} from '../../store/actions/chongdaeAction';
 
-var accessTokenResult = {};
-
-const ChongdaeInfo = (props) => {
-    const doc_id = props.match.params.id;
-    console.log(doc_id)
-    useFirestoreConnect([{
-        collection: 'chongdaes',
-        doc: doc_id
-    }]);
-
-    const chongdae = useSelector(({firestore:{data}})=>data.chongdaes && data.chongdaes[doc_id]);
-    console(chongdae);
-
-    const user = firebase.auth().currentUser;
-    if(chongdae && user){
-
-    }
-}
-
 class Account_auth extends Component{
 
+  
     constructor(props) {
         super(props);
         
@@ -58,11 +40,7 @@ class Account_auth extends Component{
     
         console.log(this.state.access_token);
         this.props.verifyChongdae(this.state)
-        /*
-        if(this.state.access_token!=null){
-          var msg = "이미 본인인증이 완료되었습니다."
-          alert(msg);
-        }*/
+        alert("본인인증이 완료되었습니다.")
       };
 
       
@@ -92,8 +70,8 @@ class Account_auth extends Component{
 
 const mapStateToProps = (state) => {
   return{
-      authError: state.auth.authError,
-      auth: state.firebase.auth
+    authError: state.auth.authError,
+    auth: state.firebase.auth
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -104,7 +82,7 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Account_auth);
 
 async function token(currentComponent){
@@ -139,17 +117,18 @@ async function token(currentComponent){
         refresh_token: refreshtoken,
         user_seq_no: userseqno
       })
+        
+      alert("본인인증이 완료되었습니다.");
+      window.location.href = "http://localhost:3000/";
      }
     })
     .catch(function(error){
       console.log(error);
     })
-    
-    //window.location.href = "http://localhost:3000/";
   }
   else{
-    alert("본인인증에 실패했습니다. 다시 인증하세요.")
-    //window.location.href = "http://localhost:3000/chongdae";
+    alert("본인인증에 실패했습니다. 다시 인증하세요.");
+    window.location.href = "http://localhost:3000/chongdae";
   }
 }
 

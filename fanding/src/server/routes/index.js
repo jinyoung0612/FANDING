@@ -32,15 +32,15 @@ router.post('/api/token', (req,res) =>{
     });
 })
 
-router.get('/api/account/list', (req,res) =>{
+router.post('/api/account/list', (req,res) =>{
     console.log('/api/account/list');
     console.log(req.body.access_token);
     console.log(req.body.user_seq_no);
     var option2 = {
         method: "GET",
         url: "https://testapi.openbanking.or.kr/v2.0/account/list",
-        header: {
-            'Authorization':'Bearer' + req.body.access_token
+        headers: {
+            'Authorization':'Bearer ' + req.body.access_token
         },
         form: {
             user_seq_no: req.body.user_seq_no,
@@ -59,7 +59,7 @@ router.get('/api/account/list', (req,res) =>{
        // var account_info = [];
        // account_info = [fintechNumber, realBankName, bankHolderName];
        // console.log(account_info);
-        return result2;
+       res.send(result2);
     })
 })
 
