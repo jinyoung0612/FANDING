@@ -96,6 +96,10 @@ console.log(props)
         </div>
     );
 
+  }else{
+    return(
+      <div>Loading...</div>
+    )
   }
 }
 

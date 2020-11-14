@@ -60,7 +60,7 @@ class Account_auth extends Component{
               <Label>User Number</Label>
               <Input type="text" id="user_seq_no" 
               placeholder={this.state.user_seq_no} onChange={this.handleChange} />
-              <Button id='verifyButton' >인증 완료</Button>
+              <Button id='verifyButton' onClick={finishVerify} >인증 완료</Button>
             </Form>
             
           </div>
@@ -117,9 +117,6 @@ async function token(currentComponent){
         refresh_token: refreshtoken,
         user_seq_no: userseqno
       })
-        
-      alert("본인인증이 완료되었습니다.");
-      window.location.href = "http://localhost:3000/";
      }
     })
     .catch(function(error){
@@ -138,4 +135,9 @@ function getQueryStringObjectToken(){
   var p = a[0].split('=',2);
   //console.log(p[1]);
   return p[1];
+}
+
+function finishVerify(){
+  alert("본인인증이 완료되었습니다.");
+  window.location.href = "http://localhost:3000/";
 }
