@@ -81,7 +81,7 @@ console.log(props)
                   <Card body>
                     <CardTitle>본인 인증</CardTitle>
                     <CardText>펀딩을 생성하려면 본인 인증이 필요합니다.</CardText>
-                    <Button color="warning" onClick={Identify_auth}>본인 인증</Button>
+                    <Button color="warning">본인 인증</Button>
                   </Card>
                 </Col>
                 <Col sm="6">
@@ -102,8 +102,8 @@ console.log(props)
           </TabContent>
         </div>
     );
+  }
 }
-
 
 const mapStateToProps = (state) => {
   return{
