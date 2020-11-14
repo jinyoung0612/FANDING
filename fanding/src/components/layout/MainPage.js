@@ -9,20 +9,18 @@ import {firebaseConnect, isLoaded, isEmpty} from "react-redux-firebase";
 import {connect} from "react-redux";
 //import { MainPageFundingList } from "./MainPageFundingList";
 import SelectedArtist from "./SelectedArtist";
-
+import {loadMain} from "../../store/actions/searchActions";
 
 
 const artistsMap = [1, 2, 3];
 class MainPage extends Component {
 
-    
-    
+
     render(){
         //const { fundings } = this.props;
-        const { auth, user, fundings} = this.props;
-        //const { users } = this.props;
+        const { auth, user} = this.props;
         console.log("auth", auth);
-        //console.log("users", user);
+        // console.log("users", user);
         // const artist1 = user.artist1;
         //console.log(artist1);
         //this.props.auth.isLoaded
@@ -30,9 +28,7 @@ class MainPage extends Component {
         if(!isLoaded(auth)){
             return <div>Loading...</div>
         }
-        
-        
-        
+
         //this.handleArtist(this.props);
         // const mapToComponent = data => {
         //     return data.map((artist, i) => {
@@ -40,6 +36,7 @@ class MainPage extends Component {
         //     });
         //   };
         //console.log("users", user);
+
             if(this.props.auth.uid)
             {
                 //console.log("auth", auth);
@@ -56,14 +53,13 @@ class MainPage extends Component {
                     
                 }
                 else{
+
                     return(
-                                            
-                            <div>
+
+                        <div>
                             <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
-                            <SelectedArtist artist={user[0].artist1} />
-                            <SelectedArtist artist={user[0].artist2} />  
-                                                
-                            </div>
+                            <SelectedArtist artist={user[0].artistSelect}></SelectedArtist>
+                        </div>
                     )
                 }
                    
@@ -77,10 +73,6 @@ class MainPage extends Component {
                     //default fundings
                 )
             }
-        
-        
-        
-
        
     }
 }
@@ -89,10 +81,10 @@ const mapStateToProps = (state) => {
     return {
        
         uid: state.firebase.auth.uid,
-        fundings: state.firestore.ordered.fundings,
         auth: state.firebase.auth,
         authError: state.auth.authError,
         user: state.firestore.ordered.users,
+
     }
 }
 
@@ -101,14 +93,14 @@ const mapStateToProps = (state) => {
     firestoreConnect(props=> {
         const user_email = props.auth.email == null ? "none": props.auth.email;
         console.log('user email:', user_email);
-            
+
         return[
             {
                 collection: 'users',
                 where: [['user_email', '==', user_email]],
             }
             ]
-        }         
+        }
     )
 )(MainPage);
 

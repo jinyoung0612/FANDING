@@ -48,6 +48,7 @@ export const signUp = (newUser) => {
             artist1: newUser.artist1,
             artist2: newUser.artist2,
             artist3: newUser.artist3,
+              artistSelect:newUser.artistSelect
           })
           .then(() => {
               firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)

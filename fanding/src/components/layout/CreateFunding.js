@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import {firebase_funding_save} from '../../store/actions/formActions';
 import {storage} from "../../config/fbConfig";
 import { Redirect } from 'react-router-dom';
-
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated'
 //toast-ui
 import { Editor } from '@toast-ui/react-editor';
 import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
@@ -19,6 +20,7 @@ import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highl
 //chart plugin
 import 'tui-chart/dist/tui-chart.css';
 import chart from '@toast-ui/editor-plugin-chart';
+
 
 class CreateFunding extends Component{
 
@@ -69,6 +71,21 @@ class CreateFunding extends Component{
         
         
     }
+    options=[
+        {value:'BTS', label:"BTS"},
+        {value:'BLACKPINK', label:"BLACKPINK"},
+        {value: "APINK", label:"APINK"},
+        {value: "TXT", label:"TXT"},
+        {value: "DAY6", label:"DAY6"},
+        {value: "TWICE", label:"TWICE"},
+        {value: "Stray Kids", label:"Stray Kids"},
+        {value: "B1A4", label:"B1A4"},
+        {value: "NU'EST", label:"NU'EST"},
+        {value: "IDLE", label:"IDLE"},
+        {value: "기타", label:"기타"},
+    ];
+
+    animatedComponents =makeAnimated();
 
     handleImageChange = e => {
 
@@ -85,7 +102,11 @@ class CreateFunding extends Component{
         });
         console.log(e.target.value);
     };
-
+    handleChangeSelect = e => {
+        this.setState({
+            artistSelect:e
+        });
+    };
     handleRadioChange = e => {
         this.setState({
             fundingType: e.target.value
@@ -179,16 +200,18 @@ class CreateFunding extends Component{
                         })
                         
                     }
-                   
                     
                 </CustomInput>
                 </FormGroup>
+                <FormGroup>
+                    <Select id="artistSelect" components={this.animatedComponents} options={this.options} isMulti onChange={this.handleChangeSelect}/>
+                </FormGroup>
+
 
                 <FormGroup>
                     <Label for="Radio">펀딩 유형 선택</Label>
-                    
                     <div>
-                    <CustomInput type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"  
+                    <CustomInput type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"
                     checked={this.state.fundingType === 'reward'} 
                     onChange={this.handleRadioChange}
                     inline/>
@@ -369,6 +392,7 @@ class CreateFunding extends Component{
                 </Form>
 
             </>
+
         )
 
     }
