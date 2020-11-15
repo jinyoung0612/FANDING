@@ -94,7 +94,8 @@ export const signUpCom = (newCompany) => {
             email_verification: firebase.auth().currentUser.emailVerified,
           })
           .then(() => {
-            dispatch({ type: "SIGNUP_SUCCESS" });
+              firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+              dispatch({ type: "SIGNUP_SUCCESS" });
           })
           .catch((err) => {
             dispatch({ type: "SIGNUP_ERROR", err });
@@ -104,7 +105,8 @@ export const signUpCom = (newCompany) => {
             companies
               .sendEmailVerification()
               .then(function () {
-                dispatch({ type: "EMAIL_SPENT_SUCCESS" });
+                  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                  dispatch({ type: "EMAIL_SPENT_SUCCESS" });
               })
               .catch((err) => {
                 dispatch({ type: "NOT_EMAIL_SPENT", err });

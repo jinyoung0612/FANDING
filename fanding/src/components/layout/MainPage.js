@@ -10,7 +10,7 @@ import {connect} from "react-redux";
 //import { MainPageFundingList } from "./MainPageFundingList";
 import SelectedArtist from "./SelectedArtist";
 import {loadMain} from "../../store/actions/searchActions";
-
+import FundingContents from "./FundingContents";
 
 const artistsMap = [1, 2, 3];
 class MainPage extends Component {
@@ -18,35 +18,63 @@ class MainPage extends Component {
 
     render(){
         //const { fundings } = this.props;
-        const { auth, user} = this.props;
+        const { auth, user,fundings} = this.props;
         console.log("auth", auth);
         console.log("users", user);
+        // console.log("funding", fundings);
+
         // const artist1 = user.artist1;
         //console.log(artist1);
         //this.props.auth.isLoaded
         //if (this.props.auth.isLoaded) //logined user -> show interested artists' funding
         if(!isLoaded(auth) || !isLoaded(user)) {
-            return <div>Loading...</div>
+            return (
+
+                <div>
+                    {/*<Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>*/}
+                    Loading...
+                </div>
+            )
         }
         else{
             if(!user[0].artistSelect){
-                console.log("artistSelect 없음")
+                console.log("artistSelect 없음");
+                if(isLoaded(fundings)){
+                    return(
+                        <div>
+                            {
+                                fundings.map((funding,i)=>{
+                                    return(
+                                        <FundingContents funding={funding} key={i}></FundingContents>
+                                    )
+                                })
+                                
+                            }
+                        </div>
+                    )
+
+                }
+
                 return(
-                    <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
+                    // <Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>
+                    <div>
+                    </div>
                 )
             }
             else{
-                console.log("artistSelect 있음")
-                console.log("ArtistSelect", user.artistSelect);
+                console.log("artistSelect 있음");
+                console.log("ArtistSelect", user[0].artistSelect);
 
                 return(
                     <div>
-                        <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
+                        {/*<Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>*/}
                         <SelectedArtist artist={user[0].artistSelect}></SelectedArtist>
                     </div>
                 )
             }
         }
+
+
 
         //this.handleArtist(this.props);
         // const mapToComponent = data => {
@@ -93,17 +121,19 @@ class MainPage extends Component {
            //          //default fundings
            //      )
            //  }
-       
+
     }
 }
 const mapStateToProps = (state) => {
      console.log("mapStateToProps", state);
     return {
-       
+
         uid: state.firebase.auth.uid,
         auth: state.firebase.auth,
         authError: state.auth.authError,
         user: state.firestore.ordered.users,
+        fundings: state.firestore.ordered.fundings,
+
 
     }
 }
@@ -118,6 +148,9 @@ const mapStateToProps = (state) => {
             {
                 collection: 'users',
                 where: [['user_email', '==', user_email]],
+            },
+            {
+                collection:'fundings'
             }
             ]
         }

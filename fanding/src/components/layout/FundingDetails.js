@@ -18,7 +18,7 @@ const FundingDetails = (props)=>{
 
     const doc_id=props.match.params.id;
     // console.log(doc_id)
-    useFirestoreConnect([{
+       useFirestoreConnect([{
         collection: 'fundings',
         doc: doc_id
     }]);
