@@ -48,7 +48,7 @@ class MainPage extends Component {
                                         <FundingContents funding={funding} key={i}></FundingContents>
                                     )
                                 })
-                                
+
                             }
                         </div>
                     )

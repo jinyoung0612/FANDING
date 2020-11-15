@@ -31,7 +31,7 @@ import MainPageDefault from "./components/layout/MainPageDefault";
 
 class App extends Component {
   render() {
-    console.log("current user:",firebase.auth().currentUser);
+    // console.log("current user:",firebase.auth().currentUser);
     return (
       <BrowserRouter>
         <div className="App">

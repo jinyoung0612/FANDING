@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase'
+import {firestoreConnect, isLoaded} from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container, Row, Col, Button, Progress } from 'reactstrap';
@@ -42,19 +42,20 @@ class RecruitFormDetail extends Component{
 
   
   render(){
-    //console.log(this.state);
+
+    const {recruitCompany}=this.props;
     
-    
-    if(this.state.recruitCompany)
+    if(isLoaded(recruitCompany) && recruitCompany)
     {
       return(
         <>
         <Container>
           
-         <div className="text-center"><h2><b>{this.state.recruitCompany.itemTitle}</b></h2></div> 
+         <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
         <Row xs="2">
-          <Col><CardImg top width="10%" src={this.state.recruitCompany.url} style={imgStyle} alt="Card image cap" /></Col>
-          <Col>
+          <Col><CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" /></Col>
+
+            <Col>
             <div>
               
               
@@ -66,7 +67,7 @@ class RecruitFormDetail extends Component{
         <div className="mt-auto">
              <Viewer
               height="400px"
-              initialValue={this.state.recruitCompany.content}
+              initialValue={recruitCompany.content}
               ref={this.viewerRef}
               previewStyle="vertical"
               initialEditType="wysiwyg"
@@ -91,6 +92,7 @@ class RecruitFormDetail extends Component{
     }
     else
     {
+        console.log(this.state)
       return(
         <div>
               <p>Loading form...</p>
