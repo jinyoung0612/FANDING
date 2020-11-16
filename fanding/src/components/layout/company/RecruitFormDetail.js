@@ -3,14 +3,29 @@ import { connect } from 'react-redux'
 import {firestoreConnect, isLoaded} from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
-import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container, Row, Col, Button, Progress } from 'reactstrap';
+import {
+    Card,
+    CardImg,
+    CardTitle,
+    CardSubtitle,
+    CardText,
+    CardBody,
+    Container,
+    Row,
+    Col,
+    Button,
+    Progress,
+    Form, FormGroup, Label, Input
+} from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 //import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Editor, Viewer} from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { BsHeart, BsChatSquareDots } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
-import './company.css';
+import "./company.css"
 
 //import moment from 'moment';
 let imgStyle = {
@@ -24,23 +39,47 @@ class RecruitFormDetail extends Component{
     super(props);
     this.state = {
       recruitCompany: this.props.recruitCompany,
-
-    }
-    /*
-    this.editor = Editor.factory({
-          el:document.querySelector('#editor'),
-          viewer: true,
-          height: '500px',
-          initialValue: this.state.props.content,
-          ref: this.viewerRef
-        })
-        */
+        comments:"",
+        render:"",
+        modal: false
+    };
+      this.toggle = this.toggle.bind(this);
   }
+
+    toggle() {
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
 
 
   viewerRef = React.createRef();
 
-  
+
+  handleCommentChange=(e)=>{
+      this.setState({
+          [e.target.id]: e.target.value,
+      });
+      console.log(e.target.value);
+  }
+
+    handleClick=(Comp,e)=>{
+      this.setState({render:Comp});
+    }
+
+    handleChange=(e)=>{
+
+    }
+
+    handleSubmit=(e)=>{
+
+    }
+    renderComments(){
+      switch(this.state.render) {
+          case 'comments': return <Comments comments={this.state.comments}/>
+
+      }
+    }
   render(){
 
     const {recruitCompany}=this.props;
@@ -53,7 +92,12 @@ class RecruitFormDetail extends Component{
           
          <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
         <Row xs="2">
-          <Col><CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" /></Col>
+          <Col>
+              <CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+              <CardText>예상 가격대 : 개당 {recruitCompany.itemPrice}원</CardText>
+              <CardText>예상 개수 : {recruitCompany.itemRemain}</CardText>
+          </Col>
+
 
             <Col>
             <div>
@@ -73,17 +117,106 @@ class RecruitFormDetail extends Component{
               initialEditType="wysiwyg"
               />
         </div>
+            <div>
+                <div>
+                    <Button color="danger" onClick={this.toggle}>지원하기</Button>
+                    <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                        <ModalHeader toggle={this.toggle} charCode="x">지원서</ModalHeader>
+                        <ModalBody>
+                            <div className="companyRecruit">
+                                <h3>{recruitCompany.itemTitle}</h3>
 
-        <div className='Reply_div'>
+                                <Form onSubmit={this.handleSubmit}>
+                                    <FormGroup>
+                                        <Label for="PaymentInfo">입금정보입력</Label>
+                                        <Input type="name" name="name" id="name"
+                                               placeholder="입금자명"
+                                               onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Input type="price" name="price" id="price"
+                                               placeholder="입금 금액(숫자만 입력)"
+                                               onChange={this.handleChange}
+
+                                        />
+                                    </FormGroup>
+                                    <FormGroup className="ml-auto">
+                                        <Input
+                                            type="date"
+                                            name="date"
+                                            id="paymentDate"
+                                            placeholder="입금 날짜"
+                                            onChange={this.handleChange}
+
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Input
+                                            type="time"
+                                            name="time"
+                                            id="paymentTime"
+                                            placeholder="00:00"
+                                            onChange={this.handleChange}
+
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="Refund">환불계좌정보입력</Label>
+                                        <Input type="bank" name="bank" id="bank"
+                                               placeholder="은행명"
+                                               onChange={this.handleChange}
+
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Input type="accountNumber" name="accountNumber" id="accountNumber"
+                                               placeholder="계좌번호"
+                                               onChange={this.handleChange}
+
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Input type="accountName" name="accountName" id="accountName"
+                                               placeholder="예금주명"
+                                               onChange={this.handleChange}
+
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>이메일 주소</Label>
+                                        <Input type="email" name="email" id="email"
+                                               placeholder="이메"
+                                               onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Form>
+                            </div>
+
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="primary" onClick={this.toggle}>제출하기</Button>{' '}
+                            <Button color="secondary" onClick={this.toggle}>닫기</Button>
+                        </ModalFooter>
+                    </Modal>
+                </div>
+            </div>
+
+            <div className='Reply_div'>
           <h4> 댓글 </h4>
           <div className='Reply_write'>
-            <textarea rows='3' placeholder='100자 이내의 글을 입력해주세요.'
-              maxLength='100' name='write_reply'>
+            <textarea id="comments" rows='3' placeholder='100자 이내의 글을 입력해주세요.'
+              maxLength='100' name='write_reply' onChange={this.handleCommentChange}>
               </textarea>
-              <input type='button' value='등록' id='reply_submit_button'/>
+              <input type='button' value='등록' id='reply_submit_button' onClick={this.handleClick.bind(this, 'comments')}/>
           </div>
 
         </div>
+
+            <div>
+                {/*{this.state.comments}*/}
+                {this.renderComments()}
+            </div>
         </Container>
 
         
@@ -101,6 +234,19 @@ class RecruitFormDetail extends Component{
     }
   }
    
+}
+
+class Comments extends Component{
+    constructor() {
+        super();
+        this.state={
+            comments:""
+        }
+    }
+
+    render() {
+        return <div>{this.props.comments}</div>
+    }
 }
 /*
 const FundingDetail = (props) => {

@@ -45,10 +45,11 @@ export const signUp = (newUser) => {
             zipcode: "",
             phone_number: "",
             email_verification: firebase.auth().currentUser.emailVerified,
-            artist1: newUser.artist1,
-            artist2: newUser.artist2,
-            artist3: newUser.artist3,
-              artistSelect:newUser.artistSelect
+            // artist1: newUser.artist1,
+            // artist2: newUser.artist2,
+            // artist3: newUser.artist3,
+              artistSelect:newUser.artistSelect,
+              type:"user"
           })
           .then(() => {
               firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
@@ -92,6 +93,7 @@ export const signUpCom = (newCompany) => {
             addr2: "",
             email: newCompany.email,
             email_verification: firebase.auth().currentUser.emailVerified,
+              type:"company"
           })
           .then(() => {
               firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
@@ -164,6 +166,8 @@ export const twitterSignIn = (credentials) => {
                 phone_number: "",
                 email_verification: firebase.auth().currentUser.emailVerified,
                 artist_id: "",
+                  type:"user"
+
               });
           } else {
             console.log("already exists");
