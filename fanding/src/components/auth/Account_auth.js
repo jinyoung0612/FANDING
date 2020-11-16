@@ -40,10 +40,7 @@ class Account_auth extends Component{
     
         console.log(this.state.access_token);
         this.props.verifyChongdae(this.state);
-        if(this.state.access_token!='error' && this.state.access_token!=null){
-          alert("본인인증이 완료되었습니다.");
-          window.location.href = "http://localhost:3000/";
-        }
+        alert("본인인증이 완료되었습니다.");
       };
 
       

@@ -5,7 +5,6 @@ import { firebase } from 'firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
-//import { connect } from '../../server/routes';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 
 class Chongdae_auth extends Component{
@@ -29,31 +28,33 @@ class Chongdae_auth extends Component{
           if(chongdaes[0]!=null){
             console.log('chongdae_access_token:',chongdaes[0].access_token);
             const access_token = chongdaes[0].access_token;
-            const user_seq_no = chongdaes[0].user_seq_no;
-            
-            axios.post('/api/account/list',{
-              access_token : access_token,
-              user_seq_no : user_seq_no
-            })
-            .then((res)=>{
-              if(res.data.rsp_code){
-                const errCode = res.data.rsp_code
-                console.log(`arror: ${errCode}`)
-              }
-              else{
-                const result = res.data
-                console.log(`account list result: ${result}`)
-              }  
-            })
 
-            //console.log('account_list result:',result);
-
-            return(
-              <Card body>
-                    <CardTitle>본인 인증</CardTitle>
-                    <CardText>이미 본인인증이 완료되었습니다.</CardText>
-              </Card>  
-            );
+            if(access_token!='error'&&access_token!=null){
+              return(
+                <Card body>
+                  <Row>
+                  <Col sm="6">
+                    <Card body>
+                      <CardTitle>본인 인증</CardTitle>
+                      <CardText>이미 본인인증이 완료되었습니다.</CardText>
+                    </Card>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col sm="6">
+                    <Card body>
+                      <CardTitle>거래 내역 조회</CardTitle>
+                      <CardText>본인 인증 시 등록한 계좌의 거래 내역 조회</CardText>
+                      <Link to='/transaction_list'>
+                      <Button color="warning">조회</Button>
+                      </Link>
+                    </Card>
+                  </Col>
+                </Row>
+                </Card>  
+                
+              );
+            }
           }
           else{
             return(
@@ -62,9 +63,6 @@ class Chongdae_auth extends Component{
                     <CardText>펀딩을 생성하려면 본인 인증이 필요합니다.</CardText>
                     <Button id="verButton" color="warning" 
                     href="https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=qhsl7X3L59LPtU6QfdZNv2d4jYYKKFiY8K2iw2NI&redirect_uri=http://localhost:3000/account_auth&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor" >본인 인증</Button>
-                    {/*<Link to="/account_auth">
-                      <Button id="verButton" color="warning" onClick={chongdae_auth} >본인 인증</Button>
-            </Link>*/}
               </Card>  
             );
           }
