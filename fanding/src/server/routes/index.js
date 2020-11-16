@@ -32,33 +32,34 @@ router.post('/api/token', (req,res) =>{
     });
 })
 
-router.post('/api/account/list', (req,res) =>{
-    console.log('/api/account/list');
-    console.log(req.body.access_token);
-    console.log(req.body.user_seq_no);
+//사용자/계좌 관리
+router.post('/api/user/me', (req,res) =>{
+    console.log('/api/user/me');
+    
+    var accessToken = req.body.access_token;
+    var userSeqNo = req.body.user_seq_no;
+    console.log('req.body.access_token: ',accessToken);
+    console.log('req.body.user_seq_no: ', userSeqNo);
+
     var option2 = {
         method: "GET",
-        url: "https://testapi.openbanking.or.kr/v2.0/account/list",
+        url: "https://testapi.openbanking.or.kr/v2.0/user/me",
         headers: {
-            'Authorization':'Bearer ' + req.body.access_token
+            Authorization:'Bearer '+ accessToken
         },
-        form: {
-            user_seq_no: req.body.user_seq_no,
-            include_cancel_yn: 'N',
-            sort_order: 'D'
+        qs: {
+            user_seq_no: userSeqNo
         }
     }
     request(option2,function(error,response,body){
-        console.log('/account/list');
+        console.log('/user/me');
         var result2 = JSON.parse(body);
-        console.log(result2);
-       // var fintechNumber = result2.body.res_list[0].fintech_use_num;
-       // var realBankName = result2.body.res_list[0].bank_name;
-       // var bankHolderName = result2.body.res_list[0].account_holder_name;
-
-       // var account_info = [];
-       // account_info = [fintechNumber, realBankName, bankHolderName];
-       // console.log(account_info);
+        //console.log('user me result: ',result2);
+        //var userName = result2.user_name;
+        //console.log('user name : ', userName);
+        //var res_list0 = result2.res_list[0];
+        //console.log('res_list[0]: ', res_list0);
+       
        res.send(result2);
     })
 })

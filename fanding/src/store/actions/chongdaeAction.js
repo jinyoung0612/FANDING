@@ -25,3 +25,11 @@ export const verifyChongdae = (newChongdae) => {
     };
 };
 
+/*
+export const transactionList = (newTransaction) => {
+    return (dispatch) => {
+        const firestore = firebase.firestore();
+        const user = firebase.auth().currentUser;
+
+    }
+}*/

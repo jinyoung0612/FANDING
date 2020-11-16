@@ -22,6 +22,7 @@ import CompanyRecruit from "./components/layout/company/CompanyRecruit";
 import FundingDetails from "./components/layout/FundingDetails";
 import FundingState from "./components/layout/FundingState";
 import MainPage from "./components/layout/MainPage";
+import TransactionList from "./components/layout/TransactionList";
 
 class App extends Component {
   render() {
@@ -43,7 +44,8 @@ class App extends Component {
             <Route exact path="/find_company" component={CompanyRecruit} />
             <Route path="/find_company_form" component={FindCompanyForm} />
             <Route path="/payment" component={Payment} />
-      
+            <Route path="/transaction_list" component={TransactionList}/>
+
             <Route exact path="/reward_funding" component={RewardFunding} />
             <Route exact path="/reward_funding/:id" component={RewardFundingDetail} />
             <Route exact path="/collect_funding" component={CollectFunding} />
