@@ -23,6 +23,7 @@ class TransactionList extends Component{
                     const access_token = chongdaes[0].access_token;
                     const user_seq_no = chongdaes[0].user_seq_no;
 
+                    // 본인인증한 user 이름, 계좌 정보 가져오기
                     axios.post('/api/user/me',{
                         access_token : access_token,
                         user_seq_no : user_seq_no
@@ -33,7 +34,7 @@ class TransactionList extends Component{
                           console.log('user name: ',userName);
                           const result = res.data.res_list[0];
                           console.log('account list: ',result);
-                          
+                          const finNum = result.fintech_use_num;
                         }
                         else{
                           console.log('account list 불러오기 실패');
