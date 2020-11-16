@@ -28,6 +28,27 @@ export const firebase_recruit_save = newRecruitForm => {
 
 };
 
+export const company_application_save = newApply =>{
+    const firestore = firebase.firestore();
+
+    return (dispatch, getState) => {
+        firestore
+            .collection("applications")
+            .doc()
+            .set({
+                company_uid:firebase.auth().currentUser.uid,
+                company_email:firebase.auth().currentUser.email,
+                price: newApply.price,
+                minimum: newApply.minimum,
+                time: newApply.time,
+                others: newApply.others,
+                recruit_id: newApply.recruit_id,
+
+            })
+    };
+
+}
+
 const initialState = {
     auth: null,
     user_data: []

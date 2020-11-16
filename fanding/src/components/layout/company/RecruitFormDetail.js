@@ -26,6 +26,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { BsHeart, BsChatSquareDots } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
 import "./company.css"
+import {company_application_save} from '../../../store/actions/recruitCompanyActions'
 
 //import moment from 'moment';
 let imgStyle = {
@@ -41,6 +42,11 @@ class RecruitFormDetail extends Component{
       recruitCompany: this.props.recruitCompany,
         comments:"",
         render:"",
+        price:"",
+        time:"",
+        minimum:"",
+        others:"",
+        recruit_id:this.props.match.params.id,
         modal: false
     };
       this.toggle = this.toggle.bind(this);
@@ -68,11 +74,19 @@ class RecruitFormDetail extends Component{
     }
 
     handleChange=(e)=>{
-
+        this.setState({
+            [e.target.id]: e.target.value,
+        });
+        console.log(e.target.value);
     }
 
     handleSubmit=(e)=>{
-
+      e.preventDefault();
+      console.log("제출");
+      console.log(this.state);
+      this.props.company_application_save(this.state);
+        alert("지원서를 제출하였습니다")
+        this.toggle()
     }
     renderComments(){
       switch(this.state.render) {
@@ -83,9 +97,10 @@ class RecruitFormDetail extends Component{
   render(){
 
     const {recruitCompany}=this.props;
-    
+
     if(isLoaded(recruitCompany) && recruitCompany)
     {
+        console.log(this.props.match.params.id)
       return(
         <>
         <Container>
@@ -121,83 +136,60 @@ class RecruitFormDetail extends Component{
                 <div>
                     <Button color="danger" onClick={this.toggle}>지원하기</Button>
                     <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                        <ModalHeader toggle={this.toggle} charCode="x">지원서</ModalHeader>
-                        <ModalBody>
+                        <Form onSubmit={this.handleSubmit}>
+                            <ModalHeader toggle={this.toggle} charCode="x">지원서</ModalHeader>
+                            <ModalBody>
                             <div className="companyRecruit">
                                 <h3>{recruitCompany.itemTitle}</h3>
 
-                                <Form onSubmit={this.handleSubmit}>
+
                                     <FormGroup>
-                                        <Label for="PaymentInfo">입금정보입력</Label>
-                                        <Input type="name" name="name" id="name"
-                                               placeholder="입금자명"
+                                        <Label for="PaymentInfo">단가</Label>
+                                        <Input type="text" name="price" id="price"
+                                               placeholder="단가 입력"
                                                onChange={this.handleChange}
                                         />
                                     </FormGroup>
                                     <FormGroup>
-                                        <Input type="price" name="price" id="price"
-                                               placeholder="입금 금액(숫자만 입력)"
-                                               onChange={this.handleChange}
-
-                                        />
-                                    </FormGroup>
-                                    <FormGroup className="ml-auto">
-                                        <Input
-                                            type="date"
-                                            name="date"
-                                            id="paymentDate"
-                                            placeholder="입금 날짜"
-                                            onChange={this.handleChange}
-
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Input
-                                            type="time"
-                                            name="time"
-                                            id="paymentTime"
-                                            placeholder="00:00"
-                                            onChange={this.handleChange}
-
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="Refund">환불계좌정보입력</Label>
-                                        <Input type="bank" name="bank" id="bank"
-                                               placeholder="은행명"
+                                        <Label for="PaymentInfo">최소 주문수량</Label>
+                                        <Input type="text" name="minimum" id="minimum"
+                                               placeholder="최소 주문수량 입력"
                                                onChange={this.handleChange}
 
                                         />
                                     </FormGroup>
                                     <FormGroup>
-                                        <Input type="accountNumber" name="accountNumber" id="accountNumber"
-                                               placeholder="계좌번호"
+                                        <Label for="Refund">제작 소요일</Label>
+                                        <Input type="text" name="time" id="time"
+                                               placeholder="제작 소요일 입력"
                                                onChange={this.handleChange}
 
                                         />
                                     </FormGroup>
                                     <FormGroup>
-                                        <Input type="accountName" name="accountName" id="accountName"
-                                               placeholder="예금주명"
+                                        <Label for="Refund">기타 사항</Label>
+                                        <Input type="textarea" name="others" id="others"
+                                               placeholder="기타 사항 입력"
                                                onChange={this.handleChange}
 
                                         />
                                     </FormGroup>
-                                    <FormGroup>
-                                        <Label>이메일 주소</Label>
-                                        <Input type="email" name="email" id="email"
-                                               placeholder="이메"
-                                               onChange={this.handleChange}
-                                        />
-                                    </FormGroup>
-                                </Form>
+                                    <Label>모든제품은 과세대상 상품입니다. 선택하신 제품가격에 부가세 10%가 별도로 청구되오니 제품구입시 확인 부탁드립니다. </Label>
+                                    {/*<Button color="primary" onSubmit={this.handleSubmit}>제출하기</Button>{' '}*/}
+
+                                    <ModalFooter>
+                                        <Button color="primary">제출하기</Button>{' '}
+                                        <Button color="secondary" onClick={this.toggle}>닫기</Button>
+                                    </ModalFooter>
                             </div>
 
                         </ModalBody>
-                        <ModalFooter>
-                            <Button color="primary" onClick={this.toggle}>제출하기</Button>{' '}
-                            <Button color="secondary" onClick={this.toggle}>닫기</Button>
-                        </ModalFooter>
+                        </Form>
+
+                        {/*<ModalFooter>*/}
+                        {/*    <Button color="primary" onClick={this.toggle}>제출하기</Button>{' '}*/}
+                        {/*    <Button color="secondary" onClick={this.toggle}>닫기</Button>*/}
+                        {/*</ModalFooter>*/}
                     </Modal>
                 </div>
             </div>
@@ -311,10 +303,15 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        company_application_save: (newApply) => dispatch(company_application_save(newApply)) //creds -> funding
+    };
+};
 
 
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps,mapDispatchToProps),
     firestoreConnect(props => [{
         collection: 'recruitCompanies', doc: props.match.params.id
     }])
