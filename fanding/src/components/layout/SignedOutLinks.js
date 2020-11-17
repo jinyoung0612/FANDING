@@ -9,8 +9,29 @@ import {
 const SignedOutLinks = () => {
   return (
 
-    
-      <ul className="navbar-nav">
+    <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+      <li class="nav-item">
+        <a class="nav-link link text-black display-4" href="/signin">로그인</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link text-black display-4" href="/signup">회원가입</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link link text-black display-4" href="/signupcom">업체 회원가입</a>
+      </li>
+    </ul>
+      
+   
+  )
+}
+
+export default SignedOutLinks;
+
+{/* <ul className="navbar-nav">
+
+
+
       <NavItem>
           <NavLink href="/signin">로그인</NavLink>
       </NavItem>
@@ -20,9 +41,4 @@ const SignedOutLinks = () => {
       <NavItem>
         <NavLink href="/signupcom">업체 회원가입</NavLink>
       </NavItem>
-      </ul>
-   
-  )
-}
-
-export default SignedOutLinks;
+      </ul> */}

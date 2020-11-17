@@ -60,8 +60,8 @@ class MainPage extends Component {
                                             
                             <div>
                             <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
-                            <SelectedArtist artist={user[0].artist1} />
-                            <SelectedArtist artist={user[0].artist2} />  
+                            {/* <SelectedArtist artist={user[0].artist1} />
+                            <SelectedArtist artist={user[0].artist2} />   */}
                                                 
                             </div>
                     )
@@ -100,13 +100,19 @@ const mapStateToProps = (state) => {
     connect(mapStateToProps),
     firestoreConnect(props=> {
         const user_email = props.auth.email == null ? "none": props.auth.email;
+        // const artist1 = props.user.artist1 == null ? "none" : props.user.artist1;
+        // const artist2 = props.user.artist2 == null ? "none" : props.user.artist2;
+        // const artist3 = props.user.artist3 == null ? "none" : props.user.artist3;
+
         console.log('user email:', user_email);
-            
+        // console.log('artist1', artist1);
+        // console.log('artist2', artist2);    
+        // console.log('artist3', artist3);
         return[
             {
                 collection: 'users',
                 where: [['user_email', '==', user_email]],
-            }
+            },
             ]
         }         
     )

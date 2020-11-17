@@ -43,7 +43,7 @@ class MyFunding extends Component {
         const {auth,user_data}=this.props;
         console.log(this.props);
 
-        if(this.props.user_data.length!=0){
+        if(this.props.user_data.length!==0){
             // console.log(user_data);
             return(
 
