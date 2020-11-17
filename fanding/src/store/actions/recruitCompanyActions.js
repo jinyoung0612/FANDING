@@ -38,11 +38,13 @@ export const company_application_save = newApply =>{
             .set({
                 company_uid:firebase.auth().currentUser.uid,
                 company_email:firebase.auth().currentUser.email,
+                company_name:newApply.company_name,
                 price: newApply.price,
                 minimum: newApply.minimum,
                 time: newApply.time,
                 others: newApply.others,
                 recruit_id: newApply.recruit_id,
+
 
             })
     };
