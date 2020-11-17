@@ -20,6 +20,14 @@ import { reduxFirestore, getFirestore } from 'redux-firestore';
 
 //reactstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./assets/web/assets/mobirise-icons2/mobirise2.css";
+import "./assets/tether/tether.min.css";
+import 'bootstrap/dist/css/bootstrap-grid.min.css';
+import 'bootstrap/dist/css/bootstrap-reboot.min.css';
+import "./assets/dropdown/css/style.css";
+import "./assets/socicon/css/styles.css";
+import "./assets/theme/css/style.css";
+import "./assets/mobirise/css/mbr-additional.css";
 
 /*
 const store = createStore(rootReducer, 

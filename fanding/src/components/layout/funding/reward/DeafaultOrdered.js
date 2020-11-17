@@ -19,9 +19,11 @@ class DefaultOrdered extends Component {
         const { fundings } = this.props;
         
         return(
-            <div onClick={this.props.onClick}>
-            <FundingList fundings={fundings} />
-            </div>
+           
+                    <div onClick={this.props.onClick}>
+                    <FundingList fundings={fundings} />
+                    </div>
+                
         )
     }
 }

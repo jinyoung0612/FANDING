@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+@font-face 
+{ font-family: 'NanumSqaureRoundB'; src: url(./fonts/NanumSquareRoundB.ttf) format('truetype'); }
+@font-face 
+{ font-family: 'NanumSqaureRoundEB'; src: url(./fonts/NanumSquareRoundEB.ttf) format('truetype'); }
+@font-face 
+{ font-family: 'NanumSqaureRoundL'; src: url(./fonts/NanumSquareRoundL.ttf) format('truetype'); }
+@font-face 
+{ font-family: 'NanumSqaureRoundR'; src: url(./fonts/NanumSquareRoundR.ttf) format('truetype'); }

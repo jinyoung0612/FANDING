@@ -76,12 +76,22 @@ class RewardFunding extends Component {
             {/* {this.state.dropDownValue==="보기 방식" ? <DefaultOrdered />
             : this.state.dropDownValue==="최신순"? <NewOrdered />
             : <PopOrdered />} */}
-            
+            <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+    
+                <div class="container">
+                    <div class="mbr-section-head">
+                        <h3 class="mbr-section-title mbr-fonts-style align-center m-0 display-2"><strong>리워드 펀딩</strong></h3>
+                        <h4 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-2 display-5">Images with Captions</h4>
+                    </div>
+                    <div class="row mbr-gallery mt-4">
+                        
             {this.state.dropDownValue === "보기 방식" && <DefaultOrdered onClick={this.changeValue}/>}
             {this.state.dropDownValue === "최신순" && <NewOrdered onClick={this.changeValue}/>}
             {this.state.dropDownValue === "인기순" && <PopOrdered onClick={this.changeValue}/>}
             
-
+            </div>
+            </div>
+            </section>
             </div>
             
         )
