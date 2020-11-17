@@ -122,6 +122,7 @@ class MainPage extends Component {
            //      )
            //  }
 
+
     }
 }
 const mapStateToProps = (state) => {
@@ -142,6 +143,10 @@ const mapStateToProps = (state) => {
     connect(mapStateToProps),
     firestoreConnect(props=> {
         const user_email = props.auth.email == null ? "none": props.auth.email;
+        // const artist1 = props.user.artist1 == null ? "none" : props.user.artist1;
+        // const artist2 = props.user.artist2 == null ? "none" : props.user.artist2;
+        // const artist3 = props.user.artist3 == null ? "none" : props.user.artist3;
+
         console.log('user email:', user_email);
 
         return[
@@ -152,6 +157,7 @@ const mapStateToProps = (state) => {
             {
                 collection:'fundings'
             }
+
             ]
         }
     )

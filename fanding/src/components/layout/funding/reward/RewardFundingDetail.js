@@ -12,7 +12,7 @@ import { BsHeart, BsChatSquareDots } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
 import ModalPortal from "../../../../ModalPortal";
 import MyModal from "../../../../MyModal";
-
+import Test2 from "../../../../components/test2"
 
 //import moment from 'moment';
 let imgStyle = {
@@ -79,6 +79,7 @@ class FundingDetail extends Component{
               <p><b>15일</b> 남음</p>
               {/*<Button color="warning" size="xs" block>펀딩하기</Button>*/}
                 <Button onClick={this.handleOpenModal}>펀딩 참여하기</Button>
+                {/* <Test2></Test2> */}
                 {this.state.isModalOpen && (
                     <ModalPortal>
                         <MyModal onClose={this.handleCloseModal} funding={this.state.funding} fid={this.props.match.params.id}/>

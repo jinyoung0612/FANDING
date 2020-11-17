@@ -19,19 +19,19 @@ import CollectFunding from './components/layout/funding/collect/CollectFunding';
 import CollectFundingDetail from "./components/layout/funding/collect/CollectFundingDetail";
 import RecruitFormDetail from "./components/layout/company/RecruitFormDetail";
 import CompanyRecruit from "./components/layout/company/CompanyRecruit";
+
 // import test from './components/layout/test';
 import FundingDetails from "./components/layout/FundingDetails";
 import FundingState from "./components/layout/FundingState";
 import MainPage from "./components/layout/MainPage";
 import ReactDOM from "react-dom";
-
-import firebase from "firebase"
 import MainPageDefault from "./components/layout/MainPageDefault";
+// import MainPage from "./components/layout/MainPage";
+import TransactionList from "./components/layout/TransactionList";
 
 
 class App extends Component {
   render() {
-    // console.log("current user:",firebase.auth().currentUser);
     return (
       <BrowserRouter>
         <div className="App">
@@ -51,15 +51,15 @@ class App extends Component {
             <Route exact path="/find_company" component={CompanyRecruit} />
             <Route path="/find_company_form" component={FindCompanyForm} />
             <Route path="/payment" component={Payment} />
+            <Route path="/transaction_list" component={TransactionList}/>
+
             <Route exact path="/reward_funding" component={RewardFunding} />
             <Route exact path="/reward_funding/:id" component={RewardFundingDetail} />
             <Route exact path="/collect_funding" component={CollectFunding} />
             <Route exact path="/collect_funding/:id" component={CollectFundingDetail} />
             <Route path="/find_company/:id" component={RecruitFormDetail} />
-            {/*<Route path="/test" component={test}/>*/}
             <Route path="/funding_detail/:id" component={FundingDetails} />
             <Route path="/funding_state/:id" component={FundingState} />
-
 
           </Switch>
         </div>
