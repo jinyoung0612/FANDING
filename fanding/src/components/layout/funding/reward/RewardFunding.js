@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { DefaultContext } from "react-icons";
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import {ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
+import {ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, CardDeck, Row, 
+    Col, Container} from "reactstrap";
 //import Dropdown from './Dropdown';
 import { compose } from 'redux';
 import FundingList from './RewardFundingList';
@@ -83,14 +84,14 @@ class RewardFunding extends Component {
                         <h3 class="mbr-section-title mbr-fonts-style align-center m-0 display-2"><strong>리워드 펀딩</strong></h3>
                         <h4 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-2 display-5">Images with Captions</h4>
                     </div>
-                    <div class="row mbr-gallery mt-4">
-                        
-            {this.state.dropDownValue === "보기 방식" && <DefaultOrdered onClick={this.changeValue}/>}
-            {this.state.dropDownValue === "최신순" && <NewOrdered onClick={this.changeValue}/>}
-            {this.state.dropDownValue === "인기순" && <PopOrdered onClick={this.changeValue}/>}
+                    {/* <div class="row mbr-gallery mt-4"> */}
+            
+                {this.state.dropDownValue === "보기 방식" && <DefaultOrdered onClick={this.changeValue}/>}
+                {this.state.dropDownValue === "최신순" && <NewOrdered onClick={this.changeValue}/>}
+                {this.state.dropDownValue === "인기순" && <PopOrdered onClick={this.changeValue}/>}
             
             </div>
-            </div>
+            {/* </div> */}
             </section>
             </div>
             

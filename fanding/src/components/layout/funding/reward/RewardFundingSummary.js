@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
+import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Row, Col } from 'reactstrap';
 let imgStyle = {
     maxHeight: '128px',
     maxWidth: '128px'
@@ -25,30 +25,34 @@ const FundingSummary = ({funding}) => {
         //     </div>
         // </div>
         // <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-        <div>
-            <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-        <div class="item-wrapper">
-            <img class="w-100" src={funding.url} alt="" data-slide-to="0" data-target="#lb-sgtDtjHEYn" />
-            <div class="icon-wrapper">
-                <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
-            </div>
-        </div>
-        <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-2 mt-2 display-7">
-        {funding.fundingTitle}
-        </h6>
-        </div>
-    </div>
-        
-    )
-}
-
-export default FundingSummary;
-
-{/* <Card sm="6">
+        // <div>
+        //     <div class="col-12 col-md-6 col-lg-3 item gallery-image">
+        // <div class="item-wrapper">
+        //     <img class="w-100" src={funding.url} alt="" data-slide-to="0" data-target="#lb-sgtDtjHEYn" />
+        //     <div class="icon-wrapper">
+        //         <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
+        //     </div>
+        // </div>
+        // <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-2 mt-2 display-7">
+        // {funding.fundingTitle}
+        // </h6>
+        // </div>
+        <Col md={3}>
+        <Card>
+            
             <CardImg top width="100%" src={funding.url} style={imgStyle} alt="Card image cap" />
             <CardBody>
             <CardTitle>{funding.fundingTitle}</CardTitle>
             <CardSubtitle>{funding.fundingType}</CardSubtitle>
             <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
             </CardBody>
-        </Card> */}
+
+        </Card>
+        </Col>
+
+        
+    )
+}
+
+export default FundingSummary;
+
