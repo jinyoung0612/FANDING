@@ -7,7 +7,7 @@ let imgStyle = {
 const RecruitFundingSummary = ({recruitCompany}) => {
     return(
         <Card sm="6">
-            <CardImg top width="100%" src={recruitCompany.url} style={imgStyle} alt="Card image cap" />
+            <CardImg top width="100%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
             <CardBody>
             <CardTitle>{recruitCompany.itemTitle}</CardTitle>
             <CardSubtitle>{recruitCompany.itemPrice}</CardSubtitle>

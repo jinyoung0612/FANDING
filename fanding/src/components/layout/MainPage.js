@@ -9,90 +9,133 @@ import {firebaseConnect, isLoaded, isEmpty} from "react-redux-firebase";
 import {connect} from "react-redux";
 //import { MainPageFundingList } from "./MainPageFundingList";
 import SelectedArtist from "./SelectedArtist";
-
-
+import {loadMain} from "../../store/actions/searchActions";
+import FundingContents from "./FundingContents";
 
 const artistsMap = [1, 2, 3];
 class MainPage extends Component {
 
-    
-    
+
     render(){
         //const { fundings } = this.props;
-        const { auth, user, fundings} = this.props;
-        //const { users } = this.props;
+        const { auth, user,fundings} = this.props;
         console.log("auth", auth);
-        //console.log("users", user);
+        console.log("users", user);
+        // console.log("funding", fundings);
+
         // const artist1 = user.artist1;
         //console.log(artist1);
         //this.props.auth.isLoaded
         //if (this.props.auth.isLoaded) //logined user -> show interested artists' funding
-        if(!isLoaded(auth)){
-            return <div>Loading...</div>
+        if(!isLoaded(auth) || !isLoaded(user)) {
+            return (
+
+                <div>
+                    {/*<Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>*/}
+                    Loading...
+                </div>
+            )
         }
-        
-        
-        
+        else{
+            if(!user[0].artistSelect){
+                console.log("artistSelect 없음");
+                if(isLoaded(fundings)){
+                    return(
+                        <div>
+                            {
+                                fundings.map((funding,i)=>{
+                                    return(
+                                        <FundingContents funding={funding} key={i}></FundingContents>
+                                    )
+                                })
+
+                            }
+                        </div>
+                    )
+
+                }
+
+                return(
+                    // <Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>
+                    <div>
+                    </div>
+                )
+            }
+            else{
+                console.log("artistSelect 있음");
+                console.log("ArtistSelect", user[0].artistSelect);
+
+                return(
+                    <div>
+                        {/*<Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>*/}
+                        <SelectedArtist artist={user[0].artistSelect}></SelectedArtist>
+                    </div>
+                )
+            }
+        }
+
+
+
         //this.handleArtist(this.props);
         // const mapToComponent = data => {
         //     return data.map((artist, i) => {
         //       return (<SelectedArtist artist={user[0].artist+{i}} key={i}/>);
         //     });
         //   };
-        //console.log("users", user);
-            if(this.props.auth.uid)
-            {
-                //console.log("auth", auth);
-                console.log("logined user");
+        // console.log("users", user[0].artistSelect)
+        //     if(this.props.auth.uid)
+        //     {
+        //         //console.log("auth", auth);
+        //         console.log("ArtistSelect", user.artistSelect);
+        //
+        //         console.log("logined user");
                 //const { user_data } = this.props;
                 //console.log(this.props);
                 //console.log(this.props.fundings);
                 //console.log("auth artist: ",this.props.users.artist1);
-                
-                if(!isLoaded(user))
-                {
-                   
-                    return <div>Loading...</div>
-                    
-                }
-                else{
-                    return(
-                                            
-                            <div>
-                            <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
-                            {/* <SelectedArtist artist={user[0].artist1} />
-                            <SelectedArtist artist={user[0].artist2} />   */}
-                                                
-                            </div>
-                    )
-                }
-                   
-            }
-           else
-           {
-                console.log("not loginned");
-                console.log(this.props);
-                return (
-                    <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
-                    //default fundings
-                )
-            }
-        
-        
-        
+           //
+           //      if(!isLoaded(user))
+           //      {
+           //
+           //          return <div>Loading...</div>
+           //
+           //      }
+           //      else{
+           //
+           //          return(
+           //
+           //              <div>
+           //                  <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
+           //                  {/*<SelectedArtist artist={user[0].artistSelect}></SelectedArtist>*/}
+           //              </div>
+           //          )
+           //      }
+           //
+           //  }
+           // else
+           // {
+           //      console.log("not loginned");
+           //      console.log(this.props);
+           //      return (
+           //          <Media middle object src={main_image} class="img-fluid" alt="main_image" width='100%'/>
+           //          //default fundings
+           //      )
+           //  }
 
-       
+
     }
 }
 const mapStateToProps = (state) => {
      console.log("mapStateToProps", state);
     return {
-       
+
         uid: state.firebase.auth.uid,
-        fundings: state.firestore.ordered.fundings,
         auth: state.firebase.auth,
         authError: state.auth.authError,
         user: state.firestore.ordered.users,
+        fundings: state.firestore.ordered.fundings,
+
+
     }
 }
 
@@ -105,16 +148,18 @@ const mapStateToProps = (state) => {
         // const artist3 = props.user.artist3 == null ? "none" : props.user.artist3;
 
         console.log('user email:', user_email);
-        // console.log('artist1', artist1);
-        // console.log('artist2', artist2);    
-        // console.log('artist3', artist3);
+
         return[
             {
                 collection: 'users',
                 where: [['user_email', '==', user_email]],
             },
+            {
+                collection:'fundings'
+            }
+
             ]
-        }         
+        }
     )
 )(MainPage);
 

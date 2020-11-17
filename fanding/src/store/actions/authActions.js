@@ -45,9 +45,11 @@ export const signUp = (newUser) => {
             zipcode: "",
             phone_number: "",
             email_verification: firebase.auth().currentUser.emailVerified,
-            artist1: newUser.artist1,
-            artist2: newUser.artist2,
-            artist3: newUser.artist3,
+            // artist1: newUser.artist1,
+            // artist2: newUser.artist2,
+            // artist3: newUser.artist3,
+              artistSelect:newUser.artistSelect,
+              type:"user"
           })
           .then(() => {
               firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
@@ -91,9 +93,11 @@ export const signUpCom = (newCompany) => {
             addr2: "",
             email: newCompany.email,
             email_verification: firebase.auth().currentUser.emailVerified,
+              type:"company"
           })
           .then(() => {
-            dispatch({ type: "SIGNUP_SUCCESS" });
+              firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+              dispatch({ type: "SIGNUP_SUCCESS" });
           })
           .catch((err) => {
             dispatch({ type: "SIGNUP_ERROR", err });
@@ -103,7 +107,8 @@ export const signUpCom = (newCompany) => {
             companies
               .sendEmailVerification()
               .then(function () {
-                dispatch({ type: "EMAIL_SPENT_SUCCESS" });
+                  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                  dispatch({ type: "EMAIL_SPENT_SUCCESS" });
               })
               .catch((err) => {
                 dispatch({ type: "NOT_EMAIL_SPENT", err });
@@ -161,6 +166,8 @@ export const twitterSignIn = (credentials) => {
                 phone_number: "",
                 email_verification: firebase.auth().currentUser.emailVerified,
                 artist_id: "",
+                  type:"user"
+
               });
           } else {
             console.log("already exists");

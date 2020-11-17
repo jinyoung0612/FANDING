@@ -19,10 +19,16 @@ import CollectFunding from './components/layout/funding/collect/CollectFunding';
 import CollectFundingDetail from "./components/layout/funding/collect/CollectFundingDetail";
 import RecruitFormDetail from "./components/layout/company/RecruitFormDetail";
 import CompanyRecruit from "./components/layout/company/CompanyRecruit";
+
+// import test from './components/layout/test';
 import FundingDetails from "./components/layout/FundingDetails";
 import FundingState from "./components/layout/FundingState";
 import MainPage from "./components/layout/MainPage";
+import ReactDOM from "react-dom";
+import MainPageDefault from "./components/layout/MainPageDefault";
+// import MainPage from "./components/layout/MainPage";
 import TransactionList from "./components/layout/TransactionList";
+
 
 class App extends Component {
   render() {
@@ -31,7 +37,8 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Switch>
-            <Route exact path="/" component={MainPage} />
+            {/*<Route exact path="/" component={MainPage} />*/}
+            <Route exact path="/" component={MainPageDefault} />
             <Route path="/signup" component={SignUp} />
             <Route path="/signupcom" component={SignUpCom} />
             <Route path="/signin" component={SignIn} />

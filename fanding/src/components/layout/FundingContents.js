@@ -14,6 +14,7 @@ const FundingContents = ({funding})=>{
     // }
     // const data= find(funding);
 
+    // console.log("Funding Contents:",funding);
     return(
 
         <div>
