@@ -4,7 +4,7 @@ import {firestoreConnect, isLoaded} from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { CardImg, CardText, Container, Row, Col, Button, Progress, Form, FormGroup, Label, Input, Table,NavLink,NavItem } from 'reactstrap';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Badge } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Badge} from 'reactstrap';
 
 //import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
@@ -14,10 +14,13 @@ import { BsHeart, BsChatSquareDots } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
 import "./company.css"
 import {company_application_save} from '../../../store/actions/recruitCompanyActions'
+import {check_user_type} from "../../../store/actions/userActions";
+
 import firebase from  "firebase"
 import App from "../../../App";
 //import moment from 'moment';
 import { Link } from 'react-router-dom';
+
 
 let imgStyle = {
     maxHeight: '400px',
@@ -38,19 +41,36 @@ class RecruitFormDetail extends Component{
         others:"",
         recruit_id:this.props.match.params.id,
         company_name:"",
-        modal: false
+        modal: false,
     };
       this.toggle = this.toggle.bind(this);
   }
 
     toggle() {
+      console.log(this.props)
         this.setState({
             modal: !this.state.modal
         });
     }
 
 
-  viewerRef = React.createRef();
+    // componentWillReceiveProps() {
+    //   console.log("ComponentDidMount");
+    //   console.log(this.props.auth.email)
+    //   this.props.dispatch(check_user_type(this.props.auth.email))
+    // }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      if(prevProps.auth!=this.props.auth){
+          console.log("ComponentDidUpdate")
+            this.props.dispatch(check_user_type(this.props.auth.email))
+
+      }
+    }
+
+    componentWillUnmount() {
+    }
+
+    viewerRef = React.createRef();
 
 
   handleCommentChange=(e)=>{
@@ -96,122 +116,310 @@ class RecruitFormDetail extends Component{
     {
         // console.log(this.props.match.params.id);
         console.log(this.props.application);
-        // console.log(this.props);
+        // console.log(this.props.user_type[0]);
+        const{user_type}=this.props
+        console.log(user_type[0])
+           if(isLoaded(user_type)&&user_type[0]==="company"){
+            console.log("업체업체업체")
+               return(
+                   <>
+                       <Container>
 
-        return(
-        <>
-        <Container>
-          
-         <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
-        <Row xs="2">
-          <Col>
-              <CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
-              <CardText>예상 가격대 : 개당 {recruitCompany.itemPrice}원</CardText>
-              <CardText>예상 개수 : {recruitCompany.itemRemain}</CardText>
-          </Col>
-
-
-            <Col>
-            <div>
-              
-              
-            </div>
-          </Col>
-
-      </Row>
-        
-        <div className="mt-auto">
-             <Viewer
-              height="400px"
-              initialValue={recruitCompany.content}
-              ref={this.viewerRef}
-              previewStyle="vertical"
-              initialEditType="wysiwyg"
-              />
-        </div>
-            <Row></Row>
-            <div>
-                <div>
-                    <Button color="warning" onClick={this.toggle} size="lg" block>지원하기</Button>
-                    <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                        <Form onSubmit={this.handleSubmit}>
-                            <ModalHeader toggle={this.toggle} charCode="x">지원서</ModalHeader>
-                            <ModalBody>
-                            <div className="companyRecruit">
-                                <h3>{recruitCompany.itemTitle}</h3>
+                           <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
+                           <Row xs="2">
+                               <Col>
+                                   <CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+                                   <CardText>예상 가격대 : 개당 {recruitCompany.itemPrice}원</CardText>
+                                   <CardText>예상 개수 : {recruitCompany.itemRemain}</CardText>
+                               </Col>
 
 
-                                    <FormGroup>
-                                        <Label for="PaymentInfo">단가</Label>
-                                        <Input type="text" name="price" id="price"
-                                               placeholder="단가 입력"
-                                               onChange={this.handleChange}
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="PaymentInfo">최소 주문수량</Label>
-                                        <Input type="text" name="minimum" id="minimum"
-                                               placeholder="최소 주문수량 입력"
-                                               onChange={this.handleChange}
+                               <Col>
+                                   <div>
 
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="Refund">제작 소요일</Label>
-                                        <Input type="text" name="time" id="time"
-                                               placeholder="제작 소요일 입력"
-                                               onChange={this.handleChange}
 
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="Refund">기타 사항</Label>
-                                        <Input type="textarea" name="others" id="others"
-                                               placeholder="기타 사항 입력"
-                                               onChange={this.handleChange}
+                                   </div>
+                               </Col>
 
-                                        />
-                                    </FormGroup>
-                                    <Label>모든제품은 과세대상 상품입니다. 선택하신 제품가격에 부가세 10%가 별도로 청구되오니 제품구입시 확인 부탁드립니다. </Label>
-                                    {/*<Button color="primary" onSubmit={this.handleSubmit}>제출하기</Button>{' '}*/}
+                           </Row>
 
-                                    <ModalFooter>
-                                        <Button color="primary">제출하기</Button>{' '}
-                                        <Button color="secondary" onClick={this.toggle}>닫기</Button>
-                                    </ModalFooter>
-                            </div>
+                           <div className="mt-auto">
+                               <Viewer
+                                   height="400px"
+                                   initialValue={recruitCompany.content}
+                                   ref={this.viewerRef}
+                                   previewStyle="vertical"
+                                   initialEditType="wysiwyg"
+                               />
+                           </div>
+                           <Row></Row>
+                           <div>
+                               <div>
 
-                        </ModalBody>
-                        </Form>
-                    </Modal>
-                </div>
-            </div>
+                                   <Button color="warning" onClick={this.toggle} size="lg" block>지원하기</Button>
 
-            {/*<div className='Reply_div'>*/}
-          {/*<h4> 댓글 </h4>*/}
-          {/*<div className='Reply_write'>*/}
-          {/*  <textarea id="comments" rows='3' placeholder='100자 이내의 글을 입력해주세요.'*/}
-          {/*    maxLength='100' name='write_reply' onChange={this.handleCommentChange}>*/}
-          {/*    </textarea>*/}
-          {/*    <input type='button' value='등록' id='reply_submit_button' onClick={this.handleClick.bind(this, 'comments')}/>*/}
-          {/*</div>*/}
-          {/*  </div>*/}
+                                   <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                                       <Form onSubmit={this.handleSubmit}>
+                                           <ModalHeader toggle={this.toggle} charCode="x">지원서</ModalHeader>
+                                           <ModalBody>
+                                               <div className="companyRecruit">
+                                                   <h3>{recruitCompany.itemTitle}</h3>
 
-            <div>
-                <h3>지원현황</h3>
-                <ApplicationList applications={this.props.application}></ApplicationList>
-            </div>
 
-            <div>
-                {/*{this.state.comments}*/}
-                {this.renderComments()}
+                                                   <FormGroup>
+                                                       <Label for="PaymentInfo">단가</Label>
+                                                       <Input type="text" name="price" id="price"
+                                                              placeholder="단가 입력"
+                                                              onChange={this.handleChange}
+                                                       />
+                                                   </FormGroup>
+                                                   <FormGroup>
+                                                       <Label for="PaymentInfo">최소 주문수량</Label>
+                                                       <Input type="text" name="minimum" id="minimum"
+                                                              placeholder="최소 주문수량 입력"
+                                                              onChange={this.handleChange}
 
-            </div>
-        </Container>
+                                                       />
+                                                   </FormGroup>
+                                                   <FormGroup>
+                                                       <Label for="Refund">제작 소요일</Label>
+                                                       <Input type="text" name="time" id="time"
+                                                              placeholder="제작 소요일 입력"
+                                                              onChange={this.handleChange}
 
-        
-            </>
-      )
+                                                       />
+                                                   </FormGroup>
+                                                   <FormGroup>
+                                                       <Label for="Refund">기타 사항</Label>
+                                                       <Input type="textarea" name="others" id="others"
+                                                              placeholder="기타 사항 입력"
+                                                              onChange={this.handleChange}
+
+                                                       />
+                                                   </FormGroup>
+                                                   <Label>모든제품은 과세대상 상품입니다. 선택하신 제품가격에 부가세 10%가 별도로 청구되오니 제품구입시 확인 부탁드립니다. </Label>
+                                                   {/*<Button color="primary" onSubmit={this.handleSubmit}>제출하기</Button>{' '}*/}
+
+                                                   <ModalFooter>
+                                                       <Button color="primary">제출하기</Button>{' '}
+                                                       <Button color="secondary" onClick={this.toggle}>닫기</Button>
+                                                   </ModalFooter>
+                                               </div>
+
+                                           </ModalBody>
+                                       </Form>
+                                   </Modal>
+                               </div>
+                           </div>
+
+                           {/*<div className='Reply_div'>*/}
+                           {/*<h4> 댓글 </h4>*/}
+                           {/*<div className='Reply_write'>*/}
+                           {/*  <textarea id="comments" rows='3' placeholder='100자 이내의 글을 입력해주세요.'*/}
+                           {/*    maxLength='100' name='write_reply' onChange={this.handleCommentChange}>*/}
+                           {/*    </textarea>*/}
+                           {/*    <input type='button' value='등록' id='reply_submit_button' onClick={this.handleClick.bind(this, 'comments')}/>*/}
+                           {/*</div>*/}
+                           {/*  </div>*/}
+
+                           <div>
+                               <h3>지원현황</h3>
+                               {/*<ApplicationList applications={this.props.application}></ApplicationList>*/}
+                               <ApplicationList applications={this.props.application} chongdae={recruitCompany.user_email}></ApplicationList>
+
+                           </div>
+
+                           <div>
+                               {/*{this.state.comments}*/}
+                               {this.renderComments()}
+
+                           </div>
+                       </Container>
+
+
+                   </>
+               )
+
+        }
+    else{
+               return(
+                   <>
+                       <Container>
+
+                           <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
+                           <Row xs="2">
+                               <Col>
+                                   <CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+                                   <CardText>예상 가격대 : 개당 {recruitCompany.itemPrice}원</CardText>
+                                   <CardText>예상 개수 : {recruitCompany.itemRemain}</CardText>
+                               </Col>
+
+
+                               <Col>
+                                   <div>
+
+
+                                   </div>
+                               </Col>
+
+                           </Row>
+
+                           <div className="mt-auto">
+                               <Viewer
+                                   height="400px"
+                                   initialValue={recruitCompany.content}
+                                   ref={this.viewerRef}
+                                   previewStyle="vertical"
+                                   initialEditType="wysiwyg"
+                               />
+                           </div>
+                           <Row></Row>
+
+
+                           {/*<div className='Reply_div'>*/}
+                           {/*<h4> 댓글 </h4>*/}
+                           {/*<div className='Reply_write'>*/}
+                           {/*  <textarea id="comments" rows='3' placeholder='100자 이내의 글을 입력해주세요.'*/}
+                           {/*    maxLength='100' name='write_reply' onChange={this.handleCommentChange}>*/}
+                           {/*    </textarea>*/}
+                           {/*    <input type='button' value='등록' id='reply_submit_button' onClick={this.handleClick.bind(this, 'comments')}/>*/}
+                           {/*</div>*/}
+                           {/*  </div>*/}
+
+                           <div>
+                               <h3>지원현황</h3>
+                               <ApplicationList applications={this.props.application} chongdae={recruitCompany.user_email}></ApplicationList>
+                           </div>
+
+                           <div>
+                               {/*{this.state.comments}*/}
+                               {this.renderComments()}
+
+                           </div>
+                       </Container>
+
+
+                   </>
+               )
+           }
+
+
+      //   return(
+      //   <>
+      //   <Container>
+      //
+      //    <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
+      //   <Row xs="2">
+      //     <Col>
+      //         <CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+      //         <CardText>예상 가격대 : 개당 {recruitCompany.itemPrice}원</CardText>
+      //         <CardText>예상 개수 : {recruitCompany.itemRemain}</CardText>
+      //     </Col>
+      //
+      //
+      //       <Col>
+      //       <div>
+      //
+      //
+      //       </div>
+      //     </Col>
+      //
+      // </Row>
+      //
+      //   <div className="mt-auto">
+      //        <Viewer
+      //         height="400px"
+      //         initialValue={recruitCompany.content}
+      //         ref={this.viewerRef}
+      //         previewStyle="vertical"
+      //         initialEditType="wysiwyg"
+      //         />
+      //   </div>
+      //       <Row></Row>
+      //       <div>
+      //           <div>
+      //
+      //               <Button color="warning" onClick={this.toggle} size="lg" block>지원하기</Button>
+      //
+      //               <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+      //                   <Form onSubmit={this.handleSubmit}>
+      //                       <ModalHeader toggle={this.toggle} charCode="x">지원서</ModalHeader>
+      //                       <ModalBody>
+      //                       <div className="companyRecruit">
+      //                           <h3>{recruitCompany.itemTitle}</h3>
+      //
+      //
+      //                               <FormGroup>
+      //                                   <Label for="PaymentInfo">단가</Label>
+      //                                   <Input type="text" name="price" id="price"
+      //                                          placeholder="단가 입력"
+      //                                          onChange={this.handleChange}
+      //                                   />
+      //                               </FormGroup>
+      //                               <FormGroup>
+      //                                   <Label for="PaymentInfo">최소 주문수량</Label>
+      //                                   <Input type="text" name="minimum" id="minimum"
+      //                                          placeholder="최소 주문수량 입력"
+      //                                          onChange={this.handleChange}
+      //
+      //                                   />
+      //                               </FormGroup>
+      //                               <FormGroup>
+      //                                   <Label for="Refund">제작 소요일</Label>
+      //                                   <Input type="text" name="time" id="time"
+      //                                          placeholder="제작 소요일 입력"
+      //                                          onChange={this.handleChange}
+      //
+      //                                   />
+      //                               </FormGroup>
+      //                               <FormGroup>
+      //                                   <Label for="Refund">기타 사항</Label>
+      //                                   <Input type="textarea" name="others" id="others"
+      //                                          placeholder="기타 사항 입력"
+      //                                          onChange={this.handleChange}
+      //
+      //                                   />
+      //                               </FormGroup>
+      //                               <Label>모든제품은 과세대상 상품입니다. 선택하신 제품가격에 부가세 10%가 별도로 청구되오니 제품구입시 확인 부탁드립니다. </Label>
+      //                               {/*<Button color="primary" onSubmit={this.handleSubmit}>제출하기</Button>{' '}*/}
+      //
+      //                               <ModalFooter>
+      //                                   <Button color="primary">제출하기</Button>{' '}
+      //                                   <Button color="secondary" onClick={this.toggle}>닫기</Button>
+      //                               </ModalFooter>
+      //                       </div>
+      //
+      //                   </ModalBody>
+      //                   </Form>
+      //               </Modal>
+      //           </div>
+      //       </div>
+      //
+      //       {/*<div className='Reply_div'>*/}
+      //     {/*<h4> 댓글 </h4>*/}
+      //     {/*<div className='Reply_write'>*/}
+      //     {/*  <textarea id="comments" rows='3' placeholder='100자 이내의 글을 입력해주세요.'*/}
+      //     {/*    maxLength='100' name='write_reply' onChange={this.handleCommentChange}>*/}
+      //     {/*    </textarea>*/}
+      //     {/*    <input type='button' value='등록' id='reply_submit_button' onClick={this.handleClick.bind(this, 'comments')}/>*/}
+      //     {/*</div>*/}
+      //     {/*  </div>*/}
+      //
+      //       <div>
+      //           <h3>지원현황</h3>
+      //           <ApplicationList applications={this.props.application}></ApplicationList>
+      //       </div>
+      //
+      //       <div>
+      //           {/*{this.state.comments}*/}
+      //           {this.renderComments()}
+      //
+      //       </div>
+      //   </Container>
+      //
+      //
+      //       </>
+      // )
     }
     else
     {
@@ -244,28 +452,58 @@ class ApplicationList extends Component{
         super();
         this.state={
             modal:false,
+            select:false,
             apply_id:""
         };
         this.toggle=this.toggle.bind(this)
+        this.receive_apply=this.receive_apply.bind(this)
     }
     handleClick=()=>{
         console.log("click");
         window.location.href="/"
     };
 
-    toggle(apply) {
+    toggle(apply){
         this.setState({
-            modal: !this.state.modal
-        });
-        this.setState({
-            apply_id:apply
-        })
+            apply_id:apply,
+            modal:!this.state.modal }
+        // },
+        //     ()=>{
+        //     //this.receive_apply(apply)}
+        //     console.log(this.state.modal)
+        //         if(this.state.modal===true){
+        //             this.receive_apply(apply)
+        //         }
+        //     }
+        )
+
     }
+    receive_apply(apply) {
+        // this.setState({
+        //     apply_id:apply
+        // })
+        if(this.props.chongdae===firebase.auth().currentUser.email || this.state.apply_id.company_email===firebase.auth().currentUser.email){
+
+        }
+        else{
+            console.log("총대가 아닙니다.")
+            alert("권한이 없습니다.")
+            this.setState({modal:!this.state.modal})
+        }
+        // this.setState({
+        //     modal: !this.state.modal
+        // });
+
+    }
+    noAuth(){
+        alert("권한이 없습니다.")
+    }
+
 
     render() {
         console.log(this.props);
         const{applications}=this.props;
-        console.log(applications);
+        // console.log(applications);
         if(isLoaded(applications) && applications){
             return (
                 <div>
@@ -283,29 +521,58 @@ class ApplicationList extends Component{
                         </thead>
 
                     {applications.map((apply,i)=>{
-                        return(
-                                    <tbody>
-                                    <tr>
+                        if(this.props.chongdae===firebase.auth().currentUser.email || apply.company_email===firebase.auth().currentUser.email){
+                            return(
+                                <tbody>
+                                <tr>
 
-                                        <th scope="row">{i+1}</th>
-                                        <td>{apply.company_name}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>지원서 제목</td>
-                                        <td>
-                                            <Button onClick={()=>this.toggle(apply)} >지원서 보기</Button>
+                                    <th scope="row">{i+1}</th>
+                                    <td>{apply.company_name}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>지원서 제목</td>
+                                    <td>
+                                        <Button onClick={()=>this.toggle(apply)} >지원서 보기</Button>
 
-                                        </td>
-                                        <td>
-                                            {/*{console.log("아이디",apply.id)}*/}
-                                            <Button>문의하기</Button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
+                                    </td>
+                                    <td>
+                                        {/*{console.log("아이디",apply.id)}*/}
+                                        <Button>문의하기</Button>
+                                    </td>
+                                </tr>
+                                </tbody>
 
 
 
-                        )
+                            )
+                        }
+                        else{
+                            return(
+                                <tbody>
+                                <tr>
+
+                                    <th scope="row">{i+1}</th>
+                                    <td>{apply.company_name}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>지원서 제목</td>
+                                    <td>
+                                        <Button onClick={this.noAuth}>지원서 보기</Button>
+
+                                    </td>
+                                    <td>
+                                        {/*{console.log("아이디",apply.id)}*/}
+                                        <Button onClick={this.noAuth}>문의하기</Button>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+
+
+                            )
+
+                        }
+
                     })}
                     </Table>
 
@@ -408,7 +675,8 @@ const mapStateToProps = (state, ownProps) => {
       recruitCompany: recruitCompany,
       auth: state.firebase.auth,
         application:state.firestore.ordered.applications,
-        company:state.firestore.ordered.companies
+        company:state.firestore.ordered.companies,
+        user_type:state.auth.user_type
     }
   }
 
@@ -427,6 +695,7 @@ export default compose(
             console.log('user email:', user_email);
 
             return[
+
                 {
                     collection: 'companies',
                     where: [['email', '==', user_email]],
