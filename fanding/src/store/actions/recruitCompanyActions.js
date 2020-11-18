@@ -22,7 +22,8 @@ export const firebase_recruit_save = newRecruitForm => {
             itemPrice: newRecruitForm.itemPrice,
             itemRemain: newRecruitForm.itemRemain,
             shippingMethod: newRecruitForm.shippingMethod,
-            content: newRecruitForm.content
+            content: newRecruitForm.content,
+            isSelected:false
           })
   };
 
@@ -51,7 +52,39 @@ export const company_application_save = newApply =>{
 
 }
 
-export const company_select = selectCom =>{
+export const company_select = Company =>{
+
+    console.log("company_select Action: ",Company.select_email)
+    const firestore = firebase.firestore();
+
+    return (dispatch, getState) => {
+        firestore
+            .collection("users")
+            .doc(Company.chongdae)
+            .update({
+                selectedCompany:Company.select_email
+            })
+            .then(()=>{
+                console.log("성공")
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+
+        firestore
+            .collection("recruitCompanies")
+            .doc(Company.recruit_id)
+            .update({
+                isSelected:true
+            })
+            .then((data)=>{
+                console.log("성공")
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+
+    };
 
 }
 

@@ -13,8 +13,9 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { BsHeart, BsChatSquareDots } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
 import "./company.css"
-import {company_application_save} from '../../../store/actions/recruitCompanyActions'
+import recruitCompanyActions, {company_application_save} from '../../../store/actions/recruitCompanyActions'
 import {check_user_type} from "../../../store/actions/userActions";
+import {company_select} from "../../../store/actions/recruitCompanyActions";
 
 import firebase from  "firebase"
 import App from "../../../App";
@@ -52,7 +53,6 @@ class RecruitFormDetail extends Component{
             modal: !this.state.modal
         });
     }
-
 
     // componentWillReceiveProps() {
     //   console.log("ComponentDidMount");
@@ -120,7 +120,7 @@ class RecruitFormDetail extends Component{
     if(isLoaded(recruitCompany) && recruitCompany)
     {
         // console.log(this.props.match.params.id);
-        console.log(this.props.application);
+        // console.log(this.props.application);
         // console.log(this.props.user_type[0]);
         const{user_type}=this.props
         console.log(user_type[0])
@@ -293,7 +293,7 @@ class RecruitFormDetail extends Component{
 
                            <div>
                                <h3>지원현황</h3>
-                               <ApplicationList applications={this.props.application} chongdae={recruitCompany.user_email}></ApplicationList>
+                               <ApplicationList applications={this.props.application} chongdae={recruitCompany.user_email} dispatchFunc={this.props.company_select}></ApplicationList>
                            </div>
 
                            <div>
@@ -347,10 +347,13 @@ class ApplicationList extends Component{
         super();
         this.state={
             modal:false,
-            select:false,
-            apply_id:""
+            apply_id:"",
+            select_email:"",
+            recruit_id:""
+
         };
         this.toggle=this.toggle.bind(this)
+        this.selectCompany=this.selectCompany.bind(this)
     }
     handleClick=()=>{
         console.log("click");
@@ -376,12 +379,26 @@ class ApplicationList extends Component{
     noAuth(){
         alert("권한이 없습니다.")
     }
-    selectCompany(){
-        this.setState({select:true})
+    selectCompany(email,recruit_id){
+        console.log(email, recruit_id);
+        console.log(this.props);
+
+        this.setState({
+            select_email:email,
+            recruit_id:recruit_id,
+            chongdae:this.props.chongdae
+        },()=>this.props.dispatchFunc(this.state))
+
+        // this.setState({
+        //     select_email:email,
+        //     recruit_id:recruit_id,
+        //     chongdae:this.props.chongdae
+        // })
+
     }
 
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         const{applications}=this.props;
         // console.log(applications);
         if(isLoaded(applications) && applications){
@@ -394,6 +411,7 @@ class ApplicationList extends Component{
                             <th scope="row">업체명</th>
                             <th scope="row">지원서보기</th>
                             <th scope="row">문의하기</th>
+                            {this.props.chongdae===firebase.auth().currentUser.email ? <th>업체선정</th>:null}
                         </tr>
                         </thead>
 
@@ -403,9 +421,7 @@ class ApplicationList extends Component{
                                 <tbody key={i}>
                                 <tr style={{ textAlign: 'center' }}>
                                     <td scope="row">{i+1}</td>
-                                    <td>{apply.company_name}</td>
-                                    {/*<td></td>*/}
-                                    {/*<td></td>*/}
+                                    <td  style={{ textAlign: 'center',width:"30%",margin:"auto" }}>{apply.company_name}</td>
                                     {/*<td>지원서 제목</td>*/}
                                     <td style={{ textAlign: 'center' }}>
                                         <Button onClick={()=>this.toggle(apply)} >지원서 보기</Button>
@@ -413,8 +429,16 @@ class ApplicationList extends Component{
                                     </td>
                                     <td>
                                         {/*{console.log("아이디",apply.id)}*/}
-                                        <Button>문의하기</Button>
+                                        {firebase.auth().currentUser.email==this.props.chongdae ?
+                                            <Button>문의하기</Button>
+                                            :   <Button>내 채팅방으로 이동</Button>
+                                        }
+                                        {/*<Button>문의하기</Button>*/}
                                     </td>
+                                    {firebase.auth().currentUser.email==this.props.chongdae ?
+                                        <td><Button color="primary" onClick={()=>this.selectCompany(apply.company_email,apply.recruit_id,this.props.dispatchFunc)}>업체 선정하기</Button></td>
+                                        :  null
+                                    }
                                 </tr>
                                 </tbody>
 
@@ -429,12 +453,13 @@ class ApplicationList extends Component{
                                     <td scope="row">{i+1}</td>
                                     <td>{apply.company_name}</td>
                                     <td>
-                                        <Button onClick={this.noAuth}>지원서 보기</Button>
+                                        {/*<Button onClick={this.noAuth}>지원서 보기</Button>*/}
+                                        열람 권한이 없습니다.
 
                                     </td>
                                     <td>
                                         {/*{console.log("아이디",apply.id)}*/}
-                                        <Button onClick={this.noAuth}>문의하기</Button>
+                                        <Button onClick={this.noAuth}>X</Button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -464,7 +489,11 @@ class ApplicationList extends Component{
                                         {/*<Button color="primary" onSubmit={this.handleSubmit}>제출하기</Button>{' '}*/}
 
                                         <ModalFooter>
-                                            <Button color="primary" onClick={this.selectCompany}>업체 선정하기</Button>{' '}
+                                            {/*{firebase.auth().currentUser.email==this.props.chongdae ?*/}
+                                            {/*    <Button color="primary" onClick={()=>this.selectCompany(this.state.apply_id)}>업체 선정하기</Button>*/}
+                                            {/*    : <Button color="primary" onClick={this.toggle}>확인</Button>*/}
+                                            {/*}*/}
+                                            {/*<Button color="primary" onClick={this.selectCompany}>업체 선정하기</Button>{' '}*/}
                                             <Button color="secondary" onClick={this.toggle} >닫기</Button>
                                         </ModalFooter>
                                     </div>
@@ -478,12 +507,16 @@ class ApplicationList extends Component{
         }
         else{
             return(
-                <div></div>
+                <div>Loading...</div>
             )
         }
 
+
     }
+
 }
+
+
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -502,7 +535,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        company_application_save: (newApply) => dispatch(company_application_save(newApply)) //creds -> funding
+        company_application_save: (newApply) => dispatch(company_application_save(newApply)), //creds -> funding
+        company_select:(Com)=>dispatch(company_select(Com))
     };
 };
 
