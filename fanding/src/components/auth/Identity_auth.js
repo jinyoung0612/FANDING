@@ -18,6 +18,7 @@ class Identity_auth extends Component{
             .then(data=>data.json())
             .then(data=>{
                 console.log(data);
+                this.setState({accessToken: data})
             });
 
     //     let getData = () =>

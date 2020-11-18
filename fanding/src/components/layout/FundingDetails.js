@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
-    CardSubtitle,Form } from 'reactstrap';
+    CardSubtitle,Form , Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {connect, useSelector} from "react-redux";
 import { Link } from 'react-router-dom';
 import {useFirestoreConnect} from "react-redux-firebase";
 import firebase from "firebase/app"
 import ReactHtmlParser from 'react-html-parser';
 import ModalPortal from "../../ModalPortal";
-import MyModal from "../../MyModal";
+//import MyModal from "../../MyModal";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer} from '@toast-ui/react-editor';
 
@@ -18,22 +18,25 @@ const FundingDetails = (props)=>{
 
     const doc_id=props.match.params.id;
     // console.log(doc_id)
-    useFirestoreConnect([{
+       useFirestoreConnect([{
         collection: 'fundings',
         doc: doc_id
     }]);
 
-    const [isModalOpen,setModal]=useState(false);
+    // const [isModalOpen,setModal]=useState(false);
 
-    const handleOpenModal=()=>{
-        setModal(true);
-    }
-    const handleCloseModal=()=>{
-        setModal(false);
-    }
+    // const handleOpenModal=()=>{
+    //     setModal(true);
+    // }
+    // const handleCloseModal=()=>{
+    //     setModal(false);
+    // }
+
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
 
     const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
-    console.log(funding);
+    //console.log(funding);
     // console.log(props.auth.uid);
     // if(firebase.auth().currentUser){
     //     console.log(firebase.auth().currentUser.uid)
@@ -114,13 +117,31 @@ const FundingDetails = (props)=>{
                             </div>
                             {/*<CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
                             <Button>찜하기</Button>
-                            <Button onClick={handleOpenModal}>펀딩 참여하기</Button>
-                            {isModalOpen && (
-                                <ModalPortal>
-                                    <MyModal onClose={handleCloseModal} funding={funding} fid={doc_id}/>
-                                </ModalPortal>
-                            )}
-                            {/*참여했으면*/}
+                            
+                            {/* <Button onClick={handleOpenModal}>펀딩 참여하기</Button> */}
+                            <Button onClick={toggle}>펀딩 참여하기</Button>
+                            
+                                
+                                
+                                <Modal isOpen={modal} toggle={toggle}>
+                                <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                                <ModalBody>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+                                <Button color="secondary" onClick={toggle}>Cancel</Button>
+                            </ModalFooter>
+                            </Modal>
+                            
+                            
+                            
+                           
+                                
+                                
+                            
+                            
+                            
                             <Button>Notice</Button>
                             <Button>1:1 문의</Button>
 

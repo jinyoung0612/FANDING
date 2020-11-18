@@ -1,7 +1,9 @@
 // import firebase from 'firebase/app';
 const initState = {
   authError: null,
-  user_data:[]
+  user_data:[],
+  user_data2:[]
+
 };
 const authReducer = (state = initState, action) => {
   switch (action.type) {
@@ -60,6 +62,12 @@ const authReducer = (state = initState, action) => {
       return{
         ...state,
         user_data:action.payload.user_data
+      };
+
+    case "loadMainPage":
+      return{
+        ...state,
+        user_data:{...action.payload.user_data}
       }
 
     default:
