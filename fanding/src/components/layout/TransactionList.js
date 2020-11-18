@@ -10,6 +10,7 @@ class TransactionList extends Component{
         const {auth, chongdaes} = this.props;
         console.log('auth', auth);
         console.log('chongdaes', chongdaes);
+        const finNum = '';
 
         if(!isLoaded(auth)){
             return <div> Loading... </div>
@@ -19,10 +20,12 @@ class TransactionList extends Component{
                 return <div>Loading...</div> 
             }else{
                 if(chongdaes[0]!=null){
+                  
                     console.log('chongdae_access_token: ',chongdaes[0].access_token);
                     const access_token = chongdaes[0].access_token;
                     const user_seq_no = chongdaes[0].user_seq_no;
-
+                    const finNum = chongdaes[0].fintech_use_num;
+                    /*
                     // 본인인증한 user 이름, 계좌 정보 가져오기
                     axios.post('/api/user/me',{
                         access_token : access_token,
@@ -34,7 +37,8 @@ class TransactionList extends Component{
                           console.log('user name: ',userName);
                           const result = res.data.res_list[0];
                           console.log('account list: ',result);
-                          const finNum = result.fintech_use_num;
+                          finNum = result.fintech_use_num;
+                          console.log('user/me에서 핀테크이용번호: ',finNum);
                         }
                         else{
                           console.log('account list 불러오기 실패');
@@ -42,7 +46,19 @@ class TransactionList extends Component{
                       })
                       .catch(function(error){
                         console.log(error);
+                      })*/
+                    if(finNum!=null){
+                      // 거래내역 가져오기
+                      console.log("핀테크이용번호: ",finNum);
+                      axios.post('api/account/transaction',{
+                        access_token : access_token,
+                        fintech_use_num: finNum
                       })
+                      .then((res)=>{
+                        const tranList = res.data;
+                        console.log("거래내역 결과:", tranList);
+                      })
+                    }  
                 }
             }//else
         }//uid if
@@ -74,3 +90,43 @@ const mapStateToProps = (state) => {
     })
   )(TransactionList);
   
+  async function getFinNum(chongdaes){
+    console.log('chongdae_access_token: ',chongdaes[0].access_token);
+    const access_token = chongdaes[0].access_token;
+    const user_seq_no = chongdaes[0].user_seq_no;
+
+    // 본인인증한 user 이름, 계좌 정보 가져오기
+    axios.post('/api/user/me',{
+      access_token : access_token,
+      user_seq_no : user_seq_no
+    })
+    .then((res)=>{
+      if(res.data.user_name){
+        const userName = res.data.user_name;
+        console.log('user name: ',userName);
+        const result = res.data.res_list[0];
+        console.log('account list: ',result);
+        const finNum = result.fintech_use_num;
+        const accountHolderName = result.account_holder_name;
+        const bankName = result.bank_name;
+
+        const userMeResult = {
+          user_name : userName,
+          fintech_use_num : finNum,
+          account_holder_name : accountHolderName,
+          bank_name : bankName
+        }
+
+        console.log('getFinNum 속 userMeResult',userMeResult);
+        
+        return finNum;
+      }
+      else{
+        console.log('account list 불러오기 실패');
+      }  
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+
+  }

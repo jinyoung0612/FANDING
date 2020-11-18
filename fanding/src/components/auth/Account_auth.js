@@ -18,7 +18,9 @@ class Account_auth extends Component{
         this.state = {
           access_token: '',
           refresh_token: '',
-          user_seq_no: ''
+          user_seq_no: '',
+          account_num: '',
+          written_bank_name: '',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,12 +35,14 @@ class Account_auth extends Component{
         this.setState({
           [e.target.id]: e.target.value,
         });
+        console.log(this.state)
       };
     
       handleSubmit = (e) => {
         e.preventDefault();
     
         console.log(this.state.access_token);
+        console.log(this.state);
         this.props.verifyChongdae(this.state);
         alert("본인인증이 완료되었습니다.");
       };
@@ -52,14 +56,15 @@ class Account_auth extends Component{
                 <CardHeader tag="h3">본인인증</CardHeader>
                 <CardText className="abs">
                   <small className="text-muted">
-                    본인 인증 완료 시 아래 버튼을 클릭해주세요.
+                    본인인증시 등록한 은행이름과 계좌번호를 입력 후, 아래 버튼을 클릭해주세요.
                   </small>
                 </CardText>
                 <Form onSubmit = {this.handleSubmit}>
                   <Input type="hidden" id="access_token" placeholder={this.state.access_token} onChange={this.handleChange}/>
                   <Input type="hidden" id="refresh_token" placeholder={this.state.refresh_token} onChange={this.handleChange} />
                   <Input type="hidden" id="user_seq_no" placeholder={this.state.user_seq_no} onChange={this.handleChange} />
-        
+                  <Input type="text" id="written_bank_name" placeholder="정확한 은행이름을 입력하세요." onChange={this.handleChange} />
+                  <Input type="text" id="account_num" placeholder="기호없이 숫자만 입력하세요." onChange={this.handleChange} />
                   <br />
                 <Button id='verifyButton' color="warning" >완료</Button>
                 </Form>

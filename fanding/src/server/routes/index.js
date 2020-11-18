@@ -54,11 +54,6 @@ router.post('/api/user/me', (req,res) =>{
     request(option2,function(error,response,body){
         console.log('/user/me');
         var result2 = JSON.parse(body);
-        //console.log('user me result: ',result2);
-        //var userName = result2.user_name;
-        //console.log('user name : ', userName);
-        //var res_list0 = result2.res_list[0];
-        //console.log('res_list[0]: ', res_list0);
        
        res.send(result2);
     })

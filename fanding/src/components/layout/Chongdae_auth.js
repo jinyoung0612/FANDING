@@ -1,21 +1,47 @@
 import React, {Component} from 'react';
-import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { Card, Button, CardTitle, CardText, Row, Col, Form, Input } from 'reactstrap';
 import { Link } from "react-router-dom";
 import { firebase } from 'firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import {verifyChongdae} from '../../store/actions/chongdaeAction';
 
 class Chongdae_auth extends Component{
+
+    constructor(props){
+      super(props);
+
+      this.state = {
+        fintech_use_num: '',
+        user_name: '',
+        bank_name: ''
+      };
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange = (e) => {
+      this.setState({
+        [e.target.id]: e.target.value,
+      });
+    };
+
+    handleSubmit = (e) => {
+      e.preventDefault();
+
+      console.log(this.state.fintech_use_num);
+      this.props.verifyChongdae(this.state);
+      alert("계좌확인이 완료되었습니다.");
+    }
 
     render()
     {
       const {auth, chongdaes} = this.props;
       console.log('auth', auth);
       console.log('chongdaes', chongdaes);
-      //
-
+      
       if(!isLoaded(auth)){
         return <div>Loading...</div>
       }
@@ -28,6 +54,32 @@ class Chongdae_auth extends Component{
           if(chongdaes[0]!=null){
             console.log('chongdae_access_token:',chongdaes[0].access_token);
             const access_token = chongdaes[0].access_token;
+            const user_seq_no = chongdaes[0].user_seq_no;
+            
+                    // 본인인증한 user 이름, 계좌 정보 가져오기
+                axios.post('/api/user/me',{
+                      access_token : access_token,
+                      user_seq_no : user_seq_no
+                    })
+                    .then((res)=>{
+                      if(res.data.user_name){
+                        const result = res.data.res_list[0];
+                        console.log('account list: ',result);
+                        
+                        this.setState({
+                          fintech_use_num: result.fintech_use_num,
+                          user_name: res.data.user_name,
+                          bank_name: result.bank_name
+                        });
+
+                      }
+                      else{
+                        console.log('account list 불러오기 실패');
+                      }  
+                    })
+                    .catch(function(error){
+                      console.log(error);
+                    })
 
             if(access_token!='error'&&access_token!=null){
               return(
@@ -37,6 +89,12 @@ class Chongdae_auth extends Component{
                     <Card body>
                       <CardTitle>본인 인증</CardTitle>
                       <CardText>이미 본인인증이 완료되었습니다.</CardText>
+                      <Form onSubmit = {this.handleSubmit}>
+                        <Input type="text" id="fintech_use_num" placeholder={this.state.fintech_use_num} onChange={this.handleChange}/>
+                        <Input type="text" id="user_name" placeholder={this.state.user_name} onChange={this.handleChange}/>
+                        <Input type="text" id="bank_name" placeholder={this.state.bank_name} onChange={this.handleChange}/>
+                        <Button>계좌 확인</Button>
+                      </Form>
                     </Card>
                   </Col>
                 </Row>
@@ -81,6 +139,11 @@ const mapStateToProps = (state) => {
     authError : state.auth.authError,
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+      verifyChongdae: (creds) => dispatch(verifyChongdae(creds))
+  };
+};
 
 export default compose(
   connect(mapStateToProps),
@@ -94,5 +157,8 @@ export default compose(
         where: [['user_email', '==', user_email]]
       }
     ]
-  })
+  }),
+  connect(mapDispatchToProps)
 )(Chongdae_auth);
+
+
