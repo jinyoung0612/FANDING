@@ -51,6 +51,10 @@ export const company_application_save = newApply =>{
 
 }
 
+export const company_select = selectCom =>{
+
+}
+
 const initialState = {
     auth: null,
     user_data: []
