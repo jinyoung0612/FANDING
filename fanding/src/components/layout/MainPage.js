@@ -11,7 +11,7 @@ import {connect} from "react-redux";
 import SelectedArtist from "./SelectedArtist";
 import {loadMain} from "../../store/actions/searchActions";
 import FundingContents from "./FundingContents";
-
+import {CardDeck} from 'reactstrap';
 const artistsMap = [1, 2, 3];
 class MainPage extends Component {
 
@@ -41,7 +41,9 @@ class MainPage extends Component {
                 console.log("artistSelect 없음");
                 if(isLoaded(fundings)){
                     return(
-                        <div>
+
+                        <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}> 
+
                             {
                                 fundings.map((funding,i)=>{
                                     return(
@@ -50,7 +52,10 @@ class MainPage extends Component {
                                 })
 
                             }
-                        </div>
+                        </CardDeck>
+
+                        
+
                     )
 
                 }

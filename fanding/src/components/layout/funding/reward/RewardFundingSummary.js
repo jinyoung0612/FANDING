@@ -1,9 +1,10 @@
 import React from 'react';
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Row, Col } from 'reactstrap';
 let imgStyle = {
-    maxHeight: '128px',
-    maxWidth: '128px'
+    maxHeight: '200px',
+    maxWidth: '200px'
   }
+
 const FundingSummary = ({funding}) => {
     return(
 
@@ -37,22 +38,23 @@ const FundingSummary = ({funding}) => {
         // {funding.fundingTitle}
         // </h6>
         // </div>
-        <Col md={3}>
-        <Card>
+
+        <Card body style={{width:'15em',flex: '1',
+        backgroundColor: "#ebebeb", height:'20em', margin: '5px'}} >
             
             <CardImg top width="100%" src={funding.url} style={imgStyle} alt="Card image cap" />
             <CardBody>
             <CardTitle>{funding.fundingTitle}</CardTitle>
-            <CardSubtitle>{funding.fundingType}</CardSubtitle>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+            {/* <CardSubtitle>{funding.fundingType}</CardSubtitle> */}
+            <CardText></CardText>
             </CardBody>
 
         </Card>
-        </Col>
+
 
         
     )
 }
-
+// 
 export default FundingSummary;
 

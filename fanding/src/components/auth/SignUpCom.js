@@ -91,11 +91,20 @@ class SignUpCom extends Component {
     const { auth, authError } = this.props;
     if (auth.uid) return <Redirect to="/" />;
     return (
-      <Container className="signform mt-auto">
-        <h2>업체 회원가입</h2>
+
+
+      <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+             <div class="mbr-section-head pb-10">
+                        <h3 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>업체 회원가입</strong></h3>
+                        
+            </div>
+            <Container
+            style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em", 
+            marginTop:"40px"}}>
+        
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
-            <Label for="companyName">상호명</Label>
+            <Label for="companyName"><strong>상호명</strong></Label>
             <Input
               type="text"
               name="companyName"
@@ -104,11 +113,15 @@ class SignUpCom extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <FormGroup>
-            <Label for="companyRegistrationNumber">사업자등록번호</Label>
-            <Button color="warning" className="ml-3" onClick={this.handleClick}>
+          </Form>
+
+          <Label for="companyRegistrationNumber"><strong>사업자등록번호</strong></Label>
+            <Button color="warning" className="ml-3" size="sm" onClick={this.handleClick}>
               중복확인
             </Button>
+          <Form onSubmit={this.handleSubmit}>
+          <FormGroup>
+            
             <Input
               type="text"
               name="companyRegistrationNumber"
@@ -123,7 +136,7 @@ class SignUpCom extends Component {
             ) : null}
           </div>
           <FormGroup>
-            <Label for="corporateRegistrationNumber">법인등록번호</Label>
+            <Label for="corporateRegistrationNumber"><strong>법인등록번호</strong></Label>
             <Input
               type="text"
               name="corporateRegistrationNumber"
@@ -132,15 +145,20 @@ class SignUpCom extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <FormGroup>
-            <Label for="Email">이메일</Label>
+          </Form>
+
+          <Label for="Email"><strong>이메일</strong></Label>
             <Button
               color="warning"
-              className="ml-3"
+              className="ml-3" size="sm" 
               onChange={this.handleClick}
             >
               이메일 인증
             </Button>
+
+          <Form onSubmit={this.handleSubmit}>
+          <FormGroup>
+            
             <Input
               type="email"
               name="email"
@@ -150,7 +168,7 @@ class SignUpCom extends Component {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="Password">비밀번호</Label>
+            <Label for="Password"><strong>비밀번호</strong></Label>
             <Input
               type="password"
               name="password"
@@ -160,9 +178,12 @@ class SignUpCom extends Component {
             />
           </FormGroup>
 
-          <Button>Submit</Button>
+          <Button className="mx-auto" size="lg">가입하기</Button>
         </Form>
+ 
       </Container>
+      </section>
+      
     );
   }
 }

@@ -9,8 +9,32 @@ import {firebaseConnect, isLoaded, isEmpty} from "react-redux-firebase";
 import {connect, useSelector} from "react-redux";
 import MainPageUser from "./MainPage";
 import MainPageCom from "./MainPageCom";
+import {CardDeck, Container} from 'reactstrap';
 //import { MainPageFundingList } from "./MainPageFundingList";
 
+const DefaultLayout= () => {
+    return(
+        <section class="header1 cid-s48MCQYojq mbr-fullscreen mbr-parallax-background" id="header1-f">
+
+    
+
+        <div class="mbr-overlay" style={{opacity: "0.4", backgroundColor: 'rgb(255, 255, 255)'}}></div>
+        
+        <div class="align-center container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <h1 class="mbr-section-title mbr-fonts-style mb-3 display-1"><strong>K-POP 팬을 위한 펀딩 공간</strong></h1>
+                    
+                    <p class="mbr-text mbr-fonts-style display-7">This is a default project. Click any text to edit or style it. Select text to insert a 
+                        <a href="/">test</a>. Click the blue "Gear" icon at the top right corner to hide/show buttons, text, title, and change the block background. Click the red "+" button at the bottom right cor</p>
+                    <div class="mbr-section-btn mt-3"><a class="btn btn-success display-4" href="/">Button 1</a> <a class="btn btn-success-outline display-4" href="https://mobirise.com">Button 2 &gt;</a></div>
+                </div>
+            </div>
+        </div>
+        </section>
+    )
+
+}
 class MainPageDefault extends Component {
 
 
@@ -31,38 +55,49 @@ class MainPageDefault extends Component {
             return (
 
                 <div>
-                    <Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>
+                   <DefaultLayout />
+                    {/* <Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/> */}
                     Loading...
                 {/*    모든펀딩 보여줘야 */}
                 </div>
             )
         }
         else{
-            if(isLoaded(user)&&user.length!=0){
+            if(isLoaded(user)&&user.length!==0){
                 console.log("일반사용자");
                 return(
                     <div>
-                        <Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>
+                        <DefaultLayout />
+                        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+    
+
+                        <Container>
+                        
                         <MainPageUser></MainPageUser>
+
+                      </Container>
+
+
+                        </section>
                     </div>
                 )
             }
-            else if(isLoaded(company)&&company.length!=0){
+            else if(isLoaded(company)&&company.length!==0){
                 console.log("업체");
                 return(
                     <div>
-                        <Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>
+                        <DefaultLayout />
                         <MainPageCom></MainPageCom>
 
                     </div>
                 )
             }
-            else if(user.length==0 && company.length==0){
+            else if(user.length===0 && company.length===0){
                 console.log("로그인 안됨");
 
                 return(
                     <div>
-                        <Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>
+                        <DefaultLayout />
                         {/*<MainPageCom></MainPageCom>*/}
                     </div>
                 )
