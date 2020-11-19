@@ -20,6 +20,8 @@ import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highl
 //chart plugin
 import 'tui-chart/dist/tui-chart.css';
 import chart from '@toast-ui/editor-plugin-chart';
+import {compose} from "redux";
+import {firestoreConnect} from "react-redux-firebase";
 
 
 class CreateFunding extends Component{
@@ -50,25 +52,24 @@ class CreateFunding extends Component{
             shippingDetail:'',
             redirectToReferrer: false,
             content: '',
-            options: [
-                {name:'없음', id:0},
-                {name:'BTS', id:1},
-                {name:'BLACKPINK', id:2},
-                {name:'APINK', id:3},
-                {name:'TXT', id:4},
-                {name:'DAY6', id:5},
-                {name:'TWICE', id:6},
-                {name:'Stray Kids', id:7},
-                {name:'B1A4', id:8},
-                {name:"NU'EST", id:9},
-                {name:'IDLE', id:10},
-                {name:'기타', id:11},
-            ]
+            selectedCom:''
+            // options: [
+            //     {name:'없음', id:0},
+            //     {name:'BTS', id:1},
+            //     {name:'BLACKPINK', id:2},
+            //     {name:'APINK', id:3},
+            //     {name:'TXT', id:4},
+            //     {name:'DAY6', id:5},
+            //     {name:'TWICE', id:6},
+            //     {name:'Stray Kids', id:7},
+            //     {name:'B1A4', id:8},
+            //     {name:"NU'EST", id:9},
+            //     {name:'IDLE', id:10},
+            //     {name:'기타', id:11},
+            // ]
             
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-        
-        
         
     }
     options=[
@@ -103,8 +104,9 @@ class CreateFunding extends Component{
         console.log(e.target.value);
     };
     handleChangeSelect = e => {
+        // console.log(e.value)
         this.setState({
-            artistSelect:e
+            artistSelect:e.value
         });
     };
     handleRadioChange = e => {
@@ -175,7 +177,7 @@ class CreateFunding extends Component{
 
     render()
     {
-
+        console.log(this.props.user);
        
         
         if(this.state.redirectToReferrer===true){
@@ -221,6 +223,10 @@ class CreateFunding extends Component{
                     
                     
                     
+                </FormGroup>
+                <FormGroup>
+                    <Label for="fundingTitle">업체목록 가져오기</Label>
+                    <Select></Select>
                 </FormGroup>
                 
                 <FormGroup>
@@ -398,9 +404,12 @@ class CreateFunding extends Component{
 
 
 const mapStateToProps = (state) => {
+    console.log("mapStateToProps");
     return{
         authError: state.auth.authError,
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        user:state.firestore.ordered.users,
+        company:state.firestore.ordered.companies
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -409,7 +418,51 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(
-    mapStateToProps, //null로 고치면 어떻게 되나?
-    mapDispatchToProps,
-)(CreateFunding);
+export default compose(
+    connect(
+    mapStateToProps,
+    mapDispatchToProps),
+
+    firestoreConnect(props=>{
+
+        const user_email = props.auth.email == null ? "none": props.auth.email;
+        console.log("Compose");
+
+        // console.log(props.user);
+        const company = props.user == null ? "none": props.user
+        console.log(company)
+       if(user_email){
+           return[
+               {
+                   collection:"users",
+                   where:["user_email","==",user_email]
+               },
+               // {
+               //     collection:"companies",
+               //     where: ["email","==",company[0].selectedCompany]
+               // }
+           ]
+       }
+       if(company!=="none"){
+           return[
+
+               {
+                   collection:"companies",
+                   where: ["email","==",company[0].selectedCompany]
+               }
+           ]
+       }
+
+        // return[
+        //     {
+        //         collection:"users",
+        //         where:["user_email","==",user_email]
+        //     },
+        //     // {
+        //     //     collection:"companies",
+        //     //     where: ["email","==",props.user[0].selectedCompany]
+        //     // }
+        // ]
+    })
+
+    )(CreateFunding);
