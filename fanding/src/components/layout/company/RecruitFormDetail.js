@@ -350,7 +350,8 @@ class ApplicationList extends Component{
             modal:false,
             apply_id:"",
             select_email:"",
-            recruit_id:""
+            recruit_id:"",
+            select_name:"",
 
         };
         this.toggle=this.toggle.bind(this)
@@ -380,7 +381,7 @@ class ApplicationList extends Component{
     noAuth(){
         alert("권한이 없습니다.")
     }
-    selectCompany(email,recruit_id){
+    selectCompany(email,recruit_id,name){
         console.log(email, recruit_id);
         console.log(this.props);
         if(this.props.isSelectd===true){
@@ -389,16 +390,17 @@ class ApplicationList extends Component{
         }
         else{
             this.setState({
+                select_name:name,
                 select_email:email,
                 recruit_id:recruit_id,
                 chongdae:this.props.chongdae
             },()=>this.props.dispatchFunc(this.state))
 
-            this.setState({
-                select_email:email,
-                recruit_id:recruit_id,
-                chongdae:this.props.chongdae
-            })
+            // this.setState({
+            //     select_email:email,
+            //     recruit_id:recruit_id,
+            //     chongdae:this.props.chongdae
+            // })
         }
 
 
@@ -443,7 +445,7 @@ class ApplicationList extends Component{
                                         {/*<Button>문의하기</Button>*/}
                                     </td>
                                     {firebase.auth().currentUser.email===this.props.chongdae ?
-                                        <td><Button color="primary" onClick={()=>this.selectCompany(apply.company_email,apply.recruit_id)}>업체 선정하기</Button></td>
+                                        <td><Button color="primary" onClick={()=>this.selectCompany(apply.company_email,apply.recruit_id,apply.company_name)}>업체 선정하기</Button></td>
                                         :  null
                                     }
                                 </tr>

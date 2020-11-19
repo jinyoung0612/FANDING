@@ -62,7 +62,9 @@ export const company_select = Company =>{
             .collection("users")
             .doc(Company.chongdae)
             .update({
-                selectedCompany:Company.select_email
+                selectedCompany:Company.select_email,
+                selectedCompanyName:Company.select_name
+
             })
             .then(()=>{
                 console.log("성공")

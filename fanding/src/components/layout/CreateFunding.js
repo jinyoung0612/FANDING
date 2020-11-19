@@ -21,7 +21,7 @@ import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highl
 import 'tui-chart/dist/tui-chart.css';
 import chart from '@toast-ui/editor-plugin-chart';
 import {compose} from "redux";
-import {firestoreConnect} from "react-redux-firebase";
+import {firestoreConnect, isLoaded} from "react-redux-firebase";
 
 
 class CreateFunding extends Component{
@@ -86,6 +86,9 @@ class CreateFunding extends Component{
         {value: "기타", label:"기타"},
     ];
 
+    // companies=[
+    // ]
+
     animatedComponents =makeAnimated();
 
     handleImageChange = e => {
@@ -104,9 +107,15 @@ class CreateFunding extends Component{
         console.log(e.target.value);
     };
     handleChangeSelect = e => {
-        // console.log(e.value)
+        console.log(e)
         this.setState({
             artistSelect:e.value
+        });
+    };
+    handleChangeCom = e => {
+        console.log(e)
+        this.setState({
+            selectedCom:e.value
         });
     };
     handleRadioChange = e => {
@@ -177,7 +186,7 @@ class CreateFunding extends Component{
 
     render()
     {
-        console.log(this.props.user);
+        console.log(this.props);
        
         
         if(this.state.redirectToReferrer===true){
@@ -224,9 +233,12 @@ class CreateFunding extends Component{
                     
                     
                 </FormGroup>
+                {/*{console.log("user 정보",this.props.user)}*/}
+
                 <FormGroup>
                     <Label for="fundingTitle">업체목록 가져오기</Label>
-                    <Select></Select>
+                    {isLoaded(this.props.user) ? <Select id="selectedCom" components={this.animatedComponents} options={[{value:this.props.user[0].selectedCompany,label:this.props.user[0].selectedCompanyName}]}
+                                                         menuPortalTarget={document.body} onChange={this.handleChangeCom}>Select...</Select> :  <Select>Select...</Select>}
                 </FormGroup>
                 
                 <FormGroup>
@@ -408,8 +420,7 @@ const mapStateToProps = (state) => {
     return{
         authError: state.auth.authError,
         auth: state.firebase.auth,
-        user:state.firestore.ordered.users,
-        company:state.firestore.ordered.companies
+        user:state.firestore.ordered.users
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -428,41 +439,12 @@ export default compose(
         const user_email = props.auth.email == null ? "none": props.auth.email;
         console.log("Compose");
 
-        // console.log(props.user);
-        const company = props.user == null ? "none": props.user
-        console.log(company)
-       if(user_email){
            return[
                {
                    collection:"users",
                    where:["user_email","==",user_email]
                },
-               // {
-               //     collection:"companies",
-               //     where: ["email","==",company[0].selectedCompany]
-               // }
            ]
-       }
-       if(company!=="none"){
-           return[
-
-               {
-                   collection:"companies",
-                   where: ["email","==",company[0].selectedCompany]
-               }
-           ]
-       }
-
-        // return[
-        //     {
-        //         collection:"users",
-        //         where:["user_email","==",user_email]
-        //     },
-        //     // {
-        //     //     collection:"companies",
-        //     //     where: ["email","==",props.user[0].selectedCompany]
-        //     // }
-        // ]
     })
 
     )(CreateFunding);
