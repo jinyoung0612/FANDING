@@ -159,9 +159,9 @@ body {
 }
 .btn-secondary.disabled,
 .btn-secondary:disabled {
-  color: #ffffff !important;
-  background-color: #ff0f0f !important;
-  border-color: #ff0f0f !important;
+  color: #000000 !important;
+  background-color: #c5c5c5 !important;
+  border-color: #c5c5c5 !important;
 }
 .btn-info,
 .btn-info:active {

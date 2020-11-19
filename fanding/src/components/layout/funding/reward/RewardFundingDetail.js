@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase'
+import { firestoreConnect, isLoaded } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container, Row, Col, Button, Progress } from 'reactstrap';
@@ -13,6 +13,7 @@ import {FaShareAlt} from "react-icons/fa";
 import ModalPortal from "../../../../ModalPortal";
 import MyModal from "../../../../MyModal";
 import Test2 from "../../../../components/test2"
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 //import moment from 'moment';
 let imgStyle = {
@@ -20,6 +21,7 @@ let imgStyle = {
     maxWidth: '400px'
   }
   
+ 
 class FundingDetail extends Component{
 
   constructor(props){
@@ -39,6 +41,7 @@ class FundingDetail extends Component{
         })
         */
   }
+  
    handleOpenModal=()=>{
         this.setState({isModalOpen:true})
     }
@@ -60,35 +63,43 @@ class FundingDetail extends Component{
   
   render(){
     console.log(this.state.funding);
-    
-    
+    const url=window.location.href; 
+  
     if(this.state.funding)
     {
       return(
-        <>
-        <Container>
-          
-         <div className="text-center"><h2><b>{this.state.funding.fundingTitle}</b></h2></div> 
+        
+        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+        
+         <Container>  
+         <div className="text-left"><h2><b>{this.state.funding.fundingTitle}</b></h2></div>
+         <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{this.state.funding.artistSelect}</Button>
+         <div className="mt-5">
         <Row xs="2">
           <Col><CardImg top width="10%" src={this.state.funding.url} style={imgStyle} alt="Card image cap" /></Col>
           <Col>
             <div>
               <div className="text-center"><b>80% 달성</b></div>
               <Progress color="info" value="80" />
-              <p><b>257명</b>의 FAN</p>
-              <p><b>15일</b> 남음</p>
-              {/*<Button color="warning" size="xs" block>펀딩하기</Button>*/}
-                <Button onClick={this.handleOpenModal}>펀딩 참여하기</Button>
+              <p className="mt-5"><b>257명</b>의 FAN</p>
+              <p className="mt-3"><b>15일</b> 남음</p>
+              <Row xs="2">
+                <Button color="info" onClick={this.handleOpenModal}>펀딩 참여하기</Button>
                 {/* <Test2></Test2> */}
                 {this.state.isModalOpen && (
                     <ModalPortal>
                         <MyModal onClose={this.handleCloseModal} funding={this.state.funding} fid={this.props.match.params.id}/>
                     </ModalPortal>
                 )}
+              </Row>
               <Row xs="3">
-                <Col><Button color="secondary" size="xs" block><BsHeart />350</Button></Col>
-                <Col><Button color="secondary" size="xs" block><BsChatSquareDots />문의</Button></Col>
-                <Col><Button color="secondary" size="xs" block><FaShareAlt />공유</Button></Col>
+                <Col><Button style={{backgroundColor: '#bfbfbf'}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
+                <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
+                <Col>
+                <CopyToClipboard text={url}>
+                <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                </CopyToClipboard>
+                </Col>
               </Row>
             </div>
           </Col>
@@ -104,8 +115,9 @@ class FundingDetail extends Component{
               initialEditType="wysiwyg"
               />
         </div>
+        </div>
         </Container>
-            </>
+        </section>
       )
     }
     else
