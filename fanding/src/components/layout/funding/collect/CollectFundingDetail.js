@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase'
+import {firestoreConnect, isLoaded} from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
@@ -49,17 +49,20 @@ class CollectFundingDetail extends Component{
   render(){
     //console.log(this.state);
     
-    
-    if(this.state.funding)
+    console.log("props:",this.props.fundings)
+      const{funding}=this.props
+
+      console.log("funding:",funding)
+    if(isLoaded(funding)&&funding)
     {
       return(
         <>
         <Card sm="6">
-            <CardImg top width="10%" src={this.state.funding.url} style={imgStyle} alt="Card image cap" />
+            <CardImg top width="10%" src={funding.url} style={imgStyle} alt="Card image cap" />
             <CardBody>
-            <CardTitle>{this.state.funding.fundingTitle}</CardTitle>
+            <CardTitle>{funding.fundingTitle}</CardTitle>
             <CardSubtitle> subtitle</CardSubtitle>
-            <CardText>{this.state.funding.content}</CardText>
+            <CardText>{funding.content}</CardText>
             </CardBody>
             
             
@@ -67,7 +70,7 @@ class CollectFundingDetail extends Component{
         <div>
              <Viewer
               height="400px"
-              initialValue={this.state.funding.content}
+              initialValue={funding.content}
               ref={this.viewerRef}
               previewStyle="vertical"
               initialEditType="wysiwyg"

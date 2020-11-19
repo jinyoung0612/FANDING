@@ -50,25 +50,24 @@ class CreateFunding extends Component{
             shippingDetail:'',
             redirectToReferrer: false,
             content: '',
-            options: [
-                {name:'없음', id:0},
-                {name:'BTS', id:1},
-                {name:'BLACKPINK', id:2},
-                {name:'APINK', id:3},
-                {name:'TXT', id:4},
-                {name:'DAY6', id:5},
-                {name:'TWICE', id:6},
-                {name:'Stray Kids', id:7},
-                {name:'B1A4', id:8},
-                {name:"NU'EST", id:9},
-                {name:'IDLE', id:10},
-                {name:'기타', id:11},
-            ]
+            selectedCom:''
+            // options: [
+            //     {name:'없음', id:0},
+            //     {name:'BTS', id:1},
+            //     {name:'BLACKPINK', id:2},
+            //     {name:'APINK', id:3},
+            //     {name:'TXT', id:4},
+            //     {name:'DAY6', id:5},
+            //     {name:'TWICE', id:6},
+            //     {name:'Stray Kids', id:7},
+            //     {name:'B1A4', id:8},
+            //     {name:"NU'EST", id:9},
+            //     {name:'IDLE', id:10},
+            //     {name:'기타', id:11},
+            // ]
             
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-        
-        
         
     }
     options=[
@@ -221,6 +220,10 @@ class CreateFunding extends Component{
                     
                     
                     
+                </FormGroup>
+                <FormGroup>
+                    <Label for="fundingTitle">업체목록 가져오기</Label>
+                    <Select></Select>
                 </FormGroup>
                 
                 <FormGroup>

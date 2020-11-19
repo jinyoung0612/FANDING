@@ -230,7 +230,8 @@ class RecruitFormDetail extends Component{
                            <div>
                                <h3>지원현황</h3>
                                {/*<ApplicationList applications={this.props.application}></ApplicationList>*/}
-                               <ApplicationList applications={this.props.application} chongdae={recruitCompany.user_email}></ApplicationList>
+
+                               <ApplicationList applications={this.props.application} chongdae={recruitCompany.user_email} dispatchFunc={this.props.company_select} isSelectd={recruitCompany.isSelected}></ApplicationList>
 
                            </div>
 
@@ -293,7 +294,7 @@ class RecruitFormDetail extends Component{
 
                            <div>
                                <h3>지원현황</h3>
-                               <ApplicationList applications={this.props.application} chongdae={recruitCompany.user_email} dispatchFunc={this.props.company_select}></ApplicationList>
+                               <ApplicationList applications={this.props.application} chongdae={recruitCompany.user_email} dispatchFunc={this.props.company_select} isSelectd={recruitCompany.isSelected}></ApplicationList>
                            </div>
 
                            <div>
@@ -382,18 +383,24 @@ class ApplicationList extends Component{
     selectCompany(email,recruit_id){
         console.log(email, recruit_id);
         console.log(this.props);
+        if(this.props.isSelectd===true){
+            console.log("선정완료")
+            alert("이미 업체를 선정하였습니다.");
+        }
+        else{
+            this.setState({
+                select_email:email,
+                recruit_id:recruit_id,
+                chongdae:this.props.chongdae
+            },()=>this.props.dispatchFunc(this.state))
 
-        this.setState({
-            select_email:email,
-            recruit_id:recruit_id,
-            chongdae:this.props.chongdae
-        },()=>this.props.dispatchFunc(this.state))
+            this.setState({
+                select_email:email,
+                recruit_id:recruit_id,
+                chongdae:this.props.chongdae
+            })
+        }
 
-        // this.setState({
-        //     select_email:email,
-        //     recruit_id:recruit_id,
-        //     chongdae:this.props.chongdae
-        // })
 
     }
 
@@ -429,14 +436,14 @@ class ApplicationList extends Component{
                                     </td>
                                     <td>
                                         {/*{console.log("아이디",apply.id)}*/}
-                                        {firebase.auth().currentUser.email==this.props.chongdae ?
+                                        {firebase.auth().currentUser.email===this.props.chongdae ?
                                             <Button>문의하기</Button>
                                             :   <Button>내 채팅방으로 이동</Button>
                                         }
                                         {/*<Button>문의하기</Button>*/}
                                     </td>
-                                    {firebase.auth().currentUser.email==this.props.chongdae ?
-                                        <td><Button color="primary" onClick={()=>this.selectCompany(apply.company_email,apply.recruit_id,this.props.dispatchFunc)}>업체 선정하기</Button></td>
+                                    {firebase.auth().currentUser.email===this.props.chongdae ?
+                                        <td><Button color="primary" onClick={()=>this.selectCompany(apply.company_email,apply.recruit_id)}>업체 선정하기</Button></td>
                                         :  null
                                     }
                                 </tr>

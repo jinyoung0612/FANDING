@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase'
+import {firestoreConnect, isLoaded} from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container, Row, Col, Button, Progress } from 'reactstrap';
@@ -60,17 +60,17 @@ class FundingDetail extends Component{
   
   render(){
     console.log(this.state.funding);
+    const{funding}=this.props;
     
-    
-    if(this.state.funding)
+    if(isLoaded(funding) && funding)
     {
       return(
         <>
         <Container>
           
-         <div className="text-center"><h2><b>{this.state.funding.fundingTitle}</b></h2></div> 
+         <div className="text-center"><h2><b>{funding.fundingTitle}</b></h2></div>
         <Row xs="2">
-          <Col><CardImg top width="10%" src={this.state.funding.url} style={imgStyle} alt="Card image cap" /></Col>
+          <Col><CardImg top width="10%" src={funding.url} style={imgStyle} alt="Card image cap" /></Col>
           <Col>
             <div>
               <div className="text-center"><b>80% 달성</b></div>
@@ -82,7 +82,7 @@ class FundingDetail extends Component{
                 {/* <Test2></Test2> */}
                 {this.state.isModalOpen && (
                     <ModalPortal>
-                        <MyModal onClose={this.handleCloseModal} funding={this.state.funding} fid={this.props.match.params.id}/>
+                        <MyModal onClose={this.handleCloseModal} funding={funding} fid={this.props.match.params.id}/>
                     </ModalPortal>
                 )}
               <Row xs="3">
@@ -98,7 +98,7 @@ class FundingDetail extends Component{
         <div className="mt-auto">
              <Viewer
               height="400px"
-              initialValue={this.state.funding.content}
+              initialValue={funding.content}
               ref={this.viewerRef}
               previewStyle="vertical"
               initialEditType="wysiwyg"
