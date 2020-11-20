@@ -63,11 +63,7 @@ class SignUp extends Component {
       check_click == true &&
       this.state.nickname != ""
     ) {
-      if (
-        this.state.email != "" &&
-        this.state.password != "" &&
-        this.state.artistSelect != ""
-      ) {
+      if (this.state.email != "" && this.state.password != "") {
         var msg = "이메일인증이 전송되었습니다.";
         this.props.signUp(this.state);
         alert(msg);
@@ -77,9 +73,6 @@ class SignUp extends Component {
       } else if (this.state.password == "") {
         var msg = "비밀번호를 입력해주세요";
         alert(msg);
-      } else if (this.state.artistSelect == "") {
-        var msg = "선호하는 아티스트를 선택해주세요";
-        alert(msg); //아티스트 반드시선정해야되는지 아니라면 굳이 이거할필요없다
       }
     } else {
       var msg = "닉네임 중복확인을 해주세요";
