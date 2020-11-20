@@ -20,7 +20,7 @@ class Account_auth extends Component{
           refresh_token: '',
           user_seq_no: '',
           account_num: '',
-          written_bank_name: '',
+          bank_name: '',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,7 +63,7 @@ class Account_auth extends Component{
                   <Input type="hidden" id="access_token" placeholder={this.state.access_token} onChange={this.handleChange}/>
                   <Input type="hidden" id="refresh_token" placeholder={this.state.refresh_token} onChange={this.handleChange} />
                   <Input type="hidden" id="user_seq_no" placeholder={this.state.user_seq_no} onChange={this.handleChange} />
-                  <Input type="text" id="written_bank_name" placeholder="정확한 은행이름을 입력하세요." onChange={this.handleChange} />
+                  <Input type="text" id="bank_name" placeholder="정확한 은행이름을 입력하세요." onChange={this.handleChange} />
                   <Input type="text" id="account_num" placeholder="기호없이 숫자만 입력하세요." onChange={this.handleChange} />
                   <br />
                 <Button id='verifyButton' color="warning" >완료</Button>

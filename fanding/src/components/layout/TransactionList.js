@@ -3,14 +3,22 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { Card, CardText, CardTitle, Input, Label} from 'reactstrap';
 
 class TransactionList extends Component{
 
+  constructor(props){
+    super(props);
+    this.state={
+      transaction_list : ''
+    }
+  }
+  
     render(){
-        const {auth, chongdaes} = this.props;
+        const {auth, chongdaes, transactionLists} = this.props;
         console.log('auth', auth);
         console.log('chongdaes', chongdaes);
-        const finNum = '';
+        console.log('transactionLists', transactionLists);
 
         if(!isLoaded(auth)){
             return <div> Loading... </div>
@@ -22,43 +30,49 @@ class TransactionList extends Component{
                 if(chongdaes[0]!=null){
                   
                     console.log('chongdae_access_token: ',chongdaes[0].access_token);
-                    const access_token = chongdaes[0].access_token;
-                    const user_seq_no = chongdaes[0].user_seq_no;
-                    const finNum = chongdaes[0].fintech_use_num;
-                    /*
-                    // 본인인증한 user 이름, 계좌 정보 가져오기
-                    axios.post('/api/user/me',{
-                        access_token : access_token,
-                        user_seq_no : user_seq_no
-                      })
-                      .then((res)=>{
-                        if(res.data.user_name){
-                          const userName = res.data.user_name;
-                          console.log('user name: ',userName);
-                          const result = res.data.res_list[0];
-                          console.log('account list: ',result);
-                          finNum = result.fintech_use_num;
-                          console.log('user/me에서 핀테크이용번호: ',finNum);
-                        }
-                        else{
-                          console.log('account list 불러오기 실패');
-                        }  
-                      })
-                      .catch(function(error){
-                        console.log(error);
-                      })*/
-                    if(finNum!=null){
+                    
+                    if(transactionLists[0]!=null){
+                      console.log('transactionLists[0].fintech_use_num: ',transactionLists[0].fintech_use_num);
                       // 거래내역 가져오기
-                      console.log("핀테크이용번호: ",finNum);
-                      axios.post('api/account/transaction',{
-                        access_token : access_token,
-                        fintech_use_num: finNum
-                      })
-                      .then((res)=>{
-                        const tranList = res.data;
-                        console.log("거래내역 결과:", tranList);
-                      })
-                    }  
+                      let currentComponent = this;
+                      getTransactionList(chongdaes,transactionLists,currentComponent)
+                      
+                      console.log("this.state.transaction_list: ",this.state.transaction_list);
+
+                      var Lists = this.state.transaction_list;
+                      
+                      console.log('Lists:',Lists);
+                      var List1 = Lists[0];
+                      var List2 = Lists[1];
+                      var please=[];
+                      for (var key in List1) {
+                        console.log("key: " + key + " / " + List1[key])
+                        please[key]=List1[key];
+                        console.log("please["+key+"] :"+please[key]);
+                     }
+                      console.log(please['print_content']);
+                     
+                      console.log('Lists[0]:',List1);
+                      console.log('typeof: ', typeof(List1));
+                      //console.log('Lists[0].print_content:',List1.print_content);
+                      console.log('Lists[1]:',List2);
+                      return(
+                        <Card body>
+                          <CardTitle>거래내역</CardTitle>
+                        
+                          <Label>입금자1</Label>
+                          <Input placeholder={please['print_content']}/>
+                          <Input placeholder={please['tran_amt']}/>
+                          
+                          
+                          <Label>입금자2</Label>
+                          <Input placeholder={List2}/>
+                          
+                            
+                        </Card>
+                      );
+                    
+                  }   
                 }
             }//else
         }//uid if
@@ -70,11 +84,20 @@ const mapStateToProps = (state) => {
     return {
       uid : state.firebase.auth.uid,
       chongdaes : state.firestore.ordered.chongdaes,
+      transactionLists : state.firestore.ordered.transactionLists,
       auth : state.firebase.auth,
       authError : state.auth.authError,
     }
   }
-  
+
+  /*
+  const mapDispatchToProps = (dispatch) => {
+    console.log(dispatch);
+    return {
+        getTransactionList: (creds) => dispatch(getTransactionList(creds))
+    };
+  };
+  */
   export default compose(
     connect(mapStateToProps),
     firestoreConnect(props=> {
@@ -83,46 +106,45 @@ const mapStateToProps = (state) => {
   
       return[
         {
+          collection: 'transactionLists',
+          where: [['chongdae_email', '==', user_email]],
+        },
+        {
           collection: 'chongdaes',
-          where: [['user_email', '==', user_email]]
-        }
-      ]
+          where: [['user_email', '==', user_email]],
+        },
+      ];
     })
+
+    //connect(null,mapDispatchToProps)
   )(TransactionList);
   
-  async function getFinNum(chongdaes){
+  async function getTransactionList(chongdaes, transactionLists, currentComponent){
     console.log('chongdae_access_token: ',chongdaes[0].access_token);
     const access_token = chongdaes[0].access_token;
-    const user_seq_no = chongdaes[0].user_seq_no;
+    const fintech_use_num = transactionLists[0].fintech_use_num;
 
     // 본인인증한 user 이름, 계좌 정보 가져오기
-    axios.post('/api/user/me',{
+    axios.post('/api/account/transaction',{
       access_token : access_token,
-      user_seq_no : user_seq_no
+      fintech_use_num : fintech_use_num
     })
     .then((res)=>{
-      if(res.data.user_name){
-        const userName = res.data.user_name;
-        console.log('user name: ',userName);
-        const result = res.data.res_list[0];
-        console.log('account list: ',result);
-        const finNum = result.fintech_use_num;
-        const accountHolderName = result.account_holder_name;
-        const bankName = result.bank_name;
-
-        const userMeResult = {
-          user_name : userName,
-          fintech_use_num : finNum,
-          account_holder_name : accountHolderName,
-          bank_name : bankName
-        }
-
-        console.log('getFinNum 속 userMeResult',userMeResult);
+      if(res.data.page_record_cnt){
+        const bankName = res.data.bank_name;
+        console.log('bank name: ',bankName);
+        const result = res.data.res_list;
+        console.log('transaciton list: ',result);
+        console.log('transaciton [0]print_content: ',result[0].print_content);
         
-        return finNum;
+          currentComponent.setState({
+            transaction_list: result
+          });
+        
       }
       else{
-        console.log('account list 불러오기 실패');
+        console.log('transaction list 불러오기 실패');
+        console.log('fail. this.state.trlist: ', currentComponent.state.transaction_list);
       }  
     })
     .catch(function(error){

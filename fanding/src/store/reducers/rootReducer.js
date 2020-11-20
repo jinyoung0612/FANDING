@@ -1,7 +1,7 @@
 import authReducer from "./authReducer";
 import formReducer from "./formReducer";
 import paymentReducer from "./paymentReducer";
-import verifyReducer from "./chongdaeReducer";
+import chongdaeReducer from "./chongdaeReducer";
 import adminReducer from "./adminReducer";
 import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   form: formReducer,
   payment: paymentReducer,
-  verify: verifyReducer,
+  chongdae: chongdaeReducer,
   admin: adminReducer,
   firestore: firestoreReducer,
   firebase: firebaseReducer,

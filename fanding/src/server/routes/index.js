@@ -68,7 +68,9 @@ router.post('/api/account/transaction', (req,res) => {
     console.log('req.body.access_token: ',accessToken);
     console.log('req.body.fintech_use_num: ', finNum);
     
-    var countnum = Math.floor(Math.random()*1000000000)+1;
+
+    var countnum = Math.floor((Math.random()*(1000000000-1)+1));
+
     var bankTranID = "T991666810U" + countnum;
 
     var option3 = {
@@ -83,7 +85,7 @@ router.post('/api/account/transaction', (req,res) => {
             inquiry_type: "A",
             inquiry_base: "D",
             from_date: "20201020",
-            to_date: "20201231",
+            to_date: "20201119",
             sort_order: "D",
             tran_dtime: "20201116170400"
         }

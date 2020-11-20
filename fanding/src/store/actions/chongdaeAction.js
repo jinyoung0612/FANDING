@@ -34,29 +34,40 @@ export const verifyChongdae = (newChongdae) => {
 };
 
 
-export const transactionList = (newTransactionList) => {
-    return (dispatch) => {
+export const getTransactionList = (newTransactionList) => {
+    
+    return (dispatch,getFirestore) => {
         const firestore = firebase.firestore();
         const user = firebase.auth().currentUser;
-        
+        console.log(newTransactionList);
+
+        /*
         this.props.dispatch(loadFundings(this.props.auth.uid))
         const {user_data} = this.props;
-        console.log(this.props);
+        console.log("chongdaeAction_getTran this.props:",this.props);
+        console.log("chongdaeAction getTran user_data.id",user_data.id);
+        */
 
         firestore
-        .collection("transacionLists")
+        .collection("transactionLists")
         .doc()
         .set({
             chongdae_uid: user.uid,
             chongdae_email: user.email,
-            fintech_use_num: newTransactionList,
-            user_name: newTransactionList.username,
+            fintech_use_num: newTransactionList.fintech_use_num,
+            user_name: newTransactionList.user_name,
             bank_name: newTransactionList.bank_name,
-            funding_id: user_data.id
-        })
-    }
+            //funding_id: user_data.id,
+            //transaction_list: newTransactionList.transaction_list
+        }).then(()=>{
+            dispatch({type: "GET_TRANSACTION_LIST_SUCCESS",newTransactionList});
+        }).catch((err) => {
+            dispatch({type: "GET_TRANSACTION_LIST_ERROR", err});
+        });
+    };
 };
 
+/*
 const mapStateToProps = (state) => {
     return{
         authError: state.auth.authError,
@@ -67,3 +78,4 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps
 );
+*/

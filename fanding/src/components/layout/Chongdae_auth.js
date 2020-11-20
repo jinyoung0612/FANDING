@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import {verifyChongdae} from '../../store/actions/chongdaeAction';
+import {verifyChongdae, getTransactionList} from '../../store/actions/chongdaeAction';
 
 class Chongdae_auth extends Component{
 
@@ -16,7 +16,8 @@ class Chongdae_auth extends Component{
       this.state = {
         fintech_use_num: '',
         user_name: '',
-        bank_name: ''
+        bank_name: '',
+        //transaction_list: ''
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,7 +33,7 @@ class Chongdae_auth extends Component{
       e.preventDefault();
 
       console.log(this.state.fintech_use_num);
-      this.props.verifyChongdae(this.state);
+      this.props.getTransactionList(this.state);
       alert("계좌확인이 완료되었습니다.");
     }
 
@@ -53,33 +54,11 @@ class Chongdae_auth extends Component{
         else{
           if(chongdaes[0]!=null){
             console.log('chongdae_access_token:',chongdaes[0].access_token);
-            const access_token = chongdaes[0].access_token;
-            const user_seq_no = chongdaes[0].user_seq_no;
             
-                    // 본인인증한 user 이름, 계좌 정보 가져오기
-                axios.post('/api/user/me',{
-                      access_token : access_token,
-                      user_seq_no : user_seq_no
-                    })
-                    .then((res)=>{
-                      if(res.data.user_name){
-                        const result = res.data.res_list[0];
-                        console.log('account list: ',result);
-                        
-                        this.setState({
-                          fintech_use_num: result.fintech_use_num,
-                          user_name: res.data.user_name,
-                          bank_name: result.bank_name
-                        });
-
-                      }
-                      else{
-                        console.log('account list 불러오기 실패');
-                      }  
-                    })
-                    .catch(function(error){
-                      console.log(error);
-                    })
+            const access_token = chongdaes[0].access_token;
+            
+            let currentComponent = this;
+            getUserMe(chongdaes,currentComponent);
 
             if(access_token!='error'&&access_token!=null){
               return(
@@ -93,7 +72,7 @@ class Chongdae_auth extends Component{
                         <Input type="text" id="fintech_use_num" placeholder={this.state.fintech_use_num} onChange={this.handleChange}/>
                         <Input type="text" id="user_name" placeholder={this.state.user_name} onChange={this.handleChange}/>
                         <Input type="text" id="bank_name" placeholder={this.state.bank_name} onChange={this.handleChange}/>
-                        <Button>계좌 확인</Button>
+                        <Button>핀테크넘버 저장</Button>
                       </Form>
                     </Card>
                   </Col>
@@ -139,9 +118,11 @@ const mapStateToProps = (state) => {
     authError : state.auth.authError,
   }
 }
+
 const mapDispatchToProps = (dispatch) => {
+  console.log(dispatch);
   return {
-      verifyChongdae: (creds) => dispatch(verifyChongdae(creds))
+      getTransactionList: (creds) => dispatch(getTransactionList(creds))
   };
 };
 
@@ -158,7 +139,36 @@ export default compose(
       }
     ]
   }),
-  connect(mapDispatchToProps)
+  connect(null,mapDispatchToProps)
 )(Chongdae_auth);
 
+async function getUserMe(chongdaes, currentComponent){
+  const access_token = chongdaes[0].access_token;
+  const user_seq_no = chongdaes[0].user_seq_no;
+            
+  // 본인인증한 user 이름, 계좌 정보 가져오기
+  axios.post('/api/user/me',{
+      access_token : access_token,
+      user_seq_no : user_seq_no
+    })
+    .then((res)=>{
+      if(res.data.user_name){
+        const result = res.data.res_list[0];
+        console.log('account list: ',result);
+                        
+        currentComponent.setState({
+          fintech_use_num: result.fintech_use_num,
+          user_name: res.data.user_name,
+          bank_name: result.bank_name
+        });
 
+      }
+      else{
+        console.log('account list 불러오기 실패');
+      }  
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+
+}
