@@ -43,7 +43,8 @@ export const firebase_funding_save = newForm => {
             createTime: firebase.firestore.Timestamp.now(),
             content: newForm.content,
             nickname:"",
-            selectedCom:newForm.selectedCom
+            selectedCom:newForm.selectedCom,
+            gift:newForm.gift
 
         }).then(() => {
             dispatch({type: 'CREATEFORM_SUCCESS' , newForm});

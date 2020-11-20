@@ -88,7 +88,40 @@ export const company_select = Company =>{
 
     };
 
-}
+};
+
+export const loadRecruits = (uid) => {
+    return (dispatch, getState) => {
+        const firestore = firebase.firestore();
+        // const user=firebase.auth().currentUser.uid;
+        // console.log(user)
+        // const user="LcveT8eRo9Z0dEwzJGQXl76KtPs1";
+        let rows=[];
+        firestore
+            .collection("recruitCompanies")
+            .where("user_uid","==",uid)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    let data= {};
+
+                    data=doc.data();
+                    data["id"]=doc.id;
+                    rows.push(data)
+                    // console.log(rows)
+
+                })
+
+            })
+            .then(()=> {
+                dispatch({type:"loadMyRecruits",payload: {
+                        recruits:rows
+                    }})
+            });
+
+
+    };
+};
 
 const initialState = {
     auth: null,

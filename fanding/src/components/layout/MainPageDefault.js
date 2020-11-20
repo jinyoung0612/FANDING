@@ -63,7 +63,7 @@ class MainPageDefault extends Component {
                 return(
                     <div>
                         <Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>
-                        {/*<MainPageCom></MainPageCom>*/}
+                        <MainPageCom></MainPageCom>
                     </div>
                 )
 
