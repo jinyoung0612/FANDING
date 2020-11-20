@@ -65,15 +65,15 @@ class SignIn extends Component {
         <div className="row justify-content-center mt-4" >
             <div className="col-lg-8 mx-auto mbr-form" data-form-type="formoid" >
             <Form className="mbr-form form-with-styler mx-auto"onSubmit={this.handleSubmit} >
-            <p class="mbr-text mbr-fonts-style align-center mb-4 display-7">FANDING</p>
+            <p class="mbr-text mbr-fonts-style align-center mb-4 display-7"><strong>FANDING</strong></p>
           <FormGroup>
-            <Label for="Email">이메일</Label>
+            <Label for="Email"><strong>이메일</strong></Label>
             <Input type="email" name="email" id="email" 
             placeholder="이메일을 입력하세요" 
             onChange={this.handleChange}/>
           </FormGroup>
           <FormGroup>
-            <Label for="Password">비밀번호</Label>
+            <Label for="Password"><strong>비밀번호</strong></Label>
             <Input type="password" name="password" id="password" 
             placeholder="비밀번호를 입력하세요" 
             onChange={this.handleChange}/>

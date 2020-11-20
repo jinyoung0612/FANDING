@@ -70,6 +70,14 @@ class Payment extends Component {
 
   render() {
     return (
+      <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+             <div class="mbr-section-head pb-10">
+                        <h3 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>수수료 결제</strong></h3>
+                        
+            </div>
+            <Container
+            style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em", 
+            marginTop:"40px"}}>
       <div>
         <Label>제품이름</Label>
         <Input
@@ -121,10 +129,13 @@ class Payment extends Component {
           onChange={this.handleChange}
         ></Input>
         <div>
-          <Button onClick={this.handleClickPaymentInput}>입력</Button>
+          <Button onClick={this.handleClickPaymentInput}>입력확인</Button>
           <Button onClick={this.handleClickPayment}>결제</Button>
         </div>
+        
       </div>
+      </Container>
+        </section>
     );
   }
 }
