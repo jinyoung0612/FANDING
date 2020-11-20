@@ -254,8 +254,7 @@ class CreateFunding extends Component{
                             placeholder="펀딩 시작일"
                             onChange={this.handleChange}
                         />
-                    </FormGroup>
-                    <FormGroup>
+                    
                         <Input
                             type="time"
                             name="time"
@@ -263,9 +262,9 @@ class CreateFunding extends Component{
                             placeholder="00:00"
                             onChange={this.handleChange}
                         />
-                    </FormGroup>
-                    <Label for="wave" className="mx-auto"><strong>~</strong></Label>
-                    <FormGroup >
+                    
+                    <Label for="wave" className="ml-5 mr-5"><strong>~</strong></Label>
+                    
                         <Input
                             type="date"
                             name="date"
@@ -273,8 +272,7 @@ class CreateFunding extends Component{
                             placeholder="펀딩 종료일"
                             onChange={this.handleChange}
                         />
-                    </FormGroup>
-                    <FormGroup>
+                    
                         <Input
                             type="time"
                             name="time"
