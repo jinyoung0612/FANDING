@@ -1,21 +1,23 @@
 import React from 'react';
 //import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
-import FundingSummary from './CollectFundingSummary';
+import CollectFundingSummary from './CollectFundingSummary';
 import { Link } from 'react-router-dom';
+import { CardDeck } from 'reactstrap';
 
 const CollectFundingList = ({fundings}) => {
     return(
-        <div>
+        <CardDeck style={{display: 'flex', flexDirection: 'row', 
+                    justifyContent: 'left'}}>
+
             { fundings && fundings.map(funding => {
                 return (
                     <Link to={'collect_funding/' + funding.id}>
-                        <FundingSummary funding={funding} key={funding.id} />
+                        <CollectFundingSummary funding={funding} key={funding.id} />
                     </Link>
                 )
             })}
-
-        </div>
-    )
+        </CardDeck>
+    )   
 }
 
 export default CollectFundingList;

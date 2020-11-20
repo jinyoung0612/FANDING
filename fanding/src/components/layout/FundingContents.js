@@ -1,8 +1,11 @@
 import React from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
-    CardSubtitle } from 'reactstrap';
+import { Card, CardTitle, CardText, Row, Col, CardImg, CardBody,
+    CardSubtitle, CardDeck } from 'reactstrap';
 import { Link } from 'react-router-dom';
-
+let imgStyle = {
+    maxHeight: '200px',
+    maxWidth: '200px'
+  }
 const FundingContents = ({funding})=>{
 
 
@@ -16,11 +19,11 @@ const FundingContents = ({funding})=>{
 
     // console.log("Funding Contents:",funding);
     return(
-
+        
         <div>
             <Link to={'funding_detail/'+funding.id} funding={funding}>
-            <Card sm="6">
-                <CardImg src={funding.thumbnailImage}top width="100" alt="Card image cap" />
+            <Card body style={{width:'15em',flex: '1', backgroundColor: "#ebebeb", height:'20em', margin: '5px'}} >
+                <CardImg src={funding.thumbnailImage}top width="100" alt="Card image cap" style={imgStyle}/>
                 <CardBody>
                     <CardTitle>[{funding.artistSelect}] {funding.fundingTitle}</CardTitle>
                     <CardSubtitle> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndTime} {funding.fundingEndTime}</CardSubtitle>
