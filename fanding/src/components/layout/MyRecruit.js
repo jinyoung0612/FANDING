@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {loadRecruits} from "../../store/actions/recruitCompanyActions";
+import {Link} from "react-router-dom";
+import RecruitFormSummary from "./company/RecruitFormSummary";
 
 
 class MyRecruit extends Component {
@@ -26,14 +28,21 @@ class MyRecruit extends Component {
     render(){
         console.log("render");
 
-        const {recruits}=this.props;
+        // const {recruits}=this.props;
         console.log(this.props.recruits);
 
         if(this.props.recruits.length!==0){
-            // console.log(user_data);
-            return(
+            const recruits=Object.values(this.props.recruits);
 
+            return(
                 <div>
+                    { recruits && recruits.map(recruit => {
+                        return (
+                            <Link to={'/find_company/' + recruit.id}>
+                                <RecruitFormSummary recruitCompany={recruit} key={recruit.id} />
+                            </Link>
+                        )
+                    })}
 
                 </div>
             )
@@ -43,7 +52,7 @@ class MyRecruit extends Component {
             return(
 
                 <div>
-                    <h2>생성한 업체 모집글이 없습니다..</h2>
+                    <h2>생성한 업체 모집글이 없습니다</h2>
                 </div>
 
 
