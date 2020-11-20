@@ -15,10 +15,12 @@ import FindCompanyForm from "./components/layout/FindCompanyForm";
 import Payment from "./components/payment/Payment";
 import RewardFunding from "./components/layout/funding/reward/RewardFunding";
 import RewardFundingDetail from "./components/layout/funding/reward/RewardFundingDetail";
-import CollectFunding from './components/layout/funding/collect/CollectFunding';
+import CollectFunding from "./components/layout/funding/collect/CollectFunding";
 import CollectFundingDetail from "./components/layout/funding/collect/CollectFundingDetail";
 import RecruitFormDetail from "./components/layout/company/RecruitFormDetail";
 import CompanyRecruit from "./components/layout/company/CompanyRecruit";
+import QuestionChat from "./components/chatting/questionchat/QuestionChat";
+import TotalChat from "./components/chatting/totalchat/TotalChat";
 
 // import test from './components/layout/test';
 import FundingDetails from "./components/layout/FundingDetails";
@@ -28,7 +30,6 @@ import ReactDOM from "react-dom";
 import MainPageDefault from "./components/layout/MainPageDefault";
 // import MainPage from "./components/layout/MainPage";
 import TransactionList from "./components/layout/TransactionList";
-
 
 class App extends Component {
   render() {
@@ -51,23 +52,31 @@ class App extends Component {
             <Route exact path="/find_company" component={CompanyRecruit} />
             <Route path="/find_company_form" component={FindCompanyForm} />
             <Route path="/payment" component={Payment} />
-            <Route path="/transaction_list" component={TransactionList}/>
+            <Route path="/transaction_list" component={TransactionList} />
 
             <Route exact path="/reward_funding" component={RewardFunding} />
-            <Route exact path="/reward_funding/:id" component={RewardFundingDetail} />
+            <Route
+              exact
+              path="/reward_funding/:id"
+              component={RewardFundingDetail}
+            />
             <Route exact path="/collect_funding" component={CollectFunding} />
-            <Route exact path="/collect_funding/:id" component={CollectFundingDetail} />
+            <Route
+              exact
+              path="/collect_funding/:id"
+              component={CollectFundingDetail}
+            />
             <Route path="/find_company/:id" component={RecruitFormDetail} />
             <Route path="/funding_detail/:id" component={FundingDetails} />
             <Route path="/funding_state/:id" component={FundingState} />
-
+            <Route path="/questionchat" component={QuestionChat} />
+            <Route path="/totalchat" component={TotalChat} />
           </Switch>
         </div>
       </BrowserRouter>
     );
   }
 }
-
 
 // class App extends React.Component {
 //
