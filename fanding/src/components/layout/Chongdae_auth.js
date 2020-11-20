@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { Card, Button, CardTitle, CardText, Row, Col, Container } from 'reactstrap';
 import { Link } from "react-router-dom";
 import { firebase } from 'firebase';
 import { compose } from 'redux';
@@ -58,12 +58,23 @@ class Chongdae_auth extends Component{
           }
           else{
             return(
+              <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                <div class="mbr-section-head pb-10">
+                        
+                        
+            </div>
+
+              <Container style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em", width:'30%',
+            marginTop:"40px"}}>
+              <h4 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>본인 인증</strong></h4>
               <Card body>
-                    <CardTitle>본인 인증</CardTitle>
+                    {/* <CardTitle>본인 인증</CardTitle> */}
                     <CardText>펀딩을 생성하려면 본인 인증이 필요합니다.</CardText>
                     <Button id="verButton" color="warning" 
                     href="https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=qhsl7X3L59LPtU6QfdZNv2d4jYYKKFiY8K2iw2NI&redirect_uri=http://localhost:3000/account_auth&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor" >본인 인증</Button>
               </Card>  
+              </Container>
+              </section>
             );
           }
         }//else

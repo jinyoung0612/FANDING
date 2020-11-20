@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUp } from "../../store/actions/authActions";
-
-
 import {
   Button,
   Form,
@@ -16,28 +14,18 @@ import {
 import { render } from "react-dom";
 import Select from "react-select";
 import makeAnimated from "react-select/animated/dist/react-select.esm";
-
+const style = {
+  control: base => ({
+    ...base,
+    border: 1,
+    // This line disable the blue border
+      boxShadow: 'none',
+  })
+};
 class SignUp extends Component {
   state = {
     email: "",
     password: "",
-    // artist1: "",
-    // artist2: "",
-    // artist3: "",
-    // options: [
-    //   {name:'없음', id:0},
-    //   {name:'BTS', id:1},
-    //   {name:'BLACKPINK', id:2},
-    //   {name:'APINK', id:3},
-    //   {name:'TXT', id:4},
-    //   {name:'DAY6', id:5},
-    //   {name:'TWICE', id:6},
-    //   {name:'Stray Kids', id:7},
-    //   {name:'B1A4', id:8},
-    //   {name:"NU'EST", id:9},
-    //   {name:'IDLE', id:10},
-    //   {name:'기타', id:11},
-    // ],
     artistSelect:""
   };
   options=[
@@ -84,18 +72,54 @@ class SignUp extends Component {
     const { authError, auth } = this.props;
     if (auth.uid) return <Redirect to="/" />;
     return (
-      <Container className="signform mt-auto">
-        <h2>회원가입</h2>
-        <Form>
-          <FormGroup>
-            <Label for="Email">이메일</Label>
-            <Button
-              color="warning"
+      <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+             <div class="mbr-section-head pb-10">
+                        <h3 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>회원가입</strong></h3>
+                        
+            </div>
+            <Container
+            style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em", 
+            marginTop:"40px"}}>
+           
+           <Label className="mr-2" for="Email"><strong>닉네임</strong></Label>
+        <Button
               className="ml-3"
+              color="warning"
               onChange={this.handleClick}
+              size="sm"
+            >
+            중복 확인
+            </Button>
+        <Form>
+          
+          <FormGroup>
+             
+            
+            <Input
+              type="nickname"
+              name="nickname"
+              id="nickname"
+              placeholder="닉네임을 입력하세요"
+              onChange={this.handleChange}
+            />
+            
+          </FormGroup>
+        </Form>
+
+        <Label className="mr-2" for="Email"><strong>이메일</strong></Label>
+        <Button
+              className="ml-3"
+              color="warning"
+              onChange={this.handleClick}
+              size="sm"
             >
               이메일 인증
             </Button>
+        <Form>
+          
+          <FormGroup>
+             
+            
             <Input
               type="email"
               name="email"
@@ -103,9 +127,14 @@ class SignUp extends Component {
               placeholder="이메일을 입력하세요"
               onChange={this.handleChange}
             />
+            
           </FormGroup>
+        </Form>
+
+
+          <Form className="mt-4">
           <FormGroup>
-            <Label for="Password">비밀번호</Label>
+            <Label for="Password"><strong>비밀번호</strong></Label>
             <Input
               type="password"
               name="password"
@@ -115,66 +144,21 @@ class SignUp extends Component {
             />
           </FormGroup>
           </Form>
-          <Form>
-          {/*<FormGroup>*/}
-          {/*  <Label for="SelectMulti">관심아티스트1</Label>*/}
-          {/*  <Input*/}
-          {/*    type="select"*/}
-          {/*    name="selectMulti"*/}
-          {/*    id="artist1"*/}
-          {/*    multiple*/}
-          {/*    onChange={this.handleChange}*/}
-          {/*  >*/}
-          {/*  {*/}
-          {/*    this.state.options.map((e,key) => {*/}
-          {/*    return <option value={e.value}>{e.name}</option>;*/}
-          {/*   })*/}
-          {/*  }*/}
-          {/*  </Input>*/}
-          {/*</FormGroup>*/}
-          {/*<FormGroup>*/}
-          {/*  <Label for="SelectMulti">관심아티스트2</Label>*/}
-          {/*  <Input*/}
-          {/*    type="select"*/}
-          {/*    name="selectMulti"*/}
-          {/*    id="artist2"*/}
-          {/*    multiple*/}
-          {/*    onChange={this.handleChange}*/}
-          {/*  >*/}
-          {/*  {*/}
-          {/*    this.state.options.map((e,key) => {*/}
-          {/*    return <option value={e.value}>{e.name}</option>;*/}
-          {/*   })*/}
-          {/*  }*/}
-          {/*  </Input>*/}
-          {/*</FormGroup>*/}
+          <Form className="mt-4">
 
-          {/*<FormGroup>*/}
-          {/*  <Label for="SelectMulti">관심아티스트3</Label>*/}
-          {/*  <Input*/}
-          {/*    type="select"*/}
-          {/*    name="selectMulti"*/}
-          {/*    id="artist3"*/}
-          {/*    multiple*/}
-          {/*    onChange={this.handleChange}*/}
-          {/*  >*/}
-          {/*  {*/}
-          {/*    this.state.options.map((e,key) => {*/}
-          {/*    return <option value={e.value}>{e.name}</option>;*/}
-          {/*   })*/}
-          {/*  }*/}
-          {/*  </Input>*/}
-          {/*</FormGroup>*/}
             <FormGroup>
-              <Label>관심 아티스트</Label>
-              <Select id="artistSelect" components={this.animatedComponents} options={this.options} menuPortalTarget={document.body} style={{menuPortal:base=>({...base,zIndex:9999})}} isMulti onChange={this.handleChangeSelect}/>
+              <Label><strong>관심 아티스트</strong></Label>
+              <Select styles={style} id="artistSelect" components={this.animatedComponents} options={this.options} menuPortalTarget={document.body} style={{menuPortal:base=>({...base,zIndex:9999})}} isMulti onChange={this.handleChangeSelect}/>
             </FormGroup>
 
             </Form>
-      <Form onSubmit={this.handleSubmit}>
-          <Button>Submit</Button>
+      <Form  onSubmit={this.handleSubmit}>
+          <Button className="mx-auto" size="lg">가입하기</Button>
         </Form>
+
+
       </Container>
+      </section>
     );
   }
 }

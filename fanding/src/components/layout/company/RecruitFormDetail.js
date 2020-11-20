@@ -10,8 +10,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Badge} from 'reactstrap';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Editor, Viewer} from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { BsHeart, BsChatSquareDots } from "react-icons/bs";
-import {FaShareAlt} from "react-icons/fa";
+
 import "./company.css"
 import recruitCompanyActions, {company_application_save} from '../../../store/actions/recruitCompanyActions'
 import {check_user_type} from "../../../store/actions/userActions";
