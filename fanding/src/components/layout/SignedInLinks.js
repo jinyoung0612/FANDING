@@ -1,9 +1,11 @@
 import React from 'react'
 //import { NavLink } from 'react-router-dom'
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { signOut } from '../../store/actions/authActions';
 import { NavLink, NavItem, Button } from 'reactstrap';
 import {BsPeopleCircle, BsBell} from "react-icons/bs"
+import { render } from '@testing-library/react';
+import { isConstructorDeclaration } from 'typescript';
 
 const style = {
   color: 'rgb(0, 0, 0)',
@@ -24,9 +26,9 @@ const style = {
 // }
 
 const SignedInLinks = (props) => {
+
     return (
       
-
           // <>
           // <NavItem>
           //   <NavLink href="#"><BsBell size={24}/></NavLink>
@@ -86,4 +88,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(SignedInLinks)
+export default connect(null, mapDispatchToProps)(SignedInLinks);
+
