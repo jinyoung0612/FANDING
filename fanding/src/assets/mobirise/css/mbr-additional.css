@@ -143,18 +143,18 @@ body {
 }
 .btn-secondary,
 .btn-secondary:active {
-  background-color: #ff6666 !important;
-  border-color: #ff6666 !important;
-  color: #ffffff !important;
+  background-color: #ff6666 ;
+  border-color: #ff6666;
+  color: #ffffff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
 .btn-secondary:hover,
 .btn-secondary:focus,
 .btn-secondary.focus,
 .btn-secondary.active {
-  color: #ffffff !important;
-  background-color: #ff0f0f !important;
-  border-color: #ff0f0f !important;
+  color: #ffffff ;
+  background-color: #ff0f0f ;
+  border-color: #ff0f0f ;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
 .btn-secondary.disabled,

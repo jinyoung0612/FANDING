@@ -41,7 +41,8 @@ export const firebase_funding_save = newForm => {
             shippingFee: newForm.shippingFee,
             shippingDetail: newForm.shippingDetail,
             createTime: firebase.firestore.Timestamp.now(),
-            content: newForm.content
+            content: newForm.content,
+            nickname:""
 
         }).then(() => {
             dispatch({type: 'CREATEFORM_SUCCESS' , newForm});

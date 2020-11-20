@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import {isLoaded} from "react-redux-firebase";
 
 export const loadFundings = (uid) => {
     return (dispatch, getState) => {
@@ -95,6 +96,73 @@ export const loadParticipants = (id) => {
 
     };
 };
+
+export const check_user_type=(email)=>{
+    if(email!=null){
+        return(dispatch,getState)=>{
+            const firestore=firebase.firestore();
+            // console.log(email)
+
+            var type=[];
+            firestore
+                .collection("users")
+                .where("user_email","==",email)
+                .get()
+                .then(function (querySnapshot) {
+                    console.log(querySnapshot.docs.length)
+                    if(querySnapshot.docs.length!=0){
+                        querySnapshot.forEach(function (doc) {
+                            // console.log("doc",doc.data())
+                            type.push("users")
+                            // console.log(type)
+
+                        })
+                    }
+                    else{
+                        firestore
+                            .collection("companies")
+                            .where("email","==",email)
+                            .get()
+                            .then(function (querySnapshot) {
+                                if(querySnapshot.docs.length!=0){
+                                    querySnapshot.forEach(function (doc) {
+                                        console.log(doc.data());
+                                        type.push("company")
+                                        console.log(type)
+
+
+                                    })
+                                }
+
+                            })
+                            .then(()=>{
+                                // console.log(type)
+                                dispatch({type:"CheckUserType",payload: {
+                                        user_type:type
+                                    }})
+                            })
+
+                    }
+
+
+                    })
+                .then(()=>{
+                    // console.log(type)
+                    dispatch({type:"CheckUserType",payload: {
+                            user_type:type
+                        }})
+                })
+
+        }
+    }
+    else{
+        return(dispatch,getState)=>{
+
+        }
+
+    }
+
+}
 
 // import { createAction, handleActions } from 'redux-actions';
 // import firebase from "firebase/app";

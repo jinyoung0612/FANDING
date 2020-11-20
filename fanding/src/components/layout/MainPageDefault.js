@@ -98,7 +98,7 @@ class MainPageDefault extends Component {
                 return(
                     <div>
                         <DefaultLayout />
-                        {/*<MainPageCom></MainPageCom>*/}
+                        <MainPageCom></MainPageCom>
                     </div>
                 )
 
