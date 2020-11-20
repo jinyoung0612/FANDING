@@ -10,7 +10,7 @@ class TransactionList extends Component{
   constructor(props){
     super(props);
     this.state={
-      transaction_list : ''
+      transaction_list : '',
     }
   }
   
@@ -36,42 +36,23 @@ class TransactionList extends Component{
                       // 거래내역 가져오기
                       let currentComponent = this;
                       getTransactionList(chongdaes,transactionLists,currentComponent)
-                      
-                      console.log("this.state.transaction_list: ",this.state.transaction_list);
-
-                      var Lists = this.state.transaction_list;
-                      
-                      console.log('Lists:',Lists);
-                      var List1 = Lists[0];
-                      var List2 = Lists[1];
-                      var please=[];
-                      for (var key in List1) {
-                        console.log("key: " + key + " / " + List1[key])
-                        please[key]=List1[key];
-                        console.log("please["+key+"] :"+please[key]);
-                     }
-                      console.log(please['print_content']);
                      
-                      console.log('Lists[0]:',List1);
-                      console.log('typeof: ', typeof(List1));
-                      //console.log('Lists[0].print_content:',List1.print_content);
-                      console.log('Lists[1]:',List2);
+                      var Lists = this.state.transaction_list;
+                      var transactions = [[],[]];
+                      transactions = storeTransactions(Lists);
+                      console.log("transactions.result", transactions.PromiseResult);
+                      console.log("transactions:",transactions);
+                      console.log("transactions[0]:",transactions[0]);
+                      console.log("transactions[0]['print_content]:",transactions[0]['print_content']);
+                      console.log("transactions[0]['tran_amt]:",transactions[0]['tran_amt']);
+                      console.log("transactions[1]:",transactions[1]);
+
                       return(
                         <Card body>
                           <CardTitle>거래내역</CardTitle>
-                        
-                          <Label>입금자1</Label>
-                          <Input placeholder={please['print_content']}/>
-                          <Input placeholder={please['tran_amt']}/>
-                          
-                          
-                          <Label>입금자2</Label>
-                          <Input placeholder={List2}/>
-                          
-                            
                         </Card>
                       );
-                    
+                    //}
                   }   
                 }
             }//else
@@ -151,4 +132,21 @@ const mapStateToProps = (state) => {
       console.log(error);
     })
 
+  }
+
+  function storeTransactions(Lists){
+    console.log("lists length: ", Lists.length);
+    console.log('Lists:',Lists);
+    var count = Lists.length;
+    var transactions = [[],[]];
+    
+    for(var i=0; i<count; i++){
+      for(var key in Lists[i]){  
+        console.log(Lists[i][key]);
+        transactions[i][key] = Lists[i][key];
+        console.log("transactions["+i+"]["+key+"]:",transactions[i][key]);
+        }
+    }
+
+    return transactions
   }
