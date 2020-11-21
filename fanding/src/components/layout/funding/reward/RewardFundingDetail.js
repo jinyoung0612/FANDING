@@ -40,10 +40,9 @@ class FundingDetail extends Component{
       bank:'',
       accountNumber:'',
       accountName:'',
-      fid:this.props.match.params.id,
-      email:'',
+      email:firebase.auth().currentUser.email,
+      fid: this.props.match.params.id,
       isChatView: false,
-
     };
     this.toggle = this.toggle.bind(this);
     
@@ -71,7 +70,6 @@ class FundingDetail extends Component{
     }
   viewerRef = React.createRef();
 
-
   handleChange=(e)=>{
       console.log(this.state)
       this.setState({
@@ -79,8 +77,6 @@ class FundingDetail extends Component{
       });
 
   }
-
-
 
 handleClickChatView = () => {
     this.setState({ isChatView: true });
