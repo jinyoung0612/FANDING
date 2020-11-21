@@ -3,10 +3,23 @@ import { Link } from "react-router-dom";
 import { Button, NavLink, Col, Form, FormGroup, Label, Input, 
     Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText,
     FormText, CustomInput } from 'reactstrap';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import firebase from 'firebase';
 
 const FindCompany = (props) => {
 
+    useFirestoreConnect([{
+        collection: 'chongdaes',
+        where: [
+            ['user_email','==',firebase.auth().currentUser.email]
+        ]
+    }]);
+
+    const chongdae =useSelector((state)=>state.firestore.ordered.chongdae);
+    console.log(chongdae);
+
+    if(isLoaded(chongdae)){
     return (
         <div>
         <NavLink href="/find_company_form"><Button className="pull-right" outline color="primary">업체모집 폼 생성</Button></NavLink>
@@ -41,7 +54,8 @@ const FindCompany = (props) => {
         </Card>
         </div>
     )    
-    
+  }  
 }
+
 
 export default FindCompany; 
