@@ -14,7 +14,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { BsHeart, BsChatSquareDots, BsFillBellFill } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
 import {Participate_save} from "../../store/actions/userActions";
-import RewardFundingDetail from "./funding/reward/RewardFundingDetail";
+import QuestionChat from "../chatting/questionchat/QuestionChat";
+import {useHistory} from "react-router";
 
 let imgStyle = {
     maxHeight: '500px',
@@ -33,22 +34,25 @@ const FundingDetails = (props)=>{
     }]);
 
         const [inputs, setInputs]=useState({
-        name:'',
-        price:'',
-        date:'',
-        time:'',
-        bank:'',
-        accountNumber:'',
-        accountName:'',
-        email:"",
-        fid:doc_id
-    });
+            name:'',
+            price:'',
+            date:'',
+            time:'',
+            bank:'',
+            accountNumber:'',
+            accountName:'',
+            email:"",
+            fid:doc_id
+
+        });
 
     // const [isModalOpen,setModal]=useState(false);
     const dispatch = useDispatch();
 
 
     const [modal, setModal] = useState(false);
+    const [isChatView, setChat]=useState(false);
+
     const toggle = () => setModal(!modal);
 
     const handleChange = e => {
@@ -67,6 +71,11 @@ const FundingDetails = (props)=>{
         alert("펀딩에 참여하였습니다.");
         setModal(!modal)
     };
+
+    const handleClickChatView=()=>{
+        console.log("chatview");
+        setChat(true);
+    }
 
     const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
     const url=window.location.href;
@@ -88,6 +97,7 @@ const FundingDetails = (props)=>{
     //총대일 때
     if(funding && firebase.auth().currentUser){
         if(firebase.auth().currentUser.uid===funding.user_uid){
+
             if(funding.fundingType==="reward"){
                 return(
 
@@ -259,10 +269,19 @@ const FundingDetails = (props)=>{
         else{
             //리워드형 일때
             if(funding.fundingType==="reward"){
-                return(
+                if(isChatView===true){
+                    // console.log(props.history.location)
+                    return(
 
+                    <QuestionChat funding={funding} history={props.history}></QuestionChat>
+                    )
+                }
+                return(
                     <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                         <Container>
+                            {/*{console.log(props.history)}*/}
+                            {/*{isChatView===true ? <QuestionChat funding={funding} history={props.history}></QuestionChat> :null }*/}
+
                             <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
                             <div className="text-left"><h2><b>{funding.fundingTitle}</b></h2></div>
                             <div className="mt-5">
@@ -361,7 +380,7 @@ const FundingDetails = (props)=>{
                                             </Modal>
                                             <Row xs="3">
                                                 <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
-                                                <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
+                                                <Col><Button onClick={handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
                                                 <Col>
                                                     <CopyToClipboard text={url}>
                                                         <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
@@ -420,6 +439,14 @@ const FundingDetails = (props)=>{
             }
             //모금형 펀딩일때
             else{
+                if(isChatView===true){
+                    // console.log(props.history.location)
+                    return(
+
+                        <QuestionChat funding={funding} history={props.history}></QuestionChat>
+                    )
+                }
+
                 return(
                     <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                         <Container>
@@ -521,10 +548,10 @@ const FundingDetails = (props)=>{
                                             </Modal>
                                             <Row xs="3">
                                                 <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
-                                                <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
+                                                <Col><Button onClick={handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>문의</Button></Col>
                                                 <Col>
                                                     <CopyToClipboard text={url}>
-                                                        <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                                                        <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />공유</Button>
                                                     </CopyToClipboard>
                                                 </Col>
                                             </Row>
@@ -629,6 +656,8 @@ const FundingDetails = (props)=>{
                         </CardBody>
                     </Card>
                 </div>
+                                )
+                                }
                 </Container>
                 </section>
             )
