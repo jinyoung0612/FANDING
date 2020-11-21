@@ -16,14 +16,15 @@ class CompanyRecruit extends Component {
 
     handleSubmit = () => {
         const {chongdae} = this.props;
-
+        console.log("handle submit!!!");
         console.log("function chongdae: ",chongdae);
+        console.log("function chongdae.lenth: ",chongdae.length);
         if(chongdae.length>0){
         console.log("function chongdae[0]: ",chongdae[0]);
         const accessToken = chongdae[0].access_token;
         console.log(accessToken);
         
-            if(accessToken!=null && accessToken!='error'){
+            if(accessToken!=null && accessToken!=='error'){
                 window.location.href = "http://localhost:3000/find_company_form";
             }
             else{
@@ -62,11 +63,12 @@ class CompanyRecruit extends Component {
                         </p>
                     </div>
                 
-                    <NavLink href="/find_company_form">
-                        <div className="text-right" style={{paddingRight:'80px'}}>
-                        <Button className="pull-right" outline color="primary" onClick={this.handleSubmit}>업체모집 폼 생성</Button>
+                    
+                        <div className="text-right" style={{paddingRight:'80px'}} >
+                        <Button outline color="primary" onClick={this.handleSubmit}>
+                            업체모집 폼 생성</Button>
                         </div>
-                    </NavLink>
+                    
                     <RecruitFormList recruitCompanies={recruitCompanies} />
                 </Container>
             </section>

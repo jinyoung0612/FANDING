@@ -16,9 +16,9 @@ import firebase from "firebase";
 
 //import moment from 'moment';
 let imgStyle = {
-    maxHeight: '400px',
-    maxWidth: '400px'
-  }
+  maxHeight: '500px',
+  maxWidth: '700px'
+}
   
 class CollectFundingDetail extends Component{
 

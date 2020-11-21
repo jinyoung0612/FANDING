@@ -25,9 +25,14 @@ const DefaultLayout= () => {
                 <div class="col-12 col-lg-8">
                     <h1 class="mbr-section-title mbr-fonts-style mb-3 display-1"><strong>K-POP 팬을 위한 펀딩 공간</strong></h1>
                     
-                    <p class="mbr-text mbr-fonts-style display-7">This is a default project. Click any text to edit or style it. Select text to insert a 
-                        <a href="/">test</a>. Click the blue "Gear" icon at the top right corner to hide/show buttons, text, title, and change the block background. Click the red "+" button at the bottom right cor</p>
-                    <div class="mbr-section-btn mt-3"><a class="btn btn-success display-4" href="/">Button 1</a> <a class="btn btn-success-outline display-4" href="https://mobirise.com">Button 2 &gt;</a></div>
+                    <p class="mbr-text mbr-fonts-style display-7">
+                        <strong>FANDING은 K-POP 팬을 위한 크라우드 펀딩 서비스입니다. 
+                        이제 여러 플랫폼을 사용하지 말고 FANDING만을 사용하여 크라우드 펀딩을 시작해보세요!
+                        </strong></p>
+                        
+                    <div class="mbr-section-btn mt-3">
+                        <a class="btn btn-success-outline display-4" href="/">메뉴얼 &gt;</a>
+                        <a class="btn btn-success-outline display-4" href="/">둘러보기 &gt;</a></div>
                 </div>
             </div>
         </div>
