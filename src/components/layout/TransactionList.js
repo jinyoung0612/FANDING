@@ -15,45 +15,41 @@ class TransactionList extends Component{
   }
   
     render(){
-        const {auth, chongdaes, transactionLists} = this.props;
+        const {auth, transactionLists} = this.props;
         console.log('auth', auth);
-        console.log('chongdaes', chongdaes);
+        //console.log('chongdaes', chongdaes);
         console.log('transactionLists', transactionLists);
 
         if(!isLoaded(auth)){
             return <div> Loading... </div>
         }
         if(this.props.auth.uid){
-            if(!isLoaded(chongdaes)){
+            if(!isLoaded(transactionLists)){
                 return <div>Loading...</div> 
-            }else{
-                if(chongdaes[0]!=null){
-                  
-                    console.log('chongdae_access_token: ',chongdaes[0].access_token);
-                    
+            }else{  
                     if(transactionLists[0]!=null){
                       console.log('transactionLists[0].fintech_use_num: ',transactionLists[0].fintech_use_num);
                       // 거래내역 가져오기
                       let currentComponent = this;
-                      getTransactionList(chongdaes,transactionLists,currentComponent)
+                      getTransactionList(transactionLists,currentComponent)
                      
                       var Lists = this.state.transaction_list;
-                      var transactions = [[],[]];
+                      var transactions = Array(25).fill(null).map(()=>Array());
                       transactions = storeTransactions(Lists);
                       console.log("transactions.result", transactions.PromiseResult);
                       console.log("transactions:",transactions);
                       console.log("transactions[0]:",transactions[0]);
                       console.log("transactions[0]['print_content]:",transactions[0]['print_content']);
-                      console.log("transactions[0]['tran_amt]:",transactions[0]['tran_amt']);
+                      console.log("transactions[2]['tran_amt]:",transactions[2]['tran_amt']);
                       console.log("transactions[1]:",transactions[1]);
+                      console.log("transactions[2]:",transactions[2]);
+                      console.log("transactions[3]:",transactions[3]);
 
                       return(
                         <Card body>
                           <CardTitle>거래내역</CardTitle>
                         </Card>
                       );
-                    //}
-                  }   
                 }
             }//else
         }//uid if
@@ -89,20 +85,16 @@ const mapStateToProps = (state) => {
         {
           collection: 'transactionLists',
           where: [['chongdae_email', '==', user_email]],
-        },
-        {
-          collection: 'chongdaes',
-          where: [['user_email', '==', user_email]],
-        },
+        }
       ];
     })
 
     //connect(null,mapDispatchToProps)
   )(TransactionList);
   
-  async function getTransactionList(chongdaes, transactionLists, currentComponent){
-    console.log('chongdae_access_token: ',chongdaes[0].access_token);
-    const access_token = chongdaes[0].access_token;
+  async function getTransactionList(transactionLists, currentComponent){
+    console.log('chongdae_access_token: ',transactionLists[0].access_token);
+    const access_token = transactionLists[0].access_token;
     const fintech_use_num = transactionLists[0].fintech_use_num;
 
     // 본인인증한 user 이름, 계좌 정보 가져오기
@@ -138,7 +130,7 @@ const mapStateToProps = (state) => {
     console.log("lists length: ", Lists.length);
     console.log('Lists:',Lists);
     var count = Lists.length;
-    var transactions = [[],[]];
+    var transactions = Array(25).fill(null).map(()=>Array());
     
     for(var i=0; i<count; i++){
       for(var key in Lists[i]){  
@@ -150,3 +142,5 @@ const mapStateToProps = (state) => {
 
     return transactions
   }
+
+  

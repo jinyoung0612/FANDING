@@ -47,6 +47,7 @@ export const getTransactionList = (newTransactionList) => {
         .set({
             chongdae_uid: user.uid,
             chongdae_email: user.email,
+            access_token: newTransactionList.access_token,
             fintech_use_num: newTransactionList.fintech_use_num,
             user_name: newTransactionList.user_name,
             bank_name: newTransactionList.bank_name,

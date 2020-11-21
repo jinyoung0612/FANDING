@@ -14,6 +14,7 @@ class Chongdae_auth extends Component{
       super(props);
 
       this.state = {
+        access_token: '',
         fintech_use_num: '',
         user_name: '',
         bank_name: '',
@@ -56,7 +57,8 @@ class Chongdae_auth extends Component{
             console.log('chongdae_access_token:',chongdaes[0].access_token);
             
             const access_token = chongdaes[0].access_token;
-            
+            this.state.access_token = access_token;
+
             let currentComponent = this;
             getUserMe(chongdaes,currentComponent);
 
@@ -69,6 +71,7 @@ class Chongdae_auth extends Component{
                       <CardTitle>본인 인증</CardTitle>
                       <CardText>이미 본인인증이 완료되었습니다.</CardText>
                       <Form onSubmit = {this.handleSubmit}>
+                        <Input type="text" id="access_token" placeholder={this.state.access_token} onChange={this.handleChange}/>
                         <Input type="text" id="fintech_use_num" placeholder={this.state.fintech_use_num} onChange={this.handleChange}/>
                         <Input type="text" id="user_name" placeholder={this.state.user_name} onChange={this.handleChange}/>
                         <Input type="text" id="bank_name" placeholder={this.state.bank_name} onChange={this.handleChange}/>
