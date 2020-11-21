@@ -10,6 +10,7 @@ import {connect, useSelector} from "react-redux";
 import MainPageUser from "./MainPage";
 import MainPageCom from "./MainPageCom";
 import {CardDeck, Container} from 'reactstrap';
+import {Link, animateScroll as scroll} from "react-scroll";
 //import { MainPageFundingList } from "./MainPageFundingList";
 
 const DefaultLayout= () => {
@@ -32,7 +33,10 @@ const DefaultLayout= () => {
                         
                     <div class="mbr-section-btn mt-3">
                         <a class="btn btn-success-outline display-4" href="/">메뉴얼 &gt;</a>
-                        <a class="btn btn-success-outline display-4" href="/">둘러보기 &gt;</a></div>
+                        <a class="btn btn-success-outline display-4" href="/">
+                            <Link activeClass="active" to="gallery5-q" spy={true} smooth={true}>둘러보기 &gt;</Link>
+                            </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,13 +78,14 @@ class MainPageDefault extends Component {
                     <div>
                         <DefaultLayout />
                         <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-    
+                
 
                         <Container>
                         
                         <MainPageUser></MainPageUser>
-
-                      </Container>
+                        </Container>
+                           
+                      
 
 
                         </section>
