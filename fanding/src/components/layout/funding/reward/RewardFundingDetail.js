@@ -63,8 +63,8 @@ class FundingDetail extends Component{
       bank:'',
       accountNumber:'',
       accountName:'',
-      email:'',
-
+      email:firebase.auth().currentUser.email,
+      fid: this.props.match.params.id
     };
     this.toggle = this.toggle.bind(this);
     
@@ -91,6 +91,13 @@ class FundingDetail extends Component{
         });
     }
   viewerRef = React.createRef();
+
+  handleChange=(e)=>{
+    console.log(this.state)
+    this.setState({
+        [e.target.name]: e.target.value,
+    });
+  }
 
   handleSubmit=(e)=>{
     e.preventDefault();

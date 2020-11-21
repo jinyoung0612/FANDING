@@ -54,7 +54,8 @@ export const Participate_save = (newForm) => {
                 accountName:newForm.accountName,
                 email:newForm.email,
                 fid:newForm.fid,
-                uid:firebase.auth().currentUser.uid
+                uid:firebase.auth().currentUser.uid,
+                isChecked: false,
 
         }).then(() => {
             dispatch({type: 'PARTICIPATE_SUCCESS' , newForm});
@@ -162,6 +163,27 @@ export const check_user_type=(email)=>{
 
     }
 
+}
+
+export const check_deposit = (user) => {
+    console.log("user_email: ",user.email);
+    const firestore = firebase.firestore();
+
+    return (dispatch, getState) => {
+        firestore
+        .collection("participation")
+        .where("user_email","==", user.email)
+        .get()
+        .update({
+            isChecked: true
+        })
+        .then(()=>{
+            console.log("참여자 입금확인 성공")
+        })
+        .catch((err)=>{
+            console.log("참여자 입금확인 실패",err)
+        })
+    }
 }
 
 // import { createAction, handleActions } from 'redux-actions';

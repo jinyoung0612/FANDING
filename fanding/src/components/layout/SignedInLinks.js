@@ -1,9 +1,11 @@
 import React from 'react'
 //import { NavLink } from 'react-router-dom'
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { signOut } from '../../store/actions/authActions';
 import { NavLink, NavItem, Button } from 'reactstrap';
 import {BsPeopleCircle, BsBell} from "react-icons/bs"
+import {useFirestoreConnect} from "react-redux-firebase";
+import firebase from 'firebase';
 
 const style = {
   color: 'rgb(0, 0, 0)',
@@ -24,6 +26,37 @@ const style = {
 // }
 
 const SignedInLinks = (props) => {
+
+  useFirestoreConnect([{
+    collection: 'chongdaes',
+    where: [
+        ['user_email','==',firebase.auth().currentUser.email]
+    ]
+  }]);
+
+  const chongdae =useSelector((state)=>state.firestore.ordered.chongdaes);
+  console.log(chongdae);
+
+  const checkVerificationHandler = () => {
+    if(chongdae.length>0){
+      console.log("function chongdae[0]: ",chongdae[0]);
+      const accessToken = chongdae[0].access_token;
+      console.log(accessToken);
+      
+          if(accessToken!=null && accessToken!='error'){
+              window.location.href = "http://localhost:3000/create_funding";
+          }
+          else{
+              alert("총대인증이 안돼있습니다. 펀딩을 생성 하기 위해선 총대 인증을 먼저 하세요.");
+              window.location.href = "http://localhost:3000/chongdae";    
+          }
+      }
+      else{
+          alert("총대인증이 안돼있습니다. 펀딩을 생성 하기 위해선 총대 인증을 먼저 하세요.");
+          window.location.href = "http://localhost:3000/chongdae";
+      }
+  }
+
     return (
       
 
@@ -64,7 +97,7 @@ const SignedInLinks = (props) => {
             </NavItem>
             </div>
             <div class="navbar-buttons mbr-section-btn">
-              <a class="btn btn-info display-4" href="/create_funding">펀딩 생성</a>
+              <a class="btn btn-info display-4" onClick={checkVerificationHandler}>펀딩 생성</a>
             </div>
                 <div className="navbar-buttons mbr-section-btn">
                     <a className="btn btn-info display-4" href="/chongdae">총대 인증</a>
