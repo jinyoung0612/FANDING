@@ -2,8 +2,8 @@
 const initState = {
   authError: null,
   user_data:[],
-  user_data2:[],
-  user_type:[]
+  user_type:[],
+  recruits:[]
 
 };
 const authReducer = (state = initState, action) => {
@@ -69,11 +69,16 @@ const authReducer = (state = initState, action) => {
       return{
         ...state,
         user_data:{...action.payload.user_data}
-      }
+      };
     case "CheckUserType":
       return{
         ...state,
         user_type:{...action.payload.user_type}
+      };
+    case "loadMyRecruits":
+      return{
+        ...state,
+        recruits:{...action.payload.recruits}
       }
 
 

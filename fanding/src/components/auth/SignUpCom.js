@@ -49,9 +49,28 @@ class SignUpCom extends Component {
       check_click == true &&
       this.state.companyRegistrationNumber != ""
     ) {
-      var msg = "이메일인증이 전송되었습니다.";
-      alert(msg);
-      this.props.signUpCom(this.state);
+      if (
+        this.state.email != "" &&
+        this.state.password != "" &&
+        this.state.corporateRegistrationNumber != "" &&
+        this.state.companyName != ""
+      ) {
+        var msg = "이메일인증이 전송되었습니다.";
+        this.props.signUpCom(this.state);
+        alert(msg);
+      } else if (this.state.email == "") {
+        var msg = "이메일을 입력해주세요";
+        alert(msg);
+      } else if (this.state.password == "") {
+        var msg = "비밀번호를 입력해주세요";
+        alert(msg);
+      } else if (this.state.corporateRegistrationNumber == "") {
+        var msg = "법인등록번호를 입력해주세요";
+        alert(msg);
+      } else if (this.state.companyName == "") {
+        var msg = "상호명을 입력해주세요";
+        alert(msg);
+      }
     } else {
       var msg = "사업자등록번호 중복확인을 해주세요";
       alert(msg);
@@ -91,99 +110,116 @@ class SignUpCom extends Component {
     const { auth, authError } = this.props;
     if (auth.uid) return <Redirect to="/" />;
     return (
-
-
       <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-             <div class="mbr-section-head pb-10">
-                        <h3 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>업체 회원가입</strong></h3>
-                        
+        <div class="mbr-section-head pb-10">
+          <h3 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 ">
+            <strong>업체 회원가입</strong>
+          </h3>
+        </div>
+        <Container
+          style={{
+            backgroundColor: "#fafafa",
+            borderRadius: "10px",
+            padding: "3em 2em",
+            marginTop: "40px",
+          }}
+        >
+          <Form onSubmit={this.handleSubmit}>
+            <FormGroup>
+              <Label for="companyName">
+                <strong>상호명</strong>
+              </Label>
+              <Input
+                type="text"
+                name="companyName"
+                id="companyName"
+                placeholder="상호명을 입력하세요"
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+          </Form>
+
+          <Label for="companyRegistrationNumber">
+            <strong>사업자등록번호</strong>
+          </Label>
+          <Button
+            color="warning"
+            className="ml-3"
+            size="sm"
+            onClick={this.handleClick}
+          >
+            중복확인
+          </Button>
+          <Form onSubmit={this.handleSubmit}>
+            <FormGroup>
+              <Input
+                type="text"
+                name="companyRegistrationNumber"
+                id="companyRegistrationNumber"
+                placeholder="사업자등록번호를 입력하세요"
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <div>
+              {this.state.companyRegNum_Check === true ? (
+                <div>사업자등록번호가 중복입니다</div>
+              ) : null}
             </div>
-            <Container
-            style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em", 
-            marginTop:"40px"}}>
-        
-        <Form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <Label for="companyName"><strong>상호명</strong></Label>
-            <Input
-              type="text"
-              name="companyName"
-              id="companyName"
-              placeholder="상호명을 입력하세요"
-              onChange={this.handleChange}
-            />
-          </FormGroup>
+            <FormGroup>
+              <Label for="corporateRegistrationNumber">
+                <strong>법인등록번호</strong>
+              </Label>
+              <Input
+                type="text"
+                name="corporateRegistrationNumber"
+                id="corporateRegistrationNumber"
+                placeholder="법인등록번호를 입력하세요"
+                onChange={this.handleChange}
+              />
+            </FormGroup>
           </Form>
 
-          <Label for="companyRegistrationNumber"><strong>사업자등록번호</strong></Label>
-            <Button color="warning" className="ml-3" size="sm" onClick={this.handleClick}>
-              중복확인
-            </Button>
+          <Label for="Email">
+            <strong>이메일</strong>
+          </Label>
+          <Button
+            color="warning"
+            className="ml-3"
+            size="sm"
+            onChange={this.handleClick}
+          >
+            이메일 인증
+          </Button>
+
           <Form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            
-            <Input
-              type="text"
-              name="companyRegistrationNumber"
-              id="companyRegistrationNumber"
-              placeholder="사업자등록번호를 입력하세요"
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <div>
-            {this.state.companyRegNum_Check === true ? (
-              <div>사업자등록번호가 중복입니다</div>
-            ) : null}
-          </div>
-          <FormGroup>
-            <Label for="corporateRegistrationNumber"><strong>법인등록번호</strong></Label>
-            <Input
-              type="text"
-              name="corporateRegistrationNumber"
-              id="corporateRegistrationNumber"
-              placeholder="법인등록번호를 입력하세요"
-              onChange={this.handleChange}
-            />
-          </FormGroup>
+            <FormGroup>
+              <Input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="이메일을 입력하세요"
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="Password">
+                <strong>비밀번호</strong>
+              </Label>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="비밀번호를 입력하세요"
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+
+            <Button className="mx-auto" size="lg">
+              가입하기
+            </Button>
           </Form>
-
-          <Label for="Email"><strong>이메일</strong></Label>
-            <Button
-              color="warning"
-              className="ml-3" size="sm" 
-              onChange={this.handleClick}
-            >
-              이메일 인증
-            </Button>
-
-          <Form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            
-            <Input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="이메일을 입력하세요"
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="Password"><strong>비밀번호</strong></Label>
-            <Input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="비밀번호를 입력하세요"
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-
-          <Button className="mx-auto" size="lg">가입하기</Button>
-        </Form>
- 
-      </Container>
+        </Container>
       </section>
-      
     );
   }
 }

@@ -18,37 +18,14 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {Participate_save} from '../../../../store/actions/userActions'
 import firebase from "firebase";
 //import DaumPostcode from 'react-daum-postcode';
+import QuestionChat from "../../../chatting/questionchat/QuestionChat";
+
 let imgStyle = {
     maxHeight: '500px',
     maxWidth: '700px'
   }
   
- //다음 우편번호 API
-//  const Postcode = () => {
-//   const handleComplete = (data) => {
-//     let fullAddress = data.address;
-//     let extraAddress = ''; 
-    
-//     if (data.addressType === 'R') {
-//       if (data.bname !== '') {
-//         extraAddress += data.bname;
-//       }
-//       if (data.buildingName !== '') {
-//         extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
-//       }
-//       fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
-//     }
 
-//     console.log(fullAddress);  // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-//   }
-
-//   return (
-//     <DaumPostcode
-//       onComplete={handleComplete}
-//       { ...props }
-//     />
-//   );
-// }
 class FundingDetail extends Component{
 
   constructor(props){
@@ -64,6 +41,7 @@ class FundingDetail extends Component{
       accountNumber:'',
       accountName:'',
       email:'',
+isChatView: false,
 
     };
     this.toggle = this.toggle.bind(this);
@@ -110,7 +88,11 @@ class FundingDetail extends Component{
     {
       return(
         
-        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+<div>
+ {this.state.isChatView === true ? ( <QuestionChat funding={this.props.funding}
+history={this.props.history}>
+</QuestionChat>
+) : (        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
         
          <Container>  
          <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>  
@@ -255,7 +237,8 @@ class FundingDetail extends Component{
       </Row>
       </div>
         </Container>
-        </section>
+        </section>)
+</div>
       )
     }
     else

@@ -6,6 +6,7 @@ Container} from 'reactstrap';
 import classnames from 'classnames';
 import TabPane3 from './TabPane3';
 import MyFunding from "./MyFunding";
+import MyRecruit from "./MyRecruit";
 import {connect} from 'react-redux';
 import MyParticipation from "./MyParticipation";
 import SideBar from "./SideBar"
@@ -74,6 +75,14 @@ console.log(props)
                   className={classnames({ active: activeTab === '5' })}
                   onClick={() => { toggle('5'); }}
               >
+                내가 만든 업체 모집글 관리
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                  className={classnames({ active: activeTab === '6' })}
+                  onClick={() => { toggle('6'); }}
+              >
                 마이 위시리스트
               </NavLink>
             </NavItem>
@@ -103,6 +112,9 @@ console.log(props)
             <TabPane tabId="4">
               <MyParticipation/>
             </TabPane>
+            <TabPane tabId="5">
+              <MyRecruit></MyRecruit>
+            </TabPane>
           </TabContent>
         </Container>
         </section>
@@ -116,6 +128,8 @@ console.log(props)
     )
   }
 }
+
+
 
 const mapStateToProps = (state) => {
   return{
