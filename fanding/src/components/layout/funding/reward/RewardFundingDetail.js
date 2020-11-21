@@ -40,7 +40,7 @@ class FundingDetail extends Component{
       bank:'',
       accountNumber:'',
       accountName:'',
-      fid:this.props.match.params.id
+      fid:this.props.match.params.id,
       email:'',
       isChatView: false,
 
