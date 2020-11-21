@@ -34,7 +34,8 @@ export const loadFundings = (uid) => {
     };
 };
 
-export const Participate_save = (newForm) => {
+export const Participate_save = (newForm,fid,progress) => {
+    // console.log(fid)
 
     return (dispatch, getState) => {
         // make async call to database
@@ -61,6 +62,23 @@ export const Participate_save = (newForm) => {
         }).catch((err) => {
             dispatch( {type: "PARTICIPATE_ERROR", err})
         })
+
+        firestore
+            .collection("fundings")
+            .doc(fid)
+            .update({
+                progress:progress+1
+            })
+            .then(()=>{
+                console.log("성공")
+                dispatch({type:'ProgressUpdate_SUCCESS',progress});
+            })
+            .catch((err)=>{
+                console.log(err)
+                dispatch({type:"ProgressUpdate_ERROR",err})
+            })
+
+
 
     };
 

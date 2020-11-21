@@ -73,7 +73,7 @@ const FundingState = (props)=>{
     // }));
     
 
-    if(participants.length!==0){
+    if(participants.length!==0 && participants){
 
         return(
             <div>

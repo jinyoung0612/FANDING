@@ -2,6 +2,7 @@ import React, {Component, useState} from 'react';
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container,
     Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect, useSelector, useDispatch} from "react-redux";
+import ProgressBar from 'react-bootstrap/ProgressBar'
 import { Link } from 'react-router-dom';
 import {isLoaded, useFirestoreConnect} from "react-redux-firebase";
 import firebase from "firebase/app"
@@ -15,7 +16,6 @@ import { BsHeart, BsChatSquareDots, BsFillBellFill } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
 import {Participate_save} from "../../store/actions/userActions";
 import QuestionChat from "../chatting/questionchat/QuestionChat";
-import {useHistory} from "react-router";
 
 let imgStyle = {
     maxHeight: '500px',
@@ -42,8 +42,7 @@ const FundingDetails = (props)=>{
             accountNumber:'',
             accountName:'',
             email:"",
-            fid:doc_id
-
+            fid:doc_id,
         });
 
     // const [isModalOpen,setModal]=useState(false);
@@ -52,6 +51,8 @@ const FundingDetails = (props)=>{
 
     const [modal, setModal] = useState(false);
     const [isChatView, setChat]=useState(false);
+    const [progress, setProgress]=useState(0);
+
 
     const toggle = () => setModal(!modal);
 
@@ -64,12 +65,15 @@ const FundingDetails = (props)=>{
         console.log(inputs)
     };
 
-    const handleSubmit = (e) =>{
+    function handleSubmit(e,funding){
+
         e.preventDefault();
         console.log(inputs);
-        dispatch(Participate_save(inputs));
+        console.log(funding.progress)
+        dispatch(Participate_save(inputs,inputs.fid,funding.progress));
         alert("펀딩에 참여하였습니다.");
-        setModal(!modal)
+        setModal(!modal);
+        setProgress(progress+funding.progress)
     };
 
     const handleClickChatView=()=>{
@@ -79,6 +83,8 @@ const FundingDetails = (props)=>{
 
     const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
     const url=window.location.href;
+
+
 
     //console.log(funding);
     // console.log(props.auth.uid);
@@ -96,6 +102,8 @@ const FundingDetails = (props)=>{
 
     //총대일 때
     if(funding && firebase.auth().currentUser){
+        const percent=Math.round(funding.progress/funding.itemRemain*100)
+
         if(firebase.auth().currentUser.uid===funding.user_uid){
 
             if(funding.fundingType==="reward"){
@@ -110,9 +118,10 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
@@ -194,9 +203,10 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
@@ -269,6 +279,7 @@ const FundingDetails = (props)=>{
         else{
             //리워드형 일때
             if(funding.fundingType==="reward"){
+                // const percent=Math.round(funding.progress/funding.itemRemain*100)
                 if(isChatView===true){
                     // console.log(props.history.location)
                     return(
@@ -289,15 +300,16 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
                                             <Modal isOpen={modal} toggle={toggle}>
-                                                <Form onSubmit={handleSubmit}>
+                                                <Form onSubmit={(e)=>handleSubmit(e,funding)}>
                                                     <ModalHeader toggle={toggle} charCode="x">입금폼</ModalHeader>
                                                     <ModalBody>
                                                         <div className="companyRecruit text-center">
@@ -457,15 +469,16 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
                                             <Modal isOpen={modal} toggle={toggle}>
-                                                <Form onSubmit={handleSubmit}>
+                                                <Form onSubmit={(e)=>handleSubmit(e,funding)}>
                                                     <ModalHeader toggle={toggle} charCode="x">입금폼</ModalHeader>
                                                     <ModalBody>
                                                         <div className="companyRecruit text-center">
@@ -670,6 +683,8 @@ const FundingDetails = (props)=>{
     else{
 
         if(props.auth.isLoaded&&funding){
+            const percent=Math.round(funding.progress/funding.itemRemain*100)
+
             if(funding.fundingType==="reward"){
                 console.log("로그인 안된 상세페이지");
                 //////예외처리해야됨//////
@@ -683,9 +698,10 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
@@ -762,9 +778,9 @@ const FundingDetails = (props)=>{
                                 <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                 <Col xs="4">
                                     <div>
-                                        <div className="text-center"><b>80% 달성</b></div>
-                                        <Progress color="info" value="80" />
-                                        <p className="mt-5"><b>257명</b>의 FAN</p>
+                                        <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                        {/*<Progress color="info" value="80" />*/}
+                                        <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                         <p className="mt-3"><b>15일</b> 남음</p>
                                         <Row xs="2">
                                             <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
