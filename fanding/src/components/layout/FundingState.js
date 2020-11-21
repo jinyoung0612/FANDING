@@ -19,34 +19,6 @@ TuiGrid.setLanguage('ko');
 //TuiGrid.applyTheme('striped');
 var array = [];
 
-/*
-function StateDetail({participant}){
-
-    // console.log("StateDetail",participant);
-    array.push(
-        {
-            'email': participant.email, 
-            'name': participant.name,
-            'account': participant.bank,
-            'deposit_date': participant.date,
-            'deposit_time':participant.time,
-            
-        }
-    )
-    return(
-        <div>
-            <div>참여자 이메일: {participant.email}</div>
-            <div>참여자 이름: {participant.name}</div>
-            <div>참여자 계좌: {participant.bank} {participant.accountName} {participant.accountNumber}</div>
-            <div>입금 시간: {participant.date} {participant.time}</div>
-            <br/>
-            {/* /{console.log(array)} *//*}
-
-        </div>
-
-    )
-}
-*/
 
   const columns = [
     {name: 'email', header: '참여자 이메일'},

@@ -72,7 +72,7 @@ class Chongdae_auth extends Component{
                   <Row>
                   <Col sm="6">
                     <Card body>
-                      <CardTitle lass="jb-x-large">본인 인증 step3</CardTitle>
+                      <CardTitle class="jb-x-large">본인 인증 step3</CardTitle>
                       <CardText>본인인증이 완료되었습니다. 계좌 정보 최종 확인을 위한 단계로 하단의 '최종 확인' 버튼을 클릭해주세요.</CardText>
                       <CardText color='red'>※최종 확인 버튼은 한번만 누르면 됩니다!!※</CardText>
                       <Form onSubmit = {this.handleSubmit}>
