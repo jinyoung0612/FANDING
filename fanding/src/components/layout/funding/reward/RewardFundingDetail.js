@@ -40,8 +40,9 @@ class FundingDetail extends Component{
       bank:'',
       accountNumber:'',
       accountName:'',
+      fid:this.props.match.params.id
       email:'',
-isChatView: false,
+      isChatView: false,
 
     };
     this.toggle = this.toggle.bind(this);
@@ -69,13 +70,26 @@ isChatView: false,
         });
     }
   viewerRef = React.createRef();
+
+
+  handleChange=(e)=>{
+      console.log(this.state)
+      this.setState({
+          [e.target.name]: e.target.value,
+      });
+
+  }
+
+
+
 handleClickChatView = () => {
     this.setState({ isChatView: true });
   };
+
   handleSubmit=(e)=>{
     e.preventDefault();
     console.log("제출");
-      // console.log(this.state);
+      console.log(this.state);
 
       this.props.Participate_save(this.state);
       alert("지원서를 제출하였습니다");
@@ -180,6 +194,7 @@ handleClickChatView = () => {
                                      onChange={this.handleChange}
                              />
                          </FormGroup>
+
                          <FormGroup>
                           <Label>이메일 주소</Label>
                           <Input type="email" name="email" id="email" 

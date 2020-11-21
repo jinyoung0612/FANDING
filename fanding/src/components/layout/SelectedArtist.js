@@ -4,6 +4,11 @@ import {firebaseConnect, isLoaded, isEmpty} from "react-redux-firebase";
 import {connect} from "react-redux";
 import {loadMain} from "../../store/actions/searchActions";
 import FundingContents from "./FundingContents";
+import {CardDeck} from "reactstrap";
+import FundingSummary from "./funding/reward/RewardFundingSummary";
+import FundingList from "./funding/reward/RewardFundingList";
+import {Link} from "react-router-dom";
+import CollectFundingSummary from "./funding/collect/CollectFundingSummary";
 
 
 class SelectedArtist extends Component {
@@ -37,15 +42,41 @@ class SelectedArtist extends Component {
             const fundings=Object.values(this.props.user_data);
               return(
                 <div>
-                    {
-                      fundings.map((funding,i)=>{
-                          return(
-                              <FundingContents funding={funding} key={i}></FundingContents>
-                          )
-                      })
+                    {/*<CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>*/}
+                    {/*{*/}
+                    {/*  fundings.map((funding,i)=>{*/}
+                    {/*      if(funding.fundingType==="reward"){*/}
+                    {/*          return(*/}
+                    {/*              <Link to={'reward_funding/' + funding.id}>*/}
+                    {/*                  <FundingSummary funding={funding} key={funding.id} />*/}
+                    {/*              </Link>*/}
+                    {/*          )*/}
+                    {/*      }*/}
+                    {/*      else {*/}
+                    {/*          return(*/}
+                    {/*              <Link to={'collect_funding/' + funding.id}>*/}
+                    {/*                  <CollectFundingSummary funding={funding} key={funding.id} />*/}
+                    {/*              </Link>*/}
+                    {/*          )*/}
+                    {/*      }*/}
+
+                    {/*  })*/}
 
 
-                    }
+                    {/*}*/}
+                    {/*</CardDeck>*/}
+                    <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
+
+                        {
+                            fundings.map((funding,i)=>{
+                                return(
+                                    <FundingContents funding={funding} key={i}></FundingContents>
+                                )
+
+                            })
+
+                        }
+                    </CardDeck>
                 </div>
             )
         }
