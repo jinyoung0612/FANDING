@@ -12,7 +12,12 @@ import SelectedArtist from "./SelectedArtist";
 import {loadMain} from "../../store/actions/searchActions";
 import FundingContents from "./FundingContents";
 import {CardDeck} from 'reactstrap';
+import FundingSummary from "./funding/reward/RewardFundingSummary";
+import {Link} from "react-router-dom";
+import CollectFundingSummary from "./funding/collect/CollectFundingSummary";
+
 const artistsMap = [1, 2, 3];
+
 class MainPage extends Component {
 
 
@@ -42,17 +47,42 @@ class MainPage extends Component {
                 if(isLoaded(fundings)){
                     return(
 
-                        <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}> 
+                        <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
 
                             {
                                 fundings.map((funding,i)=>{
                                     return(
                                         <FundingContents funding={funding} key={i}></FundingContents>
                                     )
+
                                 })
 
                             }
                         </CardDeck>
+
+                        // <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
+                        //     {
+                        //         fundings.map((funding,i)=>{
+                        //             if(funding.fundingType==="reward"){
+                        //                 return(
+                        //                     <Link to={'reward_funding/' + funding.id}>
+                        //                         <FundingSummary funding={funding} key={funding.id} />
+                        //                     </Link>
+                        //                 )
+                        //             }
+                        //             else {
+                        //                 return(
+                        //                     <Link to={'collect_funding/' + funding.id}>
+                        //                         <CollectFundingSummary funding={funding} key={funding.id} />
+                        //                     </Link>
+                        //                 )
+                        //             }
+                        //
+                        //         })
+                        //
+                        //
+                        //     }
+                        // </CardDeck>
 
                         
 
