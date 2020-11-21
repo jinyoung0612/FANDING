@@ -702,7 +702,7 @@ export default compose(
         //     // }
         // ]
 
-           ]
+           
 
     })
 

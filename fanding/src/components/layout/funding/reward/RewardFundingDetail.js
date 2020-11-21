@@ -69,7 +69,9 @@ isChatView: false,
         });
     }
   viewerRef = React.createRef();
-
+handleClickChatView = () => {
+    this.setState({ isChatView: true });
+  };
   handleSubmit=(e)=>{
     e.preventDefault();
     console.log("제출");
@@ -88,11 +90,12 @@ isChatView: false,
     {
       return(
         
-<div>
- {this.state.isChatView === true ? ( <QuestionChat funding={this.props.funding}
-history={this.props.history}>
-</QuestionChat>
-) : (        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+      <div>
+      {
+        this.state.isChatView === true ? ( <QuestionChat funding={this.props.funding}
+            history={this.props.history}></QuestionChat>) : 
+        (        
+        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
         
          <Container>  
          <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>  
@@ -203,7 +206,7 @@ history={this.props.history}>
                   <Button color="secondary" size="xs" block><BsHeart className="mr-2"/>  350</Button>
                   </Col>
                 <Col style={{paddingLeft:"16px", paddingRight:'16px'}}>
-                  <Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button>
+                  <Button onClick={this.handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button>
                   </Col>
                 <Col style={{paddingLeft:"32px", paddingRight:'0px'}}>
                 <CopyToClipboard text={url}>
@@ -236,21 +239,25 @@ history={this.props.history}>
         </Col>
       </Row>
       </div>
+      
         </Container>
-        </section>)
-</div>
+        </section>
       )
+      
+     }
+     </div>
+     )
     }
-    else
-    {
+  
+  else
+  {
       return(
         <div>
               <p>Loading funding...</p>
         </div>
       )
-    }
   }
-   
+  }
 }
 /*
 const FundingDetail = (props) => {

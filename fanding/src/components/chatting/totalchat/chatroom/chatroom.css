@@ -38,62 +38,62 @@
 }
 .card {
   height: 93vh;
-  background-color: white !important;
+  background-color: white;
 }
 .msg_card_body {
   overflow-y: scroll;
 }
 .card-header {
-  border-radius: 15px 15px 0 0 !important;
-  border-bottom: 0 !important;
+  border-radius: 15px 15px 0 0 ;
+  border-bottom: 0 ;
 }
 .card-footer {
-  border-radius: 0 0 15px 15px !important;
-  border-top: 0 !important;
+  border-radius: 0 0 15px 15px ;
+  border-top: 0 ;
 }
 .container {
   align-content: center;
 }
 .search {
-  border-radius: 15px 0 0 15px !important;
-  background-color: white !important;
-  border: 0 !important;
-  color: white !important;
+  border-radius: 15px 0 0 15px ;
+  background-color: white ;
+  border: 0 ;
+  color: white;
 }
 .search:focus {
-  box-shadow: none !important;
-  outline: 0px !important;
+  box-shadow: none ;
+  outline: 0px ;
 }
 .type_msg {
-  background-color: white !important;
-  border: 0 !important;
-  color: black !important;
-  height: 60px !important;
+  background-color: white ;
+  border: 0 ;
+  color: black ;
+  height: 60px ;
   overflow-y: auto;
 }
 .type_msg:focus {
-  box-shadow: none !important;
-  outline: 0px !important;
+  box-shadow: none ;
+  outline: 0px ;
 }
 .attach_btn {
-  border-radius: 15px 0 0 15px !important;
-  background-color: rgba(0, 0, 0, 0.3) !important;
-  border: 0 !important;
-  color: white !important;
+  border-radius: 15px 0 0 15px ;
+  background-color: rgba(0, 0, 0, 0.3) ;
+  border: 0 ;
+  color: white ;
   cursor: pointer;
 }
 .send_btn {
-  border-radius: 0 15px 15px 0 !important;
-  background-color: rgba(0, 0, 0, 0.3) !important;
-  border: 0 !important;
-  color: white !important;
+  border-radius: 0 15px 15px 0;
+  background-color: rgba(0, 0, 0, 0.3) ;
+  border: 0 ;
+  color: white ;
   cursor: pointer;
 }
 .search_btn {
-  border-radius: 0 15px 15px 0 !important;
-  background-color: rgba(0, 0, 0, 0.3) !important;
-  border: 0 !important;
-  color: white !important;
+  border-radius: 0 15px 15px 0 ;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0 ;
+  color: white ;
   cursor: pointer;
 }
 .contacts {
@@ -101,12 +101,12 @@
   padding: 0;
 }
 .contacts li {
-  width: 100% !important;
+  width: 100% ;
   padding: 5px 10px;
-  margin-bottom: 15px !important;
+  margin-bottom: 15px ;
 }
 .active {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0);
 }
 .user_img {
   height: 70px;
@@ -130,7 +130,7 @@
 }
 
 .offline {
-  background-color: #c23616 !important;
+  background-color: #c23616;
 }
 .user_info {
   margin-top: auto;
@@ -222,7 +222,7 @@
 }
 @media (max-width: 576px) {
   .contacts_card {
-    margin-bottom: 15px !important;
+    margin-bottom: 15px;
   }
 }
 
