@@ -66,11 +66,6 @@ const SignedInLinks = (props) => {
             펀딩 생성
           </a>
         </div>
-        <div className="navbar-buttons mbr-section-btn">
-          <a className="btn btn-info display-4" href="/chongdae">
-            총대 인증
-          </a>
-        </div>
         <li className="nav-item mt-3">
           <a
             className="nav-link link text-black display-4"

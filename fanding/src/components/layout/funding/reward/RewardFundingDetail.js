@@ -41,7 +41,7 @@ class FundingDetail extends Component{
       accountNumber:'',
       accountName:'',
       email:'',
-isChatView: false,
+      isChatView: false,
 
     };
     this.toggle = this.toggle.bind(this);

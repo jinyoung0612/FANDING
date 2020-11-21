@@ -132,7 +132,8 @@ class RecruitFormDetail extends Component{
                            <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
                            <Row xs="2">
                                <Col>
-                                   <CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+                                   <CardImg className="text-center" top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+                                
                                    <CardText>예상 가격대 : 개당 {recruitCompany.itemPrice}원</CardText>
                                    <CardText>예상 개수 : {recruitCompany.itemRemain}</CardText>
                                </Col>
@@ -249,27 +250,21 @@ class RecruitFormDetail extends Component{
     else if(isLoaded(user_type)&&user_type[0]==="users"){
                return(
                    <>
+                   <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                        <Container>
 
                            <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
                            <Row xs="2">
                                <Col>
                                    <CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
-                                   <CardText>예상 가격대 : 개당 {recruitCompany.itemPrice}원</CardText>
-                                   <CardText>예상 개수 : {recruitCompany.itemRemain}</CardText>
+                                   <CardText><strong>예상 가격대</strong> : 개당 {recruitCompany.itemPrice}원</CardText>
+                                   <CardText><strong>예상 개수</strong> : {recruitCompany.itemRemain}</CardText>
+                                    
                                </Col>
-
-
-                               <Col>
-                                   <div>
-
-
-                                   </div>
-                               </Col>
-
                            </Row>
 
                            <div className="mt-auto">
+                               <p style={{paddingTop:'20px'}}><strong>상세 설명</strong></p>
                                <Viewer
                                    height="400px"
                                    initialValue={recruitCompany.content}
@@ -292,7 +287,7 @@ class RecruitFormDetail extends Component{
                            {/*  </div>*/}
 
                            <div>
-                               <h3>지원현황</h3>
+                               <h3 style={{paddingTop:'50px'}}>지원현황</h3>
                                <ApplicationList applications={this.props.application} chongdae={recruitCompany.user_email} dispatchFunc={this.props.company_select} isSelectd={recruitCompany.isSelected}></ApplicationList>
                            </div>
 
@@ -302,7 +297,7 @@ class RecruitFormDetail extends Component{
 
                            </div>
                        </Container>
-
+                    </section>
 
                    </>
                )
