@@ -19,7 +19,7 @@
 //         date:'',
 //         time:'',
 //         bank:'',
-//         accountNumber:'',
+//         accountNumber:'',f
 //         accountName:'',
 //         email:firebase.auth().currentUser.email,
 //         fid:fid

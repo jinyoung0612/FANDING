@@ -18,6 +18,8 @@ import TuiGrid from 'tui-grid';
 TuiGrid.setLanguage('ko');
 //TuiGrid.applyTheme('striped');
 var array = [];
+
+/*
 function StateDetail({participant}){
 
     // console.log("StateDetail",participant);
@@ -38,20 +40,22 @@ function StateDetail({participant}){
             <div>참여자 계좌: {participant.bank} {participant.accountName} {participant.accountNumber}</div>
             <div>입금 시간: {participant.date} {participant.time}</div>
             <br/>
-            {/* /{console.log(array)} */}
+            {/* /{console.log(array)} *//*}
+
         </div>
 
     )
 }
+*/
 
   const columns = [
     {name: 'email', header: '참여자 이메일'},
     {name: 'name', header: '참여자 이름'},
     {name: 'account', header:'참여자 계좌'},
     {name:'deposit_time', header:'입금 시간'},
-
+    {name:'deposit_price', header:'입금 금액'},
+    {name: 'check_deposit', header:'입금 확인'}
   ];
-
 
 
 const FundingState = (props)=>{
@@ -85,7 +89,8 @@ const FundingState = (props)=>{
                             'account': participant.bank,
                             'deposit_date': participant.date,
                             'deposit_time':participant.time,
-                            
+                            'deposit_price':participant.price,
+                            'check_deposit':participant.ischecked
                         }
                     )
                 ))}

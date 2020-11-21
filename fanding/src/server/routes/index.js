@@ -54,13 +54,48 @@ router.post('/api/user/me', (req,res) =>{
     request(option2,function(error,response,body){
         console.log('/user/me');
         var result2 = JSON.parse(body);
-        //console.log('user me result: ',result2);
-        //var userName = result2.user_name;
-        //console.log('user name : ', userName);
-        //var res_list0 = result2.res_list[0];
-        //console.log('res_list[0]: ', res_list0);
        
        res.send(result2);
+    })
+})
+
+// 거래내역 조회
+router.post('/api/account/transaction', (req,res) => {
+    console.log('/api/account/transaction');
+
+    var accessToken = req.body.access_token;
+    var finNum = req.body.fintech_use_num;
+    console.log('req.body.access_token: ',accessToken);
+    console.log('req.body.fintech_use_num: ', finNum);
+    
+
+    var countnum = Math.floor((Math.random()*(1000000000-1)+1));
+
+    var bankTranID = "T991666810U" + countnum;
+
+    var option3 = {
+        method: "GET",
+        url: "https://testapi.openbanking.or.kr/v2.0/account/transaction_list/fin_num",
+        headers: {
+            Authorization: "Bearer " + accessToken
+        },
+        qs: {
+            bank_tran_id: bankTranID,
+            fintech_use_num: finNum,
+            inquiry_type: "A",
+            inquiry_base: "D",
+            from_date: "20201020",
+            to_date: "20201119",
+            sort_order: "D",
+            tran_dtime: "20201116170400"
+        }
+    }
+    request(option3,function(error,response,body){
+        console.log('/account/transaction');
+        var result3 = JSON.parse(body);
+        console.log('transaction list : ',result3);
+
+        res.send(result3);
     })
 })
 
@@ -85,52 +120,6 @@ router.get('/api/oobToken', function(req, res) {
         console.log(oob_token);
     });
 })
-
-router.get('/api/authResult', function(req,res){
-    console.log('authResult');
-    console.log(req.query);
-    var authCode=req.query.code;
-
-    // if(authCode==null){
-    //     console.log("사용자 인증 코드 요청 없음");
-    //     // res.send("null")
-    // }
-    // else{
-        console.log(authCode);
-        // res.send(authCode);
-        var option={
-            method : "POST",
-            url : "https://testapi.openbanking.or.kr/oauth/2.0/token",
-            header : {
-                'Content-Type' : 'application/x-www-form-urlencoded'
-            },
-            form : {
-                code : authCode,
-                client_id : 'fHcAK2eGVzYpQN6p860McUqC0xiku8UnU95iqRyM',
-                client_secret : '3dmg9c0lkuW6jJJVrmNqTyPKY301Xdy3dPyBJv64',
-                redirect_uri : 'http://localhost:3001/api/authResult',
-                grant_type : 'authorization_code'
-            }
-        }
-
-        request(option,function(error,response,body){
-            console.log(body);
-
-            var result= JSON.parse(body);
-            var accessToken = result.access_token;
-            var refreshToken = result.refresh_token;
-            var usenum = result.user_seq_no;
-
-            console.log(accessToken);
-            console.log(refreshToken);
-            console.log(usenum);
-
-            res.redirect('/api');
-        })
-    // }
-
-
-});
 
 
 module.exports=router;

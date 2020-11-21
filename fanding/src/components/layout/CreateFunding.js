@@ -322,7 +322,7 @@ class CreateFunding extends Component{
                 <Form className="mt-5">
                     <FormGroup>
                         <Label for="fileBrowser"><strong>썸네일 이미지</strong>(size: 350*250)</Label>
-                        <CustomInput type="file" id="thumbnailImage" name="customFile"
+                        <CustomInput type="file" id="thumthbnailImage" name="customFile"
                                      label="이미지를 업로드 하세요"
                                      onChange={this.handleImageChange}
                         />
