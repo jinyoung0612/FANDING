@@ -89,7 +89,8 @@ const FundingState = (props)=>{
                             'account': participant.bank,
                             'deposit_date': participant.date,
                             'deposit_time':participant.time,
-                            'deposit_price':participant.price
+                            'deposit_price':participant.price,
+                            'check_deposit':participant.ischecked
                         }
                     )
                 ))}
