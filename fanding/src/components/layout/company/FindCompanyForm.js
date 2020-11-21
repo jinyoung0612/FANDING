@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { Link } from "react-router-dom";
-import { Button, NavLink, Col, Form, FormGroup, Label, Input, FormText, CustomInput } from 'reactstrap';
+import { Button, Container, Form, FormGroup, Label, Input, FormText, CustomInput } from 'reactstrap';
 import { connect } from 'react-redux';
-import {firebase_recruit_save} from '../../store/actions/recruitCompanyActions';
-import {storage} from "../../config/fbConfig";
+import {firebase_recruit_save} from '../../../store/actions/recruitCompanyActions';
+import {storage} from "../../../config/fbConfig";
 import { Redirect } from 'react-router-dom';
 //toast-ui
 import { Editor } from '@toast-ui/react-editor';
@@ -117,6 +117,7 @@ class FindCompanyForm extends Component {
     };
     render()
     {
+        
         //const { authError, auth } = this.props;
         //if (auth.uid) return <Redirect to='/' />
         if(this.state.redirectToReferrer===true){
@@ -128,6 +129,11 @@ class FindCompanyForm extends Component {
             if(this.state.fundingType ==='reward'){
                 return (
                     <>
+                    <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                    <div className="mbr-section-head" style={{paddingBottom: '30px'}}>
+                        <h3 className="mbr-section-title mbr-fonts-style align-center m-0 pb-30 mb-10 display-2"><strong>업체 모집하기</strong></h3>  
+                    </div>
+                    <Container style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em"}}>
                         <Form>
                             <FormGroup>
                                 <Label for="Radio">펀딩 유형 선택</Label>
@@ -181,17 +187,6 @@ class FindCompanyForm extends Component {
                                     onChange = {this.handleChangeEditor}
                                 />
 
-
-                                <div id="toastEditor">
-                                    <h1>Toast UI Editor Example</h1>
-                                    <div id="editSection"></div>
-                                    {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
-                                    <button onChange={this.handleChangeEditor} className="btn_save">Save</button>
-                                    <div>
-                                        <h2>result</h2>
-                                        <textarea className="tf_result" value={this.state.content} readOnly="readOnly"></textarea>
-                                    </div>
-                                </div>
                             </FormGroup>
                         </Form>
 
@@ -227,6 +222,8 @@ class FindCompanyForm extends Component {
                     */}
                             <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
                         </Form>
+                    </Container>
+                    </section>
                     </>
                 )
             }
@@ -234,6 +231,11 @@ class FindCompanyForm extends Component {
             else{
                 return (
                     <>
+                    <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                    <div className="mbr-section-head" style={{paddingBottom: '30px'}}>
+                        <h3 className="mbr-section-title mbr-fonts-style align-center m-0 pb-30 mb-10 display-2"><strong>업체 모집하기</strong></h3>  
+                    </div>
+                    <Container style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em"}}>
                         <Form>
                             <FormGroup>
                                 <Label for="Radio">펀딩 유형 선택</Label>
@@ -286,18 +288,6 @@ class FindCompanyForm extends Component {
                                     plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
                                     onChange = {this.handleChangeEditor}
                                 />
-
-
-                                <div id="toastEditor">
-                                    <h1>Toast UI Editor Example</h1>
-                                    <div id="editSection"></div>
-                                    {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
-                                    <button onChange={this.handleChangeEditor} className="btn_save">Save</button>
-                                    <div>
-                                        <h2>result</h2>
-                                        <textarea className="tf_result" value={this.state.content} readOnly="readOnly"></textarea>
-                                    </div>
-                                </div>
                             </FormGroup>
                         </Form>
 
@@ -333,6 +323,8 @@ class FindCompanyForm extends Component {
                     */}
                             <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>
                         </Form>
+                        </Container>
+                        </section>
                     </>
                 )
             }

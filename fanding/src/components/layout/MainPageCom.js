@@ -1,5 +1,5 @@
 import React, { useState, Component, PureComponent } from "react";
-import {CardDeck, Media} from 'reactstrap';
+import {CardDeck} from 'reactstrap';
 import main_image from './fanding_main_image.png';
 import {firestoreConnect, useFirestoreConnect} from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -21,6 +21,7 @@ const MainPageCom =()=> {
 
 
     return(
+
         <div>
             <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
             {
@@ -32,6 +33,7 @@ const MainPageCom =()=> {
 
 
             }
+
             </CardDeck>
         </div>
 
@@ -58,6 +60,7 @@ const MainPageCom =()=> {
         //
         //     }
         // </CardDeck>
+
     )
 
 }

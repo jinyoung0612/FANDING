@@ -99,6 +99,7 @@ class MainPageDefault extends Component {
 
                         </section>
 
+
                     </div>
                 )
             }
@@ -108,6 +109,7 @@ class MainPageDefault extends Component {
                 return(
                     <div>
                         <DefaultLayout />
+
                         <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
 
 

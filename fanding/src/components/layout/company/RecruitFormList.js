@@ -2,10 +2,12 @@ import React from 'react';
 //import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
 import RecruitFormSummary from './RecruitFormSummary';
 import { Link } from 'react-router-dom';
+import {CardDeck} from 'reactstrap';
 
 const RecruitFormList = ({recruitCompanies}) => {
     return(
-        <div>
+        <CardDeck style={{display: 'flex', flexDirection: 'row', 
+        justifyContent: 'left', margin:'10px'}}>
             { recruitCompanies && recruitCompanies.map(recruitCompany => {
                 return (
                     <Link to={'/find_company/' + recruitCompany.id}>
@@ -13,8 +15,8 @@ const RecruitFormList = ({recruitCompanies}) => {
                     </Link>
                 )
             })}
-
-        </div>
+        </CardDeck>
+        
     )
 }
 

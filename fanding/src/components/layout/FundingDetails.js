@@ -580,7 +580,8 @@ const FundingDetails = (props)=>{
                 )
             }
             return(
-
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                <Container>
                 <div>
                     <Card sm="6">
                         <CardImg src={funding.thumbnailImage} top width="100%" alt="Card image cap" />
@@ -628,6 +629,8 @@ const FundingDetails = (props)=>{
                         </CardBody>
                     </Card>
                 </div>
+                </Container>
+                </section>
             )
 
         }
