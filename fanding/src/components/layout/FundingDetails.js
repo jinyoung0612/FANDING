@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
-    CardSubtitle,Form , Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+    CardSubtitle,Form , Modal, ModalHeader, ModalBody, ModalFooter, Container} from 'reactstrap';
 import {connect, useSelector} from "react-redux";
 import { Link } from 'react-router-dom';
 import {useFirestoreConnect} from "react-redux-firebase";
@@ -10,7 +10,10 @@ import ModalPortal from "../../ModalPortal";
 //import MyModal from "../../MyModal";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer} from '@toast-ui/react-editor';
-
+let imgStyle = {
+    maxHeight: '500px',
+    maxWidth: '700px'
+  }
 
 const FundingDetails = (props)=>{
 
@@ -56,7 +59,11 @@ const FundingDetails = (props)=>{
             const content=funding.content;
 
             return(
-
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                <Container>
+                <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>  
+                <div className="text-left"><h2><b>{funding.fundingTitle}</b></h2></div>
+                <div className="mt-5">
                 <div>
                     <Card sm="6">
                         <CardImg src={funding.thumbnailImage} top width="100%" alt="Card image cap" />
@@ -84,8 +91,11 @@ const FundingDetails = (props)=>{
                             </Link>
                         </CardBody>
                     </Card>
-
+                
                 </div>
+                </div>
+                </Container>
+                </section>
 
             )
 
@@ -93,7 +103,8 @@ const FundingDetails = (props)=>{
         // 참여자 일 때
         else{
             return(
-
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                <Container>
                 <div>
                     <Card sm="6">
                         <CardImg src={funding.thumbnailImage} top width="100%" alt="Card image cap" />
@@ -149,6 +160,8 @@ const FundingDetails = (props)=>{
                         </CardBody>
                     </Card>
                 </div>
+                </Container>
+                </section>
             )
 
         }

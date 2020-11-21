@@ -10,7 +10,6 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated'
 //toast-ui
 import { Editor } from '@toast-ui/react-editor';
-import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -21,7 +20,9 @@ import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highl
 import 'tui-chart/dist/tui-chart.css';
 import chart from '@toast-ui/editor-plugin-chart';
 import {compose} from "redux";
+import { firestore } from 'firebase';
 import {firestoreConnect, isLoaded} from "react-redux-firebase";
+
 
 const style = {
     control: base => ({
@@ -61,6 +62,9 @@ class CreateFunding extends Component{
             redirectToReferrer: false,
             content: '',
             selectedCom:'',
+            accountName:'',
+            bankName:'',
+            accountNum:'',
             gift:false
             // options: [
             //     {name:'없음', id:0},
@@ -75,11 +79,9 @@ class CreateFunding extends Component{
             //     {name:"NU'EST", id:9},
             //     {name:'IDLE', id:10},
             //     {name:'기타', id:11},
-            // ]
-            
+            // ]        
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-        
     }
     options=[
         {value:'BTS', label:"BTS"},
@@ -201,8 +203,12 @@ class CreateFunding extends Component{
 
     render()
     {
+
+        console.log(this.props.user);
+        const {bank}= this.props;
         console.log(this.props);
        
+
         
         if(this.state.redirectToReferrer===true){
             alert("펀딩이 생성되었습니다.");
@@ -258,12 +264,13 @@ class CreateFunding extends Component{
                 </div>        
                     
                 </FormGroup>
-                 <FormGroup>
-                            <Label for="fundingTitle">업체목록 가져오기</Label>
+
+                 <FormGroup className="mt-5">
+                            <Label for="fundingTitle"><strong>업체목록 가져오기</strong></Label>
                             {isLoaded(this.props.user) ? <Select id="selectedCom" components={this.animatedComponents} options={[{value:this.props.user[0].selectedCompany,label:this.props.user[0].selectedCompanyName}]}
                                                                  menuPortalTarget={document.body} onChange={this.handleChangeCom}>Select...</Select> :  <Select>Select...</Select>}
                         </FormGroup>
-                
+              
                 <FormGroup className="mt-5">
                     <Label for="fundingTitle"><strong>펀딩 제목</strong></Label>
                     <Input type="text" name="title" id="fundingTitle" 
@@ -283,8 +290,7 @@ class CreateFunding extends Component{
                             placeholder="펀딩 시작일"
                             onChange={this.handleChange}
                         />
-                    </FormGroup>
-                    <FormGroup>
+                    
                         <Input
                             type="time"
                             name="time"
@@ -292,9 +298,9 @@ class CreateFunding extends Component{
                             placeholder="00:00"
                             onChange={this.handleChange}
                         />
-                    </FormGroup>
-                    <Label for="wave" className="mx-auto"><strong>~</strong></Label>
-                    <FormGroup >
+                    
+                    <Label for="wave" className="ml-5 mr-5"><strong>~</strong></Label>
+                    
                         <Input
                             type="date"
                             name="date"
@@ -302,8 +308,7 @@ class CreateFunding extends Component{
                             placeholder="펀딩 종료일"
                             onChange={this.handleChange}
                         />
-                    </FormGroup>
-                    <FormGroup>
+                    
                         <Input
                             type="time"
                             name="time"
@@ -405,12 +410,35 @@ class CreateFunding extends Component{
                 {/*배송방법추가 버튼 만들기*/}
 
 
+                <Label for="shipping" className="mt-5"><strong>계좌 정보</strong></Label>
+                <Form className="mb-10" inline>
+                    <FormGroup>
+                    <Label for="bankName" className="mr-2">은행 이름</Label>
+                    <Input  type="text" name="text" id="bankName"
+                           onChange={this.handleChange}
+                        //    placeholder={bank.bank_name}
+                    />
+                    </FormGroup>
+                    <FormGroup className="ml-5"> 
+                    <Label for="accountName" className="mr-2">예금주(초성만)</Label>
+                    <Input  type="text" name="text" id="accountName"
+                           onChange={this.handleChange}
+                    />
+                    </FormGroup>
+                    <FormGroup className="ml-5">
+                    <Label for="accountNum" className="mr-2">계좌번호</Label>
+                    <Input  type="text" name="text" id="accountNum"
+                           onChange={this.handleChange}
+                        //    placeholder={bank.account_num}
+                    />
+                    </FormGroup>
+                </Form> 
                 <Form className="mt-10" onSubmit={this.handleSubmit} >
                     {/*<Link to='/'>*/}
 
                     {/*    <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>*/}
                     {/*</Link>*/}
-                    <Button color="warning" size="lg" block >펀딩 만들기</Button>
+                    <Button color="warning" size="lg" block style={{marginTop:"50px"}}>펀딩 만들기</Button>
                 </Form>
             </Container>
             </section>
@@ -609,7 +637,9 @@ const mapStateToProps = (state) => {
     return{
         authError: state.auth.authError,
         auth: state.firebase.auth,
-        user:state.firestore.ordered.users
+        user:state.firestore.ordered.users,
+        company:state.firestore.ordered.companies,
+        bank: state.firestore.ordered.chongdaes,
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -627,13 +657,53 @@ export default compose(
 
         const user_email = props.auth.email == null ? "none": props.auth.email;
         console.log("Compose");
-
+        // console.log(props.user);
+        const company = props.user == null ? "none": props.user
+        const bank = props.bank == null ? "none" : props.bank
+        console.log(company)
+       if(user_email){
            return[
                {
                    collection:"users",
                    where:["user_email","==",user_email]
                },
+               
+
            ]
+       }
+       if(company!=="none"){
+           return[
+
+               {
+                   collection:"companies",
+                   where: ["email","==",company[0].selectedCompany]
+               }
+           ]
+       }
+       if(bank !== "none")
+       {
+           return[
+                {
+                    collection:"chongdaes",
+                    where:["user_email", "==", user_email]
+                }
+           ]
+
+       }
+
+        // return[
+        //     {
+        //         collection:"users",
+        //         where:["user_email","==",user_email]
+        //     },
+        //     // {
+        //     //     collection:"companies",
+        //     //     where: ["email","==",props.user[0].selectedCompany]
+        //     // }
+        // ]
+
+           ]
+
     })
 
     )(CreateFunding);

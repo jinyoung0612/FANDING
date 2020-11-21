@@ -7,7 +7,7 @@ import firebase from 'firebase/app';
 import {twitterSignIn} from "../../store/actions/authActions";
 import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import { render } from 'react-dom';
-
+import {AvForm, AvField} from 'availity-reactstrap-validation';
 // let divColor = {
 //   border-radius: 10px,
 //   backgroundColor: '#fafafa';
@@ -64,7 +64,7 @@ class SignIn extends Component {
         </div>
         <div className="row justify-content-center mt-4" >
             <div className="col-lg-8 mx-auto mbr-form" data-form-type="formoid" >
-            <Form className="mbr-form form-with-styler mx-auto"onSubmit={this.handleSubmit} >
+            <Form className="mbr-form form-with-styler mx-auto" onSubmit={this.handleSubmit}>
             <p class="mbr-text mbr-fonts-style align-center mb-4 display-7"><strong>FANDING</strong></p>
           <FormGroup>
             <Label for="Email"><strong>이메일</strong></Label>
@@ -72,12 +72,14 @@ class SignIn extends Component {
             placeholder="이메일을 입력하세요" 
             onChange={this.handleChange}/>
           </FormGroup>
+          
           <FormGroup>
             <Label for="Password"><strong>비밀번호</strong></Label>
             <Input type="password" name="password" id="password" 
             placeholder="비밀번호를 입력하세요" 
             onChange={this.handleChange}/>
-          </FormGroup>
+          </FormGroup>   
+          
           <div className="col-auto mbr-section-btn align-center">
             <Button size="lg" block className="btn btn-info display-4">로그인</Button>
           </div>
@@ -86,9 +88,11 @@ class SignIn extends Component {
            <TwitterLoginButton className="twitter mt-15" onClick={this.handleTwitter}>
             <span>트위터로 로그인하기</span>
            </TwitterLoginButton>
-        </Form>
-            </div>
-        </div>
+        </Form> 
+          </div>
+        
+      
+      </div>
     </div>
 </section>
     );

@@ -11,7 +11,7 @@ import Chongdae_auth from "./components/layout/Chongdae_auth";
 import Identity_auth from "./components/auth/Identity_auth";
 import Account_auth from "./components/auth/Account_auth";
 import CreateFunding from "./components/layout/CreateFunding";
-import FindCompanyForm from "./components/layout/FindCompanyForm";
+import FindCompanyForm from "./components/layout/company/FindCompanyForm";
 import Payment from "./components/payment/Payment";
 import RewardFunding from "./components/layout/funding/reward/RewardFunding";
 import RewardFundingDetail from "./components/layout/funding/reward/RewardFundingDetail";
@@ -30,6 +30,8 @@ import ReactDOM from "react-dom";
 import MainPageDefault from "./components/layout/MainPageDefault";
 // import MainPage from "./components/layout/MainPage";
 import TransactionList from "./components/layout/TransactionList";
+import MyFunding from './components/layout/MyFunding';
+import MyParticipation from "./components/layout/MyParticipation";
 
 class App extends Component {
   render() {
@@ -69,8 +71,11 @@ class App extends Component {
             <Route path="/find_company/:id" component={RecruitFormDetail} />
             <Route path="/funding_detail/:id" component={FundingDetails} />
             <Route path="/funding_state/:id" component={FundingState} />
+            <Route path='/myFunding_created' component={MyFunding} />
+            <Route path='/myFunding_participated' component={MyParticipation} />
             <Route path="/questionchat" component={QuestionChat} />
             <Route path="/totalchat" component={TotalChat} />
+
           </Switch>
         </div>
       </BrowserRouter>
