@@ -56,34 +56,7 @@ const FundingState = (props)=>{
     }
     else{
         if(transactionLists[0]!==null){
-            //getTransactionList(transactionLists,setTransactionList);
-
-            /*
-            if(transaction_list!=null){
-                var Lists = transaction_list;
-                var count = Lists.length;
-                console.log("transactionList Length: ",count);
-                var transactions = Array(25).fill(null).map(()=>Array());
-                transactions = storeTransactions(Lists);
-                console.log("transactions[0]:",transactions[0]);
-                console.log("transactions[0]['print_content]:",transactions[0]['print_content']);
-                console.log("transactions[2]['tran_amt]:",transactions[2]['tran_amt']);
             
-            
-                    
-                    
-                    if(transactions!==null){
-                        participants.map((participant)=>{
-                            for(var i=0; i<count; i++){
-                                if(participant.name===transactions[i].print_content
-                                    &&participant.price===transactions[i].tran_amt){
-                                    check_deposit(participant);
-                                    //console.log("participant.ischecked",participant.isChecked);
-                                }
-                            }
-                        })
-                    }
-                    */
                    if(participants.length!==0){
                     check(transactionLists,participants);
 
@@ -178,52 +151,4 @@ async function check(transactionLists, participants){
   }
 
 
-async function getTransactionList(transactionLists, setTransactionList){
-    if(transactionLists!==null){
-        console.log('chongdae_access_token: ',transactionLists[0].access_token);
-        const access_token = transactionLists[0].access_token;
-        const fintech_use_num = transactionLists[0].fintech_use_num;
-    
-        // 본인인증한 user 이름, 계좌 정보 가져오기
-        axios.post('/api/account/transaction',{
-          access_token : access_token,
-          fintech_use_num : fintech_use_num
-        })
-        .then((res)=>{
-          if(res.data.page_record_cnt){
-            const bankName = res.data.bank_name;
-            console.log('bank name: ',bankName);
-            const result = res.data.res_list;
-            console.log('transaciton list: ',result);
-            console.log('transaciton [0]print_content: ',result[0].print_content);
-            
-            setTransactionList(result);
-            
-          }
-          else{
-            console.log('transaction list 불러오기 실패');
-          }  
-        })
-        .catch(function(error){
-          console.log(error);
-        })
-    }
-  }
-
-  function storeTransactions(Lists){
-    console.log("lists length: ", Lists.length);
-    console.log('Lists:',Lists);
-    var count = Lists.length;
-    var transactions = Array(25).fill(null).map(()=>Array());
-    
-    for(var i=0; i<count; i++){
-      for(var key in Lists[i]){  
-        //console.log(Lists[i][key]);
-        transactions[i][key] = Lists[i][key];
-        //console.log("transactions["+i+"]["+key+"]:",transactions[i][key]);
-        }
-    }
-
-    return transactions
-  }
 

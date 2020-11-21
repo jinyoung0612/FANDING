@@ -110,7 +110,6 @@ router.post('/api/account/transaction/check', (req,res) => {
     console.log('req.body.fintech_use_num: ', finNum);
     
     var participants = req.body.participants;
-    console.log('req.body.participations: ', participants);
 
     var countnum = Math.floor((Math.random()*(1000000000-1)+1));
 
@@ -136,7 +135,7 @@ router.post('/api/account/transaction/check', (req,res) => {
 
     function changeState(transactions,participants){
         if(transactions!=null){
-            console.log('transactionLists : ', transactions);
+            //console.log('transactionLists : ', transactions);
             var count = transactions.length;
             console.log()
     
@@ -146,31 +145,31 @@ router.post('/api/account/transaction/check', (req,res) => {
                 uid: '',
                 isChecked: '',
             };
-            var result = [];
+            
+            var realResult = {}
 
-            participants.map((participant)=>{
+            //console.log("participants[0].name",participants[0].name);
+
+            for(var j=0; j<p_count; j++){
+                var uid = participants[j].uid;
                 for(var i=0; i<count; i++){
-                    var index = 0;
-                    if(participant.name===transactions[i].print_content
-                        &&participant.price===transactions[i].tran_amt){
-                        //check_deposit(participant);
-                        //console.log("participant.ischecked",participant.isChecked);
-                        
-                        participant_state.uid = participant.uid;
-                        participant_state.isChecked = 'true';
-                        result[index]=participant_state;
-                        index++;
-                        console.log('result index: ', index);
-                    }/*
+                    if(participants[j].name===transactions[i].print_content
+                        &&participants[j].price===transactions[i].tran_amt){
+                            //participant_state.uid = participants[j].uid;
+                            //participant_state.isChecked = 'true';
+                            realResult[uid]= 'true';
+                        }
                     else{
-                        participant_state.uid = participant.uid;
-                        participant_state.isChecked = 'false';
-                        result.assign({},participant_state);
-                    }*/
+                        if(realResult[uid]!='true'){
+                        realResult[uid]= 'false';
+                        }
+                    }
                 }
-            })
-            console.log("participant_state result: ", result);
-            res.send(result);
+            }
+            
+            console.log("real result: ", realResult);
+            
+            res.send(realResult);
         }
     }
     request(option3,function(error,response,body){
@@ -178,8 +177,6 @@ router.post('/api/account/transaction/check', (req,res) => {
         var result3 = JSON.parse(body);
         console.log('transaction list : ',result3);
         var transactions = result3.res_list;
-        console.log("in request transactions: ",transactions);
-        console.log("in request participants: ",participants);
         changeState(transactions,participants);
     })
 
