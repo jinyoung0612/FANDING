@@ -341,7 +341,7 @@ body {
 .btn-info-outline:active {
   background-color: transparent !important;
   border-color: transparent;
-  color: #ffe161;
+  color: #ffe161 !important;
 }
 .btn-info-outline:hover,
 .btn-info-outline:focus,

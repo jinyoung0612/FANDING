@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loadFundings} from "../../store/actions/userActions";
 import FundingList from "./FundingList";
-
+import {Container, Row, Col} from "reactstrap";
+import SideBar from "./SideBar"
 
 class MyFunding extends Component {
 
@@ -47,17 +48,37 @@ class MyFunding extends Component {
             // console.log(user_data);
             return(
 
-                <FundingList fundings={user_data}/>
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                    <Container>
+                        <Row>
+                            <Col sm={3}>
+                            <SideBar />
+                            </Col>
+                            <Col>
+                            
+                            <FundingList fundings={user_data}/>
+                            </Col>
+                        </Row>
+                    </Container>
+                </section>
             )
         }
         else{
 
             return(
 
-                <div>
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                    <Container>
+                        <Row>
+                            <Col sm={3}>
+                            <SideBar />
+                            </Col>
+                            <Col>
                     <h2>생성한 펀딩이 없습니다.</h2>
-                </div>
-
+                    </Col>
+                        </Row>
+                    </Container>
+                </section>
 
             )
         }

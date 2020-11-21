@@ -51,12 +51,16 @@ class RewardFunding extends Component {
             <div>
 
                 
-            <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+            <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
     
-                <div class="container">
-                    <div class="mbr-section-head">
-                        <h3 class="mbr-section-title mbr-fonts-style align-center m-0 display-2"><strong>리워드 펀딩</strong></h3>
-                        <h4 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-2 display-5">뭐라고 적어야 하나?</h4>
+                <div className="container">
+                    <div className="mbr-section-head">
+                        <h3 className="mbr-section-title mbr-fonts-style align-center m-0 display-2"><strong>리워드 펀딩</strong></h3>
+                        <p className="mbr-section-subtitle mbr-fonts-style mb-0 mt-2 display-5"
+                        style={{fontSize: '1.5rem'}}>
+                        리워드 펀딩은 자금이 필요한 총대가 펀딩을 통해 자금을 모집하여 제작하며
+                        리워드 상품이 완성되면 펀딩에 참여한 참여자에게 상품을 제공하는 방식입니다.
+                        </p>
                     </div>
 
                     <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>

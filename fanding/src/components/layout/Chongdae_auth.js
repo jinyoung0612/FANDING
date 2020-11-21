@@ -6,8 +6,12 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+<<<<<<< HEAD
 import {verifyChongdae, getTransactionList} from '../../store/actions/chongdaeAction';
 
+=======
+import SideBar from './SideBar';
+>>>>>>> 2ab43666f8e2cee484335784938dae7af9df57df
 class Chongdae_auth extends Component{
 
     constructor(props){
@@ -99,20 +103,37 @@ class Chongdae_auth extends Component{
           else{
             return(
               <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-                <div class="mbr-section-head pb-10">
+                {/* <div class="mbr-section-head pb-10"></div> */}
                         
                         
-            </div>
+            
 
-              <Container style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em", width:'30%',
-            marginTop:"40px"}}>
-              <h4 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>본인 인증</strong></h4>
-              <Card body>
+              <Container>
+              
+              <Row>
+                <Col sm="3">
+                <SideBar />
+                </Col>
+                <Col sm="4">
+                <div style={{paddingTop:'90px'}}>
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>본인 인증</strong></h4>
+                
                     {/* <CardTitle>본인 인증</CardTitle> */}
+<<<<<<< HEAD
                     <CardText>펀딩생성 및 업체 모집을 하려면 본인 인증이 필요합니다.</CardText>
                     <Button id="verButton" color="warning" 
+=======
+                    <p>펀딩을 생성하려면 본인 인증이 필요합니다.</p>
+                </div>
+                </Col>
+                <Col sm="4">
+                    <Button block style={{marginTop:'90px'}} id="verButton" color="warning" 
+>>>>>>> 2ab43666f8e2cee484335784938dae7af9df57df
                     href="https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=qhsl7X3L59LPtU6QfdZNv2d4jYYKKFiY8K2iw2NI&redirect_uri=http://localhost:3000/account_auth&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor" >본인 인증</Button>
-              </Card>  
+                </Col>
+             
+
+              </Row>  
               </Container>
               </section>
             );

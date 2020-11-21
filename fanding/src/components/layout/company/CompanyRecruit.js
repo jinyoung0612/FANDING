@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import {NavLink, Button, Form} from 'reactstrap';
+import {NavLink, Button, Container} from 'reactstrap';
 import { compose } from 'redux';
 import RecruitFormList from './RecruitFormList';
 import firebase from 'firebase';
@@ -51,12 +51,13 @@ class CompanyRecruit extends Component {
         return(
             <div>
 
-            {/*<NavLink href="/find_company_form"><Button className="pull-right" outline color="primary">업체모집 폼 생성</Button></NavLink>*/}
-           
-            <Button className="pull-right" outline color="primary" onClick={this.handleSubmit}>업체모집 폼 생성</Button>
-            
-            <RecruitFormList recruitCompanies={recruitCompanies} />
-        
+            <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                <Container>
+                <Button className="pull-right" outline color="primary" onClick={this.handleSubmit}>업체모집 폼 생성</Button>
+                    <RecruitFormList recruitCompanies={recruitCompanies} />
+                </Container>
+            </section>
+
             </div>
         )    
       }

@@ -87,8 +87,11 @@ class MainPageDefault extends Component {
                 return(
                     <div>
                         <DefaultLayout />
+                        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                        <Container>
                         <MainPageCom></MainPageCom>
-
+                        </Container>
+                        </section>
                     </div>
                 )
             }
@@ -98,7 +101,11 @@ class MainPageDefault extends Component {
                 return(
                     <div>
                         <DefaultLayout />
+                        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                        <Container>
                         <MainPageCom></MainPageCom>
+                        </Container>
+                        </section>
                     </div>
                 )
 
