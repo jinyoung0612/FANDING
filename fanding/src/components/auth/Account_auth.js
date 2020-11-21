@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 import { Button, Form, Input, Label, Card, CardHeader, CardText, FormGroup } from 'reactstrap';
 import { Link, Redirect } from "react-router-dom";
 import {connect,useSelector} from 'react-redux';
-import {firestoreConnect, useFirestoreConnect} from 'react-redux-firebase';
-import firebase from 'firebase/app';
-import ReactHtmlParser from 'react-html-parser';
-import { storage } from 'firebase';
 import axios from 'axios';
 import {verifyChongdae} from '../../store/actions/chongdaeAction';
 
@@ -45,6 +41,9 @@ class Account_auth extends Component{
         console.log(this.state);
         this.props.verifyChongdae(this.state);
         alert("본인인증이 완료되었습니다.");
+        if(this.state){
+          this.props.history.push("/chongdae");
+        }
       };
 
       
@@ -53,7 +52,7 @@ class Account_auth extends Component{
         return(
           <div>  
               <Card body>
-                <CardHeader tag="h3">본인인증</CardHeader>
+                <CardHeader tag="h3">본인인증 step2</CardHeader>
                 <CardText className="abs">
                   <small className="text-muted">
                     본인인증시 등록한 은행이름과 계좌번호를 입력 후, 아래 버튼을 클릭해주세요.
@@ -63,7 +62,9 @@ class Account_auth extends Component{
                   <Input type="hidden" id="access_token" placeholder={this.state.access_token} onChange={this.handleChange}/>
                   <Input type="hidden" id="refresh_token" placeholder={this.state.refresh_token} onChange={this.handleChange} />
                   <Input type="hidden" id="user_seq_no" placeholder={this.state.user_seq_no} onChange={this.handleChange} />
+                  <Label>은행</Label>
                   <Input type="text" id="bank_name" placeholder="정확한 은행이름을 입력하세요." onChange={this.handleChange} />
+                  <Label>계좌번호</Label>
                   <Input type="text" id="account_num" placeholder="기호없이 숫자만 입력하세요." onChange={this.handleChange} />
                   <br />
                 <Button id='verifyButton' color="warning" >완료</Button>
