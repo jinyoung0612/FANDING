@@ -3,7 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, Ca
     CardSubtitle,Form } from 'reactstrap';
 import {connect, useDispatch, useSelector} from "react-redux";
 import { Link } from 'react-router-dom';
-import {useFirestoreConnect} from "react-redux-firebase";
+import {isLoaded, useFirestoreConnect} from "react-redux-firebase";
 import firebase from "firebase/app"
 import ReactHtmlParser from 'react-html-parser';
 import ModalPortal from "../../ModalPortal";
@@ -66,12 +66,12 @@ const FundingState = (props)=>{
     },[dispatch]);
 
     const participants =props.user_data;
-   
+
 
     // const{participants}=useSelector((state)=>({
     //     participants:props.user_data
     // }));
-    
+    //
 
     if(participants.length!==0 && participants){
 
