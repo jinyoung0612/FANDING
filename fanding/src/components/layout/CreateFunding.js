@@ -126,7 +126,7 @@ class CreateFunding extends Component{
     handleChangeCom = e => {
         console.log(e)
         this.setState({
-            selectedCom:e.value
+            selectedCom:e
         });
     };
     handleRadioChange = e => {

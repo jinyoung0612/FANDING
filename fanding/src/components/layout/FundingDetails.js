@@ -3,7 +3,7 @@ import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container,
     Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect, useSelector, useDispatch} from "react-redux";
 import { Link } from 'react-router-dom';
-import {useFirestoreConnect} from "react-redux-firebase";
+import {isLoaded, useFirestoreConnect} from "react-redux-firebase";
 import firebase from "firebase/app"
 import ReactHtmlParser from 'react-html-parser';
 import ModalPortal from "../../ModalPortal";
@@ -31,7 +31,7 @@ const FundingDetails = (props)=>{
        useFirestoreConnect([{
         collection: 'fundings',
         doc: doc_id
-    }]);
+            }]);
 
         const [inputs, setInputs]=useState({
             name:'',
@@ -172,7 +172,7 @@ const FundingDetails = (props)=>{
                                         <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
                                         </Button>
                                         <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
-                                        <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+                                        <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름 {funding.selectedCom.label}</div>
                                     </Col>
                                 </Row>
                             </div>
