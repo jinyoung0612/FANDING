@@ -55,7 +55,7 @@ export const Participate_save = (newForm) => {
                 email:newForm.email,
                 fid:newForm.fid,
                 uid:firebase.auth().currentUser.uid,
-                isChecked: false,
+                isChecked: '미확인',
 
         }).then(() => {
             dispatch({type: 'PARTICIPATE_SUCCESS' , newForm});
@@ -166,16 +166,16 @@ export const check_user_type=(email)=>{
 }
 
 export const check_deposit = (user) => {
-    console.log("user_email: ",user.email);
+    console.log("user_uid: ",user.uid);
     const firestore = firebase.firestore();
 
     return (dispatch, getState) => {
         firestore
         .collection("participation")
-        .where("user_email","==", user.email)
+        .where("user_uid","==", user.uid)
         .get()
         .update({
-            isChecked: true
+            isChecked: '확인'
         })
         .then(()=>{
             console.log("참여자 입금확인 성공")
