@@ -341,7 +341,7 @@ body {
 .btn-info-outline:active {
   background-color: transparent !important;
   border-color: transparent;
-  color: #ffe161;
+  color: #ffe161 !important;
 }
 .btn-info-outline:hover,
 .btn-info-outline:focus,
@@ -1586,7 +1586,4 @@ a {
   color: #fff;
   border-color: #7B1FA2;
   background-color: #7B1FA2;
-}
-.responsive-width {
-  font-size: 3vw;
 }

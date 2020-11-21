@@ -18,6 +18,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {Participate_save} from '../../../../store/actions/userActions'
 import firebase from "firebase";
 //import DaumPostcode from 'react-daum-postcode';
+import QuestionChat from "../../../chatting/questionchat/QuestionChat";
+
 let imgStyle = {
     maxHeight: '500px',
     maxWidth: '700px'
@@ -39,6 +41,7 @@ class FundingDetail extends Component{
       accountNumber:'',
       accountName:'',
       email:'',
+isChatView: false,
 
     };
     this.toggle = this.toggle.bind(this);
@@ -66,7 +69,9 @@ class FundingDetail extends Component{
         });
     }
   viewerRef = React.createRef();
-
+handleClickChatView = () => {
+    this.setState({ isChatView: true });
+  };
   handleSubmit=(e)=>{
     e.preventDefault();
     console.log("제출");
@@ -85,6 +90,11 @@ class FundingDetail extends Component{
     {
       return(
         
+      <div>
+      {
+        this.state.isChatView === true ? ( <QuestionChat funding={this.props.funding}
+            history={this.props.history}></QuestionChat>) : 
+        (        
         <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
         
          <Container>  
@@ -196,7 +206,7 @@ class FundingDetail extends Component{
                   <Button color="secondary" size="xs" block><BsHeart className="mr-2"/>  350</Button>
                   </Col>
                 <Col style={{paddingLeft:"16px", paddingRight:'16px'}}>
-                  <Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button>
+                  <Button onClick={this.handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button>
                   </Col>
                 <Col style={{paddingLeft:"32px", paddingRight:'0px'}}>
                 <CopyToClipboard text={url}>
@@ -229,20 +239,25 @@ class FundingDetail extends Component{
         </Col>
       </Row>
       </div>
+      
         </Container>
         </section>
       )
+      
+     }
+     </div>
+     )
     }
-    else
-    {
+  
+  else
+  {
       return(
         <div>
               <p>Loading funding...</p>
         </div>
       )
-    }
   }
-   
+  }
 }
 /*
 const FundingDetail = (props) => {
