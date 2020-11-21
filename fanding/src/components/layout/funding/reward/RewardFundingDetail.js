@@ -128,11 +128,13 @@ class FundingDetail extends Component{
               <p className="mt-5"><b>257명</b>의 FAN</p>
               <p className="mt-3"><b>15일</b> 남음</p>
               <Row xs="2">
-                <Button color="info" onClick={this.toggle}>펀딩 참여하기</Button>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                  <Form onSubmit={this.handleSubmit}>
+                <Button block color="info" onClick={this.toggle} style={{width:'100%'}}>펀딩 참여하기</Button>
+                </Row>
+                <Modal style={{height: '1200px'}}isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                  
                       <ModalHeader toggle={this.toggle} charCode="x">입금폼</ModalHeader>
-                      <ModalBody>
+                      <ModalBody style={{height: '900px'}}>
+                        <Form onSubmit={this.handleSubmit}>
                           <div className="companyRecruit text-center">
                               <h3>[{funding.artistSelect}]{funding.fundingTitle}</h3>
                               <p>펀딩 계좌 정보 넣기</p>
@@ -201,23 +203,27 @@ class FundingDetail extends Component{
                           />
 
                         </FormGroup>
-
-
+                        </div>
+                        </Form>
 
                               <ModalFooter>
                                   <Button color="primary">제출하기</Button>{' '}
                                   <Button color="secondary" onClick={this.toggle}>닫기</Button>
                               </ModalFooter>
-                          </div>
+                          
 
                       </ModalBody>
-                  </Form>
+                  
                 </Modal>
-              </Row>
+              
               <Row xs="3">
-                <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
-                <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
-                <Col>
+                <Col style={{paddingLeft:"0px", paddingRight:'32px'}}>
+                  <Button color="secondary" size="xs" block><BsHeart className="mr-2"/>  350</Button>
+                  </Col>
+                <Col style={{paddingLeft:"16px", paddingRight:'16px'}}>
+                  <Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button>
+                  </Col>
+                <Col style={{paddingLeft:"32px", paddingRight:'0px'}}>
                 <CopyToClipboard text={url}>
                 <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
                 </CopyToClipboard>

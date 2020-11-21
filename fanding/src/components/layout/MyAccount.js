@@ -1,13 +1,14 @@
 import React, {Component, useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
-CardSubtitle } from 'reactstrap';
+CardSubtitle, 
+Container} from 'reactstrap';
 import classnames from 'classnames';
 import TabPane3 from './TabPane3';
 import MyFunding from "./MyFunding";
 import {connect} from 'react-redux';
 import MyParticipation from "./MyParticipation";
-
+import SideBar from "./SideBar"
 
 const MyAccount = (props) => {
 console.log(props)
@@ -24,7 +25,17 @@ console.log(props)
 
   if(props.auth.isLoaded){
     return (
-        <div>
+      <>
+      
+      <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+      <Container>
+        <Row>
+          <SideBar />
+          <div>
+          <h4 style={{paddingTop: '28px', paddingLeft:'25px'}}>내 정보에서는 프로필 관리, 펀딩 관리, 총대 인증을 하고 위시 리스트를 볼 수 있습니다. </h4>
+          </div>
+        </Row>
+          
           <Nav tabs>
             <NavItem>
               <NavLink
@@ -93,7 +104,10 @@ console.log(props)
               <MyParticipation/>
             </TabPane>
           </TabContent>
-        </div>
+        </Container>
+        </section>
+        </>
+
     );
 
   }else{
