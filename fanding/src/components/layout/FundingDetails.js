@@ -14,6 +14,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { BsHeart, BsChatSquareDots, BsFillBellFill } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
 import {Participate_save} from "../../store/actions/userActions";
+import RewardFundingDetail from "./funding/reward/RewardFundingDetail";
 
 let imgStyle = {
     maxHeight: '500px',
@@ -635,26 +636,175 @@ const FundingDetails = (props)=>{
 
     }
     else{
-        console.log(props)
-        return(
 
-            //
-            <div>
-            {/*//     <Card sm="6">*/}
-            {/*//         <CardImg src={funding.thumbnailImage}top width="100" alt="Card image cap" />*/}
-            {/*//         <CardBody>*/}
-            {/*//             <CardTitle>[{funding.artistSelect}] {funding.fundingTitle}</CardTitle>*/}
-            {/*//             <CardSubtitle> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndTime} {funding.fundingEndTime}</CardSubtitle>*/}
-            {/*//             /!*<CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*!/*/}
-            {/*//             /!*<Button>Button</Button>*!/*/}
-            {/*//         </CardBody>*/}
-            {/*//     </Card>*/}
-            </div>
+        if(props.auth.isLoaded&&funding){
+            if(funding.fundingType==="reward"){
+                console.log("로그인 안된 상세페이지");
+                //////예외처리해야됨//////
+                return(
+                    <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                        <Container>
+                            <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
+                            <div className="text-left"><h2><b>{funding.fundingTitle}</b></h2></div>
+                            <div className="mt-5">
+                                <Row xs="2">
+                                    <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
+                                    <Col xs="4">
+                                        <div>
+                                            <div className="text-center"><b>80% 달성</b></div>
+                                            <Progress color="info" value="80" />
+                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <Row xs="2">
+                                                <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
+                                            </Row>
+                                            <Row xs="3">
+                                                <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
+                                                <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
+                                                <Col>
+                                                    <CopyToClipboard text={url}>
+                                                        <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                                                    </CopyToClipboard>
+                                                </Col>
+                                            </Row>
+                                            <Row style={{paddingTop: "50px", paddingLeft:"30px"}}>
+                                                {/*<CardText>*/}
+                                                {/*    /!*<h5 className="mt-30"><b>펀딩 기간(입금 기간)</b> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</h5>*!/*/}
+                                                {/*    <CardText>{funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardText>*/}
+                                                {/*</CardText>*/}
+                                                {/*<CardText><h5 className="mt-30"><b>품목 : </b></h5></CardText>*/}
+                                                {/*<CardText>{funding.itemTitle}</CardText>*/}
+                                                {/*<CardText><h5 className="mt-30"><b>가격 : </b></h5>{funding.itemPrice}</CardText>*/}
+                                                {/*<CardText><h5 className="mt-30"><b>펀딩달성기준 : </b></h5>{funding.itemRemain}</CardText>*/}
+                                                {/*<CardText><h5 className="mt-30"><b>배송방법 : </b></h5>{funding.shippingMethod}</CardText>*/}
+                                                {/*<CardText><h5 className="mt-30"><b>배송비 : </b></h5>{funding.shippingFee}</CardText>*/}
+                                                {/*<CardText><h5 className="mt-30"><b>배송 안내 : </b></h5>{funding.shippingDetail}</CardText>*/}
+                                                <div></div>
+                                            </Row>
+                                        </div>
+                                    </Col>
+                                </Row>
+                                <Row xs="3" style={{paddingTop: "50px"}}>
+                                    <Col xs={8}>
+                                        <CardSubtitle><b>펀딩 기간(입금 기간) : </b> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardSubtitle>
+                                        <CardText><b>품목 : </b>{funding.itemTitle}</CardText>
+                                        <CardText><b>가격 : </b>{funding.itemPrice}</CardText>
+                                        <CardText><b>펀딩달성기준 : </b>{funding.itemRemain}</CardText>
+                                        <CardText><b>배송방법 : </b>{funding.shippingMethod}</CardText>
+                                        <CardText><b>배송비 : </b>{funding.shippingFee}</CardText>
+                                        <CardText><b>배송 안내 : </b>{funding.shippingDetail}</CardText>
+
+                                        <div className="text-left"><h4 className="pt-30"><b>상세 설명</b></h4></div>
+                                        <div className="mt-20">
+                                            <Viewer
+                                                height="400px"
+                                                initialValue={funding.content}
+                                                ref={viewerRef}
+                                                previewStyle="vertical"
+                                                initialEditType="wysiwyg"
+                                            />
+                                        </div>
+                                    </Col>
+                                    <Col  xs={4}>
+                                        <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
+                                        </Button>
+                                        <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
+                                        <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Container>
+                    </section>
+
+                )
+            }
+            return(
+
+
+                <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                    <Container>
+                        <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
+                        <div className="text-left"><h2><b>{funding.fundingTitle}</b></h2></div>
+                        <div className="mt-5">
+                            <Row xs="2">
+                                <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
+                                <Col xs="4">
+                                    <div>
+                                        <div className="text-center"><b>80% 달성</b></div>
+                                        <Progress color="info" value="80" />
+                                        <p className="mt-5"><b>257명</b>의 FAN</p>
+                                        <p className="mt-3"><b>15일</b> 남음</p>
+                                        <Row xs="2">
+                                            <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
+                                        </Row>
+                                        <Row xs="3">
+                                            <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
+                                            <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
+                                            <Col>
+                                                <CopyToClipboard text={url}>
+                                                    <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                                                </CopyToClipboard>
+                                            </Col>
+                                        </Row>
+                                        <Row style={{paddingTop: "50px", paddingLeft:"30px"}}>
+                                            {/*<CardText>*/}
+                                            {/*    /!*<h5 className="mt-30"><b>펀딩 기간(입금 기간)</b> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</h5>*!/*/}
+                                            {/*    <CardText>{funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardText>*/}
+                                            {/*</CardText>*/}
+                                            {/*<CardText><h5 className="mt-30"><b>품목 : </b></h5></CardText>*/}
+                                            {/*<CardText>{funding.itemTitle}</CardText>*/}
+                                            {/*<CardText><h5 className="mt-30"><b>가격 : </b></h5>{funding.itemPrice}</CardText>*/}
+                                            {/*<CardText><h5 className="mt-30"><b>펀딩달성기준 : </b></h5>{funding.itemRemain}</CardText>*/}
+                                            {/*<CardText><h5 className="mt-30"><b>배송방법 : </b></h5>{funding.shippingMethod}</CardText>*/}
+                                            {/*<CardText><h5 className="mt-30"><b>배송비 : </b></h5>{funding.shippingFee}</CardText>*/}
+                                            {/*<CardText><h5 className="mt-30"><b>배송 안내 : </b></h5>{funding.shippingDetail}</CardText>*/}
+                                            <div></div>
+                                        </Row>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row xs="3" style={{paddingTop: "50px"}}>
+                                <Col xs={8}>
+                                    <CardSubtitle><b>펀딩 기간(입금 기간) : </b> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardSubtitle>
+                                    {/*<CardText><b>품목 : </b>{funding.itemTitle}</CardText>*/}
+                                    {/*<CardText><b>가격 : </b>{funding.itemPrice}</CardText>*/}
+                                    {/*<CardText><b>펀딩달성기준 : </b>{funding.itemRemain}</CardText>*/}
+                                    {/*<CardText><b>배송방법 : </b>{funding.shippingMethod}</CardText>*/}
+                                    {/*<CardText><b>배송비 : </b>{funding.shippingFee}</CardText>*/}
+                                    {/*<CardText><b>배송 안내 : </b>{funding.shippingDetail}</CardText>*/}
+
+                                    <div className="text-left"><h4 className="pt-30"><b>상세 설명</b></h4></div>
+                                    <div className="mt-20">
+                                        <Viewer
+                                            height="400px"
+                                            initialValue={funding.content}
+                                            ref={viewerRef}
+                                            previewStyle="vertical"
+                                            initialEditType="wysiwyg"
+                                        />
+                                    </div>
+                                </Col>
+                                <Col  xs={4}>
+                                    <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
+                                    </Button>
+                                    <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
+                                    <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+                                </Col>
+                            </Row>
+                        </div>
+                    </Container>
+                </section>
 
 
 
+            )
+        }
+        else{
+            return(
+                <div>Loading....</div>
+            )
+        }
 
-        )
 
     }
 

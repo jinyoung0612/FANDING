@@ -22,6 +22,7 @@ const MainPageCom =()=> {
 
     return(
         <div>
+            <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
             {
                 fundings.map((funding,i)=>{
                     return(
@@ -31,6 +32,7 @@ const MainPageCom =()=> {
 
 
             }
+            </CardDeck>
         </div>
 
         // <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>

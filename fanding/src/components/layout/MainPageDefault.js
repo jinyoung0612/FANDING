@@ -87,7 +87,17 @@ class MainPageDefault extends Component {
                 return(
                     <div>
                         <DefaultLayout />
-                        <MainPageCom></MainPageCom>
+                        <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+
+
+                            <Container>
+
+                                <MainPageCom></MainPageCom>
+
+                            </Container>
+
+
+                        </section>
 
                     </div>
                 )
@@ -102,11 +112,14 @@ class MainPageDefault extends Component {
 
 
                             <Container>
+
                                 <MainPageCom></MainPageCom>
+
                             </Container>
 
 
                         </section>
+
                     </div>
                 )
 
