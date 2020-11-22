@@ -40,7 +40,7 @@ class CreateFunding extends Component{
         this.state={
             image:null,
             url:"",
-            progress:0,
+            // progress:0,
             artistSelect: '',
             fundingType: "reward",
             fundingTitle: '',
@@ -65,7 +65,7 @@ class CreateFunding extends Component{
             accountName:'',
             bankName:'',
             accountNum:'',
-            gift:false
+            gift:false,
             // options: [
             //     {name:'없음', id:0},
             //     {name:'BTS', id:1},
@@ -126,7 +126,7 @@ class CreateFunding extends Component{
     handleChangeCom = e => {
         console.log(e)
         this.setState({
-            selectedCom:e.value
+            selectedCom:e
         });
     };
     handleRadioChange = e => {
@@ -163,10 +163,10 @@ class CreateFunding extends Component{
             uploadTask.on(
                 "state_changed",
                 snapshot => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    this.setState({progress: progress});
+                    // const progress = Math.round(
+                    //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    // );
+                    // this.setState({progress: progress});
                 },
                 error => {
                     console.log(error);

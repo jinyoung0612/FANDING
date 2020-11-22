@@ -32,7 +32,7 @@ import MainPageDefault from "./components/layout/MainPageDefault";
 import TransactionList from "./components/layout/TransactionList";
 import MyFunding from './components/layout/MyFunding';
 import MyParticipation from "./components/layout/MyParticipation";
-
+import MyRecruit from "./components/layout/MyRecruit";
 class App extends Component {
   render() {
     return (
@@ -75,7 +75,7 @@ class App extends Component {
             <Route path='/myFunding_participated' component={MyParticipation} />
             <Route path="/questionchat" component={QuestionChat} />
             <Route path="/totalchat" component={TotalChat} />
-
+            <Route path="/myRecruit" component={MyRecruit} />
           </Switch>
         </div>
       </BrowserRouter>
