@@ -8,7 +8,7 @@ const FUNDING_SAVE= 'FUNDING_SAVE';
 export const funding_save=createAction(FUNDING_SAVE);
 
 
-export const firebase_funding_save = newForm => {
+export const firebase_funding_save = (newForm) => {
   //const firestore = firebase.firestore();
 
   return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -40,9 +40,9 @@ export const firebase_funding_save = newForm => {
             shippingMethod: newForm.shippingMethod,
             shippingFee: newForm.shippingFee,
             shippingDetail: newForm.shippingDetail,
-            bankName:'',
-            accountNum:'',
-            accountName:'',
+            bankName:newForm.bankName,
+            accountNum:newForm.accountNum,
+            accountName:newForm.accountName,
             createTime: firebase.firestore.Timestamp.now(),
             content: newForm.content,
             nickname:"",
