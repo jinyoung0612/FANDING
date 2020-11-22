@@ -41,7 +41,7 @@ const FundingDetails = (props)=>{
             bank:'',
             accountNumber:'',
             accountName:'',
-            email:"",
+            email:firebase.auth().currentUser.email,
             fid:doc_id,
         });
 

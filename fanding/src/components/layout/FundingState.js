@@ -3,7 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card,Input, Button,Form } f
 import {connect, useDispatch, useSelector} from "react-redux";
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
-import {isLoaded,firestoreConnect, useFirestoreConnect} from "react-redux-firebase";
+import {firestoreConnect, useFirestoreConnect, isLoaded} from "react-redux-firebase";
 import firebase from "firebase/app"
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import {loadParticipants} from "../../store/actions/userActions";
@@ -42,6 +42,7 @@ const FundingState = (props)=>{
     const transactionLists = props.transactionLists;
     console.log("transactionLists: ",transactionLists);
 
+
     if(!isLoaded(transactionLists)){
         console.log("transactionLists 로드 안됨")
         return(
@@ -68,7 +69,6 @@ const FundingState = (props)=>{
                                         'deposit_time':participant.time,
                                         'deposit_price':participant.price,
                                         'check_deposit':participant.isChecked
-                                        //'check_deposit':participants_state[participant.uid]
                                     }
                                 )
                             ))}
@@ -91,7 +91,6 @@ const FundingState = (props)=>{
                         <div>참여자가 없습니다.</div>
                     )
                 }
-            //}
         }
     } 
 };
