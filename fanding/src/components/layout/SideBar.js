@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { NavItem, NavLink, Nav, Collapse } from "reactstrap";
 import { FaTools } from "react-icons/fa";
-import { BsPersonCheckFill, BsFileText, BsFillHeartFill } from "react-icons/bs";
+import { BsPersonCheckFill, BsFileText, BsFillHeartFill, BsBuilding } from "react-icons/bs";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import styles from './SideBar.css';
@@ -70,7 +70,13 @@ const SideBar = ({ isOpen, toggle }) => (
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink className="inactive" activeClassName="active" tag={Link} to={"/contact"}>
+          <NavLink className="inactive" activeClassName="active" tag={Link} to={"/myRecruit"}>
+            <BsBuilding className="mr-2" />
+            업체 모집글 관리
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className="inactive" activeClassName="active" tag={Link} to={"/myaccount"}>
             <BsFillHeartFill className="mr-2" />
             마이 위시리스트
           </NavLink>

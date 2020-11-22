@@ -143,8 +143,8 @@ body {
 }
 .btn-secondary,
 .btn-secondary:active {
-  background-color: #ff6666 ;
-  border-color: #ff6666;
+  background-color: #ff6666 !important;
+  border-color: #ff6666 !important;
   color: #ffffff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
 }

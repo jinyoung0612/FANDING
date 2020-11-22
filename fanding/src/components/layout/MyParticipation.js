@@ -6,7 +6,8 @@ import {loadFundings} from "../../store/actions/userActions";
 import FundingList from "./FundingList";
 import ParticipationList from "./ParticipationList";
 import FundingContents from "./FundingContents";
-
+import {CardDeck, Container, Row, Col} from 'reactstrap';
+import SideBar from './SideBar';
 const MyParticipation =()=> {
 
     useFirestoreConnect([{
@@ -21,7 +22,16 @@ const MyParticipation =()=> {
 
 
 return(
-    <div>
+    <>
+    <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+        
+    <Container> 
+        <Row>
+            <Col sm={3}>
+            <SideBar/>
+            </Col>
+            <Col>
+    
 
         {
             participations ?
@@ -33,7 +43,11 @@ return(
         })
             : console.log("no")
         }
-    </div>
+        </Col>
+    </Row>
+    </Container>
+    </section>
+    </>
 )
 
 
