@@ -9,8 +9,9 @@ import FundingSummary from "./funding/reward/RewardFundingSummary";
 import FundingList from "./funding/reward/RewardFundingList";
 import {Link} from "react-router-dom";
 import CollectFundingSummary from "./funding/collect/CollectFundingSummary";
-
-
+import {Row} from 'reactstrap';
+var preArtist = "";
+var nowArtist = "";
 class SelectedArtist extends Component {
 
     constructor(props) {
@@ -40,6 +41,8 @@ class SelectedArtist extends Component {
 
         if(this.props.user_data.length!==0){
             const fundings=Object.values(this.props.user_data);
+            console.log('selected artist', this.state.selectedArtist.length);
+ 
               return(
                 <div>
                     {/*<CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>*/}
@@ -65,13 +68,38 @@ class SelectedArtist extends Component {
 
                     {/*}*/}
                     {/*</CardDeck>*/}
+                    
                     <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
 
                         {
+                            
+                            
                             fundings.map((funding,i)=>{
-                                return(
+                                //console.log("in map", funding.artistSelect);
+                                nowArtist = funding.artistSelect;
+                                console.log(funding.fundingTitle);
+                                if(preArtist !== nowArtist)
+                                {
+                                    preArtist = nowArtist;
+                                    return(
+                                    <>
+                                    <h3 style={{paddingLeft:'5px',paddingRight:'700px', marginTop:'50px'}}><strong>{nowArtist}</strong> 관련 펀딩</h3>
+                                    {/* <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}> */}
                                     <FundingContents funding={funding} key={i}></FundingContents>
-                                )
+                                    {/* </CardDeck> */}
+                                    </>
+                                    )
+                                }
+                                else{
+                                    return(
+                                        <FundingContents funding={funding} key={i}></FundingContents>
+                                    )
+                                    
+                                    
+                                }
+                                
+                                
+                                
 
                             })
 

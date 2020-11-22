@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import {loadRecruits} from "../../store/actions/recruitCompanyActions";
 import {Link} from "react-router-dom";
 import RecruitFormSummary from "./company/RecruitFormSummary";
-
+import {Container, Row, Col} from 'reactstrap';
+import SideBar from './SideBar';
 
 class MyRecruit extends Component {
 
@@ -35,7 +36,12 @@ class MyRecruit extends Component {
             const recruits=Object.values(this.props.recruits);
 
             return(
-                <div>
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                    <Container>
+                    <Row>
+                        <Col sm={3}>
+                            <SideBar />
+                        </Col>
                     { recruits && recruits.map(recruit => {
                         return (
                             <Link to={'/find_company/' + recruit.id}>
@@ -43,8 +49,9 @@ class MyRecruit extends Component {
                             </Link>
                         )
                     })}
-
-                </div>
+                    </Row>
+                </Container>
+                </section>
             )
         }
         else{

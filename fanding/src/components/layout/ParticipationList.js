@@ -2,9 +2,12 @@ import React, {useEffect} from "react";
 import {useFirestoreConnect} from "react-redux-firebase";
 import firebase from "firebase";
 import {connect, useSelector} from "react-redux";
-import {Card, CardBody, CardImg, CardSubtitle, CardTitle} from "reactstrap";
+import {Card, CardBody, CardImg, CardSubtitle, CardTitle, CardDeck} from "reactstrap";
 import {Link} from "react-router-dom";
-
+let imgStyle = {
+    maxHeight: '200px',
+    maxWidth: '200px'
+  }
 const ParticipationList=({participation})=>{
     // console.log(participation)
     const fid=participation.fid;
@@ -21,10 +24,13 @@ const ParticipationList=({participation})=>{
     if(funding && participation){
         // console.log(fid)
         return(
-            <div>
+            <CardDeck style={{display: 'flex', flexDirection: 'row', 
+            justifyContent: 'left', margin:'10px'}}>
+
                 <Link to={'funding_detail/'+fid} funding={funding}>
-                    <Card sm="6">
-                        <CardImg src={funding.thumbnailImage}top width="100" alt="Card image cap" />
+                <Card body style={{width:'15em',flex: '1',
+        backgroundColor: "#ebebeb", height:'20em', margin: '5px'}} >
+                        <CardImg src={funding.thumbnailImage}top width="100" alt="Card image cap" style={imgStyle}/>
                         <CardBody>
                             <CardTitle>[{funding.artistSelect}] {funding.fundingTitle}</CardTitle>
                             <CardSubtitle> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndTime} {funding.fundingEndTime}</CardSubtitle>
@@ -34,7 +40,7 @@ const ParticipationList=({participation})=>{
                     </Card>
                 </Link>
 
-            </div>
+        </CardDeck>
     )
     }
     else{
