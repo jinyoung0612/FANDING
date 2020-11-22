@@ -12,7 +12,7 @@ const RecruitFundingSummary = ({recruitCompany}) => {
             <CardBody>
             <CardTitle>{recruitCompany.itemTitle}</CardTitle>
             <CardText><p>원하는 가격: {recruitCompany.itemPrice}</p></CardText>
-            <CardText><p>수량: {recruitCompany.itermRemain}</p></CardText>
+            {/*<CardText><p>수량: {recruitCompany.itermRemain}</p></CardText>*/}
             {/*<Button>Button</Button>*/}
             </CardBody>
         </Card>
