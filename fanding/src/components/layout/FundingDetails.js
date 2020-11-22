@@ -42,7 +42,7 @@ const FundingDetails = (props)=>{
             accountNumber:'',
             accountName:'',
             email:"",
-            fid:doc_id,
+            fid:doc_id
         });
 
     // const [isModalOpen,setModal]=useState(false);
@@ -53,6 +53,8 @@ const FundingDetails = (props)=>{
     const [isChatView, setChat]=useState(false);
     const [progress, setProgress]=useState(0);
 
+
+    const [currentDate,setDate]=useState(new Date());
 
     const toggle = () => setModal(!modal);
 
@@ -102,7 +104,10 @@ const FundingDetails = (props)=>{
 
     //총대일 때
     if(funding && firebase.auth().currentUser){
-        const percent=Math.round(funding.progress/funding.itemRemain*100)
+        const percent=Math.round(funding.progress/funding.itemRemain*100);
+
+        const difference= new Date(funding.fundingEndDate)-currentDate.getTime();
+        const period=Math.ceil(difference/(1000*60*60*24))
 
         if(firebase.auth().currentUser.uid===funding.user_uid){
 
@@ -122,7 +127,7 @@ const FundingDetails = (props)=>{
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
                                             <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <p className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
                                                 {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
                                                 {/*<Col><Button>수정하기</Button></Col>*/}
@@ -212,7 +217,7 @@ const FundingDetails = (props)=>{
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
                                             <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <p className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
                                                 {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
                                                 {/*<Col><Button>수정하기</Button></Col>*/}
@@ -289,7 +294,12 @@ const FundingDetails = (props)=>{
         else{
             //리워드형 일때
             if(funding.fundingType==="reward"){
-                // const percent=Math.round(funding.progress/funding.itemRemain*100)
+
+                const difference= new Date(funding.fundingEndDate)-currentDate.getTime();
+                // console.log(difference/(1000*60*60*24))
+                const period=Math.ceil(difference/(1000*60*60*24))
+                // console.log(period)
+                const percent=Math.round(funding.progress/funding.itemRemain*100)
                 if(isChatView===true){
                     // console.log(props.history.location)
                     return(
@@ -314,7 +324,7 @@ const FundingDetails = (props)=>{
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
                                             <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <p className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
@@ -469,12 +479,12 @@ const FundingDetails = (props)=>{
                 if(isChatView===true){
                     // console.log(props.history.location)
                     return(
-
                         <QuestionChat funding={funding} history={props.history}></QuestionChat>
                     )
                 }
 
                 return(
+
                     <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                         <Container>
                             <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
@@ -488,7 +498,7 @@ const FundingDetails = (props)=>{
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
                                             <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <p className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
@@ -703,7 +713,11 @@ const FundingDetails = (props)=>{
     else{
 
         if(props.auth.isLoaded&&funding){
-            const percent=Math.round(funding.progress/funding.itemRemain*100)
+
+            const percent=Math.round(funding.progress/funding.itemRemain*100);
+            const difference= new Date(funding.fundingEndDate)-currentDate.getTime();
+
+            const period=Math.ceil(difference/(1000*60*60*24));
 
             if(funding.fundingType==="reward"){
                 console.log("로그인 안된 상세페이지");
@@ -722,7 +736,7 @@ const FundingDetails = (props)=>{
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
                                             <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <p className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
