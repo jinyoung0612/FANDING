@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { Card, CardText, CardTitle, Input, Label} from 'reactstrap';
+import {loadParticipants} from "../../store/actions/userActions";
 
 class TransactionList extends Component{
 
@@ -63,18 +64,11 @@ const mapStateToProps = (state) => {
       chongdaes : state.firestore.ordered.chongdaes,
       transactionLists : state.firestore.ordered.transactionLists,
       auth : state.firebase.auth,
+      user_data:state.auth.user_data,
       authError : state.auth.authError,
     }
   }
 
-  /*
-  const mapDispatchToProps = (dispatch) => {
-    console.log(dispatch);
-    return {
-        getTransactionList: (creds) => dispatch(getTransactionList(creds))
-    };
-  };
-  */
   export default compose(
     connect(mapStateToProps),
     firestoreConnect(props=> {
