@@ -159,7 +159,7 @@ class RecruitFormDetail extends Component{
 
                                    <Button color="warning" onClick={this.toggle} size="lg" block>지원하기</Button>
 
-                                   <Modal style={{height: '1200px'}} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                                   <Modal style={{height: '700px'}} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                                        <Form onSubmit={this.handleSubmit}>
                                            <ModalHeader toggle={this.toggle} charCode="x">지원서</ModalHeader>
                                            <ModalBody>
