@@ -66,15 +66,20 @@ class Chongdae_auth extends Component{
             let currentComponent = this;
             getUserMe(chongdaes,currentComponent);
 
-            if(access_token!='error'&&access_token!=null){
+            if(access_token!=='error'&&access_token!=null){
               return(
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                  <Container>
                 <Card body>
                   <Row>
-                  <Col sm="6">
+                  <Col sm="3">
+                    <SideBar />
+                  </Col>
+                  <Col sm="4">
                     <Card body>
-                      <CardTitle class="jb-x-large">본인 인증 step3</CardTitle>
+                      <CardTitle class="jb-x-large"><h3><strong>본인 인증 step3</strong></h3> </CardTitle>
                       <CardText>본인인증이 완료되었습니다. 계좌 정보 최종 확인을 위한 단계로 하단의 '최종 확인' 버튼을 클릭해주세요.</CardText>
-                      <CardText color='red'>※최종 확인 버튼은 한번만 누르면 됩니다!!※</CardText>
+                      <CardText style={{color:'red'}}>※최종 확인 버튼은 한번만 누르면 됩니다!!※</CardText>
                       <Form onSubmit = {this.handleSubmit}>
                         <Input type="hidden" id="access_token" placeholder={this.state.access_token} onChange={this.handleChange}/>
                         <Input type="hidden" id="fintech_use_num" placeholder={this.state.fintech_use_num} onChange={this.handleChange}/>
@@ -85,19 +90,10 @@ class Chongdae_auth extends Component{
                     </Card>
                   </Col>
                 </Row>
-                <Row>
-                  <Col sm="6">
-                    <Card body>
-                      <CardTitle>거래 내역 조회</CardTitle>
-                      <CardText>본인 인증 시 등록한 계좌의 거래 내역 조회</CardText>
-                      <Link to='/transaction_list'>
-                      <Button color="warning">조회</Button>
-                      </Link>
-                    </Card>
-                  </Col>
-                </Row>
-                </Card>  
                 
+                </Card>
+                </Container>  
+                </section>
               );
             }
           }
