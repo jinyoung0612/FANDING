@@ -11,8 +11,8 @@ const RecruitFundingSummary = ({recruitCompany}) => {
             <CardImg top width="100%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
             <CardBody>
             <CardTitle>{recruitCompany.itemTitle}</CardTitle>
-            <CardSubtitle>{recruitCompany.itemPrice}</CardSubtitle>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+            <CardText><p>원하는 가격: {recruitCompany.itemPrice}</p></CardText>
+            <CardText><p>수량: {recruitCompany.itermRemain}</p></CardText>
             {/*<Button>Button</Button>*/}
             </CardBody>
         </Card>
