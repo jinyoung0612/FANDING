@@ -43,7 +43,7 @@ const FundingDetails = (props)=>{
             accountName:'',
             email:'',
             // email:firebase.auth().currentUser.email,
-            fid:doc_id
+            fid:doc_id,
         });
 
     // const [isModalOpen,setModal]=useState(false);
