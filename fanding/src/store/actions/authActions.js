@@ -14,6 +14,9 @@ export const signIn = (credentials) => {
         } else {
           var msg = "이메일인증을 확인해주세요";
           alert(msg);
+            firebase
+                .auth()
+                .setPersistence(firebase.auth.Auth.Persistence.SESSION);
           // firebase.auth().signOut();
         }
       })
