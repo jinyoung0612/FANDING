@@ -32,9 +32,6 @@ var array = [];
 
 const FundingState = (props)=>{
 
-    const [transaction_list, setTransactionList] = useState('');
-
-    // const viewerRef = React.createRef();
 
     const doc_id=props.match.params.id;
     const dispatch=useDispatch();
@@ -46,7 +43,7 @@ const FundingState = (props)=>{
     const participants =props.user_data;    
     const transactionLists = props.transactionLists;
     console.log("transactionLists: ",transactionLists);
-    
+
 
     if(!isLoaded(transactionLists)){
         console.log("transactionLists 로드 안됨")
@@ -58,10 +55,11 @@ const FundingState = (props)=>{
         if(transactionLists[0]!==null){
             
                    if(participants.length!==0){
-                    check(transactionLists,participants);
-
+                    check(transactionLists, participants);
+                    
                     return(
                         <div>
+                          
                             {  participants.map((participant,i)=>(
                                 
                                 array.push(
@@ -73,6 +71,7 @@ const FundingState = (props)=>{
                                         'deposit_time':participant.time,
                                         'deposit_price':participant.price,
                                         'check_deposit':participant.isChecked
+                                        //'check_deposit':participants_state[participant.uid]
                                     }
                                 )
                             ))}
@@ -87,7 +86,6 @@ const FundingState = (props)=>{
                                         
                         </div>
 
-                        
                     )
 
                 }
@@ -127,10 +125,10 @@ export default compose(
 
 async function check(transactionLists, participants){
     if(transactionLists!==null){
-        console.log('chongdae_access_token: ',transactionLists[0].access_token);
-        const access_token = transactionLists[0].access_token;
+        
+        const access_token =  transactionLists[0].access_token;
         const fintech_use_num = transactionLists[0].fintech_use_num;
-    
+        
         axios.post('/api/account/transaction/check',{
           access_token : access_token,
           fintech_use_num : fintech_use_num,
@@ -139,6 +137,14 @@ async function check(transactionLists, participants){
         .then((res)=>{
           if(res.data){
             console.log(res.data);
+            const pState = res.data;
+            for(var i = 0; i< participants.length ; i++){
+              const uid = participants[i].uid;
+              console.log('participants['+i+'].uid: ', participants[i].uid);
+              if(pState[uid]==='true'){
+                check_deposit(participants[i]);
+              }
+            }
           }
           else{
             console.log('실패실패실패실패');

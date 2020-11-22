@@ -135,32 +135,22 @@ router.post('/api/account/transaction/check', (req,res) => {
 
     function changeState(transactions,participants){
         if(transactions!=null){
-            //console.log('transactionLists : ', transactions);
             var count = transactions.length;
-            console.log()
-    
+            
             var p_count = participants.length;
             console.log("participants count: ", p_count);
-            var participant_state = {
-                uid: '',
-                isChecked: '',
-            };
             
             var realResult = {}
-
-            //console.log("participants[0].name",participants[0].name);
 
             for(var j=0; j<p_count; j++){
                 var uid = participants[j].uid;
                 for(var i=0; i<count; i++){
                     if(participants[j].name===transactions[i].print_content
                         &&participants[j].price===transactions[i].tran_amt){
-                            //participant_state.uid = participants[j].uid;
-                            //participant_state.isChecked = 'true';
                             realResult[uid]= 'true';
                         }
                     else{
-                        if(realResult[uid]!='true'){
+                        if(realResult[uid]!=='true'){
                         realResult[uid]= 'false';
                         }
                     }
@@ -175,7 +165,7 @@ router.post('/api/account/transaction/check', (req,res) => {
     request(option3,function(error,response,body){
         console.log('/account/transaction');
         var result3 = JSON.parse(body);
-        console.log('transaction list : ',result3);
+        //console.log('transaction list : ',result3);
         var transactions = result3.res_list;
         changeState(transactions,participants);
     })
