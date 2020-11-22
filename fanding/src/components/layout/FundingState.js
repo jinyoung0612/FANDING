@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
-    CardSubtitle,Form } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card,Input, Button,Form } from 'reactstrap';
 import {connect, useDispatch, useSelector} from "react-redux";
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 import {firestoreConnect, useFirestoreConnect, isLoaded} from "react-redux-firebase";
 import firebase from "firebase/app"
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { Viewer} from '@toast-ui/react-editor';
 import {loadParticipants} from "../../store/actions/userActions";
 import 'tui-grid/dist/tui-grid.css';
 import Grid from '@toast-ui/react-grid';
