@@ -34,7 +34,7 @@ export const loadFundings = (uid) => {
     };
 };
 
-export const Participate_save = (newForm,fid,progress) => {
+export const Participate_save = (newForm,fid,progress, fullAddress, zoneCode) => {
     // console.log(fid)
 
     return (dispatch, getState) => {
@@ -56,7 +56,11 @@ export const Participate_save = (newForm,fid,progress) => {
                 email:newForm.email,
                 fid:newForm.fid,
                 uid:firebase.auth().currentUser.uid,
+                zoneCode: zoneCode,
+                fullAddress:fullAddress,
+                detailAddress:newForm.detailAddress,
                 isChecked: '미확인',
+
 
         }).then(() => {
             dispatch({type: 'PARTICIPATE_SUCCESS' , newForm});

@@ -15,6 +15,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { BsHeart, BsChatSquareDots, BsFillBellFill } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
 import {Participate_save} from "../../store/actions/userActions";
+import RewardFundingDetail from "./funding/reward/RewardFundingDetail";
+import DaumPostCode from 'react-daum-postcode';
 import QuestionChat from "../chatting/questionchat/QuestionChat";
 
 let imgStyle = {
@@ -34,30 +36,45 @@ const FundingDetails = (props)=>{
             }]);
 
         const [inputs, setInputs]=useState({
-            name:'',
-            price:'',
-            date:'',
-            time:'',
-            bank:'',
-            accountNumber:'',
-            accountName:'',
-            email:'',
-            // email:firebase.auth().currentUser.email,
-            fid:doc_id,
-        });
+
+        name:'',
+        price:'',
+        date:'',
+        time:'',
+        bank:'',
+        accountNumber:'',
+        accountName:'',
+        email:"",
+        fid:doc_id,
+        detailAddress:'',
+
+        // nickname:firebase.auth().currentUser.nickname,
+    });
+
 
     // const [isModalOpen,setModal]=useState(false);
     const dispatch = useDispatch();
 
 
     const [modal, setModal] = useState(false);
+    const [nestedModal, setNestedModal] = useState(false);
+    
     const [isChatView, setChat]=useState(false);
     const [progress, setProgress]=useState(0);
+    // const [address, setAdd] = useState(false);
+    const [fullAddress, setFullAdd] = useState(false);
+    const [zoneCode, setZoneCode] = useState(false);
 
+
+   
+    const toggleNested = () => {
+        setNestedModal(!nestedModal);
+    }
 
     const [currentDate,setDate]=useState(new Date());
 
     const toggle = () => {setModal(!modal);handleEmail()}
+
 
     const handleChange = e => {
         const {value, name}=e.target;
@@ -67,14 +84,48 @@ const FundingDetails = (props)=>{
         })
         console.log(inputs)
     };
+    // const handleAddChange = e => {
+    //     const {value, name} = e.target;
+    //     setAdd({
+    //         ...address,
+    //         [name]:value
+    //     })
+    // }
+     // postcode
+     const handleAddress = (data) => {
+        let AllAddress = data.address;
+        let extraAddress = ''; 
+        let zoneCodes = data.zonecode;
+        
+        if (data.addressType === 'R') {
+          if (data.bname !== '') {
+            extraAddress += data.bname;
+          }
+          if (data.buildingName !== '') {
+            extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+          }
+          AllAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+        }
+        setFullAdd(AllAddress);
+        setZoneCode(zoneCodes);
+        // this.setState ({
+        //     fullAddress: AllAddress,
+        //     zoneCode : zoneCodes
+        // })
+      }
 
     function handleSubmit(e,funding){
 
         e.preventDefault();
         console.log(inputs);
+
+        console.log(funding.progress)
+        dispatch(Participate_save(inputs,inputs.fid,funding.progress, fullAddress,zoneCode));
+
         // console.log(funding.progress)
 
-        dispatch(Participate_save(inputs,inputs.fid,funding.progress));
+        // dispatch(Participate_save(inputs,inputs.fid,funding.progress));
+
         alert("펀딩에 참여하였습니다.");
         setModal(!modal);
         setProgress(progress+funding.progress)
@@ -323,7 +374,7 @@ const FundingDetails = (props)=>{
                         <Container>
                             {/*{console.log(props.history)}*/}
                             {/*{isChatView===true ? <QuestionChat funding={funding} history={props.history}></QuestionChat> :null }*/}
-
+                            
                             <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
                             <div className="text-left"><h2><b>{funding.fundingTitle}</b></h2></div>
                             <div className="mt-5">
@@ -339,16 +390,18 @@ const FundingDetails = (props)=>{
                                             <Row style={{paddingLeft:"16px"}} xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
-                                            <Modal isOpen={modal} toggle={toggle}>
+                                            <Modal style={{height:'1200px'}} isOpen={modal} toggle={toggle}>
                                                 <Form onSubmit={(e)=>handleSubmit(e,funding)}>
                                                     <ModalHeader toggle={toggle} charCode="x">입금폼</ModalHeader>
                                                     <ModalBody>
                                                         <div className="companyRecruit text-center">
                                                             <h3>[{funding.artistSelect}]{funding.fundingTitle}</h3>
+
                                                             {/*<p>펀딩 계좌 정보 넣기</p>*/}
                                                             {/*<p>닉네임 넣기</p>*/}
                                                             {/*<p>주소 넣기</p>*/}
                                                             {/*<p>입금 확인 했는지 확인하는 checkbox</p>*/}
+
 
                                                             <FormGroup>
                                                                 <Label for="PaymentInfo"><b>입금정보입력</b></Label>
@@ -403,7 +456,70 @@ const FundingDetails = (props)=>{
                                                                        onChange={handleChange}
                                                                 />
                                                             </FormGroup>
+                                                            <Button color="primary" onClick={toggleNested}>우편번호 찾기</Button>
+                                                            <Modal isOpen={nestedModal} toggle={toggleNested}>
+                                                            <Form> 
+                                                            {
+                                                                nestedModal ?
+                                                                    <DaumPostCode
+                                                                        onComplete={handleAddress}
+                                                                        autoClose='true'
+                                                                        // width={width}
+                                                                        // height={height}
+                                                                        // style={modalStyle}
+                                                                        nestedModal={nestedModal}
+                                                                        />
+                                                                : null
+                                                            }
+                                                            </Form>
+                                                            <ModalFooter>
+                                                                <Button color="secondary" onClick={toggleNested}>닫기</Button>
+                                                            </ModalFooter>
+                                                            </Modal>
+                                                            <FormGroup>
+                                                                {
+                                                                    
+                                                                    zoneCode === false ? <Input type="zoneCode" name="zoneCode" id="zoneCode"
+                                                                        placeholder="우편번호"
+                                                                        onChange={handleChange}
+                                                                    /> : 
+                                                                    <Input type="zoneCode" name="zoneCode" id="zoneCode"
+                                                                        value={zoneCode}
+                                                                        onChange={handleChange}
+                                                                    />
 
+                                                                    
+
+                                                                }
+                                                            </FormGroup>        
+                                                            
+                                                            <FormGroup>
+                                                                {
+                                                                    fullAddress === false ? <Input type="fullAddress" name="fullAddress" id="fullAddress"
+                                                                        placeholder="주소"
+                                                                        onChange={handleChange}
+                                                                    /> : 
+                                                                    <Input type="fullAddress" name="fullAddress" id="fullAddress"
+                                                                    value={fullAddress}
+                                                                        onChange={handleChange}
+                                                                    />
+                                                                }
+                                                                    
+                                                            </FormGroup>
+                                                            <FormGroup>
+                                                                    <Input type="detailAddress" name="detailAddress" id="detailAddress"
+                                                                    
+                                                                        placeholder="상세 주소를 입력하세요"
+                                                                        onChange={handleChange}
+                                                                    />
+                                                            </FormGroup>
+                                                            {/* <div className="address">{this.fullAddress}</div>
+                                                            <div className="addressBox">
+                                                                <input type="text" value={this.address} name="address" onChange={handleChange}/>
+                                                            </div> */}
+                                                           
+                                                            
+                                                            
                                                             <FormGroup>
                                                                 <Label>이메일 주소</Label>
                                                                 <Input type="email" name="email" id="email"
