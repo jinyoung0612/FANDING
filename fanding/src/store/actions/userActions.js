@@ -56,10 +56,10 @@ export const Participate_save = (newForm,fid,progress, fullAddress, zoneCode) =>
                 email:newForm.email,
                 fid:newForm.fid,
                 uid:firebase.auth().currentUser.uid,
-                isChecked: false,
                 zoneCode: zoneCode,
                 fullAddress:fullAddress,
-                detailAddress:newForm.detailAddress
+                detailAddress:newForm.detailAddress,
+                isChecked: '미확인',
 
 
         }).then(() => {
@@ -147,7 +147,7 @@ export const check_user_type=(email)=>{
                             .where("email","==",email)
                             .get()
                             .then(function (querySnapshot) {
-                                if(querySnapshot.docs.length!=0){
+                                if(querySnapshot.docs.length!==0){
                                     querySnapshot.forEach(function (doc) {
                                         console.log(doc.data());
                                         type.push("company")
@@ -188,19 +188,54 @@ export const check_user_type=(email)=>{
 }
 
 export const check_deposit = (user) => {
-    console.log("user_email: ",user.email);
-    const firestore = firebase.firestore();
+    console.log("user_uid: ",user.fid);
+    let firestore = firebase.firestore();
+    let participationRef = firestore.collection('participation');
+    let query = participationRef
+                    .where("fid","==", user.fid)
+                    .where("uid","==",user.uid)
+                    .get()
+                    .then(snapshot => {
+                        if (snapshot.empty) {
+                          console.log('No matching documents.');
+                          return;
+                        }
+                    
+                        snapshot.forEach(doc => {
+                          console.log(doc.id, '=>', doc.data());
+                          
+                          participationRef.doc(doc.id).update({isChecked:'확인'});
+                        });
+                      })
+                      .catch(err => {
+                        console.log('Error getting documents', err);
+                      });
+    //return query;
+}
+
+
+export const check_deposit2 = (user) => {
+    console.log("user_uid: ",user.fid);
 
     return (dispatch, getState) => {
+        const firestore = firebase.firestore();
+
         firestore
         .collection("participation")
-        .where("user_email","==", user.email)
+        .where("fid","==", user.fid)
+        .where("uid","==",user.uid)
         .get()
-        .update({
-            isChecked: true
+        .then(function(querySnapshot){
+            console.log("제발");
+            if(querySnapshot.docs.length!==0){
+                querySnapshot.forEach(function (doc) {
+                    console.log(doc.data());
+                })
+            }
         })
         .then(()=>{
             console.log("참여자 입금확인 성공")
+            dispatch({type:"SUCCESS_UPDATE_ISCHEKED",user})
         })
         .catch((err)=>{
             console.log("참여자 입금확인 실패",err)

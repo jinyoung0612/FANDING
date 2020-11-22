@@ -37,6 +37,9 @@ class Chongdae_auth extends Component{
       console.log(this.state.fintech_use_num);
       this.props.getTransactionList(this.state);
       alert("계좌확인이 완료되었습니다.");
+      if(this.state){
+        this.props.history.push("/");
+      }
     }
 
     render()
@@ -69,14 +72,15 @@ class Chongdae_auth extends Component{
                   <Row>
                   <Col sm="6">
                     <Card body>
-                      <CardTitle>본인 인증</CardTitle>
-                      <CardText>이미 본인인증이 완료되었습니다.</CardText>
+                      <CardTitle class="jb-x-large">본인 인증 step3</CardTitle>
+                      <CardText>본인인증이 완료되었습니다. 계좌 정보 최종 확인을 위한 단계로 하단의 '최종 확인' 버튼을 클릭해주세요.</CardText>
+                      <CardText color='red'>※최종 확인 버튼은 한번만 누르면 됩니다!!※</CardText>
                       <Form onSubmit = {this.handleSubmit}>
-                        <Input type="text" id="access_token" placeholder={this.state.access_token} onChange={this.handleChange}/>
-                        <Input type="text" id="fintech_use_num" placeholder={this.state.fintech_use_num} onChange={this.handleChange}/>
-                        <Input type="text" id="user_name" placeholder={this.state.user_name} onChange={this.handleChange}/>
-                        <Input type="text" id="bank_name" placeholder={this.state.bank_name} onChange={this.handleChange}/>
-                        <Button>핀테크넘버 저장</Button>
+                        <Input type="hidden" id="access_token" placeholder={this.state.access_token} onChange={this.handleChange}/>
+                        <Input type="hidden" id="fintech_use_num" placeholder={this.state.fintech_use_num} onChange={this.handleChange}/>
+                        <Input type="hidden" id="user_name" placeholder={this.state.user_name} onChange={this.handleChange}/>
+                        <Input type="hidden" id="bank_name" placeholder={this.state.bank_name} onChange={this.handleChange}/>
+                        <Button>최종 확인</Button>
                       </Form>
                     </Card>
                   </Col>

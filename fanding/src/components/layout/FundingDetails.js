@@ -36,6 +36,7 @@ const FundingDetails = (props)=>{
             }]);
 
         const [inputs, setInputs]=useState({
+
         name:'',
         price:'',
         date:'',
@@ -50,6 +51,7 @@ const FundingDetails = (props)=>{
         // nickname:firebase.auth().currentUser.nickname,
     });
 
+
     // const [isModalOpen,setModal]=useState(false);
     const dispatch = useDispatch();
 
@@ -63,10 +65,17 @@ const FundingDetails = (props)=>{
     const [fullAddress, setFullAdd] = useState(false);
     const [zoneCode, setZoneCode] = useState(false);
 
-    const toggle = () => setModal(!modal);
+
+   
     const toggleNested = () => {
         setNestedModal(!nestedModal);
     }
+
+    const [currentDate,setDate]=useState(new Date());
+
+    const toggle = () => {setModal(!modal);handleEmail()}
+
+
     const handleChange = e => {
         const {value, name}=e.target;
         setInputs({
@@ -109,8 +118,14 @@ const FundingDetails = (props)=>{
 
         e.preventDefault();
         console.log(inputs);
+
         console.log(funding.progress)
         dispatch(Participate_save(inputs,inputs.fid,funding.progress, fullAddress,zoneCode));
+
+        // console.log(funding.progress)
+
+        // dispatch(Participate_save(inputs,inputs.fid,funding.progress));
+
         alert("펀딩에 참여하였습니다.");
         setModal(!modal);
         setProgress(progress+funding.progress)
@@ -119,6 +134,15 @@ const FundingDetails = (props)=>{
     const handleClickChatView=()=>{
         console.log("chatview");
         setChat(true);
+    }
+
+    const handleEmail=e=>{
+        setInputs({
+            ...inputs,
+            email:firebase.auth().currentUser.email
+        })
+
+        console.log("handleEmail:",inputs.email)
     }
 
     const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
@@ -140,9 +164,13 @@ const FundingDetails = (props)=>{
     // }
     // const data= find(funding);
 
+
     //총대일 때
     if(funding && firebase.auth().currentUser){
-        const percent=Math.round(funding.progress/funding.itemRemain*100)
+        const percent=Math.round(funding.progress/funding.itemRemain*100);
+
+        const difference= new Date(funding.fundingEndDate)-currentDate.getTime();
+        const period=Math.ceil(difference/(1000*60*60*24))
 
         if(firebase.auth().currentUser.uid===funding.user_uid){
 
@@ -158,11 +186,11 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <div className="text-center" style={{fontSize:"1.5em"}} ><b>{percent}% 달성</b></div>
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
-                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
+                                            <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
                                                 {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
                                                 {/*<Col><Button>수정하기</Button></Col>*/}
@@ -180,31 +208,31 @@ const FundingDetails = (props)=>{
                                                 </Col>
                                             </Row>
                                             <Row style={{paddingTop: "50px", paddingLeft:"30px"}}>
-                                                {/*<CardText>*/}
-                                                {/*    /!*<h5 className="mt-30"><b>펀딩 기간(입금 기간)</b> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</h5>*!/*/}
-                                                {/*    <CardText>{funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardText>*/}
-                                                {/*</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>품목 : </b></h5></CardText>*/}
-                                                {/*<CardText>{funding.itemTitle}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>가격 : </b></h5>{funding.itemPrice}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>펀딩달성기준 : </b></h5>{funding.itemRemain}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>배송방법 : </b></h5>{funding.shippingMethod}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>배송비 : </b></h5>{funding.shippingFee}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>배송 안내 : </b></h5>{funding.shippingDetail}</CardText>*/}
-                                                <div></div>
+                                                <CardText>
+                                                    <CardText><b style={{fontSize:"1.5em"}}>펀딩 기간(입금 기간)</b></CardText>
+                                                    <CardText>{funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardText>
+                                                    <CardText><b style={{fontSize:"1.5em"}}>펀딩달성기준</b></CardText>
+                                                    <CardText>{funding.itemRemain}명</CardText>
+                                                </CardText>
                                             </Row>
                                         </div>
                                     </Col>
                                 </Row>
-                                <Row xs="2" style={{paddingTop: "50px"}}>
+                                <Row xs="3" style={{paddingTop: "50px"}}>
                                     <Col xs={8}>
-                                        <CardSubtitle><b>펀딩 기간(입금 기간) : </b> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardSubtitle>
-                                        <CardText><b>품목 : </b>{funding.itemTitle}</CardText>
-                                        <CardText><b>가격 : </b>{funding.itemPrice}</CardText>
-                                        <CardText><b>펀딩달성기준 : </b>{funding.itemRemain}</CardText>
-                                        <CardText><b>배송방법 : </b>{funding.shippingMethod}</CardText>
-                                        <CardText><b>배송비 : </b>{funding.shippingFee}</CardText>
-                                        <CardText><b>배송 안내 : </b>{funding.shippingDetail}</CardText>
+
+                                        <CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>품목</b></CardText>
+                                            <CardText>{funding.itemTitle}</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>가격</b></CardText>
+                                            <CardText>{funding.itemPrice}원</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>배송방법</b></CardText>
+                                            <CardText>{funding.shippingMethod}</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>배송비</b></CardText>
+                                            <CardText>{funding.shippingFee}</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>배송 안내</b></CardText>
+                                            <CardText>{funding.shippingDetail}</CardText>
+                                        </CardText>
 
                                         <div className="text-left"><h4 className="pt-30"><b>상세 설명</b></h4></div>
                                         <div className="mt-20">
@@ -252,7 +280,7 @@ const FundingDetails = (props)=>{
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
                                             <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <p className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
                                                 {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
                                                 {/*<Col><Button>수정하기</Button></Col>*/}
@@ -329,7 +357,11 @@ const FundingDetails = (props)=>{
         else{
             //리워드형 일때
             if(funding.fundingType==="reward"){
-                // const percent=Math.round(funding.progress/funding.itemRemain*100)
+                const difference= new Date(funding.fundingEndDate)-currentDate.getTime();
+                // console.log(difference/(1000*60*60*24))
+                const period=Math.ceil(difference/(1000*60*60*24))
+                // console.log(period)
+                const percent=Math.round(funding.progress/funding.itemRemain*100)
                 if(isChatView===true){
                     // console.log(props.history.location)
                     return(
@@ -350,12 +382,12 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <div className="text-center" style={{fontSize:"1.5em"}} ><b>{percent}% 달성</b></div>
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
-                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
-                                            <Row xs="2">
+                                            <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
+                                            <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-3"><b>{period}일</b> 남음</p>
+                                            <Row style={{paddingLeft:"16px"}} xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
                                             <Modal style={{height:'1200px'}} isOpen={modal} toggle={toggle}>
@@ -364,9 +396,12 @@ const FundingDetails = (props)=>{
                                                     <ModalBody>
                                                         <div className="companyRecruit text-center">
                                                             <h3>[{funding.artistSelect}]{funding.fundingTitle}</h3>
-                                                            <p>펀딩 계좌 정보 넣기</p>
-                                                            <p>닉네임 넣기</p>
-                                                            <p>입금 확인 했는지 확인하는 checkbox</p>
+
+                                                            {/*<p>펀딩 계좌 정보 넣기</p>*/}
+                                                            {/*<p>닉네임 넣기</p>*/}
+                                                            {/*<p>주소 넣기</p>*/}
+                                                            {/*<p>입금 확인 했는지 확인하는 checkbox</p>*/}
+
 
                                                             <FormGroup>
                                                                 <Label for="PaymentInfo"><b>입금정보입력</b></Label>
@@ -512,32 +547,31 @@ const FundingDetails = (props)=>{
                                                 </Col>
                                             </Row>
                                             <Row style={{paddingTop: "50px", paddingLeft:"30px"}}>
-                                                {/*<CardText>*/}
-                                                {/*    /!*<h5 className="mt-30"><b>펀딩 기간(입금 기간)</b> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</h5>*!/*/}
-                                                {/*    <CardText>{funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardText>*/}
-                                                {/*</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>품목 : </b></h5></CardText>*/}
-                                                {/*<CardText>{funding.itemTitle}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>가격 : </b></h5>{funding.itemPrice}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>펀딩달성기준 : </b></h5>{funding.itemRemain}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>배송방법 : </b></h5>{funding.shippingMethod}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>배송비 : </b></h5>{funding.shippingFee}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>배송 안내 : </b></h5>{funding.shippingDetail}</CardText>*/}
-                                                <div></div>
+                                                <CardText>
+                                                   <CardText><b style={{fontSize:"1.5em"}}>펀딩 기간(입금 기간)</b></CardText>
+                                                    <CardText>{funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardText>
+                                                    <CardText><b style={{fontSize:"1.5em"}}>펀딩달성기준</b></CardText>
+                                                    <CardText>{funding.itemRemain}명</CardText>
+                                                </CardText>
                                             </Row>
                                         </div>
                                     </Col>
                                 </Row>
                                 <Row xs="3" style={{paddingTop: "50px"}}>
                                     <Col xs={8}>
-                                        <CardSubtitle><b>펀딩 기간(입금 기간) : </b> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardSubtitle>
-                                        <CardText><b>품목 : </b>{funding.itemTitle}</CardText>
-                                        <CardText><b>가격 : </b>{funding.itemPrice}</CardText>
-                                        <CardText><b>펀딩달성기준 : </b>{funding.itemRemain}</CardText>
-                                        <CardText><b>배송방법 : </b>{funding.shippingMethod}</CardText>
-                                        <CardText><b>배송비 : </b>{funding.shippingFee}</CardText>
-                                        <CardText><b>배송 안내 : </b>{funding.shippingDetail}</CardText>
 
+                                        <CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>품목</b></CardText>
+                                            <CardText>{funding.itemTitle}</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>가격</b></CardText>
+                                            <CardText>{funding.itemPrice}원</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>배송방법</b></CardText>
+                                            <CardText>{funding.shippingMethod}</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>배송비</b></CardText>
+                                            <CardText>{funding.shippingFee}</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>배송 안내</b></CardText>
+                                            <CardText>{funding.shippingDetail}</CardText>
+                                        </CardText>
                                         <div className="text-left"><h4 className="pt-30"><b>상세 설명</b></h4></div>
                                         <div className="mt-20">
                                             <Viewer
@@ -571,12 +605,12 @@ const FundingDetails = (props)=>{
                 if(isChatView===true){
                     // console.log(props.history.location)
                     return(
-
                         <QuestionChat funding={funding} history={props.history}></QuestionChat>
                     )
                 }
 
                 return(
+
                     <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                         <Container>
                             <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
@@ -586,13 +620,13 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <div className="text-center" style={{fontSize:"1.5em"}} ><b>{percent}% 달성</b></div>
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
-                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
+                                            <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
-                                                <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
+                                                <Button style={{paddingLeft:"16px"}} color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
                                             <Modal isOpen={modal} toggle={toggle}>
                                                 <Form onSubmit={(e)=>handleSubmit(e,funding)}>
@@ -805,7 +839,11 @@ const FundingDetails = (props)=>{
     else{
 
         if(props.auth.isLoaded&&funding){
-            const percent=Math.round(funding.progress/funding.itemRemain*100)
+
+            const percent=Math.round(funding.progress/funding.itemRemain*100);
+            const difference= new Date(funding.fundingEndDate)-currentDate.getTime();
+
+            const period=Math.ceil(difference/(1000*60*60*24));
 
             if(funding.fundingType==="reward"){
                 console.log("로그인 안된 상세페이지");
@@ -824,7 +862,7 @@ const FundingDetails = (props)=>{
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
                                             <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
-                                            <p className="mt-3"><b>15일</b> 남음</p>
+                                            <p className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
