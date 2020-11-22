@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Deleting from "react-loading";
-
+import { Container } from "reactstrap";
 import firebase from "firebase/app";
 
 import Room from "../totalchat/chatroom/chatroom";
@@ -139,136 +139,148 @@ export default class chatlist extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          {this.state.showNewChatForm === false ? (
+      <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+        <Container>
+          <div>
             <div>
-              {this.state.showChatScreen === false ? (
+              {this.state.showNewChatForm === false ? (
                 <div>
-                  {this.props.chats.length > 0 ? (
-                    <div className="overflow">
-                      {this.props.chats.map((chat, index) => (
-                        <div
-                          className=" text-light p-2 mt-2 pointer"
-                          style={{
-                            // backgroundColor: "#6119DA",
-                            backgroundColor: "#6b34c9",
-                            borderRadius: "20px",
-                          }}
-                          onClick={() => this.selectChat(index)}
-                          onTouchStart={() => this.touchStart(chat, index)}
-                          onTouchEnd={() => this.touchEnd()}
-                          onMouseDown={() => this.touchStart(chat, index)}
-                          onMouseUp={() => this.touchEnd()}
-                          onMouseLeave={() => this.touchEnd()}
-                          key={index}
-                        >
-                          <div className="chat-list">
-                            <img
-                              className="chat-list-img mr-3"
-                              // src={this.props.allUserData
-                              //   .map((list) => {
-                              //     if (
-                              //       list.email ===
-                              //       (chat.users[0] !== this.props.userEmail
-                              //         ? chat.users[0]
-                              //         : chat.users[1])
-                              //     ) {
-                              //       return list.URL; //list.URL 원래
-                              //     } else {
-                              //       return "";
-                              //     }
-                              //   })
-                              //   .join("")
-                              //   .trim("")}
-                              src={userLogo}
-                              style={{ border: "1px solid white" }}
-                            />
+                  {this.state.showChatScreen === false ? (
+                    <div>
+                      {this.props.chats.length > 0 ? (
+                        <div className="overflow">
+                          {this.props.chats.map((chat, index) => (
+                            <div
+                              className=" text-light p-2 mt-2 pointer"
+                              style={{
+                                // backgroundColor: "#6119DA",
+                                backgroundColor: "#6b34c9",
+                                borderRadius: "20px",
+                              }}
+                              onClick={() => this.selectChat(index)}
+                              onTouchStart={() => this.touchStart(chat, index)}
+                              onTouchEnd={() => this.touchEnd()}
+                              onMouseDown={() => this.touchStart(chat, index)}
+                              onMouseUp={() => this.touchEnd()}
+                              onMouseLeave={() => this.touchEnd()}
+                              key={index}
+                            >
+                              <div className="chat-list">
+                                <img
+                                  className="chat-list-img mr-3"
+                                  // src={this.props.allUserData
+                                  //   .map((list) => {
+                                  //     if (
+                                  //       list.email ===
+                                  //       (chat.users[0] !== this.props.userEmail
+                                  //         ? chat.users[0]
+                                  //         : chat.users[1])
+                                  //     ) {
+                                  //       return list.URL; //list.URL 원래
+                                  //     } else {
+                                  //       return "";
+                                  //     }
+                                  //   })
+                                  //   .join("")
+                                  //   .trim("")}
+                                  src={userLogo}
+                                  style={{ border: "1px solid white" }}
+                                />
 
-                            <div>
-                              <h4 style={{ textAlign: "left" }}>
-                                {this.props.allUserData.map((list) => {
-                                  if (
-                                    list.user_email ===
-                                    (chat.users[0] !== this.props.userEmail
-                                      ? chat.users[0]
-                                      : chat.users[1])
-                                  ) {
-                                    return list.nickname || this.state.blank;
-                                  }
-                                })}
-                              </h4>
+                                <div>
+                                  <h4 style={{ textAlign: "left" }}>
+                                    {this.props.allUserData.map((list) => {
+                                      if (
+                                        list.user_email ===
+                                        (chat.users[0] !== this.props.userEmail
+                                          ? chat.users[0]
+                                          : chat.users[1])
+                                      ) {
+                                        return (
+                                          list.nickname || this.state.blank
+                                        );
+                                      }
+                                    })}
+                                  </h4>
 
-                              <h6>
-                                {chat.messages[chat.messages.length - 1]
-                                  .type === "text" ? (
-                                  <span className="mr-1">
-                                    {chat.messages.length > 0
-                                      ? chat.messages[
-                                          chat.messages.length - 1
-                                        ].message.substring(0, 10)
-                                      : ""}
-                                  </span>
-                                ) : (
-                                  <span className="mr-1">사진</span>
-                                )}
-                                <span>
-                                  <h6 style={{ display: "inline-block" }}>
-                                    {chat.messages.length > 0
-                                      ? chat.messages[chat.messages.length - 1]
-                                          .time
-                                      : ""}
+                                  <h6>
+                                    {chat.messages[chat.messages.length - 1]
+                                      .type === "text" ? (
+                                      <span className="mr-1">
+                                        {chat.messages.length > 0
+                                          ? chat.messages[
+                                              chat.messages.length - 1
+                                            ].message.substring(0, 10)
+                                          : ""}
+                                      </span>
+                                    ) : (
+                                      <span className="mr-1">사진</span>
+                                    )}
+                                    <span>
+                                      <h6 style={{ display: "inline-block" }}>
+                                        {chat.messages.length > 0
+                                          ? chat.messages[
+                                              chat.messages.length - 1
+                                            ].time
+                                          : ""}
+                                      </h6>
+                                    </span>
                                   </h6>
-                                </span>
-                              </h6>
+                                </div>
+                              </div>
                             </div>
-                          </div>
+                          ))}
                         </div>
-                      ))}
+                      ) : (
+                        <div className="text-center">
+                          <h3>진행중인 채팅이 없습니다</h3>
+                        </div>
+                      )}
                     </div>
                   ) : (
-                    <div className="text-center">
-                      <h3>진행중인 채팅이 없습니다</h3>
-                    </div>
+                    <Room
+                      chatData={this.props.chats[this.state.index]}
+                      allUserData={this.props.allUserData}
+                      userEmail={this.props.userEmail}
+                      backButtonClick={() => this.backButtonClick()}
+                      profilePicture={this.state.profilePicture || myuserLogo}
+                    />
                   )}
                 </div>
               ) : (
-                <Room
-                  chatData={this.props.chats[this.state.index]}
-                  allUserData={this.props.allUserData}
+                <NewChatForm
                   userEmail={this.props.userEmail}
                   backButtonClick={() => this.backButtonClick()}
-                  profilePicture={this.state.profilePicture || myuserLogo}
+                  allUserData={this.props.allUserData}
+                  history={this.props.history}
                 />
               )}
             </div>
-          ) : (
-            <NewChatForm
-              userEmail={this.props.userEmail}
-              backButtonClick={() => this.backButtonClick()}
-              allUserData={this.props.allUserData}
-              history={this.props.history}
-            />
-          )}
-        </div>
 
-        {this.state.showMoreOptions ? (
-          <More moreOptions={(type) => this.moreOptions(type)} />
-        ) : null}
+            {this.state.showMoreOptions ? (
+              <More moreOptions={(type) => this.moreOptions(type)} />
+            ) : null}
 
-        {this.state.deleting ? (
-          <div
-            className="center p-3 shadow"
-            style={{ borderRadius: "20px", backgroundColor: "white" }}
-          >
-            <center>
-              <Deleting type="bars" color="black" height={100} width={100} />
-            </center>
-            <h4>Deleting...</h4>
-            <h6>Please Dont Close The App</h6>
+            {this.state.deleting ? (
+              <div
+                className="center p-3 shadow"
+                style={{ borderRadius: "20px", backgroundColor: "white" }}
+              >
+                <center>
+                  <Deleting
+                    type="bars"
+                    color="black"
+                    height={100}
+                    width={100}
+                  />
+                </center>
+                <h4>Deleting...</h4>
+                <h6>Please Dont Close The App</h6>
+              </div>
+            ) : null}
           </div>
-        ) : null}
-      </div>
+        </Container>
+      </section>
     );
   }
 }

@@ -26,7 +26,6 @@ export default class newchatform extends Component {
   componentDidMount = async () => {
     try {
       await this.getAllUsersData();
-      // console.log("1234");
     } catch (e) {
       await this.getAllUsersData();
     }
@@ -149,14 +148,14 @@ export default class newchatform extends Component {
   };
 
   buildId = async () => {
-    return [this.state.email, this.props.userEmail].sort().join(":"); //email은 상대email, userEmail은 로그인한email
+    return [this.state.email, this.props.userEmail].sort().join(":");
   };
 
   chatExists = async () => {
     const docid = await this.buildId();
 
     const chat = await firestore.collection("chats").doc(docid).get();
-    console.log("what chat?", chat); //chat.exists는 true값 나온다
+    console.log("what chat?", chat);
     return chat.exists;
   };
 
@@ -166,7 +165,7 @@ export default class newchatform extends Component {
     try {
       const exists = userSnapshot.docs
         .map((docs) => docs.data().user_email)
-        .includes(this.state.email); //여기에 해당 이메일이 있는지없는지를 체크하는것이다
+        .includes(this.state.email);
       //   console.log(this.state.email);
       //   console.log(
       //     "this is userExists , userSnapshot",
@@ -187,29 +186,23 @@ export default class newchatform extends Component {
     let { userEmail } = this.props;
 
     const dataList = [];
-    //검색해서 들어온 username으로 allUserData에서 찾아가지고 넣어주는것같다
     if (username.length > 0) {
-      //name이없다고해서 에러나지않는다
       console.log("this is username length", username.length);
       allUserData.map((data) => {
-        // console.log(data.nickname);
-        // console.log("this username", username);//내가 검색한 유저닉네임이 들어있다
         console.log(
           "this data.nickname.indexOf",
           data.nickname.indexOf(username)
         );
-        console.log("this data.email?", data.user_email); //언디파인이다
+        console.log("this data.email?", data.user_email);
         if (
-          data.nickname.indexOf(username) !== -1 && //indexOf에러나는이유 nickname이 비어있어서그렇다?아닌듯
+          data.nickname.indexOf(username) !== -1 &&
           data.user_email !== userEmail
         ) {
           dataList.push(data);
-          //   console.log("this dataList", dataList); datalist에는 전부들어간다
         }
       });
 
-      await this.setState({ list: dataList }); //여기서 list값 넣는다
-      //   console.log("this list", this.state.list); 여기도들어갔다
+      await this.setState({ list: dataList });
     } else {
       await this.setState({ list: [] });
     }

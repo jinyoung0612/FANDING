@@ -30,9 +30,13 @@ class SignUp extends Component {
   state = {
     email: "",
     password: "",
+    password_check: "",
     artistSelect: "",
     nickname: "",
     nickname_Check: "",
+    nickname_Success: false,
+    isNoPassWord: false,
+    isPassWordCheck: false,
   };
   options = [
     { value: "BTS", label: "BTS" },
@@ -63,15 +67,27 @@ class SignUp extends Component {
       check_click == true &&
       this.state.nickname != ""
     ) {
-      if (this.state.email != "" && this.state.password != "") {
-        var msg = "이메일인증이 전송되었습니다.";
-        this.props.signUp(this.state);
-        alert(msg);
+      if (
+        this.state.email != "" &&
+        this.state.password != "" &&
+        this.state.password_check != ""
+      ) {
+        if (this.state.isNoPassWord == true && this.state.isPassWordCheck) {
+          var msg = "이메일인증 메일 전송되었습니다.";
+          this.props.signUp(this.state);
+          alert(msg);
+        } else if (this.state.password_check != this.state.password) {
+          var msg = "비밀번호 확인을 해주세요";
+          alert(msg);
+        }
       } else if (this.state.email == "") {
         var msg = "이메일을 입력해주세요";
         alert(msg);
       } else if (this.state.password == "") {
         var msg = "비밀번호를 입력해주세요";
+        alert(msg);
+      } else if (this.state.password_check == "") {
+        var msg = "비밀번호 확인을 입력해주세요";
         alert(msg);
       }
     } else {
@@ -86,10 +102,14 @@ class SignUp extends Component {
     });
   };
   handleClick_Change = () => {
-    if (nickname_check == true) {
+    if (nickname_check == true && this.state.nickname != "") {
       this.setState({ nickname_Check: true });
-    } else if (nickname_check == false) {
+    } else if (nickname_check == false && this.state.nickname != "") {
       this.setState({ nickname_Check: false });
+      this.setState({ nickname_Success: true });
+    } else if (this.state.nickname_Success == "") {
+      this.setState({ nickname_Check: false });
+      this.setState({ nickname_Success: false });
     }
     nickname_check = false;
   };
@@ -113,6 +133,25 @@ class SignUp extends Component {
         console.log("Error getting documents: ", error);
       });
     check_click = true;
+  };
+  password_Checking = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+    setTimeout(() => {
+      if (this.state.password == this.state.password_check) {
+        this.setState({ isPassWordCheck: true });
+        this.setState({ isNoPassWord: true });
+        if (this.state.password == "" && this.state.password_check == "") {
+          this.setState({ isNoPassWord: false });
+        }
+      } else if (this.state.password != this.state.password_check) {
+        if (this.state.password != "" || this.state.password_check != "") {
+          this.setState({ isPassWordCheck: false });
+          this.setState({ isNoPassWord: true });
+        }
+      }
+    }, 200);
   };
 
   render() {
@@ -157,20 +196,26 @@ class SignUp extends Component {
           </Form>
           <div>
             {this.state.nickname_Check === true ? (
-              <div>닉네임이 중복입니다</div>
-            ) : null}
+              <div>닉네임 중복입니다</div>
+            ) : (
+              <div>
+                {this.state.nickname_Success === true ? (
+                  <div>닉네임 중복확인 완료되었습니다</div>
+                ) : null}
+              </div>
+            )}
           </div>
           <Label className="mr-2" for="Email">
             <strong>이메일</strong>
           </Label>
-          <Button
+          {/* <Button
             className="ml-3"
             color="warning"
             onChange={this.handleClick}
             size="sm"
           >
             이메일 인증
-          </Button>
+          </Button> */}
           <Form>
             <FormGroup>
               <Input
@@ -193,10 +238,35 @@ class SignUp extends Component {
                 name="password"
                 id="password"
                 placeholder="비밀번호를 입력하세요"
-                onChange={this.handleChange}
+                onChange={this.password_Checking}
               />
             </FormGroup>
           </Form>
+          <Form className="mt-4">
+            <FormGroup>
+              <Label for="Password">
+                <strong>비밀번호 확인</strong>
+              </Label>
+              <Input
+                type="password"
+                name="password_check"
+                id="password_check"
+                placeholder="비밀번호를 입력하세요"
+                onChange={this.password_Checking}
+              />
+            </FormGroup>
+          </Form>
+          <div>
+            {this.state.isNoPassWord === false ? null : (
+              <div>
+                {this.state.isPassWordCheck === false ? (
+                  <div>비밀번호가 일치하지 않습니다</div>
+                ) : (
+                  <div>비밀번호가 일치합니다</div>
+                )}
+              </div>
+            )}
+          </div>
           <Form className="mt-4">
             <FormGroup>
               <Label>

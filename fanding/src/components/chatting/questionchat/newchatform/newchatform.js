@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import firebase from "firebase/app";
-
+import { Container } from "reactstrap";
 import Loading from "react-loading";
 
 import "./newchatform.css";
@@ -154,50 +154,54 @@ class Newchatform extends Component {
 
   render() {
     return (
-      <div
-        className="center container-fluid p-5"
-        style={{
-          backgroundColor: "white",
-          width: "90vw",
-          borderRadius: "20px",
-        }}
-      >
-        {this.state.loading === false ? (
-          <div className="row">
-            <div className="col-lg-6 col-sm-12 col-xs-12 flex2">
-              <h3>문의사항을 입력해주세요</h3>
-              <div className="mt-3">
-                <input
-                  type="text"
-                  placeholder="채팅 내용을 입력하세요"
-                  value={this.state.msg}
-                  className="email"
-                  style={{ padding: "5px" }}
-                  onChange={(e) => this.setState({ msg: e.target.value })}
-                  onKeyUp={(e) =>
-                    e.keyCode === 13 ? this.submitNewChat() : null
-                  }
-                />
-              </div>
+      <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+        <Container>
+          <div
+            className="center container-fluid p-5"
+            style={{
+              backgroundColor: "white",
+              width: "90vw",
+              borderRadius: "20px",
+            }}
+          >
+            {this.state.loading === false ? (
+              <div className="row">
+                <div className="col-lg-6 col-sm-12 col-xs-12 flex2">
+                  <h3>문의사항을 입력해주세요</h3>
+                  <div className="mt-3">
+                    <input
+                      type="text"
+                      placeholder="채팅 내용을 입력하세요"
+                      value={this.state.msg}
+                      className="email"
+                      style={{ padding: "5px" }}
+                      onChange={(e) => this.setState({ msg: e.target.value })}
+                      onKeyUp={(e) =>
+                        e.keyCode === 13 ? this.submitNewChat() : null
+                      }
+                    />
+                  </div>
 
-              <div className="mt-3">
-                <button
-                  className="btn text-light ml-3"
-                  style={{ backgroundColor: "#6b38d1" }}
-                  onClick={() => this.submitNewChat()}
-                >
-                  채팅 시작
-                </button>
+                  <div className="mt-3">
+                    <button
+                      className="btn text-light ml-3"
+                      style={{ backgroundColor: "#6b38d1" }}
+                      onClick={() => this.submitNewChat()}
+                    >
+                      채팅 시작
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : (
+              <center>
+                <Loading type="bars" color="black" height={100} width={100} />
+                <h3>Submiting...</h3>
+              </center>
+            )}
           </div>
-        ) : (
-          <center>
-            <Loading type="bars" color="black" height={100} width={100} />
-            <h3>Submiting...</h3>
-          </center>
-        )}
-      </div>
+        </Container>
+      </section>
     );
   }
 }
