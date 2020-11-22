@@ -26,7 +26,7 @@ const FundingContents = ({funding})=>{
                 <CardImg src={funding.thumbnailImage}top width="100" alt="Card image cap" style={imgStyle}/>
                 <CardBody>
                     <CardTitle>[{funding.artistSelect}] {funding.fundingTitle}</CardTitle>
-                    <CardSubtitle> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndTime} {funding.fundingEndTime}</CardSubtitle>
+                    <CardSubtitle> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardSubtitle>
                     {/*<CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
                     {/*<Button>Button</Button>*/}
                 </CardBody>

@@ -115,7 +115,9 @@ class CreateFunding extends Component{
         this.setState({
             [e.target.id]: e.target.value,
         });
-        console.log(e.target.value);
+        this.handleAccount()
+        // console.log(e.target.value);
+        console.log(this.state)
     };
     handleChangeSelect = e => {
         console.log(e)
@@ -151,12 +153,23 @@ class CreateFunding extends Component{
             content: content
         });
     }
+
+    handleAccount(){
+        console.log("handleAccount")
+        if(isLoaded(this.props.bank)){
+            console.log(this.props.bank[0])
+            this.setState({
+                accountNum:this.props.bank[0].account_num,
+                bankName:this.props.bank[0].bank_name
+            });
+        }
+    }
+
     handleSubmit = e => {
 
-
         e.preventDefault();
-        
-        console.log(this.state.content);
+
+        console.log(this.state);
 
         if(this.state.image!=null){
             const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
@@ -190,6 +203,9 @@ class CreateFunding extends Component{
             )
         }
         else{
+            console.log(this.state);
+
+            // this.props.firebase_funding_save(this.state);
             this.props.firebase_funding_save(this.state);
             this.setState({redirectToReferrer: true})
 
@@ -206,7 +222,7 @@ class CreateFunding extends Component{
 
         console.log(this.props.user);
         const {bank}= this.props;
-        console.log(this.props);
+        console.log(this.props.bank);
        
 
         
@@ -372,7 +388,7 @@ class CreateFunding extends Component{
                         <Input type="text" name="title" id="itemPrice" placeholder="" onChange={this.handleChange}/>
                     </FormGroup>
                     <FormGroup>
-                        <Label className="ml-2 mr-1" for="itemRemain">재고</Label>
+                        <Label className="ml-2 mr-1" for="itemRemain">목표 수량</Label>
                         <Input type="text" name="title" id="itemRemain" placeholder="" onChange={this.handleChange}/>
                     </FormGroup>
 
@@ -411,26 +427,34 @@ class CreateFunding extends Component{
 
 
                 <Label for="shipping" className="mt-5"><strong>계좌 정보</strong></Label>
+
+                {/*{isLoaded(this.props.bank) ? <Label>{bank[0].bank_name}</Label> : <Label>loading...</Label>}*/}
+
                 <Form className="mb-10" inline>
                     <FormGroup>
-                    <Label for="bankName" className="mr-2">은행 이름</Label>
-                    <Input  type="text" name="text" id="bankName"
-                           onChange={this.handleChange}
-                        //    placeholder={bank.bank_name}
-                    />
+                    <Label for="bankName" className="mr-2"><b>은행 이름</b></Label>
+                    {/*<Input  type="text" name="text" id="bankName"*/}
+                    {/*       onChange={this.handleChange}*/}
+                    {/*    //    placeholder={bank.bank_name}*/}
+                    {/*/>*/}
+                    {isLoaded(this.props.bank) ? <Label>{bank[0].bank_name}</Label> : <Label>loading...</Label>}
+
                     </FormGroup>
-                    <FormGroup className="ml-5"> 
-                    <Label for="accountName" className="mr-2">예금주(초성만)</Label>
-                    <Input  type="text" name="text" id="accountName"
-                           onChange={this.handleChange}
-                    />
-                    </FormGroup>
+
                     <FormGroup className="ml-5">
-                    <Label for="accountNum" className="mr-2">계좌번호</Label>
-                    <Input  type="text" name="text" id="accountNum"
-                           onChange={this.handleChange}
-                        //    placeholder={bank.account_num}
-                    />
+                    <Label for="accountNum" className="mr-2"><b>계좌번호</b></Label>
+                    {/*<Input  type="text" name="text" id="accountNum"*/}
+                    {/*       onChange={this.handleChange}*/}
+                    {/*    //    placeholder={bank.account_num}*/}
+                    {/*/>*/}
+                    {isLoaded(this.props.bank) ? <Label>{bank[0].account_num}</Label> : <Label>loading...</Label>}
+                    </FormGroup>
+
+                    <FormGroup className="ml-5">
+                        <Label for="accountName" className="mr-2">예금주(초성만)</Label>
+                        <Input  type="text" name="text" id="accountName"
+                                onChange={this.handleChange}
+                        />
                     </FormGroup>
                 </Form> 
                 <Form className="mt-10" onSubmit={this.handleSubmit} >

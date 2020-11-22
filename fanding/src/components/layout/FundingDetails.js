@@ -167,10 +167,15 @@ const FundingDetails = (props)=>{
 
     //총대일 때
     if(funding && firebase.auth().currentUser){
-        const percent=Math.round(funding.progress/funding.itemRemain*100);
+        // var percent=0;
+        let percent=0;
+        if(funding.progress!==0){
+            percent=Math.round(funding.progress/funding.itemRemain*100);
 
+        }
         const difference= new Date(funding.fundingEndDate)-currentDate.getTime();
         const period=Math.ceil(difference/(1000*60*60*24))
+
 
         if(firebase.auth().currentUser.uid===funding.user_uid){
 
@@ -226,6 +231,8 @@ const FundingDetails = (props)=>{
                                             <CardText>{funding.itemTitle}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>가격</b></CardText>
                                             <CardText>{funding.itemPrice}원</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>입금 계좌</b></CardText>
+                                            <CardText>{funding.bankName} {funding.accountNum} {funding.accountName}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>배송방법</b></CardText>
                                             <CardText>{funding.shippingMethod}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>배송비</b></CardText>
@@ -359,9 +366,14 @@ const FundingDetails = (props)=>{
             if(funding.fundingType==="reward"){
                 const difference= new Date(funding.fundingEndDate)-currentDate.getTime();
                 // console.log(difference/(1000*60*60*24))
-                const period=Math.ceil(difference/(1000*60*60*24))
+                const period=Math.ceil(difference/(1000*60*60*24));
                 // console.log(period)
-                const percent=Math.round(funding.progress/funding.itemRemain*100)
+
+                let percent=0;
+                if(funding.progress!==0){
+                    percent=Math.round(funding.progress/funding.itemRemain*100);
+
+                }
                 if(isChatView===true){
                     // console.log(props.history.location)
                     return(
@@ -565,6 +577,8 @@ const FundingDetails = (props)=>{
                                             <CardText>{funding.itemTitle}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>가격</b></CardText>
                                             <CardText>{funding.itemPrice}원</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>입금 계좌</b></CardText>
+                                            <CardText>{funding.bankName} {funding.accountNum} {funding.accountName}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>배송방법</b></CardText>
                                             <CardText>{funding.shippingMethod}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>배송비</b></CardText>
