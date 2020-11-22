@@ -85,9 +85,9 @@ const NavbarTest = (props) => {
                   <li class="nav-item">
                     <a class="nav-link link text-black display-4" href="/find_company">업체 찾기</a>
                   </li>
-                  <li class="nav-item">
+                  {/* <li class="nav-item">
                     <a class="nav-link link text-black display-4" href="/payment">결제</a>
-                  </li>
+                  </li> */}
                   
                    
                   
