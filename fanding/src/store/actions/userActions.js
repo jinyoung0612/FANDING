@@ -54,6 +54,7 @@ export const Participate_save = (newForm) => {
                 accountName:newForm.accountName,
                 email:newForm.email,
                 fid:newForm.fid,
+                nickname:newForm.nickname,
                 uid:firebase.auth().currentUser.uid,
                 isChecked: false,
 

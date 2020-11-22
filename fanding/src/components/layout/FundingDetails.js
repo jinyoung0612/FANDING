@@ -15,6 +15,7 @@ import { BsHeart, BsChatSquareDots, BsFillBellFill } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
 import {Participate_save} from "../../store/actions/userActions";
 import RewardFundingDetail from "./funding/reward/RewardFundingDetail";
+import DaumPostCode from 'react-daum-postcode';
 
 let imgStyle = {
     maxHeight: '500px',
@@ -41,7 +42,14 @@ const FundingDetails = (props)=>{
         accountNumber:'',
         accountName:'',
         email:"",
-        fid:doc_id
+        fid:doc_id,
+        address:'',
+        zoneCode : "",
+        fullAddress : "",
+        isDaumPost : false,
+        isRegister : false,
+        register: [],
+        // nickname:firebase.auth().currentUser.nickname,
     });
 
     // const [isModalOpen,setModal]=useState(false);
@@ -49,8 +57,13 @@ const FundingDetails = (props)=>{
 
 
     const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
+    const [nestedModal, setNestedModal] = useState(false);
+    
 
+    const toggle = () => setModal(!modal);
+    const toggleNested = () => {
+        setNestedModal(!nestedModal);
+    }
     const handleChange = e => {
         const {value, name}=e.target;
         setInputs({
@@ -59,7 +72,26 @@ const FundingDetails = (props)=>{
         })
         console.log(inputs)
     };
-
+     // postcode
+     const handleAddress = (data) => {
+        let AllAddress = data.address;
+        let extraAddress = ''; 
+        let zoneCodes = data.zonecode;
+        
+        if (data.addressType === 'R') {
+          if (data.bname !== '') {
+            extraAddress += data.bname;
+          }
+          if (data.buildingName !== '') {
+            extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+          }
+          AllAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+        }
+        this.setState ({
+            fullAddress: AllAddress,
+            zoneCode : zoneCodes
+        })
+      }
     const handleSubmit = (e) =>{
         e.preventDefault();
         console.log(inputs);
@@ -341,7 +373,27 @@ const FundingDetails = (props)=>{
                                                                        onChange={handleChange}
                                                                 />
                                                             </FormGroup>
-
+                                                            <Button color="primary" onClick={toggleNested}>주소 입력하기</Button>
+                                                            <Modal isOpen={nestedModal} toggle={toggleNested}>
+                                                            {
+                                                                nestedModal ?
+                                                                    <DaumPostCode
+                                                                        onComplete={handleAddress}
+                                                                        autoClose
+                                                                        // width={width}
+                                                                        // height={height}
+                                                                        // style={modalStyle}
+                                                                        nestedModal={nestedModal}
+                                                                        />
+                                                                : null
+                                                            }
+                                                            {/* <div className="address">{this.fullAddress}</div>
+                                                            <div className="addressBox">
+                                                                <input type="text" value={this.address} name="address" onChange={handleChange}/>
+                                                            </div> */}
+                                                            </Modal>
+                                                            
+                                                            
                                                             <FormGroup>
                                                                 <Label>이메일 주소</Label>
                                                                 <Input type="email" name="email" id="email"

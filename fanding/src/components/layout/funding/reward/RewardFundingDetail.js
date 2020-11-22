@@ -19,6 +19,7 @@ import {Participate_save} from '../../../../store/actions/userActions'
 import firebase from "firebase";
 //import DaumPostcode from 'react-daum-postcode';
 import QuestionChat from "../../../chatting/questionchat/QuestionChat";
+import DaumPostCode from 'react-daum-postcode';
 
 let imgStyle = {
     maxHeight: '500px',
@@ -33,6 +34,7 @@ class FundingDetail extends Component{
     this.state = {
       funding: this.props.funding,
       modal: false,
+      postModal:false,
       name:'',
       price:'',
       date:'',
@@ -40,14 +42,27 @@ class FundingDetail extends Component{
       bank:'',
       accountNumber:'',
       accountName:'',
+      zoneCode : "",
+      fullAddress : "",
+      isDaumPost : false,
+      isRegister : false,
+      register: [],
+      nickname:firebase.auth().currentUser.nickname,
       email:firebase.auth().currentUser.email,
       fid: this.props.match.params.id,
       isChatView: false,
     };
     this.toggle = this.toggle.bind(this);
+    this.togglePost = this.togglePost.bind(this);
     
   }
   toggle() {
+    console.log(this.props)
+      this.setState({
+          postModal: !this.state.postModal
+      });
+  }
+  togglePost() {
     console.log(this.props)
       this.setState({
           modal: !this.state.modal
@@ -91,11 +106,47 @@ handleClickChatView = () => {
       alert("지원서를 제출하였습니다");
       this.toggle()
   }
+  handleOpenPost = () => {
+    this.setState({
+        isDaumPost : true
+    })
+  }
+   // postcode
+   handleAddress = (data) => {
+    let AllAddress = data.address;
+    let extraAddress = ''; 
+    let zoneCodes = data.zonecode;
+    
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      }
+      AllAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+    }
+    this.setState ({
+        fullAddress: AllAddress,
+        zoneCode : zoneCodes
+    })
+  }
   render(){
     console.log(this.state.funding);
 
     const url=window.location.href; 
     const{funding}=this.props;
+    const width = 595;
+    const height = 450;
+    const modalStyle = {
+        position: "absolute",
+        top: 0,
+        left: "-178px",
+        zIndex: "100",
+        border: "1px solid #000000",
+        overflow: "hidden"
+    }
+
     if(isLoaded(funding) && funding)
     {
       return(
@@ -136,7 +187,10 @@ handleClickChatView = () => {
                               <p>닉네임 넣기</p>
                               <p>주소 넣기</p>
                               <p>입금 확인 했는지 확인하는 checkbox</p>
-
+                              <FormGroup>
+                                  <Label for="ChongdaeAccount"><b>총대님의 계좌</b></Label>
+                                  <div></div>
+                              </FormGroup>
                               <FormGroup>
                                   <Label for="PaymentInfo"><b>입금정보입력</b></Label>
                                   <Input type="name" name="name" id="name"
@@ -190,6 +244,22 @@ handleClickChatView = () => {
                                      onChange={this.handleChange}
                              />
                          </FormGroup>
+                         
+                         <Modal style={{height: '1200px'}}isOpen={this.state.modalPost} toggle={this.togglePost} className={this.props.className}>
+                         {
+                           this.state.modalPost ?
+                              <DaumPostCode
+                                  onComplete={this.handleAddress}
+                                  autoClose
+                                  width={width}
+                                  height={height}
+                                  style={modalStyle}
+                                  isDaumPost={this.state.modalPost}
+                          		/>
+                          : null
+                        }
+                         </Modal>
+                         
 
                          <FormGroup>
                           <Label>이메일 주소</Label>
@@ -200,6 +270,7 @@ handleClickChatView = () => {
 
                         </FormGroup>
                         </div>
+                        
                         </Form>
 
                               <ModalFooter>
