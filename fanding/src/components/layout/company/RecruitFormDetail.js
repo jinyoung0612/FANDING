@@ -115,7 +115,6 @@ class RecruitFormDetail extends Component{
       console.log("RecruitFormDetail")
 
     const {recruitCompany}=this.props;
-
     if(isLoaded(recruitCompany) && recruitCompany)
     {
         // console.log(this.props.match.params.id);
@@ -127,28 +126,25 @@ class RecruitFormDetail extends Component{
             console.log("업체업체업체")
                return(
                    <>
+                   <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                        <Container>
 
                            <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
-                           <Row xs="2">
+                           <Row>
                                <Col>
-                                   <CardImg className="text-center" top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
-                                
+                               <div className="text-center">
+                                   <CardImg className="mx-auto" top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+                                </div>
+                                <div className="text-center">
                                    <CardText>예상 가격대 : 개당 {recruitCompany.itemPrice}원</CardText>
                                    <CardText>예상 개수 : {recruitCompany.itemRemain}</CardText>
+                               </div>
                                </Col>
 
-
-                               <Col>
-                                   <div>
-
-
-                                   </div>
-                               </Col>
 
                            </Row>
 
-                           <div className="mt-auto">
+                           <div className="mt-auto text-center">
                                <Viewer
                                    height="400px"
                                    initialValue={recruitCompany.content}
@@ -242,7 +238,7 @@ class RecruitFormDetail extends Component{
                            </div>
                        </Container>
 
-
+                       </section>
                    </>
                )
 
@@ -254,16 +250,20 @@ class RecruitFormDetail extends Component{
                        <Container>
 
                            <div className="text-center"><h2><b>{recruitCompany.itemTitle}</b></h2></div>
-                           <Row xs="2">
+                           <Row>
+                    
                                <Col>
-                                   <CardImg top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+                               <div className="text-center">
+                                   <CardImg className="mx-auto" top width="10%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+                                </div>
+                                <div className="text-center">
                                    <CardText><strong>예상 가격대</strong> : 개당 {recruitCompany.itemPrice}원</CardText>
                                    <CardText><strong>예상 개수</strong> : {recruitCompany.itemRemain}</CardText>
-                                    
+                                </div>    
                                </Col>
                            </Row>
 
-                           <div className="mt-auto">
+                           <div className="mt-auto text-center">
                                <p style={{paddingTop:'20px'}}><strong>상세 설명</strong></p>
                                <Viewer
                                    height="400px"
@@ -311,15 +311,15 @@ class RecruitFormDetail extends Component{
            }
 
     }
-    else
-    {
-        // console.log(this.state)
-      return(
-        <div>
-              <p>Loading form...</p>
-        </div>
-      )
-    }
+    // else
+    // {
+    //     // console.log(this.state)
+    //   return(
+    //     <div>
+    //           <p>Loading form...</p>
+    //     </div>
+    //   )
+    // }
   }
    
 }

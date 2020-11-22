@@ -10,7 +10,7 @@ import FundingList from "./funding/reward/RewardFundingList";
 import {Link} from "react-router-dom";
 import CollectFundingSummary from "./funding/collect/CollectFundingSummary";
 import {Row} from 'reactstrap';
-var preArtist = "";
+var preArtist = null;
 var nowArtist = "";
 class SelectedArtist extends Component {
 
@@ -77,6 +77,8 @@ class SelectedArtist extends Component {
                             fundings.map((funding,i)=>{
                                 //console.log("in map", funding.artistSelect);
                                 nowArtist = funding.artistSelect;
+                                console.log('preArtist', preArtist);
+                                console.log('nowArtist', nowArtist);
                                 console.log(funding.fundingTitle);
                                 if(preArtist !== nowArtist)
                                 {
