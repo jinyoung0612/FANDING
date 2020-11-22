@@ -11,7 +11,7 @@ const CollectFundingList = ({fundings}) => {
 
             { fundings && fundings.map(funding => {
                 return (
-                    <Link to={'funding_detail/' + funding.id}>
+                    <Link className="inactive" activeClassName="active" to={'funding_detail/' + funding.id}>
                         <CollectFundingSummary funding={funding} key={funding.id} />
                     </Link>
                 )

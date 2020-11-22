@@ -5,9 +5,17 @@ export const signIn = (credentials) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .then(() => {
-          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then((data) => {
+        if (data.user.emailVerified) {
+          firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
           dispatch({ type: "LOGIN_SUCCESS" });
+        } else {
+          var msg = "이메일인증을 확인해주세요";
+          alert(msg);
+          // firebase.auth().signOut();
+        }
       })
       .catch((err) => {
         dispatch({ type: "LOGIN_ERROR", err });
@@ -48,12 +56,14 @@ export const signUp = (newUser) => {
             // artist1: newUser.artist1,
             // artist2: newUser.artist2,
             // artist3: newUser.artist3,
-              artistSelect:newUser.artistSelect,
-              type:"user"
+            artistSelect: newUser.artistSelect,
+            type: "user",
           })
           .then(() => {
-              firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-              dispatch({ type: "SIGNUP_SUCCESS" });
+            firebase
+              .auth()
+              .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+            dispatch({ type: "SIGNUP_SUCCESS" });
           })
           .catch((err) => {
             dispatch({ type: "SIGNUP_ERROR", err });
@@ -63,8 +73,10 @@ export const signUp = (newUser) => {
             user
               .sendEmailVerification()
               .then(function () {
-                  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-                  dispatch({ type: "EMAIL_SPENT_SUCCESS" });
+                firebase
+                  .auth()
+                  .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+                dispatch({ type: "EMAIL_SPENT_SUCCESS" });
               })
               .catch((err) => {
                 dispatch({ type: "NOT_EMAIL_SPENT", err });
@@ -93,11 +105,13 @@ export const signUpCom = (newCompany) => {
             addr2: "",
             email: newCompany.email,
             email_verification: firebase.auth().currentUser.emailVerified,
-              type:"company"
+            type: "company",
           })
           .then(() => {
-              firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-              dispatch({ type: "SIGNUP_SUCCESS" });
+            firebase
+              .auth()
+              .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+            dispatch({ type: "SIGNUP_SUCCESS" });
           })
           .catch((err) => {
             dispatch({ type: "SIGNUP_ERROR", err });
@@ -107,8 +121,10 @@ export const signUpCom = (newCompany) => {
             companies
               .sendEmailVerification()
               .then(function () {
-                  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-                  dispatch({ type: "EMAIL_SPENT_SUCCESS" });
+                firebase
+                  .auth()
+                  .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+                dispatch({ type: "EMAIL_SPENT_SUCCESS" });
               })
               .catch((err) => {
                 dispatch({ type: "NOT_EMAIL_SPENT", err });
@@ -166,14 +182,14 @@ export const twitterSignIn = (credentials) => {
                 phone_number: "",
                 email_verification: firebase.auth().currentUser.emailVerified,
                 artist_id: "",
-                  type:"user"
-
+                type: "user",
               });
           } else {
             console.log("already exists");
           }
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-
+          firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
         })
         .catch((err) => {
           console.log("error", err);

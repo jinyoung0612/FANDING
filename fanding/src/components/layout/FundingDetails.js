@@ -2,8 +2,9 @@ import React, {Component, useState} from 'react';
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container,
     Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect, useSelector, useDispatch} from "react-redux";
+import ProgressBar from 'react-bootstrap/ProgressBar'
 import { Link } from 'react-router-dom';
-import {useFirestoreConnect} from "react-redux-firebase";
+import {isLoaded, useFirestoreConnect} from "react-redux-firebase";
 import firebase from "firebase/app"
 import ReactHtmlParser from 'react-html-parser';
 import ModalPortal from "../../ModalPortal";
@@ -16,6 +17,7 @@ import {FaShareAlt} from "react-icons/fa";
 import {Participate_save} from "../../store/actions/userActions";
 import RewardFundingDetail from "./funding/reward/RewardFundingDetail";
 import DaumPostCode from 'react-daum-postcode';
+import QuestionChat from "../chatting/questionchat/QuestionChat";
 
 let imgStyle = {
     maxHeight: '500px',
@@ -31,7 +33,7 @@ const FundingDetails = (props)=>{
        useFirestoreConnect([{
         collection: 'fundings',
         doc: doc_id
-    }]);
+            }]);
 
         const [inputs, setInputs]=useState({
         name:'',
@@ -43,12 +45,8 @@ const FundingDetails = (props)=>{
         accountName:'',
         email:"",
         fid:doc_id,
-        address:'',
-        zoneCode : "",
-        fullAddress : "",
-        isDaumPost : false,
-        isRegister : false,
-        register: [],
+        detailAddress:'',
+
         // nickname:firebase.auth().currentUser.nickname,
     });
 
@@ -59,6 +57,11 @@ const FundingDetails = (props)=>{
     const [modal, setModal] = useState(false);
     const [nestedModal, setNestedModal] = useState(false);
     
+    const [isChatView, setChat]=useState(false);
+    const [progress, setProgress]=useState(0);
+    // const [address, setAdd] = useState(false);
+    const [fullAddress, setFullAdd] = useState(false);
+    const [zoneCode, setZoneCode] = useState(false);
 
     const toggle = () => setModal(!modal);
     const toggleNested = () => {
@@ -72,6 +75,13 @@ const FundingDetails = (props)=>{
         })
         console.log(inputs)
     };
+    // const handleAddChange = e => {
+    //     const {value, name} = e.target;
+    //     setAdd({
+    //         ...address,
+    //         [name]:value
+    //     })
+    // }
      // postcode
      const handleAddress = (data) => {
         let AllAddress = data.address;
@@ -87,21 +97,34 @@ const FundingDetails = (props)=>{
           }
           AllAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
         }
-        this.setState ({
-            fullAddress: AllAddress,
-            zoneCode : zoneCodes
-        })
+        setFullAdd(AllAddress);
+        setZoneCode(zoneCodes);
+        // this.setState ({
+        //     fullAddress: AllAddress,
+        //     zoneCode : zoneCodes
+        // })
       }
-    const handleSubmit = (e) =>{
+
+    function handleSubmit(e,funding){
+
         e.preventDefault();
         console.log(inputs);
-        dispatch(Participate_save(inputs));
+        console.log(funding.progress)
+        dispatch(Participate_save(inputs,inputs.fid,funding.progress, fullAddress,zoneCode));
         alert("펀딩에 참여하였습니다.");
-        setModal(!modal)
+        setModal(!modal);
+        setProgress(progress+funding.progress)
     };
+
+    const handleClickChatView=()=>{
+        console.log("chatview");
+        setChat(true);
+    }
 
     const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
     const url=window.location.href;
+
+
 
     //console.log(funding);
     // console.log(props.auth.uid);
@@ -119,7 +142,10 @@ const FundingDetails = (props)=>{
 
     //총대일 때
     if(funding && firebase.auth().currentUser){
+        const percent=Math.round(funding.progress/funding.itemRemain*100)
+
         if(firebase.auth().currentUser.uid===funding.user_uid){
+
             if(funding.fundingType==="reward"){
                 return(
 
@@ -132,9 +158,10 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
@@ -194,7 +221,12 @@ const FundingDetails = (props)=>{
                                         <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
                                         </Button>
                                         <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
-                                        <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+                                        {funding.selectedCom ?
+                                            <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름 {funding.selectedCom.label}</div>
+                                            :                                             <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+
+                                        }
+                                        {/*<div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름 {funding.selectedCom.label}</div>*/}
                                     </Col>
                                 </Row>
                             </div>
@@ -216,9 +248,10 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
@@ -278,7 +311,12 @@ const FundingDetails = (props)=>{
                                         <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
                                         </Button>
                                         <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
-                                        <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+                                        {funding.selectedCom ?
+                                            <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름 {funding.selectedCom.label}</div>
+                                            :                                             <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+
+                                        }
+                                        {/*<div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>*/}
                                     </Col>
                                 </Row>
                             </div>
@@ -291,10 +329,20 @@ const FundingDetails = (props)=>{
         else{
             //리워드형 일때
             if(funding.fundingType==="reward"){
-                return(
+                // const percent=Math.round(funding.progress/funding.itemRemain*100)
+                if(isChatView===true){
+                    // console.log(props.history.location)
+                    return(
 
+                    <QuestionChat funding={funding} history={props.history}></QuestionChat>
+                    )
+                }
+                return(
                     <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                         <Container>
+                            {/*{console.log(props.history)}*/}
+                            {/*{isChatView===true ? <QuestionChat funding={funding} history={props.history}></QuestionChat> :null }*/}
+                            
                             <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
                             <div className="text-left"><h2><b>{funding.fundingTitle}</b></h2></div>
                             <div className="mt-5">
@@ -302,22 +350,22 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
-                                            <Modal isOpen={modal} toggle={toggle}>
-                                                <Form onSubmit={handleSubmit}>
+                                            <Modal style={{height:'1200px'}} isOpen={modal} toggle={toggle}>
+                                                <Form onSubmit={(e)=>handleSubmit(e,funding)}>
                                                     <ModalHeader toggle={toggle} charCode="x">입금폼</ModalHeader>
                                                     <ModalBody>
                                                         <div className="companyRecruit text-center">
                                                             <h3>[{funding.artistSelect}]{funding.fundingTitle}</h3>
                                                             <p>펀딩 계좌 정보 넣기</p>
                                                             <p>닉네임 넣기</p>
-                                                            <p>주소 넣기</p>
                                                             <p>입금 확인 했는지 확인하는 checkbox</p>
 
                                                             <FormGroup>
@@ -373,13 +421,14 @@ const FundingDetails = (props)=>{
                                                                        onChange={handleChange}
                                                                 />
                                                             </FormGroup>
-                                                            <Button color="primary" onClick={toggleNested}>주소 입력하기</Button>
+                                                            <Button color="primary" onClick={toggleNested}>우편번호 찾기</Button>
                                                             <Modal isOpen={nestedModal} toggle={toggleNested}>
+                                                            <Form> 
                                                             {
                                                                 nestedModal ?
                                                                     <DaumPostCode
                                                                         onComplete={handleAddress}
-                                                                        autoClose
+                                                                        autoClose='true'
                                                                         // width={width}
                                                                         // height={height}
                                                                         // style={modalStyle}
@@ -387,11 +436,53 @@ const FundingDetails = (props)=>{
                                                                         />
                                                                 : null
                                                             }
+                                                            </Form>
+                                                            <ModalFooter>
+                                                                <Button color="secondary" onClick={toggleNested}>닫기</Button>
+                                                            </ModalFooter>
+                                                            </Modal>
+                                                            <FormGroup>
+                                                                {
+                                                                    
+                                                                    zoneCode === false ? <Input type="zoneCode" name="zoneCode" id="zoneCode"
+                                                                        placeholder="우편번호"
+                                                                        onChange={handleChange}
+                                                                    /> : 
+                                                                    <Input type="zoneCode" name="zoneCode" id="zoneCode"
+                                                                        value={zoneCode}
+                                                                        onChange={handleChange}
+                                                                    />
+
+                                                                    
+
+                                                                }
+                                                            </FormGroup>        
+                                                            
+                                                            <FormGroup>
+                                                                {
+                                                                    fullAddress === false ? <Input type="fullAddress" name="fullAddress" id="fullAddress"
+                                                                        placeholder="주소"
+                                                                        onChange={handleChange}
+                                                                    /> : 
+                                                                    <Input type="fullAddress" name="fullAddress" id="fullAddress"
+                                                                    value={fullAddress}
+                                                                        onChange={handleChange}
+                                                                    />
+                                                                }
+                                                                    
+                                                            </FormGroup>
+                                                            <FormGroup>
+                                                                    <Input type="detailAddress" name="detailAddress" id="detailAddress"
+                                                                    
+                                                                        placeholder="상세 주소를 입력하세요"
+                                                                        onChange={handleChange}
+                                                                    />
+                                                            </FormGroup>
                                                             {/* <div className="address">{this.fullAddress}</div>
                                                             <div className="addressBox">
                                                                 <input type="text" value={this.address} name="address" onChange={handleChange}/>
                                                             </div> */}
-                                                            </Modal>
+                                                           
                                                             
                                                             
                                                             <FormGroup>
@@ -413,7 +504,7 @@ const FundingDetails = (props)=>{
                                             </Modal>
                                             <Row xs="3">
                                                 <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
-                                                <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
+                                                <Col><Button onClick={handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
                                                 <Col>
                                                     <CopyToClipboard text={url}>
                                                         <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
@@ -462,7 +553,12 @@ const FundingDetails = (props)=>{
                                         <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
                                         </Button>
                                         <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
-                                        <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+                                        {funding.selectedCom ?
+                                            <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름 {funding.selectedCom.label}</div>
+                                            :                                             <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+
+                                        }
+                                        {/*<div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>*/}
                                     </Col>
                                 </Row>
                             </div>
@@ -472,6 +568,14 @@ const FundingDetails = (props)=>{
             }
             //모금형 펀딩일때
             else{
+                if(isChatView===true){
+                    // console.log(props.history.location)
+                    return(
+
+                        <QuestionChat funding={funding} history={props.history}></QuestionChat>
+                    )
+                }
+
                 return(
                     <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                         <Container>
@@ -482,15 +586,16 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
                                             <Modal isOpen={modal} toggle={toggle}>
-                                                <Form onSubmit={handleSubmit}>
+                                                <Form onSubmit={(e)=>handleSubmit(e,funding)}>
                                                     <ModalHeader toggle={toggle} charCode="x">입금폼</ModalHeader>
                                                     <ModalBody>
                                                         <div className="companyRecruit text-center">
@@ -573,10 +678,10 @@ const FundingDetails = (props)=>{
                                             </Modal>
                                             <Row xs="3">
                                                 <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
-                                                <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
+                                                <Col><Button onClick={handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>문의</Button></Col>
                                                 <Col>
                                                     <CopyToClipboard text={url}>
-                                                        <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                                                        <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />공유</Button>
                                                     </CopyToClipboard>
                                                 </Col>
                                             </Row>
@@ -622,7 +727,12 @@ const FundingDetails = (props)=>{
                                         <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
                                         </Button>
                                         <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
-                                        <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+                                        {funding.selectedCom ?
+                                            <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름 {funding.selectedCom.label}</div>
+                                            :                                             <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
+
+                                        }
+                                        {/*<div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>*/}
                                     </Col>
                                 </Row>
                             </div>
@@ -681,6 +791,8 @@ const FundingDetails = (props)=>{
                         </CardBody>
                     </Card>
                 </div>
+                                )
+                                }
                 </Container>
                 </section>
             )
@@ -693,6 +805,8 @@ const FundingDetails = (props)=>{
     else{
 
         if(props.auth.isLoaded&&funding){
+            const percent=Math.round(funding.progress/funding.itemRemain*100)
+
             if(funding.fundingType==="reward"){
                 console.log("로그인 안된 상세페이지");
                 //////예외처리해야됨//////
@@ -706,9 +820,10 @@ const FundingDetails = (props)=>{
                                     <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="4">
                                         <div>
-                                            <div className="text-center"><b>80% 달성</b></div>
-                                            <Progress color="info" value="80" />
-                                            <p className="mt-5"><b>257명</b>의 FAN</p>
+                                            <div className="text-center"><b>{percent}% 달성</b></div>
+                                            <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                            {/*<Progress color="info" value="80" />*/}
+                                            <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>15일</b> 남음</p>
                                             <Row xs="2">
                                                 <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
@@ -785,9 +900,9 @@ const FundingDetails = (props)=>{
                                 <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                 <Col xs="4">
                                     <div>
-                                        <div className="text-center"><b>80% 달성</b></div>
-                                        <Progress color="info" value="80" />
-                                        <p className="mt-5"><b>257명</b>의 FAN</p>
+                                        <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
+                                        {/*<Progress color="info" value="80" />*/}
+                                        <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                         <p className="mt-3"><b>15일</b> 남음</p>
                                         <Row xs="2">
                                             <Button color="info" onClick={toggle}>펀딩 참여하기</Button>

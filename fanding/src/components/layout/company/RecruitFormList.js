@@ -10,7 +10,7 @@ const RecruitFormList = ({recruitCompanies}) => {
         justifyContent: 'left', margin:'10px'}}>
             { recruitCompanies && recruitCompanies.map(recruitCompany => {
                 return (
-                    <Link to={'/find_company/' + recruitCompany.id}>
+                    <Link className="inactive" activeClassName="active" to={'/find_company/' + recruitCompany.id}>
                         <RecruitFormSummary recruitCompany={recruitCompany} key={recruitCompany.id} />
                     </Link>
                 )

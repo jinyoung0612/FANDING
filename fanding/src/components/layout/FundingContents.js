@@ -21,7 +21,7 @@ const FundingContents = ({funding})=>{
     return(
         
         <div>
-            <Link to={'funding_detail/'+funding.id} funding={funding}>
+            <Link className="inactive" activeClassName="active" to={'funding_detail/'+funding.id} funding={funding}>
             <Card body style={{width:'15em',flex: '1', backgroundColor: "#ebebeb", height:'20em', margin: '5px'}} >
                 <CardImg src={funding.thumbnailImage}top width="100" alt="Card image cap" style={imgStyle}/>
                 <CardBody>

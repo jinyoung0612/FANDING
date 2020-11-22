@@ -17,7 +17,7 @@ console.log(fundings);
                 return (
                         
                         
-                            <Link to={'funding_detail/' + funding.id}>
+                            <Link className="inactive" activeClassName="active" to={'funding_detail/' + funding.id}>
                                 <RewardFundingSummary funding={funding} key={funding.id} />
                             </Link>
                         

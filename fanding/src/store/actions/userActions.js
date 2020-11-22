@@ -34,7 +34,8 @@ export const loadFundings = (uid) => {
     };
 };
 
-export const Participate_save = (newForm) => {
+export const Participate_save = (newForm,fid,progress, fullAddress, zoneCode) => {
+    // console.log(fid)
 
     return (dispatch, getState) => {
         // make async call to database
@@ -54,15 +55,35 @@ export const Participate_save = (newForm) => {
                 accountName:newForm.accountName,
                 email:newForm.email,
                 fid:newForm.fid,
-                nickname:newForm.nickname,
                 uid:firebase.auth().currentUser.uid,
                 isChecked: false,
+                zoneCode: zoneCode,
+                fullAddress:fullAddress,
+                detailAddress:newForm.detailAddress
+
 
         }).then(() => {
             dispatch({type: 'PARTICIPATE_SUCCESS' , newForm});
         }).catch((err) => {
             dispatch( {type: "PARTICIPATE_ERROR", err})
         })
+
+        firestore
+            .collection("fundings")
+            .doc(fid)
+            .update({
+                progress:progress+1
+            })
+            .then(()=>{
+                console.log("성공")
+                dispatch({type:'ProgressUpdate_SUCCESS',progress});
+            })
+            .catch((err)=>{
+                console.log(err)
+                dispatch({type:"ProgressUpdate_ERROR",err})
+            })
+
+
 
     };
 

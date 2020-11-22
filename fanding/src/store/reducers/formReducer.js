@@ -29,6 +29,16 @@ const formReducer = (state = initState, action) => {
       return{
         ...state
       }
+    case 'ProgressUpdate_SUCCESS':
+      console.log("ProgressUpdate_SUCCESS");
+      return{
+        ...state
+      }
+    case "ProgressUpdate_ERROR":
+      console.log("ProgressUpdate_ERROR");
+      return{
+        ...state
+      }
 
     default:
       return state

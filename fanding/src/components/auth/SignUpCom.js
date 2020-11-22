@@ -23,10 +23,14 @@ class SignUpCom extends Component {
     this.state = {
       email: "",
       password: "",
+      password_check: "",
       companyName: "",
       companyRegistrationNumber: "",
       corporateRegistrationNumber: "",
       companyRegNum_Check: "",
+      companyRegNum_Success: false,
+      isPassWordCheck: false,
+      isNoPassWord: false,
     };
 
     this.handleClick_Change = this.handleClick_Change.bind(this);
@@ -53,16 +57,25 @@ class SignUpCom extends Component {
         this.state.email != "" &&
         this.state.password != "" &&
         this.state.corporateRegistrationNumber != "" &&
-        this.state.companyName != ""
+        this.state.companyName != "" &&
+        this.state.password_check != ""
       ) {
-        var msg = "이메일인증이 전송되었습니다.";
-        this.props.signUpCom(this.state);
-        alert(msg);
+        if (this.state.isNoPassWord == true && this.state.isPassWordCheck) {
+          var msg = "이메일인증 메일 전송되었습니다.";
+          this.props.signUpCom(this.state);
+          alert(msg);
+        } else if (this.state.password_check != this.state.password) {
+          var msg = "비밀번호 확인을 해주세요";
+          alert(msg);
+        }
       } else if (this.state.email == "") {
         var msg = "이메일을 입력해주세요";
         alert(msg);
       } else if (this.state.password == "") {
         var msg = "비밀번호를 입력해주세요";
+        alert(msg);
+      } else if (this.state.password_check == "") {
+        var msg = "비밀번호 확인을 입력해주세요";
         alert(msg);
       } else if (this.state.corporateRegistrationNumber == "") {
         var msg = "법인등록번호를 입력해주세요";
@@ -77,10 +90,17 @@ class SignUpCom extends Component {
     }
   };
   handleClick_Change = () => {
-    if (company_check == true) {
+    if (company_check == true && this.state.companyRegistrationNumber != "") {
       this.setState({ companyRegNum_Check: true });
-    } else if (company_check == false) {
+    } else if (
+      company_check == false &&
+      this.state.companyRegistrationNumber != ""
+    ) {
       this.setState({ companyRegNum_Check: false });
+      this.setState({ companyRegNum_Success: true });
+    } else if (this.state.companyRegistrationNumber == "") {
+      this.setState({ companyRegNum_Check: false });
+      this.setState({ companyRegNum_Success: false });
     }
     company_check = false;
   };
@@ -104,6 +124,25 @@ class SignUpCom extends Component {
         console.log("Error getting documents: ", error);
       });
     check_click = true;
+  };
+  password_Checking = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+    setTimeout(() => {
+      if (this.state.password == this.state.password_check) {
+        this.setState({ isPassWordCheck: true });
+        this.setState({ isNoPassWord: true });
+        if (this.state.password == "" && this.state.password_check == "") {
+          this.setState({ isNoPassWord: false });
+        }
+      } else if (this.state.password != this.state.password_check) {
+        if (this.state.password != "" || this.state.password_check != "") {
+          this.setState({ isPassWordCheck: false });
+          this.setState({ isNoPassWord: true });
+        }
+      }
+    }, 200);
   };
 
   render() {
@@ -162,8 +201,14 @@ class SignUpCom extends Component {
             </FormGroup>
             <div>
               {this.state.companyRegNum_Check === true ? (
-                <div>사업자등록번호가 중복입니다</div>
-              ) : null}
+                <div>사업자등록번호 중복입니다</div>
+              ) : (
+                <div>
+                  {this.state.companyRegNum_Success === true ? (
+                    <div>사업자등록번호 중복확인 완료되었습니다</div>
+                  ) : null}
+                </div>
+              )}
             </div>
             <FormGroup>
               <Label for="corporateRegistrationNumber">
@@ -182,14 +227,14 @@ class SignUpCom extends Component {
           <Label for="Email">
             <strong>이메일</strong>
           </Label>
-          <Button
+          {/* <Button
             color="warning"
             className="ml-3"
             size="sm"
             onChange={this.handleClick}
           >
             이메일 인증
-          </Button>
+          </Button> */}
 
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
@@ -210,10 +255,33 @@ class SignUpCom extends Component {
                 name="password"
                 id="password"
                 placeholder="비밀번호를 입력하세요"
-                onChange={this.handleChange}
+                onChange={this.password_Checking}
               />
             </FormGroup>
-
+            <FormGroup>
+              <Label for="Password">
+                <strong>비밀번호 확인</strong>
+              </Label>
+              <Input
+                type="password"
+                name="password"
+                id="password_check"
+                placeholder="비밀번호를 입력하세요"
+                onChange={this.password_Checking}
+              />
+              <div>
+                {this.state.isNoPassWord === false ? null : (
+                  <div>
+                    {this.state.isPassWordCheck === false ? (
+                      <div>비밀번호가 일치하지 않습니다</div>
+                    ) : (
+                      <div>비밀번호가 일치합니다</div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </FormGroup>
+            {/* <div>{this.state.password_check}</div> */}
             <Button className="mx-auto" size="lg">
               가입하기
             </Button>
