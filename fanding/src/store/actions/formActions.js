@@ -10,7 +10,7 @@ export const funding_save=createAction(FUNDING_SAVE);
 
 export const firebase_funding_save = newForm => {
   //const firestore = firebase.firestore();
-  
+
   return (dispatch, getState, { getFirebase, getFirestore }) => {
       // make async call to database
       const firestore = getFirestore();
@@ -47,7 +47,8 @@ export const firebase_funding_save = newForm => {
             content: newForm.content,
             nickname:"",
             selectedCom:newForm.selectedCom,
-            gift:newForm.gift
+            gift:newForm.gift,
+            progress:0
 
         }).then(() => {
             dispatch({type: 'CREATEFORM_SUCCESS' , newForm});
