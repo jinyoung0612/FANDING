@@ -14,9 +14,9 @@ export const signIn = (credentials) => {
         } else {
           var msg = "이메일인증을 확인해주세요";
           alert(msg);
-            firebase
-                .auth()
-                .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+          firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
           // firebase.auth().signOut();
         }
       })
@@ -50,7 +50,7 @@ export const signUp = (newUser) => {
           .set({
             user_uid: firebase.auth().currentUser.uid,
             user_email: firebase.auth().currentUser.email,
-            nickname: "",
+            nickname: newUser.nickname,
             addr: "",
             addr_detail: "",
             zipcode: "",
@@ -66,9 +66,9 @@ export const signUp = (newUser) => {
             firebase
               .auth()
               .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-              // firebase.auth().signOut();
+            // firebase.auth().signOut();
 
-              dispatch({ type: "SIGNUP_SUCCESS" });
+            dispatch({ type: "SIGNUP_SUCCESS" });
           })
           .catch((err) => {
             dispatch({ type: "SIGNUP_ERROR", err });
@@ -83,7 +83,7 @@ export const signUp = (newUser) => {
                   .setPersistence(firebase.auth.Auth.Persistence.SESSION);
                 //   firebase.auth().signOut();
 
-                  dispatch({ type: "EMAIL_SPENT_SUCCESS" });
+                dispatch({ type: "EMAIL_SPENT_SUCCESS" });
               })
               .catch((err) => {
                 dispatch({ type: "NOT_EMAIL_SPENT", err });
@@ -131,6 +131,7 @@ export const signUpCom = (newCompany) => {
                 firebase
                   .auth()
                   .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+                //   firebase.auth().signOut();
                 dispatch({ type: "EMAIL_SPENT_SUCCESS" });
               })
               .catch((err) => {
