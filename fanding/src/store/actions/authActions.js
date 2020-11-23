@@ -66,7 +66,9 @@ export const signUp = (newUser) => {
             firebase
               .auth()
               .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-            dispatch({ type: "SIGNUP_SUCCESS" });
+              // firebase.auth().signOut();
+
+              dispatch({ type: "SIGNUP_SUCCESS" });
           })
           .catch((err) => {
             dispatch({ type: "SIGNUP_ERROR", err });
@@ -79,7 +81,9 @@ export const signUp = (newUser) => {
                 firebase
                   .auth()
                   .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-                dispatch({ type: "EMAIL_SPENT_SUCCESS" });
+                //   firebase.auth().signOut();
+
+                  dispatch({ type: "EMAIL_SPENT_SUCCESS" });
               })
               .catch((err) => {
                 dispatch({ type: "NOT_EMAIL_SPENT", err });

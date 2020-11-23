@@ -181,7 +181,7 @@ class FindCompanyForm extends Component {
                                     previewStyle="vertical"
                                     height="400px"
                                     initialEditType="wysiwyg"
-                                    initialValue="hello"
+                                    initialValue=""
                                     ref={this.editorRef}
                                     plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
                                     onChange = {this.handleChangeEditor}
@@ -283,7 +283,7 @@ class FindCompanyForm extends Component {
                                     previewStyle="vertical"
                                     height="400px"
                                     initialEditType="wysiwyg"
-                                    initialValue="hello"
+                                    initialValue=""
                                     ref={this.editorRef}
                                     plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
                                     onChange = {this.handleChangeEditor}
