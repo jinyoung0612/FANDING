@@ -12,10 +12,10 @@ import Grid from '@toast-ui/react-grid';
 import TuiGrid from 'tui-grid';
 import axios from 'axios';
 import {check_deposit} from "../../store/actions/userActions"
+import logo from "../../assets/images/reload.png"
 
 TuiGrid.setLanguage('ko');
 //TuiGrid.applyTheme('striped');
-var array = [];
 
 
   const columns = [
@@ -29,6 +29,8 @@ var array = [];
 
 
 const FundingState = (props)=>{
+    var array = [];
+
 
 
     const doc_id=props.match.params.id;
@@ -42,6 +44,9 @@ const FundingState = (props)=>{
     const transactionLists = props.transactionLists;
     console.log("transactionLists: ",transactionLists);
 
+    const handleClick=()=>{
+        window.location.reload()
+    }
 
     if(!isLoaded(transactionLists)){
         console.log("transactionLists 로드 안됨")
@@ -54,10 +59,13 @@ const FundingState = (props)=>{
             
                    if(participants.length!==0 && participants){
                     check(transactionLists, participants);
-                    
+
                     return(
+
+
+
                         <div>
-                          
+
                             {  participants.map((participant,i)=>(
                                 
                                 array.push(
@@ -80,7 +88,10 @@ const FundingState = (props)=>{
                                             heightResizable={true}
                                             rowHeaders={['rowNum']}
                                         />
-                                        
+
+                            <Button onClick={handleClick}>새로고침</Button>
+
+
                         </div>
 
                     )
