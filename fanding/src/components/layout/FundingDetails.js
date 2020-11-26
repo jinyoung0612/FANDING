@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container,
     Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect, useSelector, useDispatch} from "react-redux";
@@ -18,6 +18,7 @@ import {Participate_save} from "../../store/actions/userActions";
 import RewardFundingDetail from "./funding/reward/RewardFundingDetail";
 import DaumPostCode from 'react-daum-postcode';
 import QuestionChat from "../chatting/questionchat/QuestionChat";
+import {close_funding} from "../../store/actions/formActions";
 
 let imgStyle = {
     maxHeight: '500px',
@@ -65,8 +66,8 @@ const FundingDetails = (props)=>{
     const [fullAddress, setFullAdd] = useState(false);
     const [zoneCode, setZoneCode] = useState(false);
 
-    const [period, setPeriod]=useState(0);
-   
+    const [isClosed, setClose]=useState(false);
+
     const toggleNested = () => {
         setNestedModal(!nestedModal);
     }
@@ -145,28 +146,30 @@ const FundingDetails = (props)=>{
         console.log("handleEmail:",inputs.email)
     }
 
-    const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
+   const HandleClose=()=>{
 
-    // if(isLoaded(funding)){
-    //     console.log("펀딩 로딩됨");
-    //     const difference=new Date(funding.fundingEndDate)-currentDate.getTime()
-    //     const period=Math.ceil(difference/(1000*60*60*24))
-    //     setPeriod(period);
-    //     console.log(period);
-    // }
+            // setClose(true);
+            dispatch(close_funding(inputs.fid))
+
+            // useEffect(()=>{
+            //     if(period<0){
+            //        return dispatch(close_funding(inputs.fid))
+            //     }
+            //     else{
+            //         return null
+            //     }
+            //
+            // },[dispatch])
+
+
+    }
+
+    const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
 
     const url=window.location.href;
 
 
-    const handlePeriod=()=>{
-        const difference=new Date(funding.fundingEndDate)-currentDate.getTime()
-        const period=Math.ceil(difference/(1000*60*60*24))
-        setPeriod(period);
-        return period
-
-    }
-
-    //console.log(funding);
+    // console.log(funding);
     // console.log(props.auth.uid);
     // if(firebase.auth().currentUser){
     //     console.log(firebase.auth().currentUser.uid)
@@ -190,7 +193,11 @@ const FundingDetails = (props)=>{
 
         }
         const difference= new Date(funding.fundingEndDate)-currentDate.getTime();
-        const period=Math.ceil(difference/(1000*60*60*24))
+        const period=Math.ceil(difference/(1000*60*60*24));
+
+        // if(period<0){
+        //     HandleClose(period)
+        // }
 
 
             if(funding.fundingType==="reward"){
@@ -215,19 +222,34 @@ const FundingDetails = (props)=>{
                                             <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-3"><b>{period}일</b> 남음</p>
 
-                                            {firebase.auth().currentUser.uid===funding.user_uid ?
-                                                ( <Row xs="2">
-                                                    {/*<Col><Button>수정하기</Button></Col>*/}
-                                                    <Link to ={'../funding_state/'+doc_id} funding={funding}>
-                                                        <Col><Button>참여 현황 보기</Button></Col>
-                                                    </Link>
-                                                </Row>)
-                                                :
-                                                (<Row style={{paddingLeft:"16px"}} xs="2">
-                                                    <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
-                                                </Row>)
+                                            {
+                                                funding.isClosed===true ? (
+                                                    <div>
+                                                    <Col><Button color="secondary" size="lg" disabled>펀딩이 마감되었습니다.</Button></Col>
+                                                        {firebase.auth().currentUser.uid===funding.user_uid ?
+                                                            <Link to ={'../funding_state/'+doc_id} funding={funding}>
+                                                                <Col><Button>참여 현황 보기</Button></Col>
+                                                            </Link> : null
+                                                        }
+                                                    </div>
+                                                    )
+                                                    :
+                                                    firebase.auth().currentUser.uid===funding.user_uid ?
+                                                        ( <Row xs="2">
+                                                            {/*<Col><Button>수정하기</Button></Col>*/}
+                                                            <Link to ={'../funding_state/'+doc_id} funding={funding}>
+                                                                <Col><Button>참여 현황 보기</Button></Col>
+                                                            </Link>
+                                                            <Col><Button onClick={HandleClose}>펀딩 마감하기</Button></Col>
+
+                                                        </Row>)
+                                                        :
+                                                        (<Row style={{paddingLeft:"16px"}} xs="2">
+                                                            <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
+                                                        </Row>)
 
                                             }
+
                                             {/*<Row xs="2">*/}
                                                 {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
                                                 {/*<Col><Button>수정하기</Button></Col>*/}
@@ -406,7 +428,12 @@ const FundingDetails = (props)=>{
                                             <CardText><b style={{fontSize:"1.5em"}}>가격</b></CardText>
                                             <CardText>{funding.itemPrice}원</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>입금 계좌</b></CardText>
-                                            <CardText>{funding.bankName} {funding.accountNum} {funding.accountName}</CardText>
+                                            {
+                                                funding.isClosed===true ?
+                                                    (<CardText>마감된 펀딩의 입금 계좌는 볼 수 없습니다.</CardText>)
+                                                    : <CardText>{funding.bankName} {funding.accountNum} {funding.accountName}</CardText>
+                                            }
+                                            {/*<CardText>{funding.bankName} {funding.accountNum} {funding.accountName}</CardText>*/}
                                             <CardText><b style={{fontSize:"1.5em"}}>배송방법</b></CardText>
                                             <CardText>{funding.shippingMethod}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>배송비</b></CardText>
@@ -447,6 +474,7 @@ const FundingDetails = (props)=>{
             else{
                 return(
 
+
                     <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                         <Container>
                             <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
@@ -461,13 +489,25 @@ const FundingDetails = (props)=>{
                                             {/*<Progress color="info" value="80" />*/}
                                             <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p className="mt-3"><b>{period}일</b> 남음</p>
-                                            <Row xs="2">
-                                                {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
-                                                {/*<Col><Button>수정하기</Button></Col>*/}
-                                                <Link to ={'../funding_state/'+doc_id} funding={funding}>
-                                                    <Col><Button>참여 현황 보기</Button></Col>
-                                                </Link>
-                                            </Row>
+
+                                            {
+                                                funding.isClosed===true ? (<Col><Button color="secondary" size="lg" disabled>펀딩이 마감되었습니다.</Button></Col>)
+                                                    :
+                                                    firebase.auth().currentUser.uid===funding.user_uid ?
+                                                        ( <Row xs="2">
+                                                            {/*<Col><Button>수정하기</Button></Col>*/}
+                                                            <Link to ={'../funding_state/'+doc_id} funding={funding}>
+                                                                <Col><Button>참여 현황 보기</Button></Col>
+                                                            </Link>
+                                                            <Col><Button onClick={HandleClose}>펀딩 마감하기</Button></Col>
+
+                                                        </Row>)
+                                                        :
+                                                        (<Row style={{paddingLeft:"16px"}} xs="2">
+                                                            <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
+                                                        </Row>)
+
+                                            }
                                             <Row xs="3">
                                                 <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
                                                 <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
@@ -723,7 +763,8 @@ const FundingDetails = (props)=>{
 const mapStateToProps = (state) => {
     return{
         authError: state.auth.authError,
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        funding:state.funding
     }
 };
 

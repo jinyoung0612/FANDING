@@ -121,8 +121,8 @@ class RecruitFormDetail extends Component{
         // console.log(this.props.match.params.id);
         // console.log(this.props.application);
         // console.log(this.props.user_type[0]);
-        const{user_type}=this.props
-        console.log(user_type[0])
+        const{user_type}=this.props;
+        console.log(user_type[0]);
            if(isLoaded(user_type)&&user_type[0]==="company"){
             console.log("업체업체업체")
                return(
