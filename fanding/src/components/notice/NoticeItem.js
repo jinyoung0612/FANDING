@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { notice_read, firebase_notice_remove } from '../../store/actions/noticeAction'
+import { notice_read, firebase_notice_remove } from '../../store/actions/noticeAction';
 
 const NoticeItem = ({row, index, notice_read, firebase_notice_remove}) => (
     <tr>
