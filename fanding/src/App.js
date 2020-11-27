@@ -33,6 +33,10 @@ import TransactionList from "./components/layout/TransactionList";
 import MyFunding from './components/layout/MyFunding';
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
+
+import NoticeForm from "./components/notice/NoticeForm";
+import NoticeList from "./components/notice/NoticeList";
+
 class App extends Component {
   render() {
     return (
@@ -76,6 +80,9 @@ class App extends Component {
             <Route path="/questionchat" component={QuestionChat} />
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />
+
+            <Route path="/notice/list" component={NoticeList} />
+            <Route path="/notice/form" component={NoticeForm} />
           </Switch>
         </div>
       </BrowserRouter>
