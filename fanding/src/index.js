@@ -28,15 +28,15 @@ import "./assets/dropdown/css/style.css";
 import "./assets/socicon/css/styles.css";
 import "./assets/theme/css/style.css";
 import "./assets/mobirise/css/mbr-additional.css";
-import "./assets/web/assets/jquery/jquery.min.js";
-import "./assets/popper/popper.min.js";
-import "./assets/tether/tether.min.js";
-import "./assets/smoothscroll/smooth-scroll.js";
-import "./assets/parallax/jarallax.min.js";
-import "./assets/dropdown/js/nav-dropdown.js";
-import "./assets/dropdown/js/navbar-dropdown.js";
-import "./assets/touchswipe/jquery.touch-swipe.min.js";
-import "./assets/theme/js/script.js";
+// import "./assets/web/assets/jquery/jquery.min.js";
+    //  import "./assets/popper/popper.min.js";
+    //  import "./assets/tether/tether.min.js";
+    //  import "./assets/smoothscroll/smooth-scroll.js";
+    //  import "./assets/parallax/jarallax.min.js";
+    //  import "./assets/dropdown/js/nav-dropdown.js";
+    //  import "./assets/dropdown/js/navbar-dropdown.js";
+    //  import "./assets/touchswipe/jquery.touch-swipe.min.js";
+    //  import "./assets/theme/js/script.js";
 /*
 const store = createStore(rootReducer, 
   compose(

@@ -47,7 +47,8 @@ class MainPage extends Component {
                 if(isLoaded(fundings)){
                     return(
 
-                        <CardDeck style={{display: 'grid', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
+                        <CardDeck style={{display: 'grid', flexDirection: 'row', justifyContent: 'center', margin:'10px', 
+                        alignItems:'center', flexFlow:'row wrap'}}>
 
                             {
                                 fundings.map((funding,i)=>{

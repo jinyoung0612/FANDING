@@ -10,7 +10,7 @@ console.log(fundings);
 
 
     return(
-        <CardDeck style={{display: 'flex', flexDirection: 'row', 
+        <CardDeck style={{display: 'flex', flexDirection: 'row', flexFlow:'row wrap',  
                     justifyContent: 'left', margin:'10px'}}>
         
             { fundings && fundings.map(funding => {

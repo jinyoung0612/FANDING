@@ -61,7 +61,7 @@ const NavbarTest = (props) => {
 
     <section className="menu cid-s48OLK6784" once="menu" id="menu1-h">
     
-    <nav className="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+    <nav className="navbar navbar-dropdown navbar-fixed-top navbar-expand-sm">
       <div class="container">
             <div class="navbar-brand"> 
                 <span class="navbar-caption-wrap"><a class="navbar-caption text-black display-7" href="/">FANDING</a></span>

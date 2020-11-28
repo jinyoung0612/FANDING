@@ -119,7 +119,7 @@ class MainPageDefault extends Component {
                         <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
 
 
-                            <Container>
+                            <Container style={{dispaly:'flex', flexFlow:'row wrap'}}>
 
                                 <MainPageCom></MainPageCom>
 
