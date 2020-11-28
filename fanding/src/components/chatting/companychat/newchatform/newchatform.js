@@ -23,9 +23,9 @@ class Newchatform extends Component {
   componentDidMount = async () => {
     try {
       await this.getAllUsersData();
-      setTimeout(() => {
-        console.log("this newchatform");
-      }, 500);
+      // setTimeout(() => {
+      //   console.log("this newchatform");
+      // }, 500);
     } catch (e) {
       await this.getAllUsersData();
     }
@@ -58,9 +58,9 @@ class Newchatform extends Component {
     //   username
     // );
     if (
-      this.props.chongdaeUserEmail &&
+      this.props.companyEmail &&
       msg !== userEmail &&
-      this.props.chongdaeUserNickname
+      this.props.companyName
     ) {
       const chatExists = await this.chatExists();
 
@@ -122,7 +122,7 @@ class Newchatform extends Component {
       .set({
         docid: docId,
         time: timeStamp,
-        users: [userEmail, `${this.props.chongdaeUserEmail}`], //유저정보가아니라 채팅방에 해야되겟다
+        users: [userEmail, `${this.props.companyEmail}`],
         typing: [],
         messages: [
           {
@@ -132,7 +132,7 @@ class Newchatform extends Component {
             type: "text",
           },
         ],
-        receiver: `${this.props.chongdaeUserEmail}`,
+        receiver: `${this.props.companyEmail}`,
         readmsg: false,
       });
 
@@ -142,9 +142,7 @@ class Newchatform extends Component {
   };
 
   buildId = async () => {
-    return [this.props.chongdaeUserEmail, this.props.userEmail]
-      .sort()
-      .join(":");
+    return [this.props.companyEmail, this.props.userEmail].sort().join(":");
   };
 
   chatExists = async () => {

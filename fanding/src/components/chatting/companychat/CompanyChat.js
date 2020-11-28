@@ -1,22 +1,40 @@
 import React, { Component } from "react";
-
 import firebase from "firebase/app";
 
-import ChatList from "./chatlist";
+import ChatList from "./chatlist/chatlist";
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-export default class TotalChat extends Component {
+export default class CompanyChat extends Component {
   state = {
-    newChatFormVisible: false,
     email: null,
     chats: [],
     allUserData: [],
+    isChatRoomView: false,
+    companyEmail: null,
+    companyName: null,
     user: [],
     blockList: [],
+    chatDocid: null,
   };
-
+  buildId = async () => {
+    return [this.state.companyEmail, this.state.email].sort().join(":");
+  };
+  goToChatRoomClick = async () => {
+    this.setState({ isChatRoomView: true });
+  };
+  chatExists = async () => {
+    const docid = await this.buildId();
+    await this.setState({ chatDocid: docid });
+    console.log(this.state.chatDocid);
+    const chat = await firestore.collection("chats").doc(docid).get();
+    if (chat.exists) {
+      await this.setState({ isChatRoomView: true });
+    }
+    // console.log("changed chatroomview :", this.state.isChatRoomView);
+    return chat.exists;
+  };
   componentDidMount = async () => {
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
@@ -24,10 +42,11 @@ export default class TotalChat extends Component {
       } else {
         try {
           await this.setState({ user: user, email: user.email });
-          await this.getAllUsersData();
+          // await this.getAllUsersData();
+          this.getCompanyData();
           await this.getInfo(user);
-          console.log("totalchat");
-          // await this.onlineStatusUpdate(user.email);
+          await this.onlineStatusUpdate(user.email);
+          await this.chatExists();
         } catch (e) {
           await this.props.history.push("/signin");
         }
@@ -62,33 +81,28 @@ export default class TotalChat extends Component {
     }, 2000);
   };
 
-  getBlockList = async () => {
-    const { allUserData, email } = this.state;
+  // getBlockList = async () => {
+  //   const { allUserData, email } = this.state;
 
-    const list = allUserData.forEach(async (obj) => {
-      if (obj.email === email) {
-        await this.setState({ blockList: obj.blocklist });
-      }
-    });
-  };
+  //   const list = allUserData.forEach(async (obj) => {
+  //     if (obj.email === email) {
+  //       // console.log(obj.blocklist);
+  //       await this.setState({ blockList: obj.blocklist });
+  //     }
+  //   });
+  // };
 
-  getAllUsersData = async () => {
-    await firestore.collection("users").onSnapshot(async (snapshot) => {
-      var dt = snapshot.docs.map((docs) => docs.data());
-      // console.log("all user data?", dt);
-      await this.setState({ allUserData: dt });
-      await this.getBlockList();
-    });
-    await firestore.collection("companies").onSnapshot(async (snapshot) => {
-      await this.setState({
-        allUserData: this.state.allUserData.concat(
-          snapshot.docs.map((docs) => docs.data())
-        ),
+  getCompanyData = () => {
+    firestore
+      .collection("companies")
+      .where("email", "==", this.props.company.company_email)
+      .onSnapshot((snapshot) => {
+        var email = snapshot.docs.map((docs) => docs.data().email);
+        this.setState({ companyEmail: email });
+        var name = snapshot.docs.map((docs) => docs.data().name);
+        this.setState({ companyName: name });
       });
-      // console.log("allUserData check", this.state.allUserData);
-    });
   };
-
   getInfo = async (user, emails) => {
     await firestore
       .collection("chats")
@@ -162,8 +176,17 @@ export default class TotalChat extends Component {
             chats={this.state.chats}
             userEmail={this.state.email}
             allUserData={this.state.allUserData}
-            searchChat={(search) => this.searchChat(search)}
+            // searchChat={(search) => this.searchChat(search)}
+            // chongdaeUserData={this.state.chongdaeUserData}
+            companyEmail={this.state.companyEmail}
+            companyName={this.state.companyName}
+            isChatRoomView={this.state.isChatRoomView}
+            goToChatRoomClick={() => this.goToChatRoomClick()}
+            chatDocid={this.state.chatDocid}
           />
+          {/* <div>
+            <button onClick={this.props.handleClickBack}>뒤로가기</button>
+          </div> */}
         </div>
       </div>
     );
