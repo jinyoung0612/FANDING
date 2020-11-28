@@ -7,11 +7,9 @@ import {connect} from "react-redux";
 import SelectedArtist from "./SelectedArtist";
 import FundingContents from "./FundingContents";
 import {CardDeck, CardText} from 'reactstrap';
-import { BsPeopleCircle, BsBell,BsSearch } from "react-icons/bs";
 import queryString from 'query-string';
 import {SearchBar} from "./MainPageDefault";
-import {Link} from "react-router-dom";
-import MainPageUser from "./MainPage";
+
 
 class Search extends Component {
 
@@ -101,24 +99,3 @@ export default compose(
     )
 )(Search);
 
-
-
-/*
-export default compose(
-    firebaseConnect(),
-    connect((state, props) => ({
-        uid: state.firebase.auth.uid,
-        fundings: state.firestore.ordered.fundings,
-        auth: state.firebase.auth,
-        authError: state.auth.authError,
-        user: state.firestore.ordered.users
-    })),
-    firestoreConnect(props=>
-        [{
-            collection: 'users',
-            where: [['user_id', '==', props.auth.uid]],
-        }]),
-)(MainPage);
-*/
-
-//export default MainPage;

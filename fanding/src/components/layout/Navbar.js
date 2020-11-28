@@ -8,6 +8,7 @@ import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button, Media, FormGroup,La
 
 import { BsPeopleCircle, BsBell,BsSearch } from "react-icons/bs";
 import styles from "./Navbar.module.css";
+import {SearchBar} from "./MainPageDefault";
 
 
 const NavbarTest = (props) => {
@@ -89,7 +90,9 @@ const NavbarTest = (props) => {
                   {/* <li class="nav-item">
                     <a class="nav-link link text-black display-4" href="/payment">결제</a>
                   </li> */}
-
+                    <li className="nav-item">
+                        <SearchBar/>
+                    </li>
 
                   
                 </ul>
