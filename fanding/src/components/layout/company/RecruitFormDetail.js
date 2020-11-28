@@ -20,6 +20,7 @@ import firebase from  "firebase"
 import App from "../../../App";
 //import moment from 'moment';
 import { Link } from 'react-router-dom';
+import QuestionChat from "../../chatting/questionchat/QuestionChat";
 
 
 let imgStyle = {
@@ -112,7 +113,7 @@ class RecruitFormDetail extends Component{
       }
     }
   render(){
-      console.log("RecruitFormDetail")
+      console.log("RecruitFormDetail");
 
     const {recruitCompany}=this.props;
     if(isLoaded(recruitCompany) && recruitCompany)
@@ -120,8 +121,8 @@ class RecruitFormDetail extends Component{
         // console.log(this.props.match.params.id);
         // console.log(this.props.application);
         // console.log(this.props.user_type[0]);
-        const{user_type}=this.props
-        console.log(user_type[0])
+        const{user_type}=this.props;
+        console.log(user_type[0]);
            if(isLoaded(user_type)&&user_type[0]==="company"){
             console.log("업체업체업체")
                return(
@@ -311,15 +312,15 @@ class RecruitFormDetail extends Component{
            }
 
     }
-    // else
-    // {
-    //     // console.log(this.state)
-    //   return(
-    //     <div>
-    //           <p>Loading form...</p>
-    //     </div>
-    //   )
-    // }
+    else
+    {
+        // console.log(this.state)
+      return(
+        <div>
+              <p>Loading form...</p>
+        </div>
+      )
+    }
   }
    
 }
@@ -346,6 +347,7 @@ class ApplicationList extends Component{
             select_email:"",
             recruit_id:"",
             select_name:"",
+            isChatView:false
 
         };
         this.toggle=this.toggle.bind(this)
@@ -355,6 +357,13 @@ class ApplicationList extends Component{
         console.log("click");
         window.location.href="/"
     };
+
+   handleClickChatView=()=>{
+        console.log("chatview");
+        this.setState({
+            isChatView:true
+        })
+    }
 
     toggle(apply){
         this.setState({
@@ -405,6 +414,13 @@ class ApplicationList extends Component{
         const{applications}=this.props;
         // console.log(applications);
         if(isLoaded(applications) && applications){
+            // if(this.state.isChatView===true){
+            //     // console.log(props.history.location)
+            //     return(
+            //
+            //         <QuestionChat funding={application} history={this.props.history}></QuestionChat>
+            //     )
+            // }
             return (
                 <div>
                     <Table hover responsive >
@@ -420,7 +436,19 @@ class ApplicationList extends Component{
 
                     {applications.map((apply,i)=>{
                         if(this.props.chongdae===firebase.auth().currentUser.email || apply.company_email===firebase.auth().currentUser.email){
+
+                            // if(this.state.isChatView===true){
+                            //     // console.log(props.history.location)
+                            //     return(
+                            //
+                            //         <QuestionChat funding={apply} history={this.props.history}></QuestionChat>
+                            //     )
+                            // }
                             return(
+
+                                // this.state.isChatView === true ?
+                                //     (<QuestionChat funding={apply} history={this.props.history}></QuestionChat>) :
+
                                 <tbody key={i}>
                                 <tr style={{ textAlign: 'center' }}>
                                     <td scope="row">{i+1}</td>
@@ -433,7 +461,7 @@ class ApplicationList extends Component{
                                     <td>
                                         {/*{console.log("아이디",apply.id)}*/}
                                         {firebase.auth().currentUser.email===this.props.chongdae ?
-                                            <Button>문의하기</Button>
+                                            <Button onClick={this.handleClickChatView}>문의하기</Button>
                                             :   <Button>내 채팅방으로 이동</Button>
                                         }
                                         {/*<Button>문의하기</Button>*/}

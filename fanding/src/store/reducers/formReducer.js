@@ -40,6 +40,18 @@ const formReducer = (state = initState, action) => {
         ...state
       }
 
+    case "CLOSE_SUCCESS":
+      console.log("CLOSE_SUCCESS");
+      return{
+        ...state
+      }
+
+    case "CLOSE_ERROR":
+      console.log("CLOSE_ERROR");
+      return{
+        ...state
+      }
+
     default:
       return state
   }
