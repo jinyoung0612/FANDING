@@ -4,24 +4,29 @@ export const signIn = (credentials) => {
   return (dispatch, getState) => {
     firebase
       .auth()
-      .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .then((data) => {
-        if (data.user.emailVerified) {
-          firebase
-            .auth()
-            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-          dispatch({ type: "LOGIN_SUCCESS" });
-        } else {
-          var msg = "이메일인증을 확인해주세요";
-          alert(msg);
-          firebase
-            .auth()
-            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-          // firebase.auth().signOut();
-        }
-      })
-      .catch((err) => {
-        dispatch({ type: "LOGIN_ERROR", err });
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(function () {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(credentials.email, credentials.password)
+          .then((data) => {
+            if (data.user.emailVerified) {
+              // firebase
+              //   .auth()
+              //   .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+              dispatch({ type: "LOGIN_SUCCESS" });
+            } else {
+              var msg = "이메일인증을 확인해주세요";
+              alert(msg);
+              // firebase
+              //   .auth()
+              //   .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+              // firebase.auth().signOut();
+            }
+          })
+          .catch((err) => {
+            dispatch({ type: "LOGIN_ERROR", err });
+          });
       });
   };
 };

@@ -1,11 +1,10 @@
-import React from "react";
-import { connect, useSelector } from 'react-redux';
-import { signOut } from '../../store/actions/authActions';
-import { NavLink, NavItem, Button } from 'reactstrap';
-import {BsPeopleCircle, BsBell} from "react-icons/bs"
-import {useFirestoreConnect} from "react-redux-firebase";
-import firebase from 'firebase';
-
+import React, { useState, useEffect } from "react";
+import { connect, useSelector } from "react-redux";
+import { signOut } from "../../store/actions/authActions";
+import { NavLink, NavItem, Button } from "reactstrap";
+import { BsPeopleCircle, BsBell, BsBellFill } from "react-icons/bs";
+import { useFirestoreConnect } from "react-redux-firebase";
+import firebase from "firebase";
 
 const style = {
   color: "rgb(0, 0, 0)",
@@ -26,40 +25,62 @@ const style = {
 // }
 
 const SignedInLinks = (props) => {
-
-  useFirestoreConnect([{
-    collection: 'chongdaes',
-    where: [
-        ['user_email','==',firebase.auth().currentUser.email]
-    ]
-  }]);
-
-  const chongdae =useSelector((state)=>state.firestore.ordered.chongdaes);
+  useFirestoreConnect([
+    {
+      collection: "chongdaes",
+      where: [["user_email", "==", firebase.auth().currentUser.email]],
+    },
+  ]);
+  const [chatnotice, setChatnotice] = useState(false);
+  const chatalert = () => {
+    firebase
+      .firestore()
+      .collection("chats")
+      .where("users", "array-contains", firebase.auth().currentUser.email)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          // console.log(doc.id, "=>", doc.data());
+          if (doc.data().receiver == firebase.auth().currentUser.email) {
+            if (doc.data().readmsg == false) {
+              setChatnotice(true);
+            }
+          }
+        });
+      })
+      .catch(function (error) {
+        console.log("error getting document :", error);
+      });
+  };
+  useEffect(() => {
+    chatalert();
+  }, []);
+  const chongdae = useSelector((state) => state.firestore.ordered.chongdaes);
   console.log(chongdae);
 
   const checkVerificationHandler = () => {
-    if(chongdae.length>0){
-      console.log("function chongdae[0]: ",chongdae[0]);
+    if (chongdae.length > 0) {
+      console.log("function chongdae[0]: ", chongdae[0]);
       const accessToken = chongdae[0].access_token;
       console.log(accessToken);
-      
-          if(accessToken!=null && accessToken!='error'){
-              window.location.href = "http://localhost:3000/create_funding";
-          }
-          else{
-              alert("총대인증이 안돼있습니다. 펀딩을 생성 하기 위해선 총대 인증을 먼저 하세요.");
-              window.location.href = "http://localhost:3000/chongdae";    
-          }
-      }
-      else{
-          alert("총대인증이 안돼있습니다. 펀딩을 생성 하기 위해선 총대 인증을 먼저 하세요.");
-          window.location.href = "http://localhost:3000/chongdae";
-      }
-  }
 
-    return (
-      
+      if (accessToken != null && accessToken != "error") {
+        window.location.href = "http://localhost:3000/create_funding";
+      } else {
+        alert(
+          "총대인증이 안돼있습니다. 펀딩을 생성 하기 위해선 총대 인증을 먼저 하세요."
+        );
+        window.location.href = "http://localhost:3000/chongdae";
+      }
+    } else {
+      alert(
+        "총대인증이 안돼있습니다. 펀딩을 생성 하기 위해선 총대 인증을 먼저 하세요."
+      );
+      window.location.href = "http://localhost:3000/chongdae";
+    }
+  };
 
+  return (
     // <NavItem>
     //   <NavLink href="/create_funding"><Button outline color="info">펀딩 생성</Button></NavLink>
     // </NavItem>
@@ -78,11 +99,23 @@ const SignedInLinks = (props) => {
             </div> */}
 
         <div class="icons-menu">
-          <NavItem>
-            <NavLink href="/totalchat">
-              <BsBell size={28} style={{ fill: "black" }} className="mr-3" />
-            </NavLink>
-          </NavItem>
+          {chatnotice === false ? (
+            <NavItem>
+              <NavLink href="/totalchat">
+                <BsBell size={28} style={{ fill: "black" }} className="mr-3" />
+              </NavLink>
+            </NavItem>
+          ) : (
+            <NavItem>
+              <NavLink href="/totalchat">
+                <BsBellFill
+                  size={28}
+                  style={{ fill: "red" }}
+                  className="mr-3"
+                />
+              </NavLink>
+            </NavItem>
+          )}
           <NavItem>
             <NavLink href="/myaccount">
               <BsPeopleCircle style={{ fill: "black" }} size={28} />
