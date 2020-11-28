@@ -77,9 +77,9 @@ class SelectedArtist extends Component {
                             fundings.map((funding,i)=>{
                                 //console.log("in map", funding.artistSelect);
                                 nowArtist = funding.artistSelect;
-                                console.log('preArtist', preArtist);
-                                console.log('nowArtist', nowArtist);
-                                console.log(funding.fundingTitle);
+                                // console.log('preArtist', preArtist);
+                                // console.log('nowArtist', nowArtist);
+                                // console.log(funding.fundingTitle);
                                 if(preArtist !== nowArtist)
                                 {
                                     preArtist = nowArtist;

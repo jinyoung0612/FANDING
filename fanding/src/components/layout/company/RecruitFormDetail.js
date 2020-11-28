@@ -114,6 +114,7 @@ class RecruitFormDetail extends Component{
     }
   render(){
       console.log("RecruitFormDetail");
+      // console.log(this.state.modal)
 
     const {recruitCompany}=this.props;
     if(isLoaded(recruitCompany) && recruitCompany)
@@ -410,6 +411,7 @@ class ApplicationList extends Component{
     }
 
     render() {
+       // console.log(this.state.isChatView)
         // console.log(this.props);
         const{applications}=this.props;
         // console.log(applications);

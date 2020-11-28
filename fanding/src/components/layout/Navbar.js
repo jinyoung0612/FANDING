@@ -4,9 +4,9 @@ import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { connect } from "react-redux";
 
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button, Media } from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button, Media, FormGroup,Label,Input,InputGroup,InputGroupButtonDropdown,DropdownToggle,DropdownMenu,DropdownItem,InputGroupAddon } from "reactstrap";
 
-import { BsPeopleCircle, BsBell } from "react-icons/bs";
+import { BsPeopleCircle, BsBell,BsSearch } from "react-icons/bs";
 import styles from "./Navbar.module.css";
 
 
@@ -22,7 +22,8 @@ const NavbarTest = (props) => {
   );
 
 
-  return (
+
+    return (
     // <section className={styles.Section}>
     // <div>
     //   <Navbar className={styles.Navbar} fixed="top" light expand="lg">
@@ -88,9 +89,8 @@ const NavbarTest = (props) => {
                   {/* <li class="nav-item">
                     <a class="nav-link link text-black display-4" href="/payment">결제</a>
                   </li> */}
-                  
-                   
-                  
+
+
                   
                 </ul>
                 <div class="nav-item">

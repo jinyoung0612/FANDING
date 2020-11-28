@@ -1,5 +1,5 @@
 import React, { useState, Component, PureComponent } from "react";
-import {Media} from 'reactstrap';
+import {Button, Input, InputGroup, InputGroupAddon, Media} from 'reactstrap';
 import main_image from './fanding_main_image.png';
 import {firestoreConnect, useFirestoreConnect} from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -10,8 +10,12 @@ import {connect, useSelector} from "react-redux";
 import MainPageUser from "./MainPage";
 import MainPageCom from "./MainPageCom";
 import {CardDeck, Container} from 'reactstrap';
-import {Link, animateScroll as scroll} from "react-scroll";
+import {animateScroll as scroll} from "react-scroll";
 //import { MainPageFundingList } from "./MainPageFundingList";
+import { BsPeopleCircle, BsBell,BsSearch } from "react-icons/bs";
+import {Link} from "react-router-dom";
+import Search from "./Search";
+
 
 const DefaultLayout= () => {
     return(
@@ -44,13 +48,44 @@ const DefaultLayout= () => {
     )
 
 }
+
+export class SearchBar extends Component{
+    constructor() {
+        super();
+        this.state={
+            search:""
+        }
+
+    }
+
+    updateSearch=(e)=>{
+
+        this.setState({
+            search:e.target.value.substr(0,20)
+        });
+        console.log(this.state.search)
+
+    }
+    render() {
+        return(
+            <InputGroup>
+                <Input placeholder="어떤 펀딩을 찾고 계신가요?" value={this.state.search} onChange={this.updateSearch} />
+                <Link to={`/search?keyword=${this.state.search}`}>
+                    <InputGroupAddon addonType="append"><Button color="secondary"> <BsSearch/></Button></InputGroupAddon>
+                </Link>
+            </InputGroup>
+        )
+    }
+
+
+}
 class MainPageDefault extends Component {
 
 
     render(){
         //const { fundings } = this.props;
         const { auth, user, company, fundings} = this.props;
-        console.log("auth", auth);
+        // console.log("auth", auth);
         console.log("users", user);
         console.log("companies", company);
         // console.log("fundings", fundings);
@@ -78,10 +113,8 @@ class MainPageDefault extends Component {
                     <div>
                         <DefaultLayout />
                         <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-                
-
                         <Container>
-                        
+                            <SearchBar/>
                         <MainPageUser></MainPageUser>
                         </Container>
                            
@@ -101,7 +134,7 @@ class MainPageDefault extends Component {
 
 
                             <Container>
-
+                                <SearchBar/>
                                 <MainPageCom></MainPageCom>
 
                             </Container>
@@ -124,7 +157,7 @@ class MainPageDefault extends Component {
 
 
                             <Container>
-
+                                <SearchBar/>
                                 <MainPageCom></MainPageCom>
 
                             </Container>
