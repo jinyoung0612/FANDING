@@ -39,7 +39,7 @@ class Search extends Component {
                 <div>
                     <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                         <Container>
-                            <SearchBar/>
+                            <SearchBar history={this.props.history}/>
                             <div>
                                 <CardText>"{keyword}" 검색 결과입니다.</CardText>
                                 {keyword==="" ? null :

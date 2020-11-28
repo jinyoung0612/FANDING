@@ -10,10 +10,9 @@ import {connect, useSelector} from "react-redux";
 import MainPageUser from "./MainPage";
 import MainPageCom from "./MainPageCom";
 import {CardDeck, Container} from 'reactstrap';
-import {animateScroll as scroll} from "react-scroll";
-//import { MainPageFundingList } from "./MainPageFundingList";
-import { BsPeopleCircle, BsBell,BsSearch } from "react-icons/bs";
-import {Link} from "react-router-dom";
+import {Link,animateScroll as scroll} from "react-scroll";
+import {BsSearch } from "react-icons/bs";
+import {Link as Link2}from "react-router-dom";
 import Search from "./Search";
 
 
@@ -63,16 +62,28 @@ export class SearchBar extends Component{
         this.setState({
             search:e.target.value.substr(0,20)
         });
-        console.log(this.state.search)
+        // console.log(this.state.search)
 
     }
+
+    handleClick=(e)=>{
+        // console.log(this.props.history)
+        this.props.history.push(`/search?keyword=${this.state.search}`)
+    }
+    handleKeyPress=(e)=>{
+        // console.log(e);
+        if(e.key==="Enter"){
+            this.handleClick();
+        }
+    }
     render() {
+        // console.log(this.props)
         return(
             <InputGroup>
-                <Input placeholder="어떤 펀딩을 찾고 계신가요?" value={this.state.search} onChange={this.updateSearch} />
-                <Link to={`/search?keyword=${this.state.search}`}>
-                    <InputGroupAddon addonType="append"><Button color="secondary"> <BsSearch/></Button></InputGroupAddon>
-                </Link>
+                <Input placeholder="어떤 펀딩을 찾고 계신가요?" value={this.state.search} onChange={this.updateSearch} onKeyPress={this.handleKeyPress}/>
+                {/*<Link2 to={`/search?keyword=${this.state.search}`}>*/}
+                    <InputGroupAddon addonType="append"><Button color="secondary" onClick={this.handleClick}> <BsSearch/></Button></InputGroupAddon>
+                {/*</Link2>*/}
             </InputGroup>
         )
     }
@@ -113,9 +124,10 @@ class MainPageDefault extends Component {
                     <div>
                         <DefaultLayout />
                         <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-                        <Container>
-                            <SearchBar/>
-                        <MainPageUser></MainPageUser>
+                            <Container>
+                                <SearchBar history={this.props.history}/>
+
+                                <MainPageUser></MainPageUser>
                         </Container>
                            
                       
@@ -134,7 +146,7 @@ class MainPageDefault extends Component {
 
 
                             <Container>
-                                <SearchBar/>
+                                <SearchBar history={this.props.history}/>
                                 <MainPageCom></MainPageCom>
 
                             </Container>
@@ -157,7 +169,7 @@ class MainPageDefault extends Component {
 
 
                             <Container>
-                                <SearchBar/>
+                                <SearchBar history={this.props.history}/>
                                 <MainPageCom></MainPageCom>
 
                             </Container>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { connect } from "react-redux";
+import { useHistory } from 'react-router-dom';
 
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button, Media, FormGroup,Label,Input,InputGroup,InputGroupButtonDropdown,DropdownToggle,DropdownMenu,DropdownItem,InputGroupAddon } from "reactstrap";
 
@@ -22,6 +23,7 @@ const NavbarTest = (props) => {
     <SignedOutLinks />
   );
 
+    const history = useHistory();
 
 
     return (
@@ -91,7 +93,7 @@ const NavbarTest = (props) => {
                     <a class="nav-link link text-black display-4" href="/payment">결제</a>
                   </li> */}
                     <li className="nav-item">
-                        <SearchBar/>
+                        <SearchBar history={history}/>
                     </li>
 
                   
