@@ -16,7 +16,8 @@ class NoticeForm extends Component{
             uid: this.props.auth.uid,
             email: this.props.auth.email,
             ntctitle: this.ntctitle.value,
-            ntccontents: this.ntccontents.value
+            ntccontents: this.ntccontents.value,
+            funding_id: this.props.FundingID
         }
 
         if(this.props.selectedNotice.ntcno){
@@ -41,8 +42,8 @@ class NoticeForm extends Component{
     
 
     render(){
-        const {selectedNotice, DialogOpen, auth} = this.props;
-
+        const {selectedNotice, DialogOpen, auth, FundingID} = this.props;
+        
         return(
             <div>
                 <Dialog open={DialogOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth>
@@ -80,6 +81,7 @@ class NoticeForm extends Component{
 }
 
 let mapStateToProps = (state) => {
+    
     return {
         auth: state.firebase.auth,
         authError: state.auth.authError,

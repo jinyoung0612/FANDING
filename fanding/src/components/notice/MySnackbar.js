@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Snackbar from '@material-ui/core/Snackbar';
 
-import SnackbarContent from "./SnackbarContent";
+import SnackbarContent from "./MySnackbarContent";
 import {show_snackbar} from '../../store/actions/noticeAction';
 
 class MySnackbar extends React.Component {

@@ -38,6 +38,7 @@ const styles = theme => ({
 });
 
 class NoticeList extends Component {
+
     state = {
         DialogOpen: false,
     };
@@ -56,6 +57,10 @@ class NoticeList extends Component {
     }
 
     render(){
+        const location = window.location.href.split('/');
+        const funding_id = location[5];
+        console.log("funding_id: ",funding_id);
+
         const {classes, notices} = this.props;
         console.log("in noticelist notices: ",notices);
         const {DialogOpen} = this.state;
@@ -85,7 +90,7 @@ class NoticeList extends Component {
               }
             </List>
             <FloatingButton handleClick={this.handleDialogOpen}/>
-            <NoticeForm DialogOpen={DialogOpen} handleDialogClose={this.handleDialogClose}/>
+            <NoticeForm DialogOpen={DialogOpen} FundingID = {funding_id} handleDialogClose={this.handleDialogClose}/>
           </div> 
         )
     }

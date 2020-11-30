@@ -82,9 +82,11 @@ class App extends Component {
             <Route path="/questionchat" component={QuestionChat} />
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />
+
             <Route path="/notice" component={NoticeMain} />
-            <Route path="/notice/list" component={NoticeList} />
+            <Route path="/notice/list/:id" component={NoticeList}/>
             <Route path="/notice/form" component={NoticeForm} />
+
             <Route path="/companychat" component={CompanyChat} />
           </Switch>
         </div>
