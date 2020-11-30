@@ -7,8 +7,10 @@ import MoreDialog from "./moredialogbox/moredialogbox";
 
 import GallaryImg from "../img/image_logo.png";
 import Userlogo from "../img/userImg.png";
+import userlogo3 from "../img/userImg3.png";
 import "./chatroom.css";
 import userLogo2 from "../img/userImg2.png";
+// import userlogo3 from "../img/myuserImg.png";
 
 const f = firebase;
 const auth = firebase.auth();
@@ -33,7 +35,6 @@ export default class chatroom extends Component {
     msgType: "",
     progress: 0,
     oldChatsLength: [],
-    blank: "닉네임없음",
   };
 
   componentDidMount = async () => {
@@ -69,8 +70,13 @@ export default class chatroom extends Component {
 
   isChatChanged = async (chat) => {
     console.log("this isChatChanged");
+    const { docid, receiver } = this.props.chatData;
     await this.scrollingToEnd();
     this.setState({ oldChats: chat });
+
+    if (auth.currentUser.email == receiver) {
+      firestore.collection("chats").doc(docid).update({ readmsg: true });
+    }
   };
 
   scrollingToEnd = () => {
@@ -99,6 +105,9 @@ export default class chatroom extends Component {
 
     await this.props.allUserData.map((user) => {
       if (user.user_email === fetchEmail) {
+        userData.push(user);
+      }
+      if (user.email === fetchEmail) {
         userData.push(user);
       }
     });
@@ -147,7 +156,7 @@ export default class chatroom extends Component {
   // };
 
   sendMessage = async () => {
-    const { docid } = this.props.chatData;
+    const { docid, users } = this.props.chatData;
     const { userEmail } = this.props;
     const { text } = this.state;
 
@@ -156,7 +165,12 @@ export default class chatroom extends Component {
       hour12: true,
       minute: "numeric",
     });
-
+    let receiver_email = "";
+    if (users) {
+      users[0] === userEmail
+        ? (receiver_email = users[1])
+        : (receiver_email = users[0]);
+    }
     const timestamp = Date.now();
 
     // const isBlocked = await this.blockList();
@@ -173,6 +187,8 @@ export default class chatroom extends Component {
             type: "text",
           }),
           time: timestamp,
+          readmsg: false,
+          receiver: receiver_email,
         });
 
       await this.scrollingToEnd();
@@ -200,6 +216,7 @@ export default class chatroom extends Component {
 
     await firestore.collection("chats").doc(docid).update({
       messages: updateChats,
+      // readmsg: true,
     });
   };
 
@@ -379,10 +396,15 @@ export default class chatroom extends Component {
   };
 
   sendImage = async () => {
-    const { docid } = this.props.chatData;
+    const { docid, users } = this.props.chatData;
     const { userEmail } = this.props;
     const { imgFile } = this.state;
-
+    let receiver_email = "";
+    if (users) {
+      users[0] === userEmail
+        ? (receiver_email = users[1])
+        : (receiver_email = users[0]);
+    }
     const time = new Date().toLocaleTimeString("en-US", {
       hour: "numeric",
       hour12: true,
@@ -431,6 +453,8 @@ export default class chatroom extends Component {
                   URL: URL,
                 }),
                 time: timestamp,
+                readmsg: false,
+                receiver: receiver_email,
               });
 
             await this.setState({
@@ -502,7 +526,7 @@ export default class chatroom extends Component {
                     </div> */}
                         <div className="img_cont">
                           <img
-                            src={oponentUserData.URL || Userlogo}
+                            src={oponentUserData.URL || userlogo3}
                             className="rounded-circle user_img"
                             style={{ cursor: "pointer" }}
                             onClick={() => this.setState({ showProfile: true })}
@@ -510,7 +534,7 @@ export default class chatroom extends Component {
                         </div>
                         <div className="user_info">
                           <span>
-                            {oponentUserData.nickname || this.state.blank}
+                            {oponentUserData.nickname || oponentUserData.name}
                           </span>{" "}
                           {/* <h6 className="inline">
                         ({oponentUserData.isonline ? "Online" : "Offline"})
@@ -532,10 +556,10 @@ export default class chatroom extends Component {
                               {list.sender === oponentUserEmail ? (
                                 <div className="d-flex justify-content-start mb-4">
                                   <div className="img_cont_msg">
-                                    <img
-                                      src={oponentUserData.URL || Userlogo}
+                                    {/* <img
+                                      src={oponentUserData.URL || userlogo3}
                                       className="rounded-circle user_img_msg"
-                                    />
+                                    /> */}
                                   </div>
                                   <div
                                     className="msg_cotainer text-center"
@@ -566,10 +590,10 @@ export default class chatroom extends Component {
                                     </span>
                                   </div>
                                   <div className="img_cont_msg">
-                                    <img
+                                    {/* <img
                                       src={profilePicture}
                                       className="rounded-circle user_img_msg"
-                                    />
+                                    /> */}
                                   </div>
                                 </div>
                               )}
@@ -579,10 +603,10 @@ export default class chatroom extends Component {
                               {list.sender === oponentUserEmail ? (
                                 <div className="d-flex justify-content-start mb-4">
                                   <div className="img_cont_msg">
-                                    <img
+                                    {/* <img
                                       src={oponentUserData.URL}
                                       className="rounded-circle user_img_msg"
-                                    />
+                                    /> */}
                                   </div>
                                   <div
                                     className="msg_cotainer text-center"
@@ -617,10 +641,10 @@ export default class chatroom extends Component {
                                     </span>
                                   </div>
                                   <div className="img_cont_msg">
-                                    <img
+                                    {/* <img
                                       src={profilePicture}
                                       className="rounded-circle user_img_msg"
-                                    />
+                                    /> */}
                                   </div>
                                 </div>
                               )}
@@ -675,7 +699,7 @@ export default class chatroom extends Component {
                   <div className="oponent-profile p-5 shadow center">
                     <div className="chat-img-profile-div">
                       <img
-                        src={oponentUserData.URL || Userlogo}
+                        src={oponentUserData.URL || userlogo3}
                         className="chat-img-profile"
                       />
                     </div>
@@ -690,13 +714,16 @@ export default class chatroom extends Component {
                     >
                       <div className="chat-name-profile">
                         <h3>
-                          Nickname:{" "}
-                          {oponentUserData.nickname || this.state.blank}
+                          Name:{" "}
+                          {oponentUserData.nickname || oponentUserData.name}
                         </h3>
                       </div>
 
                       <div>
-                        <h4>Email: {oponentUserData.user_email}</h4>
+                        <h4>
+                          Email:{" "}
+                          {oponentUserData.user_email || oponentUserData.email}
+                        </h4>
                       </div>
                       {/* 
                   <div className="chat-description-profile">
@@ -718,7 +745,7 @@ export default class chatroom extends Component {
                         className="btn btn-primary mt-3"
                         onClick={() => this.setState({ showProfile: false })}
                       >
-                        Back
+                        뒤로가기
                       </button>
                     </div>
                   </div>

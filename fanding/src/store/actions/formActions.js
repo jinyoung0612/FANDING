@@ -48,7 +48,8 @@ export const firebase_funding_save = (newForm) => {
             nickname:"",
             selectedCom:newForm.selectedCom,
             gift:newForm.gift,
-            progress:0
+            progress:0,
+            isClosed:false
 
         }).then(() => {
             dispatch({type: 'CREATEFORM_SUCCESS' , newForm});
@@ -63,6 +64,27 @@ export const firebase_funding_save = (newForm) => {
 
 };
 
+export const close_funding = (fid)=>{
+    return (dispatch, getState) => {
+        // make async call to database
+        const firestore = firebase.firestore();
+        firestore
+            .collection("fundings")
+            .doc(fid)
+            .update({
+                isClosed:true
+            }).then(() => {
+            dispatch({type: 'CLOSE_SUCCESS'});
+        }).catch((err) => {
+            dispatch( {type: "CLOSE_ERROR", err})
+        })
+        //.doc()
+        /*.set({
+
+        })*/
+    };
+
+}
 /*
 const initialState = {
     auth: null,
