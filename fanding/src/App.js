@@ -36,6 +36,7 @@ import MyRecruit from "./components/layout/MyRecruit";
 
 import NoticeForm from "./components/notice/NoticeForm";
 import NoticeList from "./components/notice/NoticeList";
+import NoticeMain from "./components/notice/NoticeMain";
 
 class App extends Component {
   render() {
@@ -81,6 +82,7 @@ class App extends Component {
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />
 
+            <Route path="/notice" component={NoticeMain} />
             <Route path="/notice/list" component={NoticeList} />
             <Route path="/notice/form" component={NoticeForm} />
           </Switch>

@@ -3,6 +3,8 @@ import formReducer from "./formReducer";
 import paymentReducer from "./paymentReducer";
 import verifyReducer from "./chongdaeReducer";
 import adminReducer from "./adminReducer";
+import noticeReducer2 from "./noticeReducer"
+import noticeReducer from "../actions/noticeAction"
 import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
 import { firebaseReducer } from "react-redux-firebase";
@@ -13,6 +15,7 @@ const rootReducer = combineReducers({
   payment: paymentReducer,
   verify: verifyReducer,
   admin: adminReducer,
+  notice: noticeReducer,
   firestore: firestoreReducer,
   firebase: firebaseReducer,
 });
