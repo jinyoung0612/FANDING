@@ -107,25 +107,30 @@ class NoticeList extends Component {
               <ListItem>
                 <Col align="center">
                   <Avatar ><SupervisorAccount/></Avatar>
-                <ListItemText secondary="펀딩 진행중" />
+                <ListItemText secondary="펀딩 진행" />
                 </Col>
+                <p>ㆍㆍㆍ</p>
                 <Col align="center">
                   <Avatar ><MoneyOff/></Avatar>
                 <ListItemText secondary="입금 마감" />
                 </Col>
+                <p>ㆍㆍㆍ</p>
                 <Col align="center">
                   <Avatar ><Build/></Avatar>
                 <ListItemText secondary="상품 제작" />
                 </Col>
+                <p>ㆍㆍㆍ</p>
                 <Col align="center">
                   <Avatar ><LocalShipping/></Avatar>
                 <ListItemText secondary="상품 배송" />
                 </Col>
+                <p>ㆍㆍㆍ</p>
                 <Col align="center">
                   <Avatar ><DoneOutline/></Avatar>
                 <ListItemText secondary="펀딩 종료" />
                 </Col>
               </ListItem>
+              <br/>
               
               <Divider />
               <Divider />
