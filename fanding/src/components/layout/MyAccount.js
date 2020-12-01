@@ -18,15 +18,6 @@ import {storage} from "../../config/fbConfig";
 import firebase from "firebase";
 import {useFirestoreConnect} from "react-redux-firebase";
 
-// useFirestoreConnect([{
-//   collection: 'users',
-//   where:[
-//     ["uid","==",firebase.auth().currentUser.uid]
-//   ]
-// }]);
-//
-// const participations=useSelector((state)=>state.firestore.ordered.participation);
-// console.log(participations);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +44,28 @@ const SmallAvatar = withStyles((theme) => ({
 }))(Avatar);
 
 const MyAccount = (props) => {
-// console.log(props)
+
+  const uid = firebase.auth().currentUser ? props.auth.uid : null;
+  console.log(uid)
+
+  useFirestoreConnect([{
+    collection: 'users',
+    where:[
+      ["user_uid","==",uid]
+    ]
+  }]);
+
+  const user= useSelector((state)=>state.firestore.ordered.users);
+  // const user=useSelector(({firestore:{data}})=>data && data.users);
+
+
+  if(user!==undefined){
+
+    console.log("user",user[0]);
+
+  }
+
+console.log(props);
 
   const [activeTab, setActiveTab] = useState("1");
   const classes = useStyles();
@@ -113,8 +125,6 @@ const MyAccount = (props) => {
                   console.log(url);
                   setProfile(file.name);
                   console.log(profile);
-                  // this.props.firebase_funding_save(this.state)
-                  // this.setState({redirectToReferrer: true})
 
                 })
           }
@@ -127,7 +137,7 @@ const MyAccount = (props) => {
 
   };
 
-  if(props.auth.isLoaded){
+  if(props.auth.isLoaded && user!==undefined){
 
     return (
       <>
@@ -156,7 +166,7 @@ const MyAccount = (props) => {
 
                 </Badge>
                 <Col>
-                  닉네임
+                  닉네임: {user[0].nickname}
                 </Col>
               </Row>
             </div>
@@ -264,7 +274,6 @@ const MyAccount = (props) => {
     )
   }
 }
-
 
 
 const mapStateToProps = (state) => {
