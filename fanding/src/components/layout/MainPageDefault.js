@@ -76,7 +76,7 @@ class MainPageDefault extends Component {
                         <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
                 
 
-                        <Container>
+                        <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
                         
                         <MainPageUser></MainPageUser>
                         </Container>
@@ -96,7 +96,7 @@ class MainPageDefault extends Component {
                         <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
 
 
-                            <Container>
+                            <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
 
                                 <MainPageCom></MainPageCom>
 
@@ -119,7 +119,7 @@ class MainPageDefault extends Component {
                         <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
 
 
-                            <Container style={{dispaly:'flex', flexFlow:'row wrap'}}>
+                            <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
 
                                 <MainPageCom></MainPageCom>
 

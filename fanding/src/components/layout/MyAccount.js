@@ -4,7 +4,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, Ca
 CardSubtitle, 
 Container} from 'reactstrap';
 import classnames from 'classnames';
-import TabPane3 from './TabPane3';
+
 import MyFunding from "./MyFunding";
 import MyRecruit from "./MyRecruit";
 import {connect} from 'react-redux';
@@ -37,7 +37,7 @@ console.log(props)
           </div>
         </Row>
           
-          <Nav tabs>
+          {/* <Nav tabs>
             <NavItem>
               <NavLink
                   className={classnames({ active: activeTab === '1' })}
@@ -115,7 +115,7 @@ console.log(props)
             <TabPane tabId="5">
               <MyRecruit></MyRecruit>
             </TabPane>
-          </TabContent>
+          </TabContent> */}
         </Container>
         </section>
         </>

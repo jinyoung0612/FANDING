@@ -33,6 +33,10 @@ import TransactionList from "./components/layout/TransactionList";
 import MyFunding from './components/layout/MyFunding';
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
+import Sidebar from "./components/dashboard/Sidebar";
+import Main from "./components/dashboard/Main";
+import Dashboard from "./components/dashboard/Dashboard";
+import FanAuth from './components/layout/FanAuth';
 class App extends Component {
   render() {
     return (
@@ -76,6 +80,9 @@ class App extends Component {
             <Route path="/questionchat" component={QuestionChat} />
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />
+            <Route path="/myCompany" component={Main} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/fan_auth" component={FanAuth} />
           </Switch>
         </div>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-/* @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 body {
   font-family: "Poppins", sans-serif;
@@ -17,14 +17,14 @@ a:focus {
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
-.sidebar {
+ .sidebar {
   min-width: 250px;
   max-width: 250px;
   background: #b2e0df;
   color: #fff;
   /* margin-left: -250px; */
   transition: all 0.5s;
-}
+} 
 
 .sidebar.is-open {
   margin-left: 0;
@@ -132,7 +132,7 @@ li a.dropdown-toggle::after {
   text-decoration: none;
 }
 
-/* .active {
+.active {
   color: #ffe161;
   text-decoration: none;
-} */
+}

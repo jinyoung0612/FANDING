@@ -390,17 +390,19 @@ const FundingDetails = (props)=>{
                             <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
                             <div className="text-left"><h2><b>{funding.fundingTitle}</b></h2></div>
                             <div className="mt-5">
-                                <Row xs="2">
-                                    <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
-                                    <Col xs="4">
+                            <Row xs="12" sm="12" md="2">
+                            <Col xs="12" sm="12" md="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
+                            <Col xs="12" sm="12" md="4">
                                         <div>
                                             <div className="text-center" style={{fontSize:"1.5em"}} ><b>{percent}% 달성</b></div>
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
                                             <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-3"><b>{period}일</b> 남음</p>
-                                            <Row style={{paddingLeft:"16px"}} xs="2">
-                                                <Button className="btn-responsive" color="info" onClick={toggle}>펀딩 참여하기</Button>
+                                            <Row xs="2">
+                                            <Col xs="12">
+                                                <Button className="btn-responsive" block color="info" onClick={toggle} >펀딩 참여하기</Button>
+                                            </Col>
                                             </Row>
                                             <Modal style={{height:'1200px'}} isOpen={modal} toggle={toggle}>
                                                 <Form onSubmit={(e)=>handleSubmit(e,funding)}>
@@ -549,12 +551,12 @@ const FundingDetails = (props)=>{
                                                     </ModalBody>
                                                 </Form>
                                             </Modal>
-                                            <Row xs="3">
+                                            <Row xs="12">
                                                 <Col><Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
-                                                <Col><Button onClick={handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
+                                                <Col><Button className="btn-responsive" onClick={handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
                                                 <Col>
                                                     <CopyToClipboard text={url}>
-                                                        <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                                                        <Button className="btn-responsive" color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
                                                     </CopyToClipboard>
                                                 </Col>
                                             </Row>
@@ -598,7 +600,7 @@ const FundingDetails = (props)=>{
                                         </div>
                                     </Col>
                                     <Col  xs={4}>
-                                        <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
+                                        <Button size="sm" color="success" className="btn-responsive" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
                                         </Button>
                                         <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
                                         {funding.selectedCom ?
@@ -630,9 +632,9 @@ const FundingDetails = (props)=>{
                             <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
                             <div className="text-left"><h2><b>{funding.fundingTitle}</b></h2></div>
                             <div className="mt-5">
-                                <Row xs="2">
-                                    <Col xs="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
-                                    <Col xs="4">
+                            <Row xs="12" sm="12" md="2">
+                                <Col xs="12" sm="12" md="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
+                                <Col xs="12" sm="12" md="4">
                                         <div>
                                             <div className="text-center" style={{fontSize:"1.5em"}} ><b>{percent}% 달성</b></div>
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
@@ -640,7 +642,7 @@ const FundingDetails = (props)=>{
                                             <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                             <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-3"><b>{period}일</b> 남음</p>
                                             <Row xs="2">
-                                                <Button style={{paddingLeft:"16px"}} color="info" onClick={toggle}>펀딩 참여하기</Button>
+                                                <Button className="btn-responsive" block style={{paddingLeft:"16px"}} color="info" onClick={toggle}>펀딩 참여하기</Button>
                                             </Row>
                                             <Modal isOpen={modal} toggle={toggle}>
                                                 <Form onSubmit={(e)=>handleSubmit(e,funding)}>
@@ -725,11 +727,11 @@ const FundingDetails = (props)=>{
                                                 </Form>
                                             </Modal>
                                             <Row xs="3">
-                                                <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
-                                                <Col><Button onClick={handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>문의</Button></Col>
+                                                <Col><Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
+                                                <Col><Button className="btn-responsive" onClick={handleClickChatView} color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>문의</Button></Col>
                                                 <Col>
                                                     <CopyToClipboard text={url}>
-                                                        <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />공유</Button>
+                                                        <Button className="btn-responsive" color="secondary" size="xs" block><FaShareAlt className="mr-2" />공유</Button>
                                                     </CopyToClipboard>
                                                 </Col>
                                             </Row>
@@ -959,14 +961,14 @@ const FundingDetails = (props)=>{
                                         <p className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
                                         <p className="mt-3"><b>15일</b> 남음</p>
                                         <Row xs="2">
-                                            <Button color="info" onClick={toggle}>펀딩 참여하기</Button>
+                                            <Button className="btn-responsive" block color="info" onClick={toggle}>펀딩 참여하기</Button>
                                         </Row>
                                         <Row xs="3">
-                                            <Col><Button style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
-                                            <Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
+                                            <Col><Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
+                                            <Col><Button className="btn-responsive" color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>
                                             <Col>
                                                 <CopyToClipboard text={url}>
-                                                    <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                                                    <Button className="btn-responsive" color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
                                                 </CopyToClipboard>
                                             </Col>
                                         </Row>
@@ -1009,7 +1011,7 @@ const FundingDetails = (props)=>{
                                     </div>
                                 </Col>
                                 <Col  xs={4}>
-                                    <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
+                                    <Button size="sm" color="success" className="btn-responsive" block>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
                                     </Button>
                                     <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
                                     <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>

@@ -3,7 +3,7 @@ import { connect, useSelector } from 'react-redux';
 import { signOut } from '../../store/actions/authActions';
 import { NavLink, NavItem, Button } from 'reactstrap';
 import {BsPeopleCircle, BsBell} from "react-icons/bs"
-import {useFirestoreConnect} from "react-redux-firebase";
+import {useFirestoreConnect, isLoaded} from "react-redux-firebase";
 import firebase from 'firebase';
 
 
@@ -33,10 +33,19 @@ const SignedInLinks = (props) => {
         ['user_email','==',firebase.auth().currentUser.email]
     ]
   }]);
+  useFirestoreConnect([{
+    collection: 'companies',
+    where: [
+      ['email','==',firebase.auth().currentUser.email]
+  ]
+  }]);
+
 
   const chongdae =useSelector((state)=>state.firestore.ordered.chongdaes);
-  console.log(chongdae);
+  const company =useSelector((state)=>state.firestore.ordered.companies);
 
+  console.log(chongdae);
+  console.log('company: ', company);
   const checkVerificationHandler = () => {
     if(chongdae.length>0){
       console.log("function chongdae[0]: ",chongdae[0]);
@@ -56,56 +65,82 @@ const SignedInLinks = (props) => {
           window.location.href = "http://localhost:3000/chongdae";
       }
   }
+  if(isLoaded(company) && company.length !== 0) //업체일 때
+  {
+    console.log('업체');
+    return(
+      <div>
+    <ul class="navbar-nav ml-auto">
 
-    return (
-      
+      <div class="icons-menu">
+        <NavItem>
+          <NavLink href="/totalchat">
+            <BsBell size={28} style={{ fill: "black" }} className="mr-3" />
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="/myCompany">
+            <BsPeopleCircle style={{ fill: "black" }} size={28} />
+          </NavLink>
+        </NavItem>
+      </div>
+      {/* <div class="navbar-buttons mbr-section-btn">
+        <a class="btn btn-info display-4" onClick={checkVerificationHandler}>
+          펀딩 생성
+        </a>
+      </div> */}
+      <li className="nav-item mt-3">
+        <a
+          className="nav-link link text-black display-4"
+          href="/"
+          onClick={props.signOut}
+        >
+          로그아웃
+        </a>
+      </li>
+    </ul>
+  </div>
+    )
+    
 
-    // <NavItem>
-    //   <NavLink href="/create_funding"><Button outline color="info">펀딩 생성</Button></NavLink>
-    // </NavItem>
+  }
+  else{
+    return(
+      <div>
+    <ul class="navbar-nav ml-auto">
 
-    // <NavLink href='/' onClick={props.signOut} >로그아웃</NavLink>
-    // </>
-    <div>
-      <ul class="navbar-nav ml-auto">
-        {/* <div class="icons-menu">
-            <a class="iconfont-wrapper" href="/" rel="noopener noreferrer" target="_blank">
-                <span class="p-2 mbr-iconfont mobi-mbri-alert mobi-mbri"></span>
-            </a>
-            <a class="iconfont-wrapper" href="/myaccount" rel="noopener noreferrer" target="_blank">
-                <span class="p-2 mbr-iconfont mobi-mbri-user-2 mobi-mbri" style={style}></span>
-            </a>
-            </div> */}
+      <div class="icons-menu">
+        <NavItem>
+          <NavLink href="/totalchat">
+            <BsBell size={28} style={{ fill: "black" }} className="mr-3" />
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="/myaccount">
+            <BsPeopleCircle style={{ fill: "black" }} size={28} />
+          </NavLink>
+        </NavItem>
+      </div>
+      <div class="navbar-buttons mbr-section-btn">
+        <a class="btn btn-info display-4" onClick={checkVerificationHandler}>
+          펀딩 생성
+        </a>
+      </div>
+      <li className="nav-item mt-3">
+        <a
+          className="nav-link link text-black display-4"
+          href="/"
+          onClick={props.signOut}
+        >
+          로그아웃
+        </a>
+      </li>
+    </ul>
+  </div>
+    )
+  }
 
-        <div class="icons-menu">
-          <NavItem>
-            <NavLink href="/totalchat">
-              <BsBell size={28} style={{ fill: "black" }} className="mr-3" />
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/myaccount">
-              <BsPeopleCircle style={{ fill: "black" }} size={28} />
-            </NavLink>
-          </NavItem>
-        </div>
-        <div class="navbar-buttons mbr-section-btn">
-          <a class="btn btn-info display-4" onClick={checkVerificationHandler}>
-            펀딩 생성
-          </a>
-        </div>
-        <li className="nav-item mt-3">
-          <a
-            className="nav-link link text-black display-4"
-            href="/"
-            onClick={props.signOut}
-          >
-            로그아웃
-          </a>
-        </li>
-      </ul>
-    </div>
-  );
+   
 };
 
 const mapDispatchToProps = (dispatch) => {

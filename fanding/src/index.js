@@ -28,16 +28,11 @@ import "./assets/dropdown/css/style.css";
 import "./assets/socicon/css/styles.css";
 import "./assets/theme/css/style.css";
 import "./assets/mobirise/css/mbr-additional.css";
-// import "./assets/web/assets/jquery/jquery.min.js";
-    //  import "./assets/popper/popper.min.js";
-    //  import "./assets/tether/tether.min.js";
-    //  import "./assets/smoothscroll/smooth-scroll.js";
-    //  import "./assets/parallax/jarallax.min.js";
-    //  import "./assets/dropdown/js/nav-dropdown.js";
-    //  import "./assets/dropdown/js/navbar-dropdown.js";
-    //  import "./assets/touchswipe/jquery.touch-swipe.min.js";
-    //  import "./assets/theme/js/script.js";
-/*
+// import './assets2/css/bootstrap.min.css'
+// import './assets2/css/light-bootstrap-dashboard.css'
+// import './assets2/css/dashboard.css'
+
+    /*
 const store = createStore(rootReducer, 
   compose(
     applyMiddleware(thunk,logger)));

@@ -22,9 +22,9 @@ const FundingContents = ({funding})=>{
         
         <div>
             <Link className="inactive" activeClassName="active" to={'funding_detail/'+funding.id} funding={funding}>
-            <Card className="col-sm-12 col-12 align-items-sm-stretch align-items-stretch"
-            body style={{width:'15em',flex: '1', backgroundColor: "#ebebeb", height:'20em', maxwidth:'20em', margin: '5px'}} >
-                <CardImg src={funding.thumbnailImage} top width="100" alt="Card image cap" style={imgStyle}/>
+            <Card className="col-sm-12 col-12 align-items-sm-stretch card-bigger"
+            body style={{width:'18em',flex: '1', backgroundColor: "#ebebeb", height:'20em', margin: '8px'}} >
+                <CardImg src={funding.thumbnailImage} top width="100" alt="Card image cap" style={{maxHeight:"194px"}}/>
                 <CardBody>
                     <CardTitle>[{funding.artistSelect}] {funding.fundingTitle}</CardTitle>
                     <CardSubtitle> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardSubtitle>
