@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
+import { Avatar } from '@material-ui/core';
 
 const styles = theme => ({
   fab: {
@@ -21,11 +22,14 @@ function FloatingButton(props) {
   console.log("in floationbutton qualification: ",props.qualification)
 
     return (
-      props.qualification === true ?
+      props.qualification === 'chongdae' || props.qualification === 'company'?
       <div>
         <Tooltip title="새로운 글 작성">
+          
           <Button variant="fab" color="secondary" className={classes.absolute} onClick={props.handleClick}>
-            <AddIcon />
+          <Avatar>
+          <AddIcon />
+          </Avatar>  
           </Button>
         </Tooltip>
       </div>

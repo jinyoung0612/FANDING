@@ -15,6 +15,7 @@ class NoticeForm extends Component{
         let data = {
             uid: this.props.auth.uid,
             email: this.props.auth.email,
+            type: this.props.qualification,
             ntctitle: this.ntctitle.value,
             ntccontents: this.ntccontents.value,
             funding_id: this.props.FundingID
@@ -42,7 +43,7 @@ class NoticeForm extends Component{
     
 
     render(){
-        const {selectedNotice, DialogOpen, auth, FundingID} = this.props;
+        const {selectedNotice, DialogOpen, auth, FundingID, qualification} = this.props;
         
         return(
             <div>

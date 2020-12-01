@@ -53,15 +53,31 @@ export const firebase_notice_save = ( data = {} ) => {
         console.log("in noticeACTION DATA: ", data);
         const firestore = firebase.firestore();
         if(!data.ntcno){
-            firestore.collection("users").doc(data.email).get()
-            .then(doc => {
-                const user = doc.data();
-                var newdoc = firestore.collection('notices').doc();
-                data.ntcwriter = user.nickname;
-                data.ntcno = newdoc.id;
-                data.ntcdate = Date.now();
-                newdoc.set(data);
-            });
+            const type = data.type;
+            console.log("in noticeAction type: ", data.type);
+
+            if(type === 'chongdae'){
+                firestore.collection("users").doc(data.email).get()
+                .then(doc => {
+                    const user = doc.data();
+                    var newdoc = firestore.collection('notices').doc();
+                    data.ntcwriter = user.nickname;
+                    data.ntcno = newdoc.id;
+                    data.ntcdate = Date.now();
+                    newdoc.set(data);
+                });
+            }
+            else if(type === 'company'){
+                firestore.collection("companies").doc(data.email).get()
+                .then(doc => {
+                    const company = doc.data();
+                    var newdoc = firestore.collection('notices').doc();
+                    data.ntcwriter = company.name;
+                    data.ntcno = newdoc.id;
+                    data.ntcdate = Date.now();
+                    newdoc.set(data);
+                });
+            }
         }else{
             firestore.collection('notices')
             .doc(data.ntcno)

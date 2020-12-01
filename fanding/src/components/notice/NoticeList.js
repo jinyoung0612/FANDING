@@ -3,20 +3,20 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
-import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
+import { withStyles,List, ListItem, ListItemText, 
+  Avatar, ListItemSecondaryAction, Typography, Divider } from '@material-ui/core';
 import PhotoIcon from '@material-ui/icons/PermIdentity';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Typography from '@material-ui/core/Typography';
+import {SupervisorAccount, MoneyOff ,LocalShipping, Build, DoneOutline} from '@material-ui/icons';
 
 import {notice_read, notice_remove} from '../../store/actions/noticeAction';
 import NoticeForm from './NoticeForm';
 import FloatingButton from './FloatingButton';
 import { compose } from 'redux';
 import {firestoreConnect, isLoaded} from "react-redux-firebase";
+
+//test
+import NoticeForm2 from './NoticeForm2';
+import { Col, Row } from 'reactstrap';
 
 const styles = theme => ({
     root: {
@@ -81,27 +81,69 @@ class NoticeList extends Component {
         else{
           console.log("in noticelist funding[0].selectedCom: ",funding[0].selectedCom);
           console.log("in noticelist funding[0].user_email: ",funding[0].user_email);
-          let qualification = false;
+          //let qualification = false;
+          var qualification = '';
           const chongdae_email = funding[0].user_email;
           const company = funding[0].selectedCom;
 
+          if(chongdae_email===auth.email){
+            qualification = 'chongdae';
+          }
+            
           if(company!==''){
             console.log("company.email: ",company.value);
-            if(chongdae_email===auth.email || company.value ===auth.email){
-              qualification = true;
+            if(company.value ===auth.email){
+              qualification = 'company';
             }
           }
           return(
-              <div className={classes.root}>
+              <div className={classes.root} >
+              <div>
+              <Typography variant="title" gutterBottom align="center">
+                <br/> 
+                <h3><strong>진행 상황</strong></h3>
+              </Typography>
+              <br/>
+              <ListItem>
+                <Col align="center">
+                  <Avatar ><SupervisorAccount/></Avatar>
+                <ListItemText secondary="펀딩 진행중" />
+                </Col>
+                <Col align="center">
+                  <Avatar ><MoneyOff/></Avatar>
+                <ListItemText secondary="입금 마감" />
+                </Col>
+                <Col align="center">
+                  <Avatar ><Build/></Avatar>
+                <ListItemText secondary="상품 제작" />
+                </Col>
+                <Col align="center">
+                  <Avatar ><LocalShipping/></Avatar>
+                <ListItemText secondary="상품 배송" />
+                </Col>
+                <Col align="center">
+                  <Avatar ><DoneOutline/></Avatar>
+                <ListItemText secondary="펀딩 종료" />
+                </Col>
+              </ListItem>
+              
+              <Divider />
+              <Divider />
+              <Divider />
+              </div>
+              
+              <div>
               <Typography variant="title" gutterBottom align="center">
                 <br/>
-                <h3>공지사항</h3>
+                <h3><strong>공지사항</strong></h3>
+                <br/>
               </Typography>
+              <Divider light />
               <List className={classes.list}>
                 {
                     notices.map((row, index) => (
                   row.funding_id === funding_id?
-                    <ListItem button key={index} onClick={()=>this.handleSelectNotice(row.ntcno)}>
+                    <ListItem button divider key={index} onClick={()=>this.handleSelectNotice(row.ntcno)}>
                       <Avatar>
                       { 
                         <PhotoIcon/>
@@ -122,7 +164,8 @@ class NoticeList extends Component {
               </List>
               
               <FloatingButton qualification={qualification} handleClick={this.handleDialogOpen}/>
-              <NoticeForm DialogOpen={DialogOpen} FundingID = {funding_id} handleDialogClose={this.handleDialogClose}/>
+              <NoticeForm2 qualification={qualification} DialogOpen={DialogOpen} FundingID = {funding_id} handleDialogClose={this.handleDialogClose}/>
+              </div>
             </div> 
           )
         } 
