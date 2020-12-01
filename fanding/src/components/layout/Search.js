@@ -6,7 +6,7 @@ import {firebaseConnect, isLoaded, isEmpty} from "react-redux-firebase";
 import {connect} from "react-redux";
 import SelectedArtist from "./SelectedArtist";
 import FundingContents from "./FundingContents";
-import {CardDeck, CardText} from 'reactstrap';
+import {CardDeck, CardText, Row} from 'reactstrap';
 import queryString from 'query-string';
 import {SearchBar} from "./MainPageDefault";
 
@@ -41,7 +41,9 @@ class Search extends Component {
                         <Container>
                             <SearchBar history={this.props.history}/>
                             <div>
-                                <CardText>"{keyword}" 검색 결과입니다.</CardText>
+                                <Row style={{paddingLeft:"30px",paddingTop:"30px",paddingBottom:"30px"}}>
+                                    <CardText>"{keyword}" 검색 결과입니다.</CardText>
+                                </Row>
                                 {keyword==="" ? null :
                                     (<CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
 
