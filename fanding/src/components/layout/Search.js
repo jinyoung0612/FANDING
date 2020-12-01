@@ -42,7 +42,7 @@ class Search extends Component {
                             <SearchBar history={this.props.history}/>
                             <div>
                                 <Row style={{paddingLeft:"30px",paddingTop:"30px",paddingBottom:"30px"}}>
-                                    <CardText>"{keyword}" 검색 결과입니다.</CardText>
+                                    <CardText><b>"{keyword}"</b>검색 결과입니다.</CardText>
                                 </Row>
                                 {keyword==="" ? null :
                                     (<CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>

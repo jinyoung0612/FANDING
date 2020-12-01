@@ -1,20 +1,66 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {Component, useEffect, useRef, useState} from 'react';
 import { Link } from "react-router-dom";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
 CardSubtitle, 
-Container} from 'reactstrap';
+Container, CustomInput, Input} from 'reactstrap';
+import Avatar from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {BsPlus} from 'react-icons/bs'
 import classnames from 'classnames';
 import TabPane3 from './TabPane3';
 import MyFunding from "./MyFunding";
 import MyRecruit from "./MyRecruit";
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import MyParticipation from "./MyParticipation";
 import SideBar from "./SideBar"
+import {storage} from "../../config/fbConfig";
+import firebase from "firebase";
+import {useFirestoreConnect} from "react-redux-firebase";
+
+// useFirestoreConnect([{
+//   collection: 'users',
+//   where:[
+//     ["uid","==",firebase.auth().currentUser.uid]
+//   ]
+// }]);
+//
+// const participations=useSelector((state)=>state.firestore.ordered.participation);
+// console.log(participations);
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
+}));
+
+const SmallAvatar = withStyles((theme) => ({
+  root: {
+    width: 50,
+    height: 50,
+    border: `2px solid ${theme.palette.background.paper}`,
+    backgroundColor: '#44b700',
+    marginLeft: "90px",
+    marginTop: "20px"
+  },
+}))(Avatar);
 
 const MyAccount = (props) => {
-console.log(props)
+// console.log(props)
 
   const [activeTab, setActiveTab] = useState("1");
+  const classes = useStyles();
+  const [profile,setProfile]=useState(null);
+  const [url,setUrl]=useState("");
+  const [file,setFile]=useState("");
+  const [previewURL, setPreview]=useState(null);
 
   let myfunding=null;
 
@@ -24,7 +70,65 @@ console.log(props)
   };
   //리스트 만들기
 
+  const hiddenFileInput=React.useRef();
+
+  const handleChange=(e)=>{
+    e.preventDefault();
+    console.log(e.target.files[0]);
+    let reader = new FileReader();
+    let file= e.target.files[0];
+    reader.onloadend=()=>{
+      setFile(file);
+      setPreview(reader.result)
+    };
+    reader.readAsDataURL(file);
+  };
+  const handleClick=(e)=>{
+    // alert("클릭");
+    hiddenFileInput.current.click();
+  };
+
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    if(file!==""){
+      const uploadTask = storage.ref(`profile/${firebase.auth().currentUser.email}`).put(file);
+      uploadTask.on(
+          "state_changed",
+          snapshot => {
+            // const progress = Math.round(
+            //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            // );
+            // this.setState({progress: progress});
+          },
+          error => {
+            console.log(error);
+          },
+          () => {
+            storage
+                .ref("profile")
+                .child(firebase.auth().currentUser.email)
+                .getDownloadURL()
+                .then(url => {
+                  setUrl(url);
+                  console.log(url);
+                  setProfile(file.name);
+                  console.log(profile);
+                  // this.props.firebase_funding_save(this.state)
+                  // this.setState({redirectToReferrer: true})
+
+                })
+          }
+      )
+    }
+  };
+  const handleCancel=()=>{
+
+    window.location.reload();
+
+  };
+
   if(props.auth.isLoaded){
+
     return (
       <>
       
@@ -32,6 +136,38 @@ console.log(props)
       <Container>
         <Row>
           <SideBar />
+          <Col>
+            <div className={classes.root}>
+              <Row>
+                <Badge overlap="circle" anchorOrigin={{vertical:'bottom', horizontal: 'right'}}
+                       badgeContent={
+                         <div>
+                           <SmallAvatar children={<BsPlus/>} onClick={handleClick.bind()} style={{cursor:'pointer'}}/>
+                           <input type="file" id="profile" ref={hiddenFileInput} onChange={handleChange} style={{visibility:"hidden"}}/>
+                         </div>
+                       }>
+
+                  {
+                    file!=="" ?
+                      <Avatar style={{  width: "150px", height: "150px"}} alt="Remy Sharp" src={previewURL}/>
+                      :
+                        <Avatar style={{  width: "150px", height: "150px"}} alt="Remy Sharp"/>
+                  }
+
+                </Badge>
+                <Col>
+                  닉네임
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col>
+            <Row>
+              <Button onClick={handleSubmit}>변경사항 저장</Button>
+              <Button onClick={handleCancel}>취소</Button>
+
+            </Row>
+          </Col>
           <div>
           <h4 style={{paddingTop: '28px', paddingLeft:'25px'}}>내 정보에서는 프로필 관리, 펀딩 관리, 총대 인증을 하고 위시 리스트를 볼 수 있습니다. </h4>
           </div>
