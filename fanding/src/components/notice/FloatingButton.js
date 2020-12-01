@@ -18,19 +18,26 @@ const styles = theme => ({
 
 function FloatingButton(props) {
   const { classes } = props;
-  return (
-    <div>
-      <Tooltip title="새로운 글 작성">
-        <Button variant="fab" color="secondary" className={classes.absolute} onClick={props.handleClick}>
-          <AddIcon />
-        </Button>
-      </Tooltip>
-    </div>
-  );
+  console.log("in floationbutton qualification: ",props.qualification)
+
+    return (
+      props.qualification === true ?
+      <div>
+        <Tooltip title="새로운 글 작성">
+          <Button variant="fab" color="secondary" className={classes.absolute} onClick={props.handleClick}>
+            <AddIcon />
+          </Button>
+        </Tooltip>
+      </div>
+      :
+      <div>
+      </div>
+    );
+
 }
 
 FloatingButton.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FloatingButton);
+export default (withStyles(styles)(FloatingButton));
