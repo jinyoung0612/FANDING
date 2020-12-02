@@ -39,9 +39,11 @@ const styles = theme => ({
       width: '20%',
       float: "right"
     },
-    Image: {
-      width: '40px',
-      height: '40px',
+    large: {
+      width: theme.spacing(8),
+      height: theme.spacing(8),
+      color: '#ffffff',
+      backgroundColor: '#6496ff'
     },
 });
 
@@ -96,18 +98,15 @@ class NoticeList extends Component {
     animatedComponents = makeAnimated();
 
     render(){
-        const location = window.location.href.split('/');
-        const funding_id = location[5];
-        console.log("funding_id: ",funding_id);
-
-        const {classes, notices, auth, funding} = this.props;
+        const {classes, notices, auth, funding, progressDB} = this.props;
         console.log("in noticelist notices: ",notices);
         
         console.log("in noticelist funding: ",funding);
+        console.log("in noticelist progress: ",progressDB);
         
         const {DialogOpen} = this.state;
 
-        if(!isLoaded(auth) || !isLoaded(funding)) {
+        if(!isLoaded(auth) || !isLoaded(funding) || !isLoaded(progressDB)) {
           return (
               <div>
                   Loading...
@@ -115,9 +114,11 @@ class NoticeList extends Component {
           )
         }
         else{
+          console.log("in noticelist funding[0].id: ",funding[0].id);
           console.log("in noticelist funding[0].selectedCom: ",funding[0].selectedCom);
           console.log("in noticelist funding[0].user_email: ",funding[0].user_email);
           var qualification = '';
+          const funding_id = funding[0].id;
           const chongdae_email = funding[0].user_email;
           const company = funding[0].selectedCom;
 
@@ -131,6 +132,15 @@ class NoticeList extends Component {
               qualification = 'company';
             }
           }
+
+          var step = '';
+          if(progressDB.length > 0){
+            console.log("in noticelist progress[0].state: ",progressDB[0].state);
+            step = progressDB[0].state;
+          }else{
+            step = '펀딩진행';
+          }
+
           return(
               <div>
                 <Typography variant="h6" className={classes.title}>{funding[0].fundingTitle}</Typography>
@@ -144,7 +154,6 @@ class NoticeList extends Component {
               ?
               <Select
                     className={classes.button}
-                    //styles={selectStyle} 
                     id="progressSelect" components={this.animatedComponents} 
                     options={this.options} 
                     menuPortalTarget={document.body} 
@@ -154,32 +163,71 @@ class NoticeList extends Component {
               <div></div>
               }
               <br/>
+              {step === '입금마감' 
+              ?
               <ListItem>
-                <Col align="center">
-                  <Avatar ><SupervisorAccount/></Avatar>
-                <ListItemText secondary="펀딩 진행" />
-                </Col>
+                <Col align="center"><Avatar ><SupervisorAccount/></Avatar><ListItemText secondary="펀딩 진행" /></Col>
                 <p>ㆍㆍㆍ</p>
-                <Col align="center">
-                  <Avatar ><MoneyOff/></Avatar>
-                <ListItemText secondary="입금 마감" />
-                </Col>
+                <Col align="center"><Avatar className={classes.large}><MoneyOff/></Avatar><ListItemText secondary="입금 마감" /></Col>
                 <p>ㆍㆍㆍ</p>
-                <Col align="center">
-                  <Avatar ><Build/></Avatar>
-                <ListItemText secondary="상품 제작" />
-                </Col>
+                <Col align="center"><Avatar ><Build/></Avatar><ListItemText secondary="상품 제작" /></Col>
                 <p>ㆍㆍㆍ</p>
-                <Col align="center">
-                  <Avatar ><LocalShipping/></Avatar>
-                <ListItemText secondary="상품 배송" />
-                </Col>
+                <Col align="center"><Avatar ><LocalShipping/></Avatar><ListItemText secondary="상품 배송" /></Col>
                 <p>ㆍㆍㆍ</p>
-                <Col align="center">
-                  <Avatar ><DoneOutline/></Avatar>
-                <ListItemText secondary="펀딩 종료" />
-                </Col>
+                <Col align="center"><Avatar ><DoneOutline/></Avatar><ListItemText secondary="펀딩 종료" /></Col>
               </ListItem>
+              :step === '상품제작'
+              ?
+              <ListItem>
+                <Col align="center"><Avatar ><SupervisorAccount/></Avatar><ListItemText secondary="펀딩 진행" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><MoneyOff/></Avatar><ListItemText secondary="입금 마감" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar className={classes.large}><Build/></Avatar><ListItemText secondary="상품 제작" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><LocalShipping/></Avatar><ListItemText secondary="상품 배송" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><DoneOutline/></Avatar><ListItemText secondary="펀딩 종료" /></Col>
+              </ListItem>
+              :step === '상품배송'
+              ?
+              <ListItem>
+                <Col align="center"><Avatar ><SupervisorAccount/></Avatar><ListItemText secondary="펀딩 진행" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><MoneyOff/></Avatar><ListItemText secondary="입금 마감" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><Build/></Avatar><ListItemText secondary="상품 제작" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar className={classes.large}><LocalShipping/></Avatar><ListItemText secondary="상품 배송" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><DoneOutline/></Avatar><ListItemText secondary="펀딩 종료" /></Col>
+              </ListItem>
+              :step === '펀딩종료'
+              ?
+              <ListItem>
+                <Col align="center"><Avatar ><SupervisorAccount/></Avatar><ListItemText secondary="펀딩 진행" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><MoneyOff/></Avatar><ListItemText secondary="입금 마감" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><Build/></Avatar><ListItemText secondary="상품 제작" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><LocalShipping/></Avatar><ListItemText secondary="상품 배송" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar className={classes.large}><DoneOutline/></Avatar><ListItemText secondary="펀딩 종료" /></Col>
+              </ListItem>
+              :
+              <ListItem>
+                <Col align="center"><Avatar className={classes.large}><SupervisorAccount/></Avatar><ListItemText secondary="펀딩 진행" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><MoneyOff/></Avatar><ListItemText secondary="입금 마감" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><Build/></Avatar><ListItemText secondary="상품 제작" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><LocalShipping/></Avatar><ListItemText secondary="상품 배송" /></Col>
+                <p>ㆍㆍㆍ</p>
+                <Col align="center"><Avatar ><DoneOutline/></Avatar><ListItemText secondary="펀딩 종료" /></Col>
+              </ListItem>
+        }
               <br/>
               
               <Divider />
@@ -239,7 +287,8 @@ let mapStateToProps = (state) => {
         notices: state.notice.notices,
         selectedNotice: state.notice.selectedNotice,
         progress: state.notice.progress,
-        funding: state.firestore.ordered.fundings
+        funding: state.firestore.ordered.fundings,
+        progressDB : state.firestore.ordered.progress
     };
 }
 
@@ -253,6 +302,10 @@ export default compose(
     return[
       {
         collection: 'fundings',
+        doc: funding_id,
+      },
+      {
+        collection: 'progress',
         doc: funding_id,
       }
     ]
