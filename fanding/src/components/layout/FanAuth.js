@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
-import {Container, Form, FormGroup, Label, CustomInput} from 'reactstrap';
+import {Container, Form, FormGroup, Label, CustomInput, Media} from 'reactstrap';
+import ticketImg from './ticket.png';
+const imgStyle = {
+    maxHeight: 400,
+    maxWidth: 200
+  }
 class FanAuth extends Component{
     render()
     {
@@ -36,6 +41,7 @@ class FanAuth extends Component{
                 <FormGroup>
                 <Label><strong>3. 공연 관람 내역 인증하기</strong></Label>
                 {/* {예시이미지, 이미지 넣는 창} */}
+                <Media object src={ticketImg} style={imgStyle}/>
                 <CustomInput type="file" id="concertImage" name="customFile"
                                      label="공연 관람 내역을 업로드 하세요"
                                      onChange={this.handleImageChange}
