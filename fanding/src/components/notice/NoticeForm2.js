@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-
+import PropTypes from 'prop-types';
+import dateFormat from 'dateformat';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 //toast-ui
 import { Editor, Viewer } from '@toast-ui/react-editor';
@@ -17,9 +18,27 @@ import chart from '@toast-ui/editor-plugin-chart';
 import { firebase_notice_save, firebase_notice_delete, show_snackbar } from '../../store/actions/noticeAction';
 //material-ui
 import {Dialog,DialogTitle,DialogContent,makeStyles,
-    Toolbar, AppBar, Typography, IconButton, Divider} from '@material-ui/core';
+    Toolbar, AppBar, Typography, IconButton, Divider, withStyles, DialogActions} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
+const styles = theme => ({
+    appBar: {
+        position: 'relative',
+    },
+    title: {
+        marginLeft: theme.spacing(1),
+        flex: 2,
+    },
+    button: {
+        marginTop: theme.spacing(2),
+    },
+    date: {
+        float: "right",
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    }
+})
 
 class NoticeForm extends Component{
 
@@ -80,19 +99,18 @@ class NoticeForm extends Component{
     viewerRef = React.createRef();
 
     render(){
-        const {selectedNotice, DialogOpen, auth, FundingID, qualification} = this.props;
+        const {selectedNotice, DialogOpen, auth, classes} = this.props;
         
         return(
-            <div>
-                <Dialog fullScreen open={DialogOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth>
-                
+            <div> 
                 {selectedNotice.uid===auth.uid || !selectedNotice.uid
                 ?
                 <div>
-                <AppBar  >
+                <Dialog fullScreen open={DialogOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth>
+                <AppBar className={classes.appBar}color="white">
                     <Toolbar>
+                        <Typography variant="h6" className={classes.title}>공지사항 작성 및 수정</Typography>
                         <IconButton edge="start" color="inherit" onClick={this.handleDialogClose}><CloseIcon/></IconButton>
-                        <Typography variant="h6" >공지사항 작성 및 수정</Typography>
                     </Toolbar>
                 </AppBar>
                 <br/>
@@ -123,27 +141,34 @@ class NoticeForm extends Component{
 
                     </Form>
                     
-                    <Button onClick={this.handleNoticeSave} color="warning" size="sm"  style={{marginTop:"50px"}}>저장하기</Button>
-                            {selectedNotice.ntcno &&
-                                <Button onClick={this.handleNoticeDelete} color="warning" size="sm" style={{marginTop:"50px"}}> 삭제 </Button>
-                            }
+                    <DialogActions>
                     <Button onClick={this.handleDialogClose} 
-                            color="warning" size="sm"  style={{marginTop:"50px"}}>나가기</Button>
+                            color="warning" size="sm"  className={classes.button}>작성 취소</Button>
+                    {selectedNotice.ntcno &&
+                                <Button className={classes.button} onClick={this.handleNoticeDelete} color="warning" size="sm" > 삭제 </Button>
+                    }
+                    <Button className={classes.button} color="warning" size="sm"
+                    onClick={this.handleNoticeSave} >저장하기</Button>
+                    </DialogActions>
                 </DialogContent>
+                </Dialog>
                 </div>
                 :
                 <div>
-                <AppBar color="secondary">
+                <Dialog open={DialogOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth>
+                <AppBar className={classes.appBar} color="warning">
                     <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={this.handleDialogClose}><CloseIcon/></IconButton>
-                        <Typography variant="h6" >공지사항</Typography>
+                        <Typography variant="h6" className={classes.title}>공지사항</Typography>
+                        <IconButton  edge="start" color="inherit" onClick={this.handleDialogClose}><CloseIcon/></IconButton>
                     </Toolbar>
                 </AppBar>
                 <br/>
                 <DialogContent>
                     <Form className="mt-5">
                         <FormGroup>
-                            <Typography variant="h5">{selectedNotice.ntctitle}</Typography>
+                            <Typography variant="h5" label="noticeTitle">{selectedNotice.ntctitle}</Typography>
+                            <br/>
+                            <Typography variant="title" label="writedate" className={classes.date}>{dateFormat(selectedNotice.ntcdate, "yyyy.mm.dd mm:ss")}</Typography>
                             <br/>
                             <Divider/>
                             <Viewer
@@ -154,21 +179,25 @@ class NoticeForm extends Component{
                             ref={this.viewerRef}
                             />
 
+                            <DialogActions>
                             <Button onClick={this.handleDialogClose} 
-                            color="warning" size="sm" block style={{marginTop:"50px"}}>나가기</Button>
-                            
+                            color="warning" size="sm" style={{marginTop:"50px"}}>나가기</Button>
+                            </DialogActions>
                         </FormGroup>
                     </Form>
                 </DialogContent>    
+                </Dialog>
                 </div>
                 }
-
-                </Dialog>
             </div>
 
 
         );
     }     
+}
+
+NoticeForm.propTypes = {
+    classes: PropTypes.object.isRequired,
 }
 
 let mapStateToProps = (state) => {
@@ -180,4 +209,4 @@ let mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps)(NoticeForm);
+export default connect(mapStateToProps)(withStyles(styles)(NoticeForm));

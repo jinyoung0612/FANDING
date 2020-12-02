@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 import { withStyles,List, ListItem, ListItemText, 
-  Avatar, ListItemSecondaryAction, Typography, Divider } from '@material-ui/core';
+  Avatar, ListItemSecondaryAction, Typography, Divider, Button } from '@material-ui/core';
 import PhotoIcon from '@material-ui/icons/PermIdentity';
 import {SupervisorAccount, MoneyOff ,LocalShipping, Build, DoneOutline} from '@material-ui/icons';
 
@@ -31,7 +31,7 @@ const styles = theme => ({
       maxWidth: '20%'
     },
     button: {
-      right: '10px'
+      marginRight: '10px',
     },
     Image: {
       width: '40px',
@@ -81,7 +81,6 @@ class NoticeList extends Component {
         else{
           console.log("in noticelist funding[0].selectedCom: ",funding[0].selectedCom);
           console.log("in noticelist funding[0].user_email: ",funding[0].user_email);
-          //let qualification = false;
           var qualification = '';
           const chongdae_email = funding[0].user_email;
           const company = funding[0].selectedCom;
@@ -103,6 +102,7 @@ class NoticeList extends Component {
                 <br/> 
                 <h3><strong>진행 상황</strong></h3>
               </Typography>
+              <Button className={classes.button}>업데이트</Button>
               <br/>
               <ListItem>
                 <Col align="center">
@@ -150,9 +150,7 @@ class NoticeList extends Component {
                   row.funding_id === funding_id?
                     <ListItem button divider key={index} onClick={()=>this.handleSelectNotice(row.ntcno)}>
                       <Avatar>
-                      { 
                         <PhotoIcon/>
-                      }
                       </Avatar>
                       <ListItemText primary={row.ntctitle} secondary={row.ntcwriter}/>
                       
