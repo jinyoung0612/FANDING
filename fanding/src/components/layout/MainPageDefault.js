@@ -26,7 +26,7 @@ const DefaultLayout= () => {
         
         <div class="align-center container">
             <div class="row justify-content-center">
-                <div class="col-12 col-lg-8">
+                <div class="col-12 col-sm-8">
                     <h1 class="mbr-section-title mbr-fonts-style mb-3 display-1"><strong>K-POP 팬을 위한 펀딩 공간</strong></h1>
                     
                     <p class="mbr-text mbr-fonts-style display-7">
@@ -124,10 +124,11 @@ class MainPageDefault extends Component {
                     <div>
                         <DefaultLayout />
                         <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-                            <Container>
-                                <SearchBar history={this.props.history}/>
 
-                                <MainPageUser></MainPageUser>
+                        <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
+                          <SearchBar history={this.props.history}/>
+                        
+                        <MainPageUser></MainPageUser>
                         </Container>
                            
                       
@@ -145,11 +146,11 @@ class MainPageDefault extends Component {
                         <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
 
 
-                            <Container>
+                        <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
                                 <SearchBar history={this.props.history}/>
                                 <MainPageCom></MainPageCom>
 
-                            </Container>
+                        </Container>
 
 
                         </section>
@@ -168,7 +169,7 @@ class MainPageDefault extends Component {
                         <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
 
 
-                            <Container>
+                        <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
                                 <SearchBar history={this.props.history}/>
                                 <MainPageCom></MainPageCom>
 

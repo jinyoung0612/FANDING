@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Deleting from "react-loading";
 import { Container } from "reactstrap";
 import firebase from "firebase/app";
+import { BsBellFill } from "react-icons/bs";
 
 import Room from "../totalchat/chatroom/chatroom";
 import NewChatForm from "../totalchat/newchatform/newchatform";
 import More from "./more/more";
-import userLogo from "./img/userImg.png";
+import userLogo from "./img/userImg3.png";
 import myuserLogo from "./img/myuserImg.png";
 import "./chatlist.css";
 
@@ -27,7 +28,6 @@ export default class chatlist extends Component {
     docid: "",
     delMsgIndex: "",
     deleting: false,
-    blank: "닉네임없음",
   };
 
   componentDidMount = async () => {
@@ -58,11 +58,17 @@ export default class chatlist extends Component {
       });
   };
 
-  selectChat = async (index) => {
+  selectChat = async (chat, index) => {
     const { longPress } = this.state;
-
+    // const { chat } = this.state;
     if (!longPress) {
       await this.setState({ index: index, showChatScreen: true });
+    }
+    // console.log("chatsdocid", chat.docid);
+    if (auth.currentUser.email == chat.receiver) {
+      firestore.collection("chats").doc(chat.docid).update({
+        readmsg: true,
+      });
     }
   };
   // onlineStatusUpdate = async (email) => {
@@ -79,11 +85,11 @@ export default class chatlist extends Component {
   //   });
   // };
 
-  backButtonClick = async () => {
-    this.setState({ showChatScreen: false, showNewChatForm: false });
+  // backButtonClick = async () => {
+  //   this.setState({ showChatScreen: false, showNewChatForm: false });
 
-    await this.props.searchChat("");
-  };
+  //   await this.props.searchChat("");
+  // };
 
   searchChat = async () => {
     const { searchValue } = this.state;
@@ -157,7 +163,7 @@ export default class chatlist extends Component {
                                 backgroundColor: "#6b34c9",
                                 borderRadius: "20px",
                               }}
-                              onClick={() => this.selectChat(index)}
+                              onClick={() => this.selectChat(chat, index)}
                               onTouchStart={() => this.touchStart(chat, index)}
                               onTouchEnd={() => this.touchEnd()}
                               onMouseDown={() => this.touchStart(chat, index)}
@@ -176,7 +182,7 @@ export default class chatlist extends Component {
                                   //         ? chat.users[0]
                                   //         : chat.users[1])
                                   //     ) {
-                                  //       return list.URL; //list.URL 원래
+                                  //       return list.URL;
                                   //     } else {
                                   //       return "";
                                   //     }
@@ -192,17 +198,20 @@ export default class chatlist extends Component {
                                     {this.props.allUserData.map((list) => {
                                       if (
                                         list.user_email ===
-                                        (chat.users[0] !== this.props.userEmail
-                                          ? chat.users[0]
-                                          : chat.users[1])
+                                          (chat.users[0] !==
+                                          this.props.userEmail
+                                            ? chat.users[0]
+                                            : chat.users[1]) ||
+                                        list.email ===
+                                          (chat.users[0] !==
+                                          this.props.userEmail
+                                            ? chat.users[0]
+                                            : chat.users[1])
                                       ) {
-                                        return (
-                                          list.nickname || this.state.blank
-                                        );
+                                        return list.nickname || list.name;
                                       }
                                     })}
                                   </h4>
-
                                   <h6>
                                     {chat.messages[chat.messages.length - 1]
                                       .type === "text" ? (
@@ -224,6 +233,18 @@ export default class chatlist extends Component {
                                             ].time
                                           : ""}
                                       </h6>
+                                    </span>
+                                    <span>
+                                      {chat.receiver ===
+                                      auth.currentUser.email ? (
+                                        chat.readmsg === false ? (
+                                          <BsBellFill
+                                            size={28}
+                                            style={{ fill: "red" }}
+                                            className="mr-3"
+                                          />
+                                        ) : null
+                                      ) : null}
                                     </span>
                                   </h6>
                                 </div>

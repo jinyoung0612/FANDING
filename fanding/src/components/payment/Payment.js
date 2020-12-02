@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUp } from "../../store/actions/authActions";
+import SideBarCom from '../layout/company/SideBarCom';
 import {
   Button,
   Form,
@@ -10,6 +11,7 @@ import {
   Input,
   FormText,
   Container,
+  Row, Col
 } from "reactstrap";
 import { render } from "react-dom";
 import firebase from "firebase/app";
@@ -71,14 +73,18 @@ class Payment extends Component {
   render() {
     return (
       <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-             <div class="mbr-section-head pb-10">
+             
+            <Container>
+              <Row>
+                <Col sm={3}>
+                  <SideBarCom />
+                </Col>
+                <Col sm={9}>
+              <div>
+                <div class="mbr-section-head pb-10">
                         <h3 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>수수료 결제</strong></h3>
                         
-            </div>
-            <Container
-            style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em", 
-            marginTop:"40px"}}>
-      <div>
+                </div>
         <Label>제품이름</Label>
         <Input
           type="text"
@@ -134,6 +140,9 @@ class Payment extends Component {
         </div>
         
       </div>
+      </Col>
+              </Row>
+      
       </Container>
         </section>
     );

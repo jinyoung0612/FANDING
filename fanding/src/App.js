@@ -21,6 +21,7 @@ import RecruitFormDetail from "./components/layout/company/RecruitFormDetail";
 import CompanyRecruit from "./components/layout/company/CompanyRecruit";
 import QuestionChat from "./components/chatting/questionchat/QuestionChat";
 import TotalChat from "./components/chatting/totalchat/TotalChat";
+import CompanyChat from "./components/chatting/companychat/CompanyChat";
 
 // import test from './components/layout/test';
 import FundingDetails from "./components/layout/FundingDetails";
@@ -30,10 +31,13 @@ import ReactDOM from "react-dom";
 import MainPageDefault from "./components/layout/MainPageDefault";
 // import MainPage from "./components/layout/MainPage";
 import TransactionList from "./components/layout/TransactionList";
-import MyFunding from './components/layout/MyFunding';
+import MyFunding from "./components/layout/MyFunding";
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
+
 import Search from "./components/layout/Search";
+import MyCompany from './components/layout/company/MyCompany';
+import FanAuth from './components/layout/FanAuth';
 class App extends Component {
   render() {
     return (
@@ -73,11 +77,14 @@ class App extends Component {
             <Route path="/find_company/:id" component={RecruitFormDetail} />
             <Route path="/funding_detail/:id" component={FundingDetails} />
             <Route path="/funding_state/:id" component={FundingState} />
-            <Route path='/myFunding_created' component={MyFunding} />
-            <Route path='/myFunding_participated' component={MyParticipation} />
+            <Route path="/myFunding_created" component={MyFunding} />
+            <Route path="/myFunding_participated" component={MyParticipation} />
             <Route path="/questionchat" component={QuestionChat} />
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />
+            <Route path="/companychat" component={CompanyChat} />
+            <Route path="/myCompany" component={MyCompany} />
+            <Route exact path="/fan_auth" component={FanAuth} />
           </Switch>
         </div>
       </BrowserRouter>

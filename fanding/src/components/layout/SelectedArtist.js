@@ -69,7 +69,8 @@ class SelectedArtist extends Component {
                     {/*}*/}
                     {/*</CardDeck>*/}
                     
-                    <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
+                    <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', 
+                    margin:'10px', flexFlow:'row wrap', alignItems:'center'}}>
 
                         {
                             
