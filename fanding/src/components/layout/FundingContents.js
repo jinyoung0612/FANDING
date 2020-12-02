@@ -23,7 +23,8 @@ const FundingContents = ({funding})=>{
         <div>
             <Link className="inactive" activeClassName="active" to={'funding_detail/'+funding.id} funding={funding}>
             <Card className="col-sm-12 col-12 align-items-sm-stretch card-bigger border-custom"
-            body style={{width:'18em',flex: '1', height:'20em', margin: '8px'}} >
+            body style={{width:'18em',flex: '1', height:'20em', margin: '8px', paddingTop:'10px',
+            paddingBottom:'10px', paddingLeft:'10px', paddingRight:'10px'}} >
                 <CardImg src={funding.thumbnailImage}top width="100" alt="Card image cap" style={{height:"194px"}}/>
                 <CardBody>
                     <CardTitle>[{funding.artistSelect}] {funding.fundingTitle}</CardTitle>
