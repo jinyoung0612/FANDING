@@ -3,11 +3,133 @@ import {Container, Form, FormGroup, Label, CustomInput, Media, Button} from 'rea
 import ticketImg from './ticket.png';
 import streamingImg from './streaming.png';
 import fanclub from './fanclub.png';
+import {storage} from "../../config/fbConfig";
+import firebase from "firebase";
+
 const imgStyle = {
     maxHeight: 400,
     maxWidth: 200
   }
+
 class FanAuth extends Component{
+
+    constructor(props) {
+        super(props);
+        this.state={
+            streamingImg:"",
+            fanclubImage:"",
+            concertImage:"",
+            albumImage:"",
+            images:[],
+            urls:[]
+        };
+    }
+
+
+    handleImageChange = e => {
+
+        // if (e.target.files[0]) {
+        //     this.setState({[e.target.id]: e.target.files[0]});
+        // }
+
+        // const {images} = this.state;
+        this.setState({
+            images:this.state.images.concat({id:e.target.id,image:e.target.files[0]})
+        });
+
+        console.log(this.state)
+
+    }
+
+    handleSubmit=(e)=>{
+        console.log(this.state.images.length);
+        if(this.state.images.length!==0){
+            for(var i=0; i<this.state.images.length; i++){
+                const image_id=this.state.images[i].id;
+                const image_name=this.state.images[i].image.name;
+                const firestore=firebase.firestore();
+                const uploadTask = storage.ref(`fan_auth/${this.state.images[i].image.name}`).put(this.state.images[i].image);
+                    uploadTask.on(
+                        "state_changed",
+                        snapshot => {
+                //             // const progress = Math.round(
+                //             //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                //             // );
+                //             // this.setState({progress: progress});
+                        },
+                        error => {
+                            console.log(error);
+                        },
+                        () => {
+                            storage
+                                .ref("fan_auth")
+                                .child(image_name)
+                                .getDownloadURL()
+                                .then(url => {
+                                    this.setState({
+                                        urls:this.state.urls.concat({id:image_id,url:url})
+                                    });
+                                    // this.setState({image:this.state.image.name})
+                                    console.log(this.state.urls);
+                                    // this.props.firebase_funding_save(this.state)
+                                    // this.setState({redirectToReferrer: true})
+
+                                })
+                                .then(()=>{
+                                    firestore
+                                        .collection("users")
+                                        .doc(firebase.auth().currentUser.email)
+                                        .update({
+                                            fan_auth:this.state.urls
+                                        }).then(() => {
+                                        console.log("success");
+                                        alert("팬 인증이 완료되었습니다.")
+                                        window.location.reload()
+                                    }).catch((err) => {
+                                        console.log("error",err);
+                                    })
+                                    }
+                                )
+                        }
+                    )
+
+            }
+
+            // const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
+        //     uploadTask.on(
+        //         "state_changed",
+        //         snapshot => {
+        //             // const progress = Math.round(
+        //             //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        //             // );
+        //             // this.setState({progress: progress});
+        //         },
+        //         error => {
+        //             console.log(error);
+        //         },
+        //         () => {
+        //             storage
+        //                 .ref("images")
+        //                 .child(this.state.image.name)
+        //                 .getDownloadURL()
+        //                 .then(url => {
+        //                     this.setState({});
+        //                     // this.setState({image:this.state.image.name})
+        //                     // console.log(this.state);
+        //                     // this.props.firebase_funding_save(this.state)
+        //                     // this.setState({redirectToReferrer: true})
+        //
+        //                 })
+        //         }
+        //     )
+        // }
+        // else{
+        //     console.log(this.state);
+        //
+        }
+        console.log(this.state.urls)
+
+    }
     render()
     {
         return(
@@ -58,7 +180,7 @@ class FanAuth extends Component{
                                      onChange={this.handleImageChange}
                         />
                 </FormGroup>
-                <Button color="warning" size="md" block >제출하기</Button>
+                <Button color="warning" size="md" onClick={this.handleSubmit} block >제출하기</Button>
                 {/* 버튼 handler 연결해야함 */}
             </Form>
 
