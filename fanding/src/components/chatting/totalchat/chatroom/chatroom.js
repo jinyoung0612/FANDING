@@ -10,7 +10,7 @@ import Userlogo from "../img/userImg.png";
 import userlogo3 from "../img/userImg3.png";
 import "./chatroom.css";
 import userLogo2 from "../img/userImg2.png";
-import {MdSend} from "react-icons/md";
+import {MdSend, MdAccountCircle} from "react-icons/md";
 import {BsImage} from "react-icons/bs";
 // import userlogo3 from "../img/myuserImg.png";
 
@@ -76,7 +76,7 @@ export default class chatroom extends Component {
     await this.scrollingToEnd();
     this.setState({ oldChats: chat });
 
-    if (auth.currentUser.email == receiver) {
+    if (auth.currentUser.email === receiver) {
       firestore.collection("chats").doc(docid).update({ readmsg: true });
     }
   };
@@ -507,12 +507,15 @@ export default class chatroom extends Component {
 
     return (
       // <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-          <div className="container-fluid">
+          <div className="container-fluid" style={{
+            paddingLeft: '0px',
+            paddingRight: '0px'
+          }}>
             {this.state.showImageBeforeUpload === false ? (
               <div>
                 {this.state.showProfile === false ? (
                   <div className="card">
-                    <div className="card-header msg_head">
+                    <div className="card-header msg_head" style={{height:'65px'}}>
                       <div
                         className="d-flex bd-highlight"
                         style={{ alignItems: "center" }}
@@ -526,12 +529,15 @@ export default class chatroom extends Component {
                       </button>
                     </div> */}
                         <div className="img_cont">
-                          <img
+                          {/* <img
                             src={oponentUserData.URL || userlogo3}
                             className="rounded-circle user_img"
                             style={{ cursor: "pointer" }}
                             onClick={() => this.setState({ showProfile: true })}
-                          />
+                          /> */}
+                          <MdAccountCircle size={40} className="user_img"
+                            style={{ cursor: "pointer", fill:'#9e66ff' }}
+                            onClick={() => this.setState({ showProfile: true })}/>
                         </div>
                         <div className="user_info">
                           <span>
