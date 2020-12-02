@@ -40,7 +40,8 @@ const FundingSummary = ({funding}) => {
         // </div>
 
         <Card className="col-sm-12 col-12 align-items-sm-stretch card-bigger border-custom"
-            body style={{width:'18em',flex: '1', height:'20em', margin: '8px'}} >
+            body style={{width:'18em',flex: '1', height:'20em', margin: '8px',
+            paddingTop:'10px', paddingBottom:'10px', paddingLeft:'10px', paddingRight:'10px'}} >
             
             <CardImg top width="100%" src={funding.url} style={{height:"194px"}} alt="Card image cap" />
             <CardBody>
