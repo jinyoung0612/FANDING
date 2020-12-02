@@ -1,7 +1,5 @@
 import {createAction, handleActions } from 'redux-actions';
-import firebase, { firestore } from "firebase/app";
-import dateFormat from 'dateformat';
-import { data } from 'jquery';
+import firebase from "firebase/app";
 
 //action type
 const NOTICE_SAVE = 'SAVE';
@@ -10,7 +8,6 @@ const NOTICE_READ = 'READ';
 const NOTICE_LIST = 'LIST';
 const NOTICE_ADDS = 'ADDS';
 const SNACKBAR = 'SNACKBAR';
-const PROGRESS_ADDS = 'P_ADDS';
 const PROGRESS_SAVE = 'P_SAVE';
 
 export const notice_save = createAction(NOTICE_SAVE);
@@ -19,7 +16,6 @@ export const notice_read = createAction(NOTICE_READ);
 export const notice_list = createAction(NOTICE_LIST);
 export const notice_adds = createAction(NOTICE_ADDS);
 export const show_snackbar = createAction(SNACKBAR);
-export const progress_adds = createAction(PROGRESS_ADDS);
 export const progress_save = createAction(PROGRESS_SAVE);
 
 export const firebase_notice_list = () => {
@@ -119,8 +115,7 @@ const initialState = {
     selectedNotice: {},
     snackbarOpen: false,
     message: '', 
-    progress : [],
-    selectedProgress: {}
+    progress : []
 };
 
 export default handleActions({
@@ -163,10 +158,6 @@ export default handleActions({
             ...state,
             selectedNotice: selectedNotice
         };
-    },
-    [PROGRESS_ADDS]: (state, {payload: data}) => {
-        let progress = state.progress;
-        return {...state, progress: data.concat(progress)};
     },
     [PROGRESS_SAVE]: (state, {payload: data}) => {
         let progress = state.progress;
