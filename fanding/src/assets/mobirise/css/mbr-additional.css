@@ -44,11 +44,13 @@ body {
 }
 .display-7 {
   font-family: 'NanumSquareRound';
-  font-size: 1.2rem;
+  font-size: 1.7rem;
   line-height: 1.5;
+  font-weight: 'bold';
 }
 .display-7 > .mbr-iconfont {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
+  font-weight: 'bold';
 }
 /* ---- Fluid typography for mobile devices ---- */
 /* 1.4 - font scale ratio ( bootstrap == 1.42857 ) */
@@ -686,7 +688,8 @@ section.lazy-placeholder:after {
   opacity: 0.5;
 }
 body {
-  overflow-x: hidden;
+  overflow-x: auto;
+  overflow-y: scroll;
 }
 a {
   transition: color 0.6s;
@@ -1586,4 +1589,38 @@ a {
   color: #fff;
   border-color: #7B1FA2;
   background-color: #7B1FA2;
+}
+@media (max-width: 320px) {
+  .btn-responsive {
+    padding:2px 4px;
+    font-size:0.9em;
+    line-height: 1;
+  }
+}
+@media (max-width: 576px) {
+  .btn-responsive {
+    padding:2px 4px;
+    font-size:1.2em;
+    line-height: 2;
+  }
+}
+@media (max-width: 320px) {
+  .img-responsive {
+    width:300px;
+    height:auto;
+  }
+}
+@media (min-width: 320px)
+{
+  .card-bigger{
+    width: '25em' !important;
+    height:'auto' !important;
+  }
+}
+
+.border-custom{
+  border: solid 0.2px;
+  border-color: #4c4c49;
+  border-radius: 2%;
+  
 }

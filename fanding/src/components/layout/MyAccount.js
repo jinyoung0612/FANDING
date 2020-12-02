@@ -37,7 +37,7 @@ console.log(props)
           </div>
         </Row>
           
-          <Nav tabs>
+          {/* <Nav tabs>
             <NavItem>
               <NavLink
                   className={classnames({ active: activeTab === '1' })}
@@ -115,7 +115,7 @@ console.log(props)
             <TabPane tabId="5">
               <MyRecruit></MyRecruit>
             </TabPane>
-          </TabContent>
+          </TabContent> */}
         </Container>
         </section>
         </>
