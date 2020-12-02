@@ -35,9 +35,13 @@ import MyFunding from "./components/layout/MyFunding";
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
 
+import NoticeList from "./components/notice/NoticeList";
+import NoticeMain from "./components/notice/NoticeMain";
+
 import Search from "./components/layout/Search";
 import MyCompany from './components/layout/company/MyCompany';
 import FanAuth from './components/layout/FanAuth';
+
 class App extends Component {
   render() {
     return (
@@ -82,6 +86,10 @@ class App extends Component {
             <Route path="/questionchat" component={QuestionChat} />
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />
+
+            <Route path="/notice/list/:id" component={NoticeList}/>
+            <Route path="/notice/main" component={NoticeMain}/>
+
             <Route path="/companychat" component={CompanyChat} />
             <Route path="/myCompany" component={MyCompany} />
             <Route exact path="/fan_auth" component={FanAuth} />

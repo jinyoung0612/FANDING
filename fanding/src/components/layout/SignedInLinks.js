@@ -166,8 +166,6 @@ const SignedInLinks = (props) => {
   </div>
     )
   }
-  
-  
 };
 
 const mapDispatchToProps = (dispatch) => {
