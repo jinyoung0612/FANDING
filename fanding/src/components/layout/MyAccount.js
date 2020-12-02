@@ -1,8 +1,10 @@
 import React, {Component, useEffect, useRef, useState} from 'react';
 import { Link } from "react-router-dom";
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
-CardSubtitle, 
-Container, CustomInput, Input} from 'reactstrap';
+import {
+  TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, CardImg, CardBody,
+  CardSubtitle,
+  Container, CustomInput, Input, Label, FormGroup, Form, ModalFooter, Modal
+} from 'reactstrap';
 import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -17,6 +19,9 @@ import SideBar from "./SideBar"
 import {storage} from "../../config/fbConfig";
 import firebase from "firebase";
 import {useFirestoreConnect} from "react-redux-firebase";
+import Select from "react-select";
+import makeAnimated from "react-select/animated/dist/react-select.esm";
+import DaumPostCode from "react-daum-postcode";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,15 +43,24 @@ const SmallAvatar = withStyles((theme) => ({
     height: 50,
     border: `2px solid ${theme.palette.background.paper}`,
     backgroundColor: '#44b700',
-    marginLeft: "90px",
+    marginLeft: "120px",
     marginTop: "20px"
   },
 }))(Avatar);
 
+const style = {
+  control: (base) => ({
+    ...base,
+    border: 1,
+    // This line disable the blue border
+    boxShadow: "none",
+  }),
+};
+
 const MyAccount = (props) => {
 
   const uid = firebase.auth().currentUser ? props.auth.uid : null;
-  console.log(uid)
+  console.log(uid);
 
   useFirestoreConnect([{
     collection: 'users',
@@ -59,12 +73,6 @@ const MyAccount = (props) => {
   // const user=useSelector(({firestore:{data}})=>data && data.users);
 
 
-  if(user!==undefined){
-
-    console.log("user",user[0]);
-
-  }
-
 console.log(props);
 
   const [activeTab, setActiveTab] = useState("1");
@@ -73,6 +81,53 @@ console.log(props);
   const [url,setUrl]=useState("");
   const [file,setFile]=useState("");
   const [previewURL, setPreview]=useState(null);
+  const [modify,setModify]=useState(false);
+  const [artistSelect,setArtist]=useState("");
+  const [fullAddress, setFullAdd] = useState(false);
+  const [zoneCode, setZoneCode] = useState(false);
+  const [nestedModal, setNestedModal] = useState(false);
+
+    const [inputs, setInputs]=useState({
+        nickname:'',
+      detailAddress:'',
+
+    });
+
+
+  const options = [
+    { value: "BTS", label: "BTS" },
+    { value: "BLACKPINK", label: "BLACKPINK" },
+    { value: "APINK", label: "APINK" },
+    { value: "TXT", label: "TXT" },
+    { value: "DAY6", label: "DAY6" },
+    { value: "TWICE", label: "TWICE" },
+    { value: "Stray Kids", label: "Stray Kids" },
+    { value: "B1A4", label: "B1A4" },
+    { value: "NU'EST", label: "NU'EST" },
+    { value: "IDLE", label: "IDLE" },
+    { value: "기타", label: "기타" },
+  ];
+
+  const animatedComponents = makeAnimated();
+
+  const handleChangeSelect = (e) => {
+    // console.log(e);
+    setArtist(e);
+  };
+
+  const toggleNested = () => {
+    setNestedModal(!nestedModal);
+  }
+  const handleChange = (e)=>{
+    const {value, name}=e.target;
+    setInputs({
+      ...inputs,
+      [name]:value
+    })
+    console.log(inputs)
+  }
+
+
 
   let myfunding=null;
 
@@ -84,7 +139,7 @@ console.log(props);
 
   const hiddenFileInput=React.useRef();
 
-  const handleChange=(e)=>{
+  const handleImageChange=(e)=>{
     e.preventDefault();
     console.log(e.target.files[0]);
     let reader = new FileReader();
@@ -99,6 +154,26 @@ console.log(props);
     // alert("클릭");
     hiddenFileInput.current.click();
   };
+
+  const handleModify = () => setModify(!modify);
+
+  const handleAddress = (data) => {
+    let AllAddress = data.address;
+    let extraAddress = '';
+    let zoneCodes = data.zonecode;
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      }
+      AllAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+    }
+    setFullAdd(AllAddress);
+    setZoneCode(zoneCodes);
+  }
 
   const handleSubmit=(e)=>{
     e.preventDefault();
@@ -138,14 +213,17 @@ console.log(props);
   };
 
   if(props.auth.isLoaded && user!==undefined){
-
+    console.log(inputs)
     return (
       <>
       
       <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
       <Container>
         <Row>
-          <SideBar />
+          <Col>
+            <SideBar/>
+          </Col>
+          {/*<SideBar />*/}
           <Col>
             <div className={classes.root}>
               <Row>
@@ -153,31 +231,154 @@ console.log(props);
                        badgeContent={
                          <div>
                            <SmallAvatar children={<BsPlus/>} onClick={handleClick.bind()} style={{cursor:'pointer'}}/>
-                           <input type="file" id="profile" ref={hiddenFileInput} onChange={handleChange} style={{visibility:"hidden"}}/>
+                           <input type="file" id="profile" ref={hiddenFileInput} onChange={handleImageChange} style={{visibility:"hidden"}}/>
                          </div>
                        }>
 
                   {
                     file!=="" ?
-                      <Avatar style={{  width: "150px", height: "150px"}} alt="Remy Sharp" src={previewURL}/>
+                      <Avatar style={{  width: "150px", height: "150px", marginLeft:"250px"}} alt="Remy Sharp" src={previewURL}/>
                       :
-                        <Avatar style={{  width: "150px", height: "150px"}} alt="Remy Sharp"/>
+                        <Avatar style={{  width: "150px", height: "150px", marginLeft:"250px"}} alt="Remy Sharp"/>
                   }
 
                 </Badge>
-                <Col>
-                  닉네임: {user[0].nickname}
-                </Col>
               </Row>
             </div>
-          </Col>
-          <Col>
             <Row>
+              <Col style={{width:"732px", paddingTop:"30px"}}>
+                <CardText><b>이메일: {user[0].user_email}</b></CardText>
+                <CardText><b>닉네임</b></CardText>
+                {
+                  modify===true ?
+                      (
+                          <div>
+                            <Input placeholder={user[0].nickname}></Input>
+                            <Button onClick={handleModify}>취소</Button>
+                            <Button onClick={handleModify}>완료</Button>
+                          </div>
+                      )
+
+                      :
+                      <CardText>
+                        {user[0].nickname}
+                        <Button
+                            className="ml-3"
+                            color="warning"
+                            size="sm"
+                            onClick={handleModify}
+
+                        >
+                          수정
+                        </Button>
+                      </CardText>
+
+                }
+
+                <CardText><b>선호 아티스트</b></CardText>
+                {/*{user[0].artistSelect.map(artist=>{*/}
+                {/*  return(*/}
+                {/*      <CardText>{artist.label}</CardText>*/}
+                {/*  )*/}
+                {/*    }*/}
+                {/*)}*/}
+
+                <Select
+                    styles={style}
+                    id="artistSelect"
+                    components={animatedComponents}
+                    options={options}
+                    menuPortalTarget={document.body}
+                    style={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                    isMulti
+                    defaultValue={user[0].artistSelect.map(artist=>artist)}
+                    onChange={handleChangeSelect}
+                />
+
+
+                <CardText><b>배송지 정보</b></CardText>
+                <Button color="primary" onClick={toggleNested}>우편번호 찾기</Button>
+                <Modal isOpen={nestedModal} toggle={toggleNested}>
+                  <Form>
+                    {
+                      nestedModal ?
+                          <DaumPostCode
+                              onComplete={handleAddress}
+                              autoClose='true'
+                              // width={width}
+                              // height={height}
+                              // style={modalStyle}
+                              nestedModal={nestedModal}
+                          />
+                          : null
+                    }
+                  </Form>
+                  <ModalFooter>
+                    <Button color="secondary" onClick={toggleNested}>닫기</Button>
+                  </ModalFooter>
+                </Modal>
+
+                <FormGroup>
+                  {
+                    zoneCode === false ? <Input type="zoneCode" name="zoneCode" id="zoneCode"
+                                                placeholder="우편번호"
+                                                onChange={handleChange}
+                        /> :
+                        <Input type="zoneCode" name="zoneCode" id="zoneCode"
+                               value={zoneCode}
+                               onChange={handleChange}
+                        />
+                  }
+                </FormGroup>
+
+                <FormGroup>
+                  {
+                    fullAddress === false ? <Input type="fullAddress" name="fullAddress" id="fullAddress"
+                                                   placeholder="주소"
+                                                   onChange={handleChange}
+                        /> :
+                        <Input type="fullAddress" name="fullAddress" id="fullAddress"
+                               value={fullAddress}
+                               onChange={handleChange}
+                        />
+                  }
+                </FormGroup>
+                <FormGroup>
+                  <Input type="detailAddress" name="detailAddress" id="detailAddress"
+                         placeholder="상세 주소를 입력하세요"
+                         onChange={handleChange}
+                  />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="Refund"><b>환불계좌정보입력</b></Label>
+                  <Input type="bank" name="bank" id="bank"
+                         placeholder="은행명"
+                         onChange={handleChange}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Input type="accountNumber" name="accountNumber" id="accountNumber"
+                         placeholder="계좌번호"
+                         onChange={handleChange}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Input type="accountName" name="accountName" id="accountName"
+                         placeholder="예금주명"
+                         onChange={handleChange}
+                  />
+                </FormGroup>
+
+              </Col>
+            </Row>
+            <Row style={{position:"absolute", left:"25%"}}>
               <Button onClick={handleSubmit}>변경사항 저장</Button>
               <Button onClick={handleCancel}>취소</Button>
 
             </Row>
           </Col>
+
           <div>
           <h4 style={{paddingTop: '28px', paddingLeft:'25px'}}>내 정보에서는 프로필 관리, 펀딩 관리, 총대 인증을 하고 위시 리스트를 볼 수 있습니다. </h4>
           </div>

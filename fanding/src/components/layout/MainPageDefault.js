@@ -80,7 +80,7 @@ export class SearchBar extends Component{
         // console.log(this.props)
         return(
             <InputGroup>
-                <Input placeholder="어떤 펀딩을 찾고 계신가요?" value={this.state.search} onChange={this.updateSearch} onKeyPress={this.handleKeyPress}/>
+                <Input placeholder="Search" value={this.state.search} onChange={this.updateSearch} onKeyPress={this.handleKeyPress}/>
                 {/*<Link2 to={`/search?keyword=${this.state.search}`}>*/}
                     <InputGroupAddon addonType="append"><Button color="secondary" style={{marginLeft: "0px",marginTop:"0px",marginBottom:"0px"}}onClick={this.handleClick}> <BsSearch/></Button></InputGroupAddon>
                 {/*</Link2>*/}
