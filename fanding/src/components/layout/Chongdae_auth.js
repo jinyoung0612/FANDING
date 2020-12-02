@@ -118,16 +118,31 @@ class Chongdae_auth extends Component{
                     {/* <CardTitle>본인 인증</CardTitle> */}
 
                     <p>펀딩생성 및 업체 모집을 하려면 본인 인증이 필요합니다.</p>
-                </div>
-                </Col>
-                <Col sm="4">
-                    <Button block style={{marginTop:'90px'}} id="verButton" color="warning" 
+                    
+                    <Button block id="verButton" color="success" 
                     href="https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=qhsl7X3L59LPtU6QfdZNv2d4jYYKKFiY8K2iw2NI&redirect_uri=http://localhost:3000/account_auth&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor" 
                     //href="https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=qhsl7X3L59LPtU6QfdZNv2d4jYYKKFiY8K2iw2NI&redirect_uri=http://118.67.131.132:3000/account_auth&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0&lang=kor" 
                     >본인 인증</Button>
+                </div>
                 </Col>
+                <Col sm="4">
 
-              </Row>  
+                <div style={{paddingTop:'90px'}}>
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>팬 인증</strong></h4>
+
+                    <p>펀딩생성 및 업체 모집을 하려면 팬 인증이 필요합니다.</p>
+                    
+                </div>
+                <Button block id="verButton" color="success" 
+                    href='/fan_auth'>팬 인증</Button>
+                </Col>
+                
+                    
+                
+              </Row>
+              
+              
+               
               </Container>
               </section>
             );

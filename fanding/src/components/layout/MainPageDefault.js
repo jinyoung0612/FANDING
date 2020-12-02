@@ -1,5 +1,5 @@
 import React, { useState, Component, PureComponent } from "react";
-import {Media} from 'reactstrap';
+import {Button, Input, InputGroup, InputGroupAddon, Media} from 'reactstrap';
 import main_image from './fanding_main_image.png';
 import {firestoreConnect, useFirestoreConnect} from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -10,8 +10,11 @@ import {connect, useSelector} from "react-redux";
 import MainPageUser from "./MainPage";
 import MainPageCom from "./MainPageCom";
 import {CardDeck, Container} from 'reactstrap';
-import {Link, animateScroll as scroll} from "react-scroll";
-//import { MainPageFundingList } from "./MainPageFundingList";
+import {Link,animateScroll as scroll} from "react-scroll";
+import {BsSearch } from "react-icons/bs";
+import {Link as Link2}from "react-router-dom";
+import Search from "./Search";
+
 
 const DefaultLayout= () => {
     return(
@@ -23,7 +26,7 @@ const DefaultLayout= () => {
         
         <div class="align-center container">
             <div class="row justify-content-center">
-                <div class="col-12 col-lg-8">
+                <div class="col-12 col-sm-8">
                     <h1 class="mbr-section-title mbr-fonts-style mb-3 display-1"><strong>K-POP 팬을 위한 펀딩 공간</strong></h1>
                     
                     <p class="mbr-text mbr-fonts-style display-7">
@@ -44,13 +47,56 @@ const DefaultLayout= () => {
     )
 
 }
+
+export class SearchBar extends Component{
+    constructor() {
+        super();
+        this.state={
+            search:""
+        }
+
+    }
+
+    updateSearch=(e)=>{
+
+        this.setState({
+            search:e.target.value.substr(0,20)
+        });
+        // console.log(this.state.search)
+
+    }
+
+    handleClick=(e)=>{
+        // console.log(this.props.history)
+        this.props.history.push(`/search?keyword=${this.state.search}`)
+    }
+    handleKeyPress=(e)=>{
+        // console.log(e);
+        if(e.key==="Enter"){
+            this.handleClick();
+        }
+    }
+    render() {
+        // console.log(this.props)
+        return(
+            <InputGroup>
+                <Input placeholder="Search" value={this.state.search} onChange={this.updateSearch} onKeyPress={this.handleKeyPress}/>
+                {/*<Link2 to={`/search?keyword=${this.state.search}`}>*/}
+                    <InputGroupAddon addonType="append"><Button color="secondary" style={{marginLeft: "0px",marginTop:"0px",marginBottom:"0px"}}onClick={this.handleClick}> <BsSearch/></Button></InputGroupAddon>
+                {/*</Link2>*/}
+            </InputGroup>
+        )
+    }
+
+
+}
 class MainPageDefault extends Component {
 
 
     render(){
         //const { fundings } = this.props;
         const { auth, user, company, fundings} = this.props;
-        console.log("auth", auth);
+        // console.log("auth", auth);
         console.log("users", user);
         console.log("companies", company);
         // console.log("fundings", fundings);
@@ -78,9 +124,9 @@ class MainPageDefault extends Component {
                     <div>
                         <DefaultLayout />
                         <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-                
 
-                        <Container>
+                        <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
+                          <SearchBar history={this.props.history}/>
                         
                         <MainPageUser></MainPageUser>
                         </Container>
@@ -100,11 +146,11 @@ class MainPageDefault extends Component {
                         <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
 
 
-                            <Container>
-
+                        <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
+                                <SearchBar history={this.props.history}/>
                                 <MainPageCom></MainPageCom>
 
-                            </Container>
+                        </Container>
 
 
                         </section>
@@ -123,8 +169,8 @@ class MainPageDefault extends Component {
                         <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
 
 
-                            <Container>
-
+                        <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
+                                <SearchBar history={this.props.history}/>
                                 <MainPageCom></MainPageCom>
 
                             </Container>

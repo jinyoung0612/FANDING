@@ -22,7 +22,15 @@ import chart from '@toast-ui/editor-plugin-chart';
 import {compose} from "redux";
 import { firestore } from 'firebase';
 import {firestoreConnect, isLoaded} from "react-redux-firebase";
+import {BsArrowDown} from 'react-icons/bs'
 
+
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Typography from '@material-ui/core/Typography';
 
 const style = {
     control: base => ({
@@ -66,20 +74,7 @@ class CreateFunding extends Component{
             bankName:'',
             accountNum:'',
             gift:false,
-            // options: [
-            //     {name:'없음', id:0},
-            //     {name:'BTS', id:1},
-            //     {name:'BLACKPINK', id:2},
-            //     {name:'APINK', id:3},
-            //     {name:'TXT', id:4},
-            //     {name:'DAY6', id:5},
-            //     {name:'TWICE', id:6},
-            //     {name:'Stray Kids', id:7},
-            //     {name:'B1A4', id:8},
-            //     {name:"NU'EST", id:9},
-            //     {name:'IDLE', id:10},
-            //     {name:'기타', id:11},
-            // ]        
+           isAgreed:false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -165,51 +160,64 @@ class CreateFunding extends Component{
         }
     }
 
+    handleAgree=(e)=>{
+        console.log("checked");
+        this.setState({
+            isAgreed:!this.state.isAgreed
+        })
+        console.log(this.state.isAgreed)
+    }
+
     handleSubmit = e => {
 
         e.preventDefault();
 
         console.log(this.state);
-
-        if(this.state.image!=null){
-            const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
-            uploadTask.on(
-                "state_changed",
-                snapshot => {
-                    // const progress = Math.round(
-                    //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    // );
-                    // this.setState({progress: progress});
-                },
-                error => {
-                    console.log(error);
-                },
-                () => {
-                    storage
-                        .ref("images")
-                        .child(this.state.image.name)
-                        .getDownloadURL()
-                        .then(url => {
-                            this.setState({url:url});
-                            console.log(this.state.url)
-                            // console.log(this.state);
-                            this.setState({image:this.state.image.name})
-                            console.log(this.state);
-                            this.props.firebase_funding_save(this.state)
-                            this.setState({redirectToReferrer: true})
-
-                        })
-                }
-            )
+        if(this.state.isAgreed===false) {
+            alert("약관에 동의해주세요");
         }
         else{
-            console.log(this.state);
+            if(this.state.image!=null){
+                const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
+                uploadTask.on(
+                    "state_changed",
+                    snapshot => {
+                        // const progress = Math.round(
+                        //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                        // );
+                        // this.setState({progress: progress});
+                    },
+                    error => {
+                        console.log(error);
+                    },
+                    () => {
+                        storage
+                            .ref("images")
+                            .child(this.state.image.name)
+                            .getDownloadURL()
+                            .then(url => {
+                                this.setState({url:url});
+                                console.log(this.state.url)
+                                // console.log(this.state);
+                                this.setState({image:this.state.image.name})
+                                console.log(this.state);
+                                this.props.firebase_funding_save(this.state)
+                                this.setState({redirectToReferrer: true})
 
-            // this.props.firebase_funding_save(this.state);
-            this.props.firebase_funding_save(this.state);
-            this.setState({redirectToReferrer: true})
+                            })
+                    }
+                )
+            }
+            else{
+                console.log(this.state);
 
+                // this.props.firebase_funding_save(this.state);
+                this.props.firebase_funding_save(this.state);
+                this.setState({redirectToReferrer: true})
+
+            }
         }
+
 
         
     };
@@ -456,7 +464,34 @@ class CreateFunding extends Component{
                                 onChange={this.handleChange}
                         />
                     </FormGroup>
-                </Form> 
+                </Form>
+
+                    <FormGroup className="mb-10" style={{marginTop:"30px"}}>
+                        <Accordion>
+                            <AccordionSummary
+                                expandIcon={<BsArrowDown />}
+                                aria-label="Expand"
+                                aria-controls="additional-actions1-content"
+                                id="additional-actions1-header">
+                                <FormControlLabel
+                                    aria-label="Acknowledge"
+                                    onClick={(event) => event.stopPropagation()}
+                                    onFocus={(event) => event.stopPropagation()}
+                                    control={<Checkbox onChange={this.handleAgree}/>}
+                                    label="약관에 동의합니다."
+                                />
+
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Typography color="textSecondary">
+                                    FANDING은 통신판매중개자이며 통신판매의 당사자가 아닙니다.
+                                    따라서 개별 판매자가 등록하여 판매한 모든 상품에 대한 거래 정보 및 거래에 대한 책임은 각 판매자가 부담하고, 이에 대하여 FANDING은 일체 책임지지 않습니다.
+                                </Typography>
+                            </AccordionDetails>
+                        </Accordion>
+                    </FormGroup>
+
+
                 <Form className="mt-10" onSubmit={this.handleSubmit} >
                     {/*<Link to='/'>*/}
 

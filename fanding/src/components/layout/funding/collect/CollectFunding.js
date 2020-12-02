@@ -41,16 +41,16 @@ class CollectFunding extends Component {
         return(
             <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
     
-            <div class="container">
+            
                 <div class="mbr-section-head">
                     <h3 class="mbr-section-title mbr-fonts-style align-center m-0 display-2"><strong>모금 펀딩</strong></h3>
                     <p class="mbr-section-subtitle  mbr-fonts-style mb-0 mt-2 display-5"
-                    style={{fontSize: '1.5rem'}}>
+                    style={{fontSize: '1.5rem', paddingLeft:'110px', paddingRight:'110px'}}>
                     모금 펀딩은 자금이 필요한 총대가 펀딩을 통해 자금을 모아 기부 혹은 아티스트를 위한 모금을 진행할 때 사용합니다. 
                     </p>
                 </div>
-
-                <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <div class="container-fluid">
+                <ButtonDropdown className="ml-70" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
 
                 <DropdownToggle caret className="mt-30">
                     {this.state.dropDownValue}

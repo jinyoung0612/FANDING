@@ -8,7 +8,7 @@ import { withStyles,List, ListItem, ListItemText,
 import PhotoIcon from '@material-ui/icons/PermIdentity';
 import {SupervisorAccount, MoneyOff ,LocalShipping, Build, DoneOutline} from '@material-ui/icons';
 
-import {notice_read, firebase_progress_save} from '../../store/actions/noticeAction';
+import {notice_read, firebase_progress_save, firebase_notice_list} from '../../store/actions/noticeAction';
 import FloatingButton from './FloatingButton';
 import { compose } from 'redux';
 import {firestoreConnect, isLoaded} from "react-redux-firebase";
@@ -20,12 +20,19 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 const styles = theme => ({
-    root: {
+    noticeRoot: { 
+      overflow: 'hidden',
       width: '100%',
+    },
+    content: {
+      width: '100%',
+      padding: theme.spacing(3),
       backgroundColor: theme.palette.background.paper,
     },
-    title: {
-      marginBottom: theme.spacing(2)
+    fundingtitle: {
+      margin: theme.spacing(3),
+      float: 'right',
+      color: '#c4c4c4'
     },
     list: {
       overflow: 'auto',
@@ -39,7 +46,7 @@ const styles = theme => ({
       width: '20%',
       float: "right"
     },
-    large: {
+    progressState: {
       width: theme.spacing(8),
       height: theme.spacing(8),
       color: '#ffffff',
@@ -49,6 +56,10 @@ const styles = theme => ({
 
 
 class NoticeList extends Component {
+
+  componentDidMount () {
+    this.props.firebase_notice_list();           
+  }
 
     state = {
         DialogOpen: false,
@@ -101,9 +112,6 @@ class NoticeList extends Component {
         const {classes, notices, auth, funding, progressDB} = this.props;
         console.log("in noticelist notices: ",notices);
         
-        console.log("in noticelist funding: ",funding);
-        console.log("in noticelist progress: ",progressDB);
-        
         const {DialogOpen} = this.state;
 
         if(!isLoaded(auth) || !isLoaded(funding) || !isLoaded(progressDB)) {
@@ -114,9 +122,6 @@ class NoticeList extends Component {
           )
         }
         else{
-          console.log("in noticelist funding[0].id: ",funding[0].id);
-          console.log("in noticelist funding[0].selectedCom: ",funding[0].selectedCom);
-          console.log("in noticelist funding[0].user_email: ",funding[0].user_email);
           var qualification = '';
           const funding_id = funding[0].id;
           const chongdae_email = funding[0].user_email;
@@ -143,10 +148,10 @@ class NoticeList extends Component {
 
           return(
               <div>
-                <Typography variant="h6" className={classes.title}>{funding[0].fundingTitle}</Typography>
-              <div className={classes.root} >
-              <div>
-              <Typography variant="title" gutterBottom align="center">
+                <Typography variant="h6" className={classes.fundingtitle}>{funding[0].fundingTitle}</Typography>
+              <div className={classes.noticeRoot} >
+              <div className={classes.content}>
+              <Typography variant="title" gutterBottom align="left">
                 <br/> 
                 <h3><strong>진행 상황</strong></h3>
               </Typography>
@@ -168,7 +173,7 @@ class NoticeList extends Component {
               <ListItem>
                 <Col align="center"><Avatar ><SupervisorAccount/></Avatar><ListItemText secondary="펀딩 진행" /></Col>
                 <p>ㆍㆍㆍ</p>
-                <Col align="center"><Avatar className={classes.large}><MoneyOff/></Avatar><ListItemText secondary="입금 마감" /></Col>
+                <Col align="center"><Avatar className={classes.progressState}><MoneyOff/></Avatar><ListItemText secondary="입금 마감" /></Col>
                 <p>ㆍㆍㆍ</p>
                 <Col align="center"><Avatar ><Build/></Avatar><ListItemText secondary="상품 제작" /></Col>
                 <p>ㆍㆍㆍ</p>
@@ -183,7 +188,7 @@ class NoticeList extends Component {
                 <p>ㆍㆍㆍ</p>
                 <Col align="center"><Avatar ><MoneyOff/></Avatar><ListItemText secondary="입금 마감" /></Col>
                 <p>ㆍㆍㆍ</p>
-                <Col align="center"><Avatar className={classes.large}><Build/></Avatar><ListItemText secondary="상품 제작" /></Col>
+                <Col align="center"><Avatar className={classes.progressState}><Build/></Avatar><ListItemText secondary="상품 제작" /></Col>
                 <p>ㆍㆍㆍ</p>
                 <Col align="center"><Avatar ><LocalShipping/></Avatar><ListItemText secondary="상품 배송" /></Col>
                 <p>ㆍㆍㆍ</p>
@@ -198,7 +203,7 @@ class NoticeList extends Component {
                 <p>ㆍㆍㆍ</p>
                 <Col align="center"><Avatar ><Build/></Avatar><ListItemText secondary="상품 제작" /></Col>
                 <p>ㆍㆍㆍ</p>
-                <Col align="center"><Avatar className={classes.large}><LocalShipping/></Avatar><ListItemText secondary="상품 배송" /></Col>
+                <Col align="center"><Avatar className={classes.progressState}><LocalShipping/></Avatar><ListItemText secondary="상품 배송" /></Col>
                 <p>ㆍㆍㆍ</p>
                 <Col align="center"><Avatar ><DoneOutline/></Avatar><ListItemText secondary="펀딩 종료" /></Col>
               </ListItem>
@@ -213,11 +218,11 @@ class NoticeList extends Component {
                 <p>ㆍㆍㆍ</p>
                 <Col align="center"><Avatar ><LocalShipping/></Avatar><ListItemText secondary="상품 배송" /></Col>
                 <p>ㆍㆍㆍ</p>
-                <Col align="center"><Avatar className={classes.large}><DoneOutline/></Avatar><ListItemText secondary="펀딩 종료" /></Col>
+                <Col align="center"><Avatar className={classes.progressState}><DoneOutline/></Avatar><ListItemText secondary="펀딩 종료" /></Col>
               </ListItem>
               :
               <ListItem>
-                <Col align="center"><Avatar className={classes.large}><SupervisorAccount/></Avatar><ListItemText secondary="펀딩 진행" /></Col>
+                <Col align="center"><Avatar className={classes.progressState}><SupervisorAccount/></Avatar><ListItemText secondary="펀딩 진행" /></Col>
                 <p>ㆍㆍㆍ</p>
                 <Col align="center"><Avatar ><MoneyOff/></Avatar><ListItemText secondary="입금 마감" /></Col>
                 <p>ㆍㆍㆍ</p>
@@ -234,9 +239,9 @@ class NoticeList extends Component {
               <Divider />
               <Divider />
               </div>
-              
-              <div>
-              <Typography variant="title" gutterBottom align="center">
+    {/***공지사항****/}
+              <div className={classes.content}>
+              <Typography variant="title" gutterBottom align="left">
                 <br/>
                 <h3><strong>공지사항</strong></h3>
                 <br/>
@@ -245,7 +250,8 @@ class NoticeList extends Component {
               <List className={classes.list}>
                 {
                     notices.map((row, index) => (
-                  row.funding_id === funding_id?
+                      row.funding_id === funding_id
+                      ?
                     <ListItem button divider key={index} onClick={()=>this.handleSelectNotice(row.ntcno)}>
                       <Avatar>
                         <PhotoIcon/>
@@ -256,10 +262,9 @@ class NoticeList extends Component {
                       <ListItemText primary={dateFormat(row.ntcdate, "yyyy-mm-dd")}/>
                       </ListItemSecondaryAction>
                     </ListItem>
-                  :
-                  <div>
-                      <ListItem></ListItem>
-                  </div>
+                    :
+                    <div>
+                    </div>
                   ))
                 }
               </List>
@@ -288,12 +293,16 @@ let mapStateToProps = (state) => {
         selectedNotice: state.notice.selectedNotice,
         progress: state.notice.progress,
         funding: state.firestore.ordered.fundings,
-        progressDB : state.firestore.ordered.progress
+        progressDB : state.firestore.ordered.progress,
     };
 }
 
+const mapDispatchToProps = dispatch => ({
+  firebase_notice_list: () =>  dispatch(firebase_notice_list()),
+})
+
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps,mapDispatchToProps),
   firestoreConnect(props => {
     const location = window.location.href.split('/');
     const funding_id = location[5];

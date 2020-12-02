@@ -1,5 +1,5 @@
 import React, { useState, Component, PureComponent } from "react";
-import {Media} from 'reactstrap';
+import {Button, Input, InputGroup, InputGroupAddon, Media} from 'reactstrap';
 import main_image from './fanding_main_image.png';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -11,17 +11,29 @@ import {connect} from "react-redux";
 import SelectedArtist from "./SelectedArtist";
 import {loadMain} from "../../store/actions/searchActions";
 import FundingContents from "./FundingContents";
-import {CardDeck} from 'reactstrap';
+import {CardDeck, CardText} from 'reactstrap';
 import FundingSummary from "./funding/reward/RewardFundingSummary";
 import {Link} from "react-router-dom";
 import CollectFundingSummary from "./funding/collect/CollectFundingSummary";
+import { BsPeopleCircle, BsBell,BsSearch } from "react-icons/bs";
 
 const artistsMap = [1, 2, 3];
 
 class MainPage extends Component {
 
+    constructor() {
+        super();
+        this.state={
+            search:'',
+            prevSearch:'',
+            searchOn:false
+        };
+    }
+
 
     render(){
+
+        // console.log(this.props.fundings)
         //const { fundings } = this.props;
         const { auth, user,fundings} = this.props;
         console.log("auth", auth);
@@ -47,7 +59,9 @@ class MainPage extends Component {
                 if(isLoaded(fundings)){
                     return(
 
-                        <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
+                        <CardDeck style={{display: 'grid', flexDirection: 'row', justifyContent: 'center', margin:'10px', 
+                        alignItems:'center', flexFlow:'row wrap'}}>
+
 
                             {
                                 fundings.map((funding,i)=>{
@@ -99,14 +113,16 @@ class MainPage extends Component {
             else{
                 console.log("artistSelect 있음");
                 console.log("ArtistSelect", user[0].artistSelect);
-
                 return(
                     <div>
-                        {/*<Media middle object src={main_image} className="img-fluid" alt="main_image" width='100%'/>*/}
                         <SelectedArtist artist={user[0].artistSelect}></SelectedArtist>
                     </div>
+
+
                 )
             }
+
+
         }
 
 

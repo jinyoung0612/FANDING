@@ -29,27 +29,6 @@ const styles = theme => ({
     },
 });
 
-function PrivateRoute ({component: Component, uid, ...rest}) {
-    return (
-      <Route
-        {...rest}
-        render={(props) => uid !==null
-          ? <Component {...props} />
-          : <Redirect to={{pathname: '/signIn', state: {from: props.location}}} />}
-      />
-    )
-}
-
-function PublicRoute ({component: Component, uid, ...rest}) {
-    return (
-      <Route
-        {...rest}
-        render={(props) => uid === null
-          ? <Component {...props} />
-          : <Redirect to='/notice' />}
-      />
-    )
-}
 
 class NoticeMain extends Component {
 
@@ -65,10 +44,7 @@ class NoticeMain extends Component {
               <main className={classes.content}>
                 <div className={classes.toolbar} />
                 <Switch>
-                  <PrivateRoute uid={uid} exact path="/notice" component={NoticeList}/>
-                  <PrivateRoute uid={uid} path="/notice/list" component={NoticeList}/>
-
-                  <PublicRoute uid={uid} component={NoMatch}/>
+                  <Route path="/notice/list/:id" component={NoticeList}/>
                 </Switch>
               </main>
               <MySnackbar />
@@ -77,14 +53,6 @@ class NoticeMain extends Component {
       );
     }
   }
-  
-  const NoMatch = ({ location }) => (
-    <div>
-      <h3>
-        No match url for <code>{location.pathname}</code>
-      </h3>
-    </div>
-  );
   
   NoticeMain.propTypes = {
     classes: PropTypes.object.isRequired,

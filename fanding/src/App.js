@@ -35,9 +35,12 @@ import MyFunding from "./components/layout/MyFunding";
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
 
-import NoticeForm from "./components/notice/NoticeForm";
 import NoticeList from "./components/notice/NoticeList";
 import NoticeMain from "./components/notice/NoticeMain";
+
+import Search from "./components/layout/Search";
+import MyCompany from './components/layout/company/MyCompany';
+import FanAuth from './components/layout/FanAuth';
 
 class App extends Component {
   render() {
@@ -48,6 +51,7 @@ class App extends Component {
           <Switch>
             {/*<Route exact path="/" component={MainPage} />*/}
             <Route exact path="/" component={MainPageDefault} />
+            <Route path="/search" component={Search}/>
             <Route path="/signup" component={SignUp} />
             <Route path="/signupcom" component={SignUpCom} />
             <Route path="/signin" component={SignIn} />
@@ -83,11 +87,12 @@ class App extends Component {
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />
 
-            <Route path="/notice" component={NoticeMain} />
             <Route path="/notice/list/:id" component={NoticeList}/>
-            <Route path="/notice/form" component={NoticeForm} />
+            <Route path="/notice/main" component={NoticeMain}/>
 
             <Route path="/companychat" component={CompanyChat} />
+            <Route path="/myCompany" component={MyCompany} />
+            <Route exact path="/fan_auth" component={FanAuth} />
           </Switch>
         </div>
       </BrowserRouter>

@@ -20,13 +20,12 @@ import { firebase_notice_save, firebase_notice_delete, show_snackbar } from '../
 import {Dialog,DialogTitle,DialogContent,makeStyles,
     Toolbar, AppBar, Typography, IconButton, Divider, withStyles, DialogActions} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { propTypes } from 'react-bootstrap/esm/Image';
 
 const styles = theme => ({
     appBar: {
         position: 'relative',
     },
-    title: {
+    tooltitle: {
         marginLeft: theme.spacing(1),
         flex: 2,
     },
@@ -107,9 +106,9 @@ class NoticeForm extends Component{
                 ?
                 <div>
                 <Dialog fullScreen open={DialogOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth>
-                <AppBar className={classes.appBar}color="white">
+                <AppBar className={classes.appBar} color="white">
                     <Toolbar>
-                        <Typography variant="h6" className={classes.title}>공지사항 작성 및 수정</Typography>
+                        <Typography variant="h6" className={classes.tooltitle}>공지사항 작성 및 수정</Typography>
                         <IconButton edge="start" color="inherit" onClick={this.handleDialogClose}><CloseIcon/></IconButton>
                     </Toolbar>
                 </AppBar>
@@ -158,7 +157,7 @@ class NoticeForm extends Component{
                 <Dialog open={DialogOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth>
                 <AppBar className={classes.appBar} color="white">
                     <Toolbar>
-                        <Typography variant="h6" className={classes.title}>공지사항</Typography>
+                        <Typography variant="h6" className={classes.tooltitle}>공지사항</Typography>
                         <IconButton  edge="start" color="inherit" onClick={this.handleDialogClose}><CloseIcon/></IconButton>
                     </Toolbar>
                 </AppBar>
@@ -167,7 +166,6 @@ class NoticeForm extends Component{
                     <Form className="mt-5">
                         <FormGroup>
                             <Typography variant="h5" label="noticeTitle">{selectedNotice.ntctitle}</Typography>
-                            <br/>
                             <Typography variant="title" label="writedate" className={classes.date}>
                                 {dateFormat(selectedNotice.ntcdate, "yyyy.mm.dd mm:ss")} / {selectedNotice.ntcwriter}
                             </Typography>

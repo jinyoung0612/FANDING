@@ -504,8 +504,7 @@ export default class chatroom extends Component {
     const { profilePicture } = this.props;
 
     return (
-      <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-        <Container>
+      // <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
           <div className="container-fluid">
             {this.state.showImageBeforeUpload === false ? (
               <div>
@@ -563,7 +562,7 @@ export default class chatroom extends Component {
                                   </div>
                                   <div
                                     className="msg_cotainer text-center"
-                                    style={{ minWidth: "70px" }}
+                                    style={{ minWidth: "100px" }}
                                   >
                                     {list.message}
                                     <span className="msg_time text-dark text-center">
@@ -808,8 +807,7 @@ export default class chatroom extends Component {
               </div>
             ) : null}
           </div>
-        </Container>
-      </section>
+      // </section>
     );
   }
 }
