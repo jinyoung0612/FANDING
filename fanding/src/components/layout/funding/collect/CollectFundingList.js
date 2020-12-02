@@ -6,8 +6,8 @@ import { CardDeck } from 'reactstrap';
 
 const CollectFundingList = ({fundings}) => {
     return(
-        <CardDeck style={{display: 'flex', flexDirection: 'row', 
-                    justifyContent: 'left'}}>
+        <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', 
+                    margin:'10px', flexFlow:'row wrap', alignItems:'center'}}>
 
             { fundings && fundings.map(funding => {
                 return (
