@@ -41,7 +41,7 @@
   background-color: white;
 }
 .msg_card_body {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 .card-header {
   border-radius: 15px 15px 0 0 ;

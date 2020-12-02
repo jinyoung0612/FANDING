@@ -504,7 +504,7 @@ export default class chatroom extends Component {
     const { profilePicture } = this.props;
 
     return (
-      <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+      // <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
           <div className="container-fluid">
             {this.state.showImageBeforeUpload === false ? (
               <div>
@@ -807,7 +807,7 @@ export default class chatroom extends Component {
               </div>
             ) : null}
           </div>
-      </section>
+      // </section>
     );
   }
 }

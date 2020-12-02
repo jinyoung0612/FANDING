@@ -86,7 +86,7 @@ class SelectedArtist extends Component {
                                     preArtist = nowArtist;
                                     return(
                                     <>
-                                    <h3 style={{paddingLeft:'5px',paddingRight:'700px', marginTop:'50px'}}><strong>{nowArtist}</strong> 관련 펀딩</h3>
+                                    <p style={{float: 'left', textAlign: 'left',paddingLeft:'0px',paddingRight:'900px', marginTop:'50px', fontSize:'2.0rem'}}><strong>{nowArtist}</strong> 관련 펀딩</p>
                                     {/* <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}> */}
                                     <FundingContents funding={funding} key={i}></FundingContents>
                                     {/* </CardDeck> */}
