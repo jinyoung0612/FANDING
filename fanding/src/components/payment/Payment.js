@@ -32,6 +32,7 @@ const Payment = (props) => {
   var totalFundingAmount = "";
   var buyerEmail = "";
   var buyerName = "";
+  var realPayAmount = "";
   const paymentList = props.paymentInfo;
 
   const handleClickPayment = () => {
@@ -41,7 +42,7 @@ const Payment = (props) => {
         pay_method: "card",
         merchant_uid: "FANDING" + new Date().getTime(),
         name: "FANDING",
-        amount: totalFundingAmount,
+        amount: realPayAmount,
         buyer_email: buyerEmail,
         buyer_name: buyerName,
         // buyer_tel: this.state.buyer_tel,
@@ -91,6 +92,7 @@ const Payment = (props) => {
         (buyerEmail = list.buyer_email)
       )
     );
+    realPayAmount = totalFundingAmount * 0.05;
     return (
       <div>
         {paymentList.map((list, i) =>
@@ -109,7 +111,8 @@ const Payment = (props) => {
           heightResizable={true}
           rowHeaders={["rowNum"]}
         />
-        {/* <Label>총 결제 금액 : {totalFundingAmount} 원 </Label> */}
+        <div>총 금액 : {totalFundingAmount} 원 </div>
+        <div>수수료 결제 금액 : {realPayAmount} 원</div>
         <Button onClick={handleClickPayment}>결제</Button>
       </div>
     );
