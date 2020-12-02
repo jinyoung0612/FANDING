@@ -34,9 +34,10 @@ import TransactionList from "./components/layout/TransactionList";
 import MyFunding from "./components/layout/MyFunding";
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
+
+import Search from "./components/layout/Search";
 import MyCompany from './components/layout/company/MyCompany';
 import FanAuth from './components/layout/FanAuth';
-
 class App extends Component {
   render() {
     return (
@@ -46,6 +47,7 @@ class App extends Component {
           <Switch>
             {/*<Route exact path="/" component={MainPage} />*/}
             <Route exact path="/" component={MainPageDefault} />
+            <Route path="/search" component={Search}/>
             <Route path="/signup" component={SignUp} />
             <Route path="/signupcom" component={SignUpCom} />
             <Route path="/signin" component={SignIn} />
