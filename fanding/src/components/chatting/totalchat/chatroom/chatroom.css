@@ -41,7 +41,7 @@
   background-color: white;
 }
 .msg_card_body {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 .card-header {
   border-radius: 15px 15px 0 0 ;
@@ -68,7 +68,7 @@
   background-color: white ;
   border: 0 ;
   color: black ;
-  height: 60px ;
+  height: 20px ;
   overflow-y: auto;
 }
 .type_msg:focus {
@@ -109,10 +109,10 @@
   background-color: rgba(0, 0, 0, 0);
 }
 .user_img {
-  height: 70px;
-  width: 70px;
+  height: 50px;
+  width: 50px;
   /* border: 1.5px solid #f5f6fa; */
-  border: 1.5px solid black;
+  /* border: 1.5px solid black; */
 }
 .user_img_msg {
   height: 40px;
@@ -250,8 +250,8 @@
 }
 
 .galary-img {
-  height: 50px;
-  width: 50px;
+  height: 20px;
+  width: 20px;
   cursor: pointer;
 }
 

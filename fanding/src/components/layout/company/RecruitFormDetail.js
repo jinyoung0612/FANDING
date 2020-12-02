@@ -405,6 +405,7 @@ class RecruitFormDetail extends Component {
         console.log("Loading....");
         return <div>Loading...</div>;
       }
+
     } else {
       // console.log(this.state)
       return (
@@ -491,7 +492,6 @@ class ApplicationList extends Component {
       // })
     }
   }
-
   render() {
     // console.log(this.props);
     const { applications } = this.props;
