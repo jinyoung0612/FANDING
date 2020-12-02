@@ -25,6 +25,8 @@ export const signIn = (credentials) => {
             }
           })
           .catch((err) => {
+            var msg = "아이디 또는 비밀번호를 확인해주세요";
+            alert(msg);
             dispatch({ type: "LOGIN_ERROR", err });
           });
       });
@@ -141,6 +143,19 @@ export const signUpCom = (newCompany) => {
               })
               .catch((err) => {
                 dispatch({ type: "NOT_EMAIL_SPENT", err });
+              });
+          })
+          .then(() => {
+            firebase
+              .firestore()
+              .collection("payments")
+              .doc(newCompany.email)
+              .set({
+                isPaymentOpen: false,
+                totalFundingAmount: 0,
+                buyer_email: newCompany.email,
+                buyer_name: newCompany.companyName,
+                paymentFundingList: [],
               });
           });
       });
