@@ -17,6 +17,7 @@ import {firestoreConnect, isLoaded} from "react-redux-firebase";
 import NoticeForm from './NoticeForm';
 import { Col } from 'reactstrap';
 import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 const styles = theme => ({
     root: {
@@ -35,6 +36,7 @@ const styles = theme => ({
     },
     button: {
       margin: theme.spacing(3),
+      width: '20%',
       float: "right"
     },
     Image: {
@@ -43,14 +45,6 @@ const styles = theme => ({
     },
 });
 
-const selectStyle = {
-  control: base => ({
-    ...base,
-    border: 1,
-    // This line disable the blue border
-      boxShadow: 'none',
-  })
-};
 
 class NoticeList extends Component {
 
@@ -99,13 +93,14 @@ class NoticeList extends Component {
       {value:'상품배송', label:'상품배송'},
       {value:'펀딩종료', label:'펀딩종료'}
     ];
+    animatedComponents = makeAnimated();
 
     render(){
         const location = window.location.href.split('/');
         const funding_id = location[5];
         console.log("funding_id: ",funding_id);
 
-        const {classes, notices, selectedNotice, auth, funding} = this.props;
+        const {classes, notices, auth, funding} = this.props;
         console.log("in noticelist notices: ",notices);
         
         console.log("in noticelist funding: ",funding);
@@ -149,8 +144,8 @@ class NoticeList extends Component {
               ?
               <Select
                     className={classes.button}
-                    styles={selectStyle} 
-                    id="artistSelect" components={this.animatedComponents} 
+                    //styles={selectStyle} 
+                    id="progressSelect" components={this.animatedComponents} 
                     options={this.options} 
                     menuPortalTarget={document.body} 
                     style={{menuPortal:base=>({...base,zIndex:9999})}} 
