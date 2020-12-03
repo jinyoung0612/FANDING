@@ -92,7 +92,7 @@ const NavbarTest = (props) => {
                   {/* <li class="nav-item">
                     <a class="nav-link link text-black display-4" href="/payment">결제</a>
                   </li> */}
-                    <li style={{paddingLeft:"50px", width:"250px"}} className="nav-item">
+                    <li style={{paddingLeft:"30px", width:"260px"}} className="nav-item">
                         <SearchBar history={history}/>
                     </li>
 

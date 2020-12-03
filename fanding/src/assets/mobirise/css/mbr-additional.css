@@ -1624,3 +1624,39 @@ a {
   border-radius: 1%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+@media (min-width: 320px)
+{
+  .artist-p{
+    padding-left: 0px; 
+    padding-right: 50px;
+  }
+}
+@media (min-width: 768px)
+{
+  .artist-p{
+    padding-left: 0px; 
+    padding-right: 300px;
+  }
+}
+@media (min-width: 1024px)
+{
+  .artist-p{
+    padding-left: 0px; 
+    padding-right: 700px;
+  }
+}
+@media (min-width: 1200px)
+{
+  .artist-p{
+    padding-left: 0px; 
+    padding-right: 700px;
+  }
+}
+@media (min-width: 1440px)
+{
+  .artist-p{
+    padding-left: 0px; 
+    padding-right: 900px;
+  }
+}
+

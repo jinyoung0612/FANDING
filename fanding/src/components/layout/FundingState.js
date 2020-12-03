@@ -45,7 +45,7 @@ const FundingState = (props) => {
 
   const doc_id = props.match.params.id;
   const dispatch = useDispatch();
-
+  const [fundingStateAmount, setfundingStateAmount] = useState("");
   useEffect(() => {
     dispatch(loadParticipants(doc_id));
   }, [dispatch]);
@@ -86,6 +86,9 @@ const FundingState = (props) => {
         data *= 1;
         totalamount += data;
       }
+      var tempTotal = totalamount;
+      tempTotal += "";
+      setfundingStateAmount(tempTotal);
     });
     if (checkClosed && checkSave) {
       await firebase.firestore().collection("fundings").doc(doc_id).update({
@@ -167,7 +170,13 @@ const FundingState = (props) => {
               heightResizable={true}
               rowHeaders={["rowNum"]}
             />
-
+            <div>
+              {fundingStateAmount === "" ? null : (
+                <div align="right">
+                  <strong>펀딩 총 금액 : {fundingStateAmount} 원</strong>
+                </div>
+              )}
+            </div>
             <Button onClick={handleClick}>새로고침</Button>
             <Button onClick={handleClicksumPrice}> 펀딩금액합산</Button>
           </div>

@@ -29,11 +29,12 @@ const columns = [
 const Payment = (props) => {
   var array = [];
 
-  var totalFundingAmount = "";
+  var totalFundingAmount = "0";
   var buyerEmail = "";
   var buyerName = "";
-  var realPayAmount = "";
+  var realPayAmount = "0";
   const paymentList = props.paymentInfo;
+  const isAmountView = false;
 
   const handleClickPayment = () => {
     IMP.request_pay(
@@ -111,8 +112,12 @@ const Payment = (props) => {
           heightResizable={true}
           rowHeaders={["rowNum"]}
         />
-        <div>총 금액 : {totalFundingAmount} 원 </div>
-        <div>수수료 결제 금액 : {realPayAmount} 원</div>
+        <div align="right">
+          <strong>총 금액 : {totalFundingAmount} 원 </strong>
+        </div>
+        <div align="right">
+          <strong>수수료 결제 금액 : {realPayAmount} 원</strong>
+        </div>
         <Button onClick={handleClickPayment}>결제</Button>
       </div>
     );
