@@ -45,7 +45,7 @@ class Search extends Component {
                                     <CardText><b>"{keyword}"</b>검색 결과입니다.</CardText>
                                 </Row>
                                 {keyword==="" ? null :
-                                    (<CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
+                                    (<CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', flexFlow:'row wrap',margin:'10px'}}>
 
                                     {
                                         filteredResult.map((funding, i) => {

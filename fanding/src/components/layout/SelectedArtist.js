@@ -9,7 +9,7 @@ import FundingSummary from "./funding/reward/RewardFundingSummary";
 import FundingList from "./funding/reward/RewardFundingList";
 import {Link} from "react-router-dom";
 import CollectFundingSummary from "./funding/collect/CollectFundingSummary";
-import {CardText} from 'reactstrap';
+import {CardText, Row} from 'reactstrap';
 var preArtist = null;
 var nowArtist = "";
 class SelectedArtist extends Component {
