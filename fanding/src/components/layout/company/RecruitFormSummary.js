@@ -6,9 +6,10 @@ let imgStyle = {
   }
 const RecruitFundingSummary = ({recruitCompany}) => {
     return(
-        <Card body style={{width:'15em',flex: '1',
-        backgroundColor: "#ebebeb", height:'20em', margin: '5px'}} >
-            <CardImg top width="100%" src={recruitCompany.itemImage} style={imgStyle} alt="Card image cap" />
+        <Card className="col-sm-12 col-12 align-items-sm-stretch card-bigger border-custom"
+        body style={{width:'18em',flex: '1', height:'20em', margin: '8px',
+        paddingTop:'10px', paddingBottom:'10px', paddingLeft:'10px', paddingRight:'10px'}} >
+            <CardImg top width="100%" src={recruitCompany.itemImage} style={{height:'194px'}} alt="Card image cap" />
             <CardBody>
             <CardTitle>{recruitCompany.itemTitle}</CardTitle>
             <CardText><p>원하는 가격: {recruitCompany.itemPrice}</p></CardText>

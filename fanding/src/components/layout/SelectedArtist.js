@@ -9,7 +9,7 @@ import FundingSummary from "./funding/reward/RewardFundingSummary";
 import FundingList from "./funding/reward/RewardFundingList";
 import {Link} from "react-router-dom";
 import CollectFundingSummary from "./funding/collect/CollectFundingSummary";
-import {Row} from 'reactstrap';
+import {CardText} from 'reactstrap';
 var preArtist = null;
 var nowArtist = "";
 class SelectedArtist extends Component {
@@ -68,6 +68,7 @@ class SelectedArtist extends Component {
 
                     {/*}*/}
                     {/*</CardDeck>*/}
+
 
                     <Row className="justify-content-md-center">
                         <CardDeck style={{display: 'flex', flexDirection: 'row',
