@@ -32,6 +32,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 
+import FanAuth from "./FanAuth";
+
 const style = {
     control: base => ({
       ...base,
@@ -40,7 +42,33 @@ const style = {
         boxShadow: 'none',
     })
   };
+class createFundingDefault extends Component{
+    constructor() {
+        super();
+        this.state={
+            isFan:false,
+            urls:[]
+        }
+        this.handler=this.handler.bind(this)
+    }
+    handler=(urls)=>{
+        this.setState({
+            isFan:true,
+            urls:urls
+        })
+        console.log("parent",this.state.urls)
+    }
+    render() {
+        console.log(this.state.isFan);
+        return (
+            this.state.isFan===false ?
+                <FanAuth handler={this.handler}/>
+                :
+                <CreateFunding user={this.props.user} company={this.props.company} bank={this.props.bank} urls={this.state.urls} firebase_funding_save={this.props.firebase_funding_save}/>
+        );
+    }
 
+}
 class CreateFunding extends Component{
 
     constructor(props) {
@@ -74,7 +102,8 @@ class CreateFunding extends Component{
             bankName:'',
             accountNum:'',
             gift:false,
-           isAgreed:false
+           isAgreed:false,
+            urls:this.props.urls
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -228,12 +257,13 @@ class CreateFunding extends Component{
     render()
     {
 
+
         console.log(this.props.user);
         const {bank}= this.props;
         console.log(this.props.bank);
-       
 
-        
+        // console.log("urlurlurl",this.props.urls)
+
         if(this.state.redirectToReferrer===true){
             alert("펀딩이 생성되었습니다.");
            return  <Redirect to='/' />
@@ -245,7 +275,7 @@ class CreateFunding extends Component{
              <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
              <div className="mbr-section-head" style={{paddingBottom: '30px'}}>
                         <h3 className="mbr-section-title mbr-fonts-style align-center m-0 pb-30 mb-10 display-2"><strong>펀딩 생성하기</strong></h3>
-                        
+
             </div>
             <Container
             style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em"}}>
@@ -266,7 +296,7 @@ class CreateFunding extends Component{
                 <FormGroup>
                     <Label><strong>아티스트</strong></Label>
                     <Select
-                    styles={style} 
+                    styles={style}
                     id="artistSelect" components={this.animatedComponents} options={this.options} menuPortalTarget={document.body} style={{menuPortal:base=>({...base,zIndex:9999})}} onChange={this.handleChangeSelect}/>
                 </FormGroup>
 
@@ -276,17 +306,17 @@ class CreateFunding extends Component{
                     <div>
                     <CustomInput
                     type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"
-                    checked={this.state.fundingType === 'reward'} 
+                    checked={this.state.fundingType === 'reward'}
                     onChange={this.handleRadioChange}
-                    
+
                     inline/>
-                    
-                    <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"   
-                    checked={this.state.fundingType === 'collect'} 
+
+                    <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"
+                    checked={this.state.fundingType === 'collect'}
                     onChange={this.handleRadioChange}
                     inline/>
-                </div>        
-                    
+                </div>
+
                 </FormGroup>
 
                  <FormGroup className="mt-5">
@@ -294,10 +324,10 @@ class CreateFunding extends Component{
                             {isLoaded(this.props.user) ? <Select id="selectedCom" components={this.animatedComponents} options={[{value:this.props.user[0].selectedCompany,label:this.props.user[0].selectedCompanyName}]}
                                                                  menuPortalTarget={document.body} onChange={this.handleChangeCom}>Select...</Select> :  <Select>Select...</Select>}
                         </FormGroup>
-              
+
                 <FormGroup className="mt-5">
                     <Label for="fundingTitle"><strong>펀딩 제목</strong></Label>
-                    <Input type="text" name="title" id="fundingTitle" 
+                    <Input type="text" name="title" id="fundingTitle"
                     placeholder="펀딩 제목을 입력하세요"
                     onChange={this.handleChange}/>
                 </FormGroup>
@@ -306,7 +336,7 @@ class CreateFunding extends Component{
                 <Label for="startDate" className="mt-5"><strong>펀딩 기간</strong>(입금 기간)</Label>
                 <Form inline>
                     <FormGroup >
-                        
+
                         <Input
                             type="date"
                             name="date"
@@ -314,7 +344,7 @@ class CreateFunding extends Component{
                             placeholder="펀딩 시작일"
                             onChange={this.handleChange}
                         />
-                    
+
                         <Input
                             type="time"
                             name="time"
@@ -322,9 +352,9 @@ class CreateFunding extends Component{
                             placeholder="00:00"
                             onChange={this.handleChange}
                         />
-                    
+
                     <Label for="wave" className="ml-5 mr-5"><strong>~</strong></Label>
-                    
+
                         <Input
                             type="date"
                             name="date"
@@ -332,7 +362,7 @@ class CreateFunding extends Component{
                             placeholder="펀딩 종료일"
                             onChange={this.handleChange}
                         />
-                    
+
                         <Input
                             type="time"
                             name="time"
@@ -357,7 +387,7 @@ class CreateFunding extends Component{
                 <Form className="mt-5">
                     <FormGroup>
                         <Label for="detailText"><strong>상세 설명</strong></Label>
-                       {/* <Input type="textarea" name="text" id="detailText" onChange={this.handleChange}/>*/} 
+                       {/* <Input type="textarea" name="text" id="detailText" onChange={this.handleChange}/>*/}
                         <Editor
                         previewStyle="vertical"
                         height="400px"
@@ -367,7 +397,7 @@ class CreateFunding extends Component{
                         plugins= {[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin, chart]}
                         onChange = {this.handleChangeEditor}
                         />
-                
+
 
                         {/* <div id="toastEditor">
                             <h1>Toast UI Editor Example</h1>
@@ -380,7 +410,7 @@ class CreateFunding extends Component{
                             </div>
                         </div>   */}
 
-                        
+
                     </FormGroup>
                 </Form>
 
@@ -506,7 +536,7 @@ class CreateFunding extends Component{
             )
 
         }
-       
+
         else{
             return (
                 <>
@@ -518,11 +548,11 @@ class CreateFunding extends Component{
                     style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em"}}>
 
                     <Form>
-                      
+
                     <FormGroup>
                     <Label><strong>아티스트</strong></Label>
                     <Select
-                    styles={style} 
+                    styles={style}
                     id="artistSelect" components={this.animatedComponents} options={this.options} menuPortalTarget={document.body} style={{menuPortal:base=>({...base,zIndex:9999})}} onChange={this.handleChangeSelect}/>
                     </FormGroup>
 
@@ -532,17 +562,17 @@ class CreateFunding extends Component{
                     <div>
                     <CustomInput
                     type="radio" id="fundingType" value = "reward" name="customRadio" label="리워드형 펀딩"
-                    checked={this.state.fundingType === 'reward'} 
+                    checked={this.state.fundingType === 'reward'}
                     onChange={this.handleRadioChange}
-                    
+
                     inline/>
-                    
-                    <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"   
-                    checked={this.state.fundingType === 'collect'} 
+
+                    <CustomInput type="radio" id="fundingType2" value="collect" name="customRadio" label="모금형 펀딩"
+                    checked={this.state.fundingType === 'collect'}
                     onChange={this.handleRadioChange}
                     inline/>
-                    </div>        
-                    
+                    </div>
+
                 </FormGroup>
                         {/*{console.log("user 정보",this.props.user)}*/}
 
@@ -565,7 +595,7 @@ class CreateFunding extends Component{
                     <Label for="startDate" className="mt-5"><strong>펀딩 기간</strong>(입금 기간)</Label>
                     <Form inline>
                         <FormGroup>
-                     
+
                             <Input
                                 type="date"
                                 name="date"
@@ -632,7 +662,7 @@ class CreateFunding extends Component{
                             />
 
 
-                          
+
                         {/* <div id="toastEditor">
                             <h1>Toast UI Editor Example</h1>
                             <div id="editSection"></div> */}
@@ -644,7 +674,7 @@ class CreateFunding extends Component{
                             </div>
                         </div>   */}
 
-                        
+
 
                         </FormGroup>
                     </Form>
@@ -656,12 +686,12 @@ class CreateFunding extends Component{
                             <Label className="mr-1" for="itemRemain">목표 금액</Label>
                             <Input type="text" name="title" id="itemRemain" placeholder="" onChange={this.handleChange}/>
                         </FormGroup>
-          
+
                         <FormGroup>
                             <CustomInput className="mr-2" type="checkbox" id="gift" value = "gift" name="customRadio" label="특전 있음"
                                              onChange={this.handleCheckChange}/>
                         </FormGroup>
-              
+
                         {this.state.gift===true ?  <FormGroup>
                             <Label className="mr-2" for="shippingDetail">특전 배송 안내</Label>
                             <Input className="mr-2" type="textarea" name="text" id="shippingDetail"
@@ -765,4 +795,4 @@ export default compose(
 
     })
 
-    )(CreateFunding);
+    )(createFundingDefault);

@@ -53,6 +53,11 @@ const FundingDetails = (props)=>{
     });
 
 
+    const auth_list=[{label:"streamingImage",value:"스트리밍 인증"},
+        {label:"fanclubImage",value:"팬클럽 인증"},
+        {label:"concertImage",value:"공연 관람 인증"},
+        {label:"albumImage",value:"앨범 인증"}]
+
     // const [isModalOpen,setModal]=useState(false);
     const dispatch = useDispatch();
 
@@ -462,6 +467,45 @@ const FundingDetails = (props)=>{
                                                 previewStyle="vertical"
                                                 initialEditType="wysiwyg"
                                             />
+                                        </div>
+                                        <div>
+                                            <div className="text-left"><h4 className="pt-30"><b>총대 팬 인증 정보</b></h4></div>
+                                            {
+
+
+                                                funding.fan_auth ? (
+                                                    funding.fan_auth.map((fan)=>{
+                                                        console.log(funding.fan_auth);
+
+                                                        return(
+                                                                auth_list.map((obj)=>{
+                                                                    return(
+                                                                        <div>
+                                                                            {
+                                                                                obj.label===fan.id ?
+                                                                                    (
+                                                                                        <div>
+                                                                                            <CardText>{obj.value}</CardText>
+                                                                                            <CardImg src={fan.url} style={{ maxHeight: 400,
+                                                                                                maxWidth: 200}}></CardImg>
+                                                                                        </div>
+
+                                                                                    )
+                                                                                    : null
+
+                                                                            }
+
+                                                                        </div>
+
+                                                                    )
+                                                                })
+
+                                                        )
+
+                                                    })
+                                                ):null
+                                            }
+
                                         </div>
                                     </Col>
                                     <Col  xs={12} sm={12} md={4}>
