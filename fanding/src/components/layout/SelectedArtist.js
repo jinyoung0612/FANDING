@@ -68,47 +68,101 @@ class SelectedArtist extends Component {
 
                     {/*}*/}
                     {/*</CardDeck>*/}
-                    
-                    <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', 
-                    margin:'10px', flexFlow:'row wrap', alignItems:'center'}}>
 
-                        {
-                            
-                            
-                            fundings.map((funding,i)=>{
-                                //console.log("in map", funding.artistSelect);
-                                nowArtist = funding.artistSelect;
-                                // console.log('preArtist', preArtist);
-                                // console.log('nowArtist', nowArtist);
-                                // console.log(funding.fundingTitle);
-                                if(preArtist !== nowArtist)
-                                {
-                                    preArtist = nowArtist;
-                                    return(
-                                    <>
-                                    <p className="artist-p" style={{float: 'left', textAlign: 'left',marginTop:'50px', 
-                                    fontSize:'2.0rem'}}><strong>{nowArtist}</strong> 관련 펀딩</p>
-                                    {/* <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}> */}
-                                    <FundingContents funding={funding} key={i}></FundingContents>
-                                    {/* </CardDeck> */}
-                                    </>
-                                    )
-                                }
-                                else{
-                                    return(
-                                        <FundingContents funding={funding} key={i}></FundingContents>
-                                    )
-                                    
-                                    
-                                }
-                                
-                                
-                                
+                    <Row className="justify-content-md-center">
+                        <CardDeck style={{display: 'flex', flexDirection: 'row',
+                            margin:'10px', flexFlow:'row wrap', alignItems:'center'}}>
 
-                            })
+                            {
 
-                        }
-                    </CardDeck>
+
+                                fundings.map((funding,i)=>{
+                                    //console.log("in map", funding.artistSelect);
+                                    nowArtist = funding.artistSelect;
+                                    // console.log('preArtist', preArtist);
+                                    // console.log('nowArtist', nowArtist);
+                                    // console.log(funding.fundingTitle);
+                                    if(preArtist !== nowArtist)
+                                    {
+                                        preArtist = nowArtist;
+                                        return(
+                                            <>
+                                                <div style={{width:"100%", marginLeft:"20px"}}>
+                                                    <p className="artist-p" style={{float: 'left', textAlign: 'left',marginTop:'50px',
+                                                        fontSize:'2.0rem'}}><strong>{nowArtist}</strong> 관련 펀딩</p>
+
+                                                </div>
+                                                {/* <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}> */}
+                                                <div>
+                                                    <FundingContents funding={funding} key={i}></FundingContents>
+
+                                                </div>
+                                                {/* </CardDeck> */}
+                                            </>
+                                        )
+                                    }
+                                    else{
+                                        return(
+                                            <FundingContents funding={funding} key={i}></FundingContents>
+                                        )
+
+
+                                    }
+
+
+
+
+                                })
+
+                            }
+                        </CardDeck>
+                    </Row>
+                    {/*<CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left',*/}
+                    {/*margin:'10px', flexFlow:'row wrap', alignItems:'center'}}>*/}
+
+                    {/*    {*/}
+                    {/*        */}
+                    {/*        */}
+                    {/*        fundings.map((funding,i)=>{*/}
+                    {/*            //console.log("in map", funding.artistSelect);*/}
+                    {/*            nowArtist = funding.artistSelect;*/}
+                    {/*            // console.log('preArtist', preArtist);*/}
+                    {/*            // console.log('nowArtist', nowArtist);*/}
+                    {/*            // console.log(funding.fundingTitle);*/}
+                    {/*            if(preArtist !== nowArtist)*/}
+                    {/*            {*/}
+                    {/*                preArtist = nowArtist;*/}
+                    {/*                return(*/}
+                    {/*                <>*/}
+                    {/*                <div style={{width:"100%", marginLeft:"20px"}}>*/}
+                    {/*                        <p className="artist-p" style={{float: 'left', textAlign: 'left',marginTop:'50px',*/}
+                    {/*                            fontSize:'2.0rem'}}><strong>{nowArtist}</strong> 관련 펀딩</p>*/}
+
+                    {/*                </div>*/}
+                    {/*                /!* <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}> *!/*/}
+                    {/*                <div>*/}
+                    {/*                    <FundingContents funding={funding} key={i}></FundingContents>*/}
+
+                    {/*                </div>*/}
+                    {/*                /!* </CardDeck> *!/*/}
+                    {/*                </>*/}
+                    {/*                )*/}
+                    {/*            }*/}
+                    {/*            else{*/}
+                    {/*                return(*/}
+                    {/*                    <FundingContents funding={funding} key={i}></FundingContents>*/}
+                    {/*                )*/}
+                    {/*                */}
+                    {/*                */}
+                    {/*            }*/}
+                    {/*            */}
+                    {/*            */}
+                    {/*            */}
+
+                    {/*        })*/}
+
+                    {/*    }*/}
+                    {/*</CardDeck>*/}
                 </div>
             )
         }
