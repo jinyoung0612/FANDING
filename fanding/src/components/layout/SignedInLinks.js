@@ -25,21 +25,18 @@ const style = {
 // }
 
 const SignedInLinks = (props) => {
-  useFirestoreConnect([{
-    collection: 'chongdaes',
-    where: [
-        ['user_email','==',firebase.auth().currentUser.email]
-    ]
-  }]);
-  useFirestoreConnect([{
-    collection: 'companies',
-    where: [
-      ['email','==',firebase.auth().currentUser.email]
-  ]
-  }]);
-
-
- 
+  useFirestoreConnect([
+    {
+      collection: "chongdaes",
+      where: [["user_email", "==", firebase.auth().currentUser.email]],
+    },
+  ]);
+  useFirestoreConnect([
+    {
+      collection: "companies",
+      where: [["email", "==", firebase.auth().currentUser.email]],
+    },
+  ]);
 
   const [chatnotice, setChatnotice] = useState(false);
   const chatalert = () => {
@@ -66,10 +63,10 @@ const SignedInLinks = (props) => {
     chatalert();
   }, []);
   const chongdae = useSelector((state) => state.firestore.ordered.chongdaes);
-  const company =useSelector((state)=>state.firestore.ordered.companies);
-   
-   console.log(chongdae);
-   console.log('company: ', company);
+  const company = useSelector((state) => state.firestore.ordered.companies);
+
+  console.log(chongdae);
+  console.log("company: ", company);
 
   const checkVerificationHandler = () => {
     if (chongdae.length > 0) {
@@ -92,79 +89,109 @@ const SignedInLinks = (props) => {
       window.location.href = "http://localhost:3000/chongdae";
     }
   };
-  if(isLoaded(company) && company.length !== 0) //업체일 때
-  {
-    console.log('업체');
-    return(
+  if (isLoaded(company) && company.length !== 0) {
+    //업체일 때
+    console.log("업체");
+    return (
       <div>
-    <ul class="navbar-nav ml-auto">
-
-      <div class="icons-menu">
-        <NavItem>
-          <NavLink href="/totalchat">
-            <BsBell size={28} style={{ fill: "black" }} className="mr-3" />
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/myCompany">
-            <BsPeopleCircle style={{ fill: "black" }} size={28} />
-          </NavLink>
-        </NavItem>
-      </div>
-      {/* <div class="navbar-buttons mbr-section-btn">
+        <ul class="navbar-nav ml-auto">
+          <div class="icons-menu">
+            {chatnotice === false ? (
+              <NavItem>
+                <NavLink href="/totalchat">
+                  <BsBell
+                    size={28}
+                    style={{ fill: "black" }}
+                    className="mr-3"
+                  />
+                </NavLink>
+              </NavItem>
+            ) : (
+              <NavItem>
+                <NavLink href="/totalchat">
+                  <BsBellFill
+                    size={28}
+                    style={{ fill: "red" }}
+                    className="mr-3"
+                  />
+                </NavLink>
+              </NavItem>
+            )}
+            <NavItem>
+              <NavLink href="/myCompany">
+                <BsPeopleCircle style={{ fill: "black" }} size={28} />
+              </NavLink>
+            </NavItem>
+          </div>
+          {/* <div class="navbar-buttons mbr-section-btn">
         <a class="btn btn-info display-4" onClick={checkVerificationHandler}>
           펀딩 생성
         </a>
       </div> */}
-      <li className="nav-item mt-3">
-        <a
-          className="nav-link link text-black display-4"
-          href="/"
-          onClick={props.signOut}
-        >
-          로그아웃
-        </a>
-      </li>
-    </ul>
-  </div>
-    )
-    
-
-  }
-  else{
-    return(
+          <li className="nav-item mt-3">
+            <a
+              className="nav-link link text-black display-4"
+              href="/"
+              onClick={props.signOut}
+            >
+              로그아웃
+            </a>
+          </li>
+        </ul>
+      </div>
+    );
+  } else {
+    return (
       <div>
-    <ul class="navbar-nav ml-auto">
-
-      <div class="icons-menu">
-        <NavItem>
-          <NavLink href="/totalchat">
-            <BsBell size={28} style={{ fill: "black" }} className="mr-3" />
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/myaccount">
-            <BsPeopleCircle style={{ fill: "black" }} size={28} />
-          </NavLink>
-        </NavItem>
+        <ul class="navbar-nav ml-auto">
+          <div class="icons-menu">
+            {chatnotice === false ? (
+              <NavItem>
+                <NavLink href="/totalchat">
+                  <BsBell
+                    size={28}
+                    style={{ fill: "black" }}
+                    className="mr-3"
+                  />
+                </NavLink>
+              </NavItem>
+            ) : (
+              <NavItem>
+                <NavLink href="/totalchat">
+                  <BsBellFill
+                    size={28}
+                    style={{ fill: "red" }}
+                    className="mr-3"
+                  />
+                </NavLink>
+              </NavItem>
+            )}
+            <NavItem>
+              <NavLink href="/myaccount">
+                <BsPeopleCircle style={{ fill: "black" }} size={28} />
+              </NavLink>
+            </NavItem>
+          </div>
+          <div class="navbar-buttons mbr-section-btn">
+            <a
+              class="btn btn-info display-4"
+              onClick={checkVerificationHandler}
+            >
+              펀딩 생성
+            </a>
+          </div>
+          <li className="nav-item mt-3">
+            <a
+              className="nav-link link text-black display-4"
+              href="/"
+              onClick={props.signOut}
+            >
+              로그아웃
+            </a>
+          </li>
+        </ul>
       </div>
-      <div class="navbar-buttons mbr-section-btn">
-        <a class="btn btn-info display-4" onClick={checkVerificationHandler}>
-          펀딩 생성
-        </a>
-      </div>
-      <li className="nav-item mt-3">
-        <a
-          className="nav-link link text-black display-4"
-          href="/"
-          onClick={props.signOut}
-        >
-          로그아웃
-        </a>
-      </li>
-    </ul>
-  </div>
-    )
+    );
   }
 };
 
