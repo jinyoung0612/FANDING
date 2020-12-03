@@ -49,7 +49,8 @@ export const firebase_funding_save = (newForm) => {
             selectedCom:newForm.selectedCom,
             gift:newForm.gift,
             progress:0,
-            isClosed:false
+            isClosed:false,
+            fan_auth:newForm.urls
 
         }).then(() => {
             dispatch({type: 'CREATEFORM_SUCCESS' , newForm});

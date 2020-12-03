@@ -22,6 +22,7 @@ import CompanyRecruit from "./components/layout/company/CompanyRecruit";
 import QuestionChat from "./components/chatting/questionchat/QuestionChat";
 import TotalChat from "./components/chatting/totalchat/TotalChat";
 import CompanyChat from "./components/chatting/companychat/CompanyChat";
+import createFundingDefault from "./components/layout/CreateFunding";
 
 // import test from './components/layout/test';
 import FundingDetails from "./components/layout/FundingDetails";
@@ -53,7 +54,7 @@ class App extends Component {
             <Route path="/signin" component={SignIn} />
             <Route path="/signupcom" component={SignUpCom} />
             <Route path="/myaccount" component={MyAccount} />
-            <Route path="/create_funding" component={CreateFunding} />
+            <Route path="/create_funding" component={createFundingDefault} />
             <Route path="/chongdae" component={Chongdae_auth} />
             <Route path="/identity_auth" component={Identity_auth} />
             <Route path="/account_auth" component={Account_auth} />

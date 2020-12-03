@@ -76,18 +76,11 @@ class FanAuth extends Component{
 
                                 })
                                 .then(()=>{
-                                    firestore
-                                        .collection("users")
-                                        .doc(firebase.auth().currentUser.email)
-                                        .update({
-                                            fan_auth:this.state.urls
-                                        }).then(() => {
-                                        console.log("success");
-                                        alert("팬 인증이 완료되었습니다.")
-                                        window.location.reload()
-                                    }).catch((err) => {
-                                        console.log("error",err);
-                                    })
+
+                                    console.log("success");
+                                    alert("팬 인증이 완료되었습니다.")
+                                    this.props.handler(this.state.urls);
+
                                     }
                                 )
                         }
