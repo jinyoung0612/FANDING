@@ -16,7 +16,7 @@ class FanAuth extends Component{
     constructor(props) {
         super(props);
         this.state={
-            streamingImg:"",
+            streamingImage:"",
             fanclubImage:"",
             concertImage:"",
             albumImage:"",
@@ -78,15 +78,23 @@ class FanAuth extends Component{
                                 .then(()=>{
 
                                     console.log("success");
-                                    alert("팬 인증이 완료되었습니다.")
+                                    // alert("팬 인증이 완료되었습니다.")
                                     this.props.handler(this.state.urls);
+                                    // if(this.state.images.length===this.state.urls.length){
+                                    //     this.props.handler(this.state.urls);
+                                    // }
 
                                     }
                                 )
                         }
                     )
-
+                // if(this.state.images.length===this.state.urls.length){
+                //     this.props.handler(this.state.urls);
+                // }
             }
+
+
+            // if(this.state.urls && this.state.images.length===this.state.url.)
 
             // const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
         //     uploadTask.on(
