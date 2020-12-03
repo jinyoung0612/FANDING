@@ -17,9 +17,9 @@ const SignedOutLinks = () => {
         <a class="nav-link link text-black display-4" href="/signup">회원가입</a>
       </li>
 
-      <li class="nav-item">
+      {/* <li class="nav-item">
         <a class="nav-link link text-black display-4" href="/signupcom">업체 회원가입</a>
-      </li>
+      </li> */}
     </ul>
       
    
