@@ -125,7 +125,7 @@ class Chongdae_auth extends Component{
                     >본인 인증</Button>
                 </div>
                 </Col>
-                <Col sm="4">
+                {/* <Col sm="4">
 
                 <div style={{paddingTop:'90px'}}>
                 <h4 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>팬 인증</strong></h4>
@@ -135,7 +135,7 @@ class Chongdae_auth extends Component{
                 </div>
                 <Button block id="verButton" color="success" 
                     href='/fan_auth'>팬 인증</Button>
-                </Col>
+                </Col> */}
                 
                     
                 

@@ -9,7 +9,7 @@ import FundingSummary from "./funding/reward/RewardFundingSummary";
 import FundingList from "./funding/reward/RewardFundingList";
 import {Link} from "react-router-dom";
 import CollectFundingSummary from "./funding/collect/CollectFundingSummary";
-import {Row} from 'reactstrap';
+import {CardText} from 'reactstrap';
 var preArtist = null;
 var nowArtist = "";
 class SelectedArtist extends Component {
@@ -70,7 +70,7 @@ class SelectedArtist extends Component {
                     {/*</CardDeck>*/}
                     
                     <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', 
-                    margin:'10px', flexFlow:'row wrap', alignItems:'center'}}>
+                    margin:'10px', flexFlow:'row wrap', alignItems:'center', position:'relative'}}>
 
                         {
                             
@@ -86,8 +86,9 @@ class SelectedArtist extends Component {
                                     preArtist = nowArtist;
                                     return(
                                     <>
-                                    <p className="artist-p" style={{float: 'left', textAlign: 'left',marginTop:'50px', 
-                                    fontSize:'2.0rem'}}><strong>{nowArtist}</strong> 관련 펀딩</p>
+                                    <CardText style={{float: 'left', textAlign: 'left',marginTop:'50px', 
+                                    marginRight:'100px', 
+                                    fontSize:'2.0rem'}}><strong>{nowArtist}</strong> 관련 펀딩</CardText>
                                     {/* <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}> */}
                                     <FundingContents funding={funding} key={i}></FundingContents>
                                     {/* </CardDeck> */}
