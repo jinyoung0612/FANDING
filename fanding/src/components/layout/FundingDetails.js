@@ -216,7 +216,7 @@ const FundingDetails = (props)=>{
                         <Container>
                             <Button disabled className="xs ml-0" style={{backgroundColor:"#ebebeb"}}>{funding.artistSelect}</Button>
                             <div className="text-left"><h2><b>{funding.fundingTitle}</b></h2></div>
-                            <div className="mt-5">
+                            <div>
                                 <Row xs="12" sm="12" md="2">
                                     <Col xs="12" sm="12" md="8"><CardImg top width="10%" src={funding.thumbnailImage} style={imgStyle}  alt="Card image cap" /></Col>
                                     <Col xs="12" sm="12" md="4">
@@ -224,7 +224,7 @@ const FundingDetails = (props)=>{
                                             <div className="text-center mt-30" style={{fontSize:"1.5em", paddingTop:'30px'}} ><b>{percent}% 달성</b></div>
                                             <ProgressBar variant={"info"} min="0" max="100" now={percent}/>
                                             {/*<Progress color="info" value="80" />*/}
-                                            <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-5"><b>{funding.progress}명</b>의 FAN</p>
+                                            <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-3"><b>{funding.progress}명</b>의 FAN</p>
                                             <p style={{paddingLeft:"16px"}} style={{fontSize:"1.5em"}} className="mt-3"><b>{period}일</b> 남음</p>
 
                                             {
@@ -414,38 +414,48 @@ const FundingDetails = (props)=>{
                                                     </CopyToClipboard>
                                                 </Col>
                                             </Row>
-                                            <Row style={{paddingTop: "50px", paddingLeft:"30px"}}>
-                                                <CardText>
-                                                    <CardText><b style={{fontSize:"1.5em"}}>펀딩 기간(입금 기간)</b></CardText>
-                                                    <CardText>{funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardText>
-                                                    <CardText><b style={{fontSize:"1.5em"}}>펀딩달성기준</b></CardText>
-                                                    <CardText>{funding.itemRemain}명</CardText>
-                                                </CardText>
+                                            <Row xs="2">
+                                                <Col xs="12">
+                                                <Link className="inactive" activeClassName="active" to={'../notice/list/' + doc_id}>
+                                                <Button size="sm" className="button-responsive" block color="success" style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
+                                                </Button>
+                                                </Link>
+                                                </Col>
                                             </Row>
+                                            {/* <Row style={{paddingTop: "50px", paddingLeft:"30px"}}>
+                                                
+                                            </Row> */}
+                                            
                                         </div>
                                     </Col>
                                 </Row>
                                 <Row xs="3" style={{paddingTop: "50px"}}>
-                                    <Col xs={8}>
+                                
+                                    
+                                    <Col xs={12} sm={12} md={8}>
 
                                         <CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>펀딩 기간(입금 기간)</b></CardText>
+                                            <CardText style={{marginBottom:'20px'}}>{funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardText>
+                                            <CardText><b style={{fontSize:"1.5em"}}>펀딩달성기준</b></CardText>
+                                            <CardText style={{marginBottom:'20px'}}>{funding.itemRemain}명</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>품목</b></CardText>
-                                            <CardText>{funding.itemTitle}</CardText>
+                                            <CardText style={{marginBottom:'20px'}}>{funding.itemTitle}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>가격</b></CardText>
-                                            <CardText>{funding.itemPrice}원</CardText>
+                                            <CardText style={{marginBottom:'20px'}}>{funding.itemPrice}원</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>입금 계좌</b></CardText>
                                             {
                                                 funding.isClosed===true ?
                                                     (<CardText>마감된 펀딩의 입금 계좌는 볼 수 없습니다.</CardText>)
-                                                    : <CardText>{funding.bankName} {funding.accountNum} {funding.accountName}</CardText>
+                                                    : <CardText style={{marginBottom:'20px'}}>{funding.bankName} {funding.accountNum} {funding.accountName}</CardText>
                                             }
                                             {/*<CardText>{funding.bankName} {funding.accountNum} {funding.accountName}</CardText>*/}
                                             <CardText><b style={{fontSize:"1.5em"}}>배송방법</b></CardText>
-                                            <CardText>{funding.shippingMethod}</CardText>
+                                            <CardText style={{marginBottom:'20px'}}>{funding.shippingMethod}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>배송비</b></CardText>
-                                            <CardText>{funding.shippingFee}</CardText>
+                                            <CardText style={{marginBottom:'20px'}}>{funding.shippingFee}</CardText>
                                             <CardText><b style={{fontSize:"1.5em"}}>배송 안내</b></CardText>
-                                            <CardText>{funding.shippingDetail}</CardText>
+                                            <CardText style={{marginBottom:'20px'}}>{funding.shippingDetail}</CardText>
                                         </CardText>
 
                                         <div className="text-left"><h4 className="pt-30"><b>상세 설명</b></h4></div>
@@ -498,10 +508,9 @@ const FundingDetails = (props)=>{
 
                                         </div>
                                     </Col>
-                                    <Col  xs={4}>
-                                        <Button size="sm" className="button-responsive" block color="success" style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
-                                        </Button>
-                                        <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
+                                    <Col  xs={12} sm={12} md={4}>
+                                    
+                                        <div className="text-left" style={{marginTop: "0px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
                                         {funding.selectedCom ?
                                             <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름 {funding.selectedCom.label}</div>
                                             :                                             <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
@@ -562,21 +571,15 @@ const FundingDetails = (props)=>{
                                                         <Button className="btn-responsive" color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
                                                     </CopyToClipboard>
                                                 </Col>
+                                                
                                             </Row>
-                                            <Row style={{paddingTop: "50px", paddingLeft:"30px"}}>
-                                                {/*<CardText>*/}
-                                                {/*    /!*<h5 className="mt-30"><b>펀딩 기간(입금 기간)</b> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</h5>*!/*/}
-                                                {/*    <CardText>{funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardText>*/}
-                                                {/*</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>품목 : </b></h5></CardText>*/}
-                                                {/*<CardText>{funding.itemTitle}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>가격 : </b></h5>{funding.itemPrice}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>펀딩달성기준 : </b></h5>{funding.itemRemain}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>배송방법 : </b></h5>{funding.shippingMethod}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>배송비 : </b></h5>{funding.shippingFee}</CardText>*/}
-                                                {/*<CardText><h5 className="mt-30"><b>배송 안내 : </b></h5>{funding.shippingDetail}</CardText>*/}
-                                                <div></div>
+                                            <Row xs="12" >
+                                            <Link className="inactive" activeClassName="active" to={'../notice/list/' + doc_id}>
+                                        <Button size="sm" color="success" className="btn-responsive" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
+                                        </Button>
+                                    </Link>
                                             </Row>
+                                            
                                         </div>
                                     </Col>
                                 </Row>
@@ -602,8 +605,7 @@ const FundingDetails = (props)=>{
                                         </div>
                                     </Col>
                                     <Col  xs={4}>
-                                        <Button size="sm" color="success" className="btn-responsive" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
-                                        </Button>
+                                    
                                         <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
                                         {funding.selectedCom ?
                                             <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름 {funding.selectedCom.label}</div>
@@ -698,8 +700,10 @@ const FundingDetails = (props)=>{
                                         </div>
                                     </Col>
                                     <Col  xs={4}>
+                                    <Link className="inactive" activeClassName="active" to={'../notice/list/' + doc_id}>
                                         <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
                                         </Button>
+                                    </Link>
                                         <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
                                         <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
                                     </Col>
@@ -777,8 +781,10 @@ const FundingDetails = (props)=>{
                                     </div>
                                 </Col>
                                 <Col  xs={4}>
-                                    <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
-                                    </Button>
+                                <Link className="inactive" activeClassName="active" to={'../notice/list/' + doc_id}>
+                                        <Button size="lg" block style={{backgroundColor:"#635d5d", borderColor:"#635d5d"}}>NOTICE <BsFillBellFill className="ml-2 mb-20"/>
+                                        </Button>
+                                    </Link>
                                     <div className="text-left" style={{marginTop: "50px"}}><h4 className="mt-30"><b>업체 정보</b></h4></div>
                                     <div style={{borderColor: "#635d5d", border: "1px solid #635d5d", borderRadius:"4px"}}>업체 이름</div>
                                 </Col>

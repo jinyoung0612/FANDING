@@ -10,6 +10,8 @@ import Userlogo from "../img/userImg.png";
 import userlogo3 from "../img/userImg3.png";
 import "./chatroom.css";
 import userLogo2 from "../img/userImg2.png";
+import {MdSend, MdAccountCircle} from "react-icons/md";
+import {BsImage} from "react-icons/bs";
 // import userlogo3 from "../img/myuserImg.png";
 
 const f = firebase;
@@ -74,7 +76,7 @@ export default class chatroom extends Component {
     await this.scrollingToEnd();
     this.setState({ oldChats: chat });
 
-    if (auth.currentUser.email == receiver) {
+    if (auth.currentUser.email === receiver) {
       firestore.collection("chats").doc(docid).update({ readmsg: true });
     }
   };
@@ -504,13 +506,16 @@ export default class chatroom extends Component {
     const { profilePicture } = this.props;
 
     return (
-      <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-          <div className="container-fluid">
+      // <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+          <div className="container-fluid" style={{
+            paddingLeft: '0px',
+            paddingRight: '0px'
+          }}>
             {this.state.showImageBeforeUpload === false ? (
               <div>
                 {this.state.showProfile === false ? (
                   <div className="card">
-                    <div className="card-header msg_head">
+                    <div className="card-header msg_head" style={{height:'65px'}}>
                       <div
                         className="d-flex bd-highlight"
                         style={{ alignItems: "center" }}
@@ -524,12 +529,15 @@ export default class chatroom extends Component {
                       </button>
                     </div> */}
                         <div className="img_cont">
-                          <img
+                          {/* <img
                             src={oponentUserData.URL || userlogo3}
                             className="rounded-circle user_img"
                             style={{ cursor: "pointer" }}
                             onClick={() => this.setState({ showProfile: true })}
-                          />
+                          /> */}
+                          <MdAccountCircle size={40} className="user_img"
+                            style={{ cursor: "pointer", fill:'#9e66ff' }}
+                            onClick={() => this.setState({ showProfile: true })}/>
                         </div>
                         <div className="user_info">
                           <span>
@@ -554,12 +562,12 @@ export default class chatroom extends Component {
                             <div>
                               {list.sender === oponentUserEmail ? (
                                 <div className="d-flex justify-content-start mb-4">
-                                  <div className="img_cont_msg">
+                                  
                                     {/* <img
                                       src={oponentUserData.URL || userlogo3}
                                       className="rounded-circle user_img_msg"
                                     /> */}
-                                  </div>
+                                 
                                   <div
                                     className="msg_cotainer text-center"
                                     style={{ minWidth: "100px" }}
@@ -581,19 +589,19 @@ export default class chatroom extends Component {
                                 >
                                   <div
                                     className="msg_cotainer_send text-center pointer"
-                                    style={{ minWidth: "70px" }}
+                                    style={{ minWidth: "70px", marginRight:'0px' }}
                                   >
                                     {list.message}
                                     <span className="msg_time_send text-dark text-center">
                                       {list.time}
                                     </span>
                                   </div>
-                                  <div className="img_cont_msg">
+                                  
                                     {/* <img
                                       src={profilePicture}
                                       className="rounded-circle user_img_msg"
                                     /> */}
-                                  </div>
+                                  
                                 </div>
                               )}
                             </div>
@@ -601,12 +609,12 @@ export default class chatroom extends Component {
                             <div>
                               {list.sender === oponentUserEmail ? (
                                 <div className="d-flex justify-content-start mb-4">
-                                  <div className="img_cont_msg">
+                                  
                                     {/* <img
                                       src={oponentUserData.URL}
                                       className="rounded-circle user_img_msg"
                                     /> */}
-                                  </div>
+                                  
                                   <div
                                     className="msg_cotainer text-center"
                                     style={{ minWidth: "70px", width: "40%" }}
@@ -639,12 +647,12 @@ export default class chatroom extends Component {
                                       {list.time}
                                     </span>
                                   </div>
-                                  <div className="img_cont_msg">
+                                  
                                     {/* <img
                                       src={profilePicture}
                                       className="rounded-circle user_img_msg"
                                     /> */}
-                                  </div>
+                                  
                                 </div>
                               )}
                             </div>
@@ -653,26 +661,15 @@ export default class chatroom extends Component {
                       ))}
                     </div>
 
-                    <div className="card-footer">
+                    <div className="card-footer" style={{height: '50px',
+	                    paddingLeft: '10px',paddingRight: '10px', paddingTop:'6px'}}
+	
+>
                       <div className="input-group">
-                        <textarea
-                          name=""
-                          className="form-control type_msg"
-                          placeholder="내용을 입력해주세요"
-                          value={this.state.text}
-                          onChange={(e) => {
-                            this.setState({ text: e.target.value });
-                            this.typing(e.target.value);
-                          }}
-                        ></textarea>
-                        <div>
-                          <img
-                            src={GallaryImg}
-                            onClick={() =>
+                        <BsImage onClick={() =>
                               document.getElementById("share_img").click()
                             }
-                            className="mt-2 galary-img"
-                          />
+                            className="mt-2 mr-1 galary-img" />
                           <input
                             type="file"
                             id="share_img"
@@ -682,13 +679,37 @@ export default class chatroom extends Component {
                             }
                             accept="image/"
                           />
+                        <textarea
+                          name=""
+                          className="form-control type_msg"
+                          placeholder="메시지를 입력해주세요"
+                          value={this.state.text}
+                          onChange={(e) => {
+                            this.setState({ text: e.target.value });
+                            this.typing(e.target.value);
+                          }}
+                          style={{height: '20px', paddingRight: '0px',
+	                                paddingLeft: '5px', paddingTop: '5px',
+	                                paddingBottom: '5px'}}
+                        ></textarea>
+                        <div>
+                          
+                          {/* <img
+                            src={GallaryImg}
+                            onClick={() =>
+                              document.getElementById("share_img").click()
+                            }
+                            className="mt-2 galary-img"
+                          />
+                           */}
+                           
                         </div>
                         <div className="input-group-append">
                           <span
                             className="input-group-text send_btn"
                             onClick={() => this.sendMessage()}
                           >
-                            전 송
+                            <MdSend />
                           </span>
                         </div>
                       </div>
@@ -807,7 +828,7 @@ export default class chatroom extends Component {
               </div>
             ) : null}
           </div>
-      </section>
+      // </section>
     );
   }
 }
