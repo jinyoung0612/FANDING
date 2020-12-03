@@ -379,9 +379,9 @@ console.log(props);
             </Row>
           </Col>
 
-          <div>
+          {/* <div>
           <h4 style={{paddingTop: '28px', paddingLeft:'25px'}}>내 정보에서는 프로필 관리, 펀딩 관리, 총대 인증을 하고 위시 리스트를 볼 수 있습니다. </h4>
-          </div>
+          </div> */}
         </Row>
           
           {/* <Nav tabs>
