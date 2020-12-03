@@ -10,8 +10,8 @@ import Userlogo from "../img/userImg.png";
 import userlogo3 from "../img/userImg3.png";
 import "./chatroom.css";
 import userLogo2 from "../img/userImg2.png";
-import {MdSend, MdAccountCircle} from "react-icons/md";
-import {BsImage} from "react-icons/bs";
+import { MdSend, MdAccountCircle } from "react-icons/md";
+import { BsImage } from "react-icons/bs";
 // import userlogo3 from "../img/myuserImg.png";
 
 const f = firebase;
@@ -51,7 +51,6 @@ export default class chatroom extends Component {
     await this.snapshotOnCall();
 
     await this.setState({ oldChats: this.props.chatData.messages.length });
-    console.log("what oldchats?", this.state.oldChats);
     var time = setTimeout(async () => {
       await this.scrollingToEnd();
       clearTimeout(time);
@@ -507,20 +506,26 @@ export default class chatroom extends Component {
 
     return (
       // <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-          <div className="container-fluid" style={{
-            paddingLeft: '0px',
-            paddingRight: '0px'
-          }}>
-            {this.state.showImageBeforeUpload === false ? (
-              <div>
-                {this.state.showProfile === false ? (
-                  <div className="card">
-                    <div className="card-header msg_head" style={{height:'65px'}}>
-                      <div
-                        className="d-flex bd-highlight"
-                        style={{ alignItems: "center" }}
-                      >
-                        {/* <div>
+      <div
+        className="container-fluid"
+        style={{
+          paddingLeft: "0px",
+          paddingRight: "0px",
+        }}
+      >
+        {this.state.showImageBeforeUpload === false ? (
+          <div>
+            {this.state.showProfile === false ? (
+              <div className="card">
+                <div
+                  className="card-header msg_head"
+                  style={{ height: "65px" }}
+                >
+                  <div
+                    className="d-flex bd-highlight"
+                    style={{ alignItems: "center" }}
+                  >
+                    {/* <div>
                       <button
                         className="btn btn-primary mr-2"
                         onClick={this.props.backButtonClick}
@@ -528,173 +533,180 @@ export default class chatroom extends Component {
                         Back
                       </button>
                     </div> */}
-                        <div className="img_cont">
-                          {/* <img
+                    <div className="img_cont">
+                      {/* <img
                             src={oponentUserData.URL || userlogo3}
                             className="rounded-circle user_img"
                             style={{ cursor: "pointer" }}
                             onClick={() => this.setState({ showProfile: true })}
                           /> */}
-                          <MdAccountCircle size={40} className="user_img"
-                            style={{ cursor: "pointer", fill:'#9e66ff' }}
-                            onClick={() => this.setState({ showProfile: true })}/>
-                        </div>
-                        <div className="user_info">
-                          <span>
-                            {oponentUserData.nickname || oponentUserData.name}
-                          </span>{" "}
-                          {/* <h6 className="inline">
+                      <MdAccountCircle
+                        size={40}
+                        className="user_img"
+                        style={{ cursor: "pointer", fill: "#9e66ff" }}
+                        onClick={() => this.setState({ showProfile: true })}
+                      />
+                    </div>
+                    <div className="user_info">
+                      <span>
+                        {oponentUserData.nickname || oponentUserData.name}
+                      </span>{" "}
+                      {/* <h6 className="inline">
                         ({oponentUserData.isonline ? "Online" : "Offline"})
                       </h6> */}
-                          <h6>
-                            {this.state.isOponentTyping ? (
-                              <h6 className="typing-text-left">입력중...</h6>
-                            ) : null}
-                          </h6>
-                        </div>
-                      </div>
+                      <h6>
+                        {this.state.isOponentTyping ? (
+                          <h6 className="typing-text-left">입력중...</h6>
+                        ) : null}
+                      </h6>
                     </div>
+                  </div>
+                </div>
 
-                    <div className="card-body msg_card_body" id="scrolling">
-                      {this.props.chatData.messages.map((list, index) => (
-                        <div key={index}>
-                          {list.type === "text" ? (
-                            <div>
-                              {list.sender === oponentUserEmail ? (
-                                <div className="d-flex justify-content-start mb-4">
-                                  
-                                    {/* <img
+                <div className="card-body msg_card_body" id="scrolling">
+                  {this.props.chatData.messages.map((list, index) => (
+                    <div key={index}>
+                      {list.type === "text" ? (
+                        <div>
+                          {list.sender === oponentUserEmail ? (
+                            <div className="d-flex justify-content-start mb-4">
+                              {/* <img
                                       src={oponentUserData.URL || userlogo3}
                                       className="rounded-circle user_img_msg"
                                     /> */}
-                                 
-                                  <div
-                                    className="msg_cotainer text-center"
-                                    style={{ minWidth: "100px" }}
-                                  >
-                                    {list.message}
-                                    <span className="msg_time text-dark text-center">
-                                      {list.time}
-                                    </span>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div
-                                  className="d-flex justify-content-end mb-4"
-                                  onTouchStart={() => this.touchStart(index)}
-                                  onTouchEnd={() => this.touchEnd()}
-                                  onMouseDown={() => this.touchStart(index)}
-                                  onMouseUp={() => this.touchEnd()}
-                                  onMouseLeave={() => this.touchEnd()}
-                                >
-                                  <div
-                                    className="msg_cotainer_send text-center pointer"
-                                    style={{ minWidth: "70px", marginRight:'0px' }}
-                                  >
-                                    {list.message}
-                                    <span className="msg_time_send text-dark text-center">
-                                      {list.time}
-                                    </span>
-                                  </div>
-                                  
-                                    {/* <img
-                                      src={profilePicture}
-                                      className="rounded-circle user_img_msg"
-                                    /> */}
-                                  
-                                </div>
-                              )}
+
+                              <div
+                                className="msg_cotainer text-center"
+                                style={{ minWidth: "100px" }}
+                              >
+                                {list.message}
+                                <span className="msg_time text-dark text-center">
+                                  {list.time}
+                                </span>
+                              </div>
                             </div>
                           ) : (
-                            <div>
-                              {list.sender === oponentUserEmail ? (
-                                <div className="d-flex justify-content-start mb-4">
-                                  
-                                    {/* <img
-                                      src={oponentUserData.URL}
-                                      className="rounded-circle user_img_msg"
-                                    /> */}
-                                  
-                                  <div
-                                    className="msg_cotainer text-center"
-                                    style={{ minWidth: "70px", width: "40%" }}
-                                  >
-                                    <img src={list.URL} className="msg_img" />
-                                    <span className="msg_time text-dark text-center">
-                                      {list.time}
-                                    </span>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div
-                                  className="d-flex justify-content-end mb-4"
-                                  onTouchStart={() =>
-                                    this.touchStartImg(index, list.imgnm)
-                                  }
-                                  onTouchEnd={() => this.touchEndImg()}
-                                  onMouseDown={() =>
-                                    this.touchStartImg(index, list.imgnm)
-                                  }
-                                  onMouseUp={() => this.touchEndImg()}
-                                  onMouseLeave={() => this.touchEndImg()}
-                                >
-                                  <div
-                                    className="msg_cotainer_send text-center pointer"
-                                    style={{ minWidth: "70px", width: "40%" }}
-                                  >
-                                    <img src={list.URL} className="msg_img" />
-                                    <span className="msg_time_send text-dark text-center">
-                                      {list.time}
-                                    </span>
-                                  </div>
-                                  
-                                    {/* <img
+                            <div
+                              className="d-flex justify-content-end mb-4"
+                              onTouchStart={() => this.touchStart(index)}
+                              onTouchEnd={() => this.touchEnd()}
+                              onMouseDown={() => this.touchStart(index)}
+                              onMouseUp={() => this.touchEnd()}
+                              onMouseLeave={() => this.touchEnd()}
+                            >
+                              <div
+                                className="msg_cotainer_send text-center pointer"
+                                style={{ minWidth: "70px", marginRight: "0px" }}
+                              >
+                                {list.message}
+                                <span className="msg_time_send text-dark text-center">
+                                  {list.time}
+                                </span>
+                              </div>
+
+                              {/* <img
                                       src={profilePicture}
                                       className="rounded-circle user_img_msg"
                                     /> */}
-                                  
-                                </div>
-                              )}
                             </div>
                           )}
                         </div>
-                      ))}
-                    </div>
-
-                    <div className="card-footer" style={{height: '50px',
-	                    paddingLeft: '10px',paddingRight: '10px', paddingTop:'6px'}}
-	
->
-                      <div className="input-group">
-                        <BsImage onClick={() =>
-                              document.getElementById("share_img").click()
-                            }
-                            className="mt-2 mr-1 galary-img" />
-                          <input
-                            type="file"
-                            id="share_img"
-                            style={{ display: "none" }}
-                            onChange={(e) =>
-                              this.setImageLocally(e.target.files[0])
-                            }
-                            accept="image/"
-                          />
-                        <textarea
-                          name=""
-                          className="form-control type_msg"
-                          placeholder="메시지를 입력해주세요"
-                          value={this.state.text}
-                          onChange={(e) => {
-                            this.setState({ text: e.target.value });
-                            this.typing(e.target.value);
-                          }}
-                          style={{height: '20px', paddingRight: '0px',
-	                                paddingLeft: '5px', paddingTop: '5px',
-	                                paddingBottom: '5px'}}
-                        ></textarea>
+                      ) : (
                         <div>
-                          
-                          {/* <img
+                          {list.sender === oponentUserEmail ? (
+                            <div className="d-flex justify-content-start mb-4">
+                              {/* <img
+                                      src={oponentUserData.URL}
+                                      className="rounded-circle user_img_msg"
+                                    /> */}
+
+                              <div
+                                className="msg_cotainer text-center"
+                                style={{ minWidth: "70px", width: "40%" }}
+                              >
+                                <img src={list.URL} className="msg_img" />
+                                <span className="msg_time text-dark text-center">
+                                  {list.time}
+                                </span>
+                              </div>
+                            </div>
+                          ) : (
+                            <div
+                              className="d-flex justify-content-end mb-4"
+                              onTouchStart={() =>
+                                this.touchStartImg(index, list.imgnm)
+                              }
+                              onTouchEnd={() => this.touchEndImg()}
+                              onMouseDown={() =>
+                                this.touchStartImg(index, list.imgnm)
+                              }
+                              onMouseUp={() => this.touchEndImg()}
+                              onMouseLeave={() => this.touchEndImg()}
+                            >
+                              <div
+                                className="msg_cotainer_send text-center pointer"
+                                style={{ minWidth: "70px", width: "40%" }}
+                              >
+                                <img src={list.URL} className="msg_img" />
+                                <span className="msg_time_send text-dark text-center">
+                                  {list.time}
+                                </span>
+                              </div>
+
+                              {/* <img
+                                      src={profilePicture}
+                                      className="rounded-circle user_img_msg"
+                                    /> */}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div
+                  className="card-footer"
+                  style={{
+                    height: "50px",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                    paddingTop: "6px",
+                  }}
+                >
+                  <div className="input-group">
+                    <BsImage
+                      onClick={() =>
+                        document.getElementById("share_img").click()
+                      }
+                      className="mt-2 mr-1 galary-img"
+                    />
+                    <input
+                      type="file"
+                      id="share_img"
+                      style={{ display: "none" }}
+                      onChange={(e) => this.setImageLocally(e.target.files[0])}
+                      accept="image/"
+                    />
+                    <textarea
+                      name=""
+                      className="form-control type_msg"
+                      placeholder="메시지를 입력해주세요"
+                      value={this.state.text}
+                      onChange={(e) => {
+                        this.setState({ text: e.target.value });
+                        this.typing(e.target.value);
+                      }}
+                      style={{
+                        height: "20px",
+                        paddingRight: "0px",
+                        paddingLeft: "5px",
+                        paddingTop: "5px",
+                        paddingBottom: "5px",
+                      }}
+                    ></textarea>
+                    <div>
+                      {/* <img
                             src={GallaryImg}
                             onClick={() =>
                               document.getElementById("share_img").click()
@@ -702,132 +714,125 @@ export default class chatroom extends Component {
                             className="mt-2 galary-img"
                           />
                            */}
-                           
-                        </div>
-                        <div className="input-group-append">
-                          <span
-                            className="input-group-text send_btn"
-                            onClick={() => this.sendMessage()}
-                          >
-                            <MdSend />
-                          </span>
-                        </div>
-                      </div>
+                    </div>
+                    <div className="input-group-append">
+                      <span
+                        className="input-group-text send_btn"
+                        onClick={() => this.sendMessage()}
+                      >
+                        <MdSend />
+                      </span>
                     </div>
                   </div>
-                ) : (
-                  <div className="oponent-profile p-5 shadow center">
-                    <div className="chat-img-profile-div">
-                      <img
-                        src={oponentUserData.URL || userlogo3}
-                        className="chat-img-profile"
-                      />
-                    </div>
+                </div>
+              </div>
+            ) : (
+              <div className="oponent-profile p-5 shadow center">
+                <div className="chat-img-profile-div">
+                  <img
+                    src={oponentUserData.URL || userlogo3}
+                    className="chat-img-profile"
+                  />
+                </div>
 
-                    <div
-                      style={{
-                        backgroundColor: "#6b34c9",
-                        color: "white",
-                        borderRadius: "20px",
-                      }}
-                      className="p-2 mt-2 container"
-                    >
-                      <div className="chat-name-profile">
-                        <h3>
-                          Name:{" "}
-                          {oponentUserData.nickname || oponentUserData.name}
-                        </h3>
-                      </div>
+                <div
+                  style={{
+                    backgroundColor: "#6b34c9",
+                    color: "white",
+                    borderRadius: "20px",
+                  }}
+                  className="p-2 mt-2 container"
+                >
+                  <div className="chat-name-profile">
+                    <h3>
+                      Name: {oponentUserData.nickname || oponentUserData.name}
+                    </h3>
+                  </div>
 
-                      <div>
-                        <h4>
-                          Email:{" "}
-                          {oponentUserData.user_email || oponentUserData.email}
-                        </h4>
-                      </div>
-                      {/* 
+                  <div>
+                    <h4>
+                      Email:{" "}
+                      {oponentUserData.user_email || oponentUserData.email}
+                    </h4>
+                  </div>
+                  {/* 
                   <div className="chat-description-profile">
                     <h5>Description: {oponentUserData.description}</h5>
                   </div> */}
-                    </div>
+                </div>
 
-                    <div className="p-3">
-                      {/* <button
+                <div className="p-3">
+                  {/* <button
                     className="btn-lg btn-danger"
                     onClick={() => this.blockUser()}
                   >
                     Block
                   </button> */}
 
-                      <br></br>
+                  <br></br>
 
-                      <button
-                        className="btn btn-primary mt-3"
-                        onClick={() => this.setState({ showProfile: false })}
-                      >
-                        뒤로가기
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {this.state.showMoreDialogBox ? (
-                  <MoreDialog moreOptions={(type) => this.moreOptions(type)} />
-                ) : null}
-              </div>
-            ) : (
-              <div className="container center">
-                <img
-                  src={this.state.currentSelectedImg}
-                  className="image-upload-output"
-                />
-
-                {!this.state.loading ? (
-                  <div className="mt-2">
-                    <button
-                      className="btn btn-primary mr-3"
-                      onClick={() => {
-                        this.setState({
-                          showImageBeforeUpload: false,
-                          imgFile: "",
-                          currentSelectedImg: "",
-                        });
-                        this.scrollingToEnd();
-                      }}
-                    >
-                      취소
-                    </button>
-                    <button
-                      className="btn btn-success"
-                      onClick={() => this.sendImage()}
-                    >
-                      전송
-                    </button>
-                  </div>
-                ) : null}
+                  <button
+                    className="btn btn-primary mt-3"
+                    onClick={() => this.setState({ showProfile: false })}
+                  >
+                    뒤로가기
+                  </button>
+                </div>
               </div>
             )}
 
-            {this.state.loading === true ? (
-              <div className="p-3  center">
-                <center>
-                  <div
-                    className="shadow p-3"
-                    style={{ backgroundColor: "#E7E7E7" }}
-                  >
-                    <Loading
-                      type="bars"
-                      color="black"
-                      height={100}
-                      width={100}
-                    />
-                    <h5>{this.state.progress}%</h5>
-                    <h3>Sending...</h3>
-                  </div>
-                </center>
+            {this.state.showMoreDialogBox ? (
+              <MoreDialog moreOptions={(type) => this.moreOptions(type)} />
+            ) : null}
+          </div>
+        ) : (
+          <div className="container center">
+            <img
+              src={this.state.currentSelectedImg}
+              className="image-upload-output"
+            />
+
+            {!this.state.loading ? (
+              <div className="mt-2">
+                <button
+                  className="btn btn-primary mr-3"
+                  onClick={() => {
+                    this.setState({
+                      showImageBeforeUpload: false,
+                      imgFile: "",
+                      currentSelectedImg: "",
+                    });
+                    this.scrollingToEnd();
+                  }}
+                >
+                  취소
+                </button>
+                <button
+                  className="btn btn-success"
+                  onClick={() => this.sendImage()}
+                >
+                  전송
+                </button>
               </div>
             ) : null}
           </div>
+        )}
+
+        {this.state.loading === true ? (
+          <div className="p-3  center">
+            <center>
+              <div
+                className="shadow p-3"
+                style={{ backgroundColor: "#E7E7E7" }}
+              >
+                <Loading type="bars" color="black" height={100} width={100} />
+                <h5>{this.state.progress}%</h5>
+                <h3>Sending...</h3>
+              </div>
+            </center>
+          </div>
+        ) : null}
+      </div>
       // </section>
     );
   }

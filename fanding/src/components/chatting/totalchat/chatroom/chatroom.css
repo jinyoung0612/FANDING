@@ -41,59 +41,59 @@
   background-color: white;
 }
 .msg_card_body {
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 .card-header {
-  border-radius: 15px 15px 0 0 ;
-  border-bottom: 0 ;
+  border-radius: 15px 15px 0 0;
+  border-bottom: 0;
 }
 .card-footer {
-  border-radius: 0 0 15px 15px ;
-  border-top: 0 ;
+  border-radius: 0 0 15px 15px;
+  border-top: 0;
 }
 .container {
   align-content: center;
 }
 .search {
-  border-radius: 15px 0 0 15px ;
-  background-color: white ;
-  border: 0 ;
+  border-radius: 15px 0 0 15px;
+  background-color: white;
+  border: 0;
   color: white;
 }
 .search:focus {
-  box-shadow: none ;
-  outline: 0px ;
+  box-shadow: none;
+  outline: 0px;
 }
 .type_msg {
-  background-color: white ;
-  border: 0 ;
-  color: black ;
-  height: 20px ;
+  background-color: white;
+  border: 0;
+  color: black;
+  height: 20px;
   overflow-y: auto;
 }
 .type_msg:focus {
-  box-shadow: none ;
-  outline: 0px ;
+  box-shadow: none;
+  outline: 0px;
 }
 .attach_btn {
-  border-radius: 15px 0 0 15px ;
-  background-color: rgba(0, 0, 0, 0.3) ;
-  border: 0 ;
-  color: white ;
+  border-radius: 15px 0 0 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
   cursor: pointer;
 }
 .send_btn {
   border-radius: 0 15px 15px 0;
-  background-color: rgba(0, 0, 0, 0.3) ;
-  border: 0 ;
-  color: white ;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
   cursor: pointer;
 }
 .search_btn {
-  border-radius: 0 15px 15px 0 ;
+  border-radius: 0 15px 15px 0;
   background-color: rgba(0, 0, 0, 0.3);
-  border: 0 ;
-  color: white ;
+  border: 0;
+  color: white;
   cursor: pointer;
 }
 .contacts {
@@ -101,9 +101,9 @@
   padding: 0;
 }
 .contacts li {
-  width: 100% ;
+  width: 100%;
   padding: 5px 10px;
-  margin-bottom: 15px ;
+  margin-bottom: 15px;
 }
 .active {
   background-color: rgba(0, 0, 0, 0);
