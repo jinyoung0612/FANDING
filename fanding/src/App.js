@@ -37,7 +37,6 @@ import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
 
 import NoticeList from "./components/notice/NoticeList";
-import NoticeMain from "./components/notice/NoticeMain";
 
 import Search from "./components/layout/Search";
 import MyCompany from './components/layout/company/MyCompany';
@@ -89,7 +88,6 @@ class App extends Component {
             <Route path="/myRecruit" component={MyRecruit} />
 
             <Route path="/notice/list/:id" component={NoticeList}/>
-            <Route path="/notice/main" component={NoticeMain}/>
 
             <Route path="/companychat" component={CompanyChat} />
             <Route path="/myCompany" component={MyCompany} />
