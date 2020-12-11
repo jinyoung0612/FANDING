@@ -243,132 +243,27 @@ export const check_deposit2 = (user) => {
     }
 }
 
-export const modify_mypage = (inputs, profile,fullAddress, zoneCode) =>{
+export const modify_mypage = (data) =>{
 
     console.log("modify_mypage")
-    console.log(inputs, profile, fullAddress, zoneCode)
+    // console.log(inputs, profile, fullAddress, zoneCode)
     return (dispatch, getState) => {
         const firestore = firebase.firestore();
 
-        if(profile!==null){
             firestore
                 .collection("users")
                 .doc(firebase.auth().currentUser.email)
-                .update({
-                    profile:profile,
-                })
+                .update(
+                    data
+                )
                 .then(() => {
                     dispatch({ type: "CHANGE_SUCCESS" });
                 })
                 .catch((err) => {
                     dispatch({ type: "CHANGE_ERROR", err });
                 });
-        }
-        else if(fullAddress!==false){
-            firestore
-                .collection("users")
-                .doc(firebase.auth().currentUser.email)
-                .update({
-                    addr:fullAddress,
-                })
-                .then(() => {
-                    dispatch({ type: "CHANGE_SUCCESS" });
-                })
-                .catch((err) => {
-                    dispatch({ type: "CHANGE_ERROR", err });
-                });
-        }
-        else if(zoneCode!==false){
-            firestore
-                .collection("users")
-                .doc(firebase.auth().currentUser.email)
-                .update({
-                    zipcode:zoneCode,
-                })
-                .then(() => {
-                    dispatch({ type: "CHANGE_SUCCESS" });
-                })
-                .catch((err) => {
-                    dispatch({ type: "CHANGE_ERROR", err });
-                });
-        }
-        else if(inputs.detailAddress!==""){
-            firestore
-                .collection("users")
-                .doc(firebase.auth().currentUser.email)
-                .update({
-                    addr_detail:inputs.detailAddress
-                })
-                .then(() => {
-                    dispatch({ type: "CHANGE_SUCCESS" });
-                })
-                .catch((err) => {
-                    dispatch({ type: "CHANGE_ERROR", err });
-                });
-        }
-        else if(inputs.bank!==""){
-            firestore
-                .collection("users")
-                .doc(firebase.auth().currentUser.email)
-                .update({
-                    bank:inputs.bank
-                })
-                .then(() => {
-                    dispatch({ type: "CHANGE_SUCCESS" });
-                })
-                .catch((err) => {
-                    dispatch({ type: "CHANGE_ERROR", err });
-                });
-        }else if(inputs.accountNumber!==""){
-            firestore
-                .collection("users")
-                .doc(firebase.auth().currentUser.email)
-                .update({
-                    accountNumber:inputs.accountNumber
-                })
-                .then(() => {
-                    dispatch({ type: "CHANGE_SUCCESS" });
-                })
-                .catch((err) => {
-                    dispatch({ type: "CHANGE_ERROR", err });
-                });
-        }else if(inputs.accountName!==""){
-            firestore
-                .collection("users")
-                .doc(firebase.auth().currentUser.email)
-                .update({
-                    accountName:inputs.accountName
-                })
-                .then(() => {
-                    dispatch({ type: "CHANGE_SUCCESS" });
-                })
-                .catch((err) => {
-                    dispatch({ type: "CHANGE_ERROR", err });
-                });
-        }
-        // firestore
-        //     .collection("users")
-        //     .doc(firebase.auth().currentUser.email)
-        //     .update({
-        //         // nickname:nickname,
-        //         // artistSelect:inputs.artistSelect,
-        //         profile:profile,
-        //         // zoneCode: zoneCode,
-        //         // fullAddress:fullAddress,
-        //         // detailAddress:inputs.detailAddress,
-        //         addr: fullAddress,
-        //         addr_detail: inputs.detailAddress,
-        //         zipcode: zoneCode,
-        //         bank:inputs.bank,
-        //         accountNumber:inputs.accountNumber,
-        //         accountName:inputs.accountName,
-        //     })
-        //     .then(() => {
-        //         dispatch({ type: "CHANGE_SUCCESS" });
-        //     })
-        //     .catch((err) => {
-        //         dispatch({ type: "CHANGE_ERROR", err });
-        //     });
+
+       
     }
 }
 

@@ -96,7 +96,7 @@ console.log(props);
         bank:'',
         accountNumber:'',
         accountName:'',
-        artistSelect:'',
+        artistSelect:''
     });
 
 
@@ -135,15 +135,6 @@ console.log(props);
   }
 
 
-
-  let myfunding=null;
-
-  const toggle = tab => {
-    if (activeTab !== tab) setActiveTab(tab);
-
-  };
-  //리스트 만들기
-
   const hiddenFileInput=React.useRef();
 
   const handleImageChange=(e)=>{
@@ -163,6 +154,70 @@ console.log(props);
   };
 
   const handleModify = () => setModify(!modify);
+
+  var nickname_check=false;
+  const handleNickName=()=>{
+    console.log(inputs.nickname)
+    firebase
+        .firestore()
+        .collection("users")
+        .where("nickname", "==", inputs.nickname)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            console.log(doc.id, "=>", doc.data());
+            console.log("Duplicate Appears");
+            nickname_check = true;
+          });
+        })
+        .then(() => {
+          if(nickname_check===true) {
+            alert("닉네임 중복입니다.")
+          }
+          else{
+            dispatch(modify_mypage({nickname:inputs.nickname}));
+            alert("닉네임이 수정되었습니다.")
+
+          }
+        })
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
+        });
+  }
+
+  const data={};
+  const checkModify=(url)=>{
+    // console.log(url)
+    if(url!==""&&url!==undefined){
+      Object.assign(data, {"profile":url});
+    }
+    if(fullAddress!==false){
+      // console.log("실행");
+      Object.assign(data, {"addr": fullAddress});
+    }
+    if(zoneCode!==false){
+      Object.assign(data, {"zipcode": zoneCode});
+    }
+    if(inputs.detailAddress){
+      Object.assign(data, {"addr_detail": inputs.detailAddress});
+    }
+    if(inputs.bank){
+      Object.assign(data, {"bank": inputs.bank});
+    }
+    if(inputs.accountName){
+      Object.assign(data, {"accountName": inputs.accountName});
+    }
+    if(inputs.accountNumber){
+      Object.assign(data, {"accountNumber": inputs.accountNumber});
+    }
+    if(artistSelect!==""){
+      Object.assign(data, {"artistSelect": artistSelect});
+
+    }
+
+  console.log(data)
+    dispatch(modify_mypage(data));
+  }
 
   const handleAddress = (data) => {
     let AllAddress = data.address;
@@ -186,6 +241,7 @@ console.log(props);
     if(window.confirm("변경사항을 저장하시겠습니까 ?") === true){
       alert("등록되었습니다");
       e.preventDefault();
+      console.log(e.target.value)
       if(file!==""){
         const uploadTask = storage.ref(`profile/${firebase.auth().currentUser.email}`).put(file);
         uploadTask.on(
@@ -209,18 +265,29 @@ console.log(props);
                     console.log(url);
                     setProfile(file.name);
                     console.log(profile);
-                    dispatch(modify_mypage(inputs,url,fullAddress,zoneCode));
+                    checkModify(url);
+
+                    // dispatch(modify_mypage(inputs,url,fullAddress,zoneCode));
 
                   })
+                  .then(()=>{
+                      checkModify(url);
+
+                      }
+                  )
             }
         )
       }
       else{
-        dispatch(modify_mypage(inputs,profile,fullAddress,zoneCode));
+        // dispatch(modify_mypage(inputs,profile,fullAddress,zoneCode));
+        checkModify();
       }
     }
     else{
+      console.log(e.target)
+
       e.preventDefault();
+
       alert("취소되었습니다.");
     }
 
@@ -233,7 +300,6 @@ console.log(props);
   };
 
   if(props.auth.isLoaded && user!==undefined){
-    console.log(inputs)
     return (
       <>
       
@@ -259,7 +325,7 @@ console.log(props);
                     file!=="" ?
                       <Avatar style={{  width: "150px", height: "150px", marginLeft:"250px"}} alt="Remy Sharp" src={previewURL}/>
                       :
-                        user[0].profile!==null ?
+                        user[0].profile ?
                         <Avatar style={{  width: "150px", height: "150px", marginLeft:"250px"}} alt="Remy Sharp" src={user[0].profile}/>
                         :
                             <Avatar style={{  width: "150px", height: "150px", marginLeft:"250px"}} alt="Remy Sharp" />
@@ -277,9 +343,9 @@ console.log(props);
                   modify===true ?
                       (
                           <div>
-                            <Input placeholder={user[0].nickname}></Input>
-                            <Button onClick={handleModify}>취소</Button>
-                            <Button onClick={handleModify}>완료</Button>
+                            <Input placeholder={user[0].nickname} name="nickname" onChange={handleChange}/>
+                            <Button onClick={handleModify}>닫기</Button>
+                            <Button onClick={handleNickName}>완료</Button>
                           </div>
                       )
 
@@ -300,13 +366,6 @@ console.log(props);
                 }
 
                 <CardText><b>선호 아티스트</b></CardText>
-                {/*{user[0].artistSelect.map(artist=>{*/}
-                {/*  return(*/}
-                {/*      <CardText>{artist.label}</CardText>*/}
-                {/*  )*/}
-                {/*    }*/}
-                {/*)}*/}
-
                 <Select
                     styles={style}
                     id="artistSelect"
@@ -345,7 +404,11 @@ console.log(props);
                 <FormGroup>
 
                   {
-                    user[0].zipcode ? <Input type="zoneCode" name="zoneCode" id="zoneCode" value={user[0].zipcode}  onChange={handleChange}></Input> :
+                    user[0].zipcode ?
+                         zoneCode === false ? <Input type="zoneCode" name="zoneCode" id="zoneCode" placeholder={user[0].zipcode}  onChange={handleChange}/>
+                         :
+                             <Input type="zoneCode" name="zoneCode" id="zoneCode" value={zoneCode}  onChange={handleChange}/>
+                    :
 
                         zoneCode === false ? <Input type="zoneCode" name="zoneCode" id="zoneCode"
                                                     placeholder="우편번호"
@@ -362,6 +425,16 @@ console.log(props);
 
                 <FormGroup>
                   {
+                    user[0].addr ?
+                        fullAddress === false ? <Input type="fullAddress" name="fullAddress" id="fullAddress"
+                                                       placeholder={user[0].addr}
+                                                       onChange={handleChange}
+                            /> :
+                            <Input type="fullAddress" name="fullAddress" id="fullAddress"
+                                   value={fullAddress}
+                                   onChange={handleChange}
+                            />
+                            :
                     fullAddress === false ? <Input type="fullAddress" name="fullAddress" id="fullAddress"
                                                    placeholder="주소"
                                                    onChange={handleChange}
@@ -373,30 +446,48 @@ console.log(props);
                   }
                 </FormGroup>
                 <FormGroup>
-                  <Input type="detailAddress" name="detailAddress" id="detailAddress"
-                         placeholder="상세 주소를 입력하세요"
-                         onChange={handleChange}
-                  />
+
+                  {
+                    user[0].addr_detail ? <Input type="detailAddress" name="detailAddress" id="detailAddress" placeholder={user[0].addr_detail}  onChange={handleChange}/>:
+                        <Input type="detailAddress" name="detailAddress" id="detailAddress"
+                               placeholder="상세 주소를 입력하세요"
+                               onChange={handleChange}
+                        />
+                  }
+
                 </FormGroup>
 
                 <FormGroup>
                   <Label for="Refund"><b>환불계좌정보입력</b></Label>
-                  <Input type="bank" name="bank" id="bank"
-                         placeholder="은행명"
-                         onChange={handleChange}
-                  />
+                  {
+                    user[0].bank ? <Input type="bank" name="bank" id="bank" placeholder={user[0].bank}  onChange={handleChange}/>:
+                        <Input type="bank" name="bank" id="bank"
+                               placeholder="은행명"
+                               onChange={handleChange}
+                        />
+                  }
+
+
                 </FormGroup>
                 <FormGroup>
-                  <Input type="accountNumber" name="accountNumber" id="accountNumber"
-                         placeholder="계좌번호"
-                         onChange={handleChange}
-                  />
+                  {
+                    user[0].accountNumber ? <Input  type="accountNumber" name="accountNumber" id="accountNumber" placeholder={user[0].accountNumber}  onChange={handleChange}/>:
+                        <Input type="accountNumber" name="accountNumber" id="accountNumber"
+                               placeholder="계좌번호"
+                               onChange={handleChange}
+                        />
+                  }
+
                 </FormGroup>
                 <FormGroup>
-                  <Input type="accountName" name="accountName" id="accountName"
-                         placeholder="예금주명"
-                         onChange={handleChange}
-                  />
+                  {
+                    user[0].accountName ? <Input type="accountName" name="accountName" id="accountName" placeholder={user[0].accountName}  onChange={handleChange}/>:
+                        <Input type="accountName" name="accountName" id="accountName"
+                               placeholder="예금주명"
+                               onChange={handleChange}
+                        />
+                  }
+
                 </FormGroup>
 
               </Col>
