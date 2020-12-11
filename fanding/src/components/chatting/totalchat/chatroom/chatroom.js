@@ -151,8 +151,6 @@ export default class chatroom extends Component {
   //   const { oponentUserData } = this.state;
   //   const { userEmail } = this.props;
   //   let isBlocked = oponentUserData.blocklist.includes(userEmail);
-  //   // console.log("상대방 data", oponentUserData);
-
   //   return isBlocked;
   // };
 

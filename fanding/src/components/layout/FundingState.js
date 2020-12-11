@@ -27,6 +27,7 @@ import TuiGrid from "tui-grid";
 import axios from "axios";
 import { check_deposit } from "../../store/actions/userActions";
 import logo from "../../assets/images/reload.png";
+import "./FundingState.css";
 
 TuiGrid.setLanguage("ko");
 //TuiGrid.applyTheme('striped');
@@ -65,6 +66,7 @@ const FundingState = (props) => {
     let isCompanySaved = false;
     let funding_name = "";
     let tempAmount = 0;
+    let companyName = "";
     await firebase
       .firestore()
       .collection("fundings")
@@ -73,10 +75,15 @@ const FundingState = (props) => {
       .then(function (doc) {
         if (doc.data().isClosed) {
           checkClosed = true;
+        } else {
+          alert("펀딩 마감 이전에는 총 펀딩 금액이 저장되지 않습니다.");
         }
         if (!doc.data().fundingAmountSave) {
           checkSave = true;
+        } else {
+          alert("이미 펀딩 총 금액이 저장되었습니다.");
         }
+        companyName = doc.data().selectedCom.label;
         companyEmail = doc.data().selectedCom.value;
         funding_name = doc.data().fundingTitle;
       });
@@ -106,11 +113,10 @@ const FundingState = (props) => {
           if (doc.data().totalFundingAmount != 0) {
             isCompanySaved = true;
             saveAmount = doc.data().totalFundingAmount;
-            // console.log(saveAmount);
           }
         });
       if (isCompanySaved == true) {
-        //before saved
+        //after saved
         tempAmount = totalamount;
         totalamount += saveAmount;
         // console.log(totalamount);
@@ -124,9 +130,18 @@ const FundingState = (props) => {
               fundingName: funding_name,
               fundingAmount: tempAmount,
             }),
+            isPaymentOpen: false,
+            adminPaymentList: firebase.firestore.FieldValue.arrayUnion({
+              companyName: companyName,
+              fundingName: funding_name,
+              fundingAmount: tempAmount,
+              feesPayment: tempAmount * 0.05,
+              isPayment: "결제 미완료",
+            }),
+            isSaved: true,
           });
       } else {
-        //before no saved
+        //before saved
         await firebase
           .firestore()
           .collection("payments")
@@ -137,6 +152,15 @@ const FundingState = (props) => {
               fundingName: funding_name,
               fundingAmount: totalamount,
             }),
+            isPaymentOpen: false,
+            adminPaymentList: firebase.firestore.FieldValue.arrayUnion({
+              companyName: companyName,
+              fundingName: funding_name,
+              fundingAmount: totalamount,
+              feesPayment: totalamount * 0.05,
+              isPayment: "결제 미완료",
+            }),
+            isSaved: true,
           });
       }
     }
@@ -170,7 +194,7 @@ const FundingState = (props) => {
               heightResizable={true}
               rowHeaders={["rowNum"]}
             />
-            <div>
+            <div className="total-amount">
               {fundingStateAmount === "" ? null : (
                 <div align="right">
                   <strong>펀딩 총 금액 : {fundingStateAmount} 원</strong>
