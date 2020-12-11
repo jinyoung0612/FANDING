@@ -81,6 +81,16 @@ const authReducer = (state = initState, action) => {
         recruits:{...action.payload.recruits}
       }
 
+    case "CHANGE_SUCCESS":
+      return{
+        ...state
+      }
+
+    case "CHANGE_ERROR":
+      return{
+        ...state
+      }
+
 
     default:
       return state;

@@ -13,7 +13,7 @@ import classnames from 'classnames';
 import TabPane3 from './TabPane3';
 import MyFunding from "./MyFunding";
 import MyRecruit from "./MyRecruit";
-import {connect, useSelector} from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import MyParticipation from "./MyParticipation";
 import SideBar from "./SideBar"
 import {storage} from "../../config/fbConfig";
@@ -22,7 +22,7 @@ import {useFirestoreConnect} from "react-redux-firebase";
 import Select from "react-select";
 import makeAnimated from "react-select/animated/dist/react-select.esm";
 import DaumPostCode from "react-daum-postcode";
-
+import {modify_mypage} from "../../store/actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,7 +60,10 @@ const style = {
 const MyAccount = (props) => {
 
   const uid = firebase.auth().currentUser ? props.auth.uid : null;
+
   console.log(uid);
+  const dispatch = useDispatch();
+
 
   useFirestoreConnect([{
     collection: 'users',
@@ -89,8 +92,11 @@ console.log(props);
 
     const [inputs, setInputs]=useState({
         nickname:'',
-      detailAddress:'',
-
+        detailAddress:'',
+        bank:'',
+        accountNumber:'',
+        accountName:'',
+        artistSelect:'',
     });
 
 
@@ -118,6 +124,7 @@ console.log(props);
   const toggleNested = () => {
     setNestedModal(!nestedModal);
   }
+
   const handleChange = (e)=>{
     const {value, name}=e.target;
     setInputs({
@@ -176,35 +183,48 @@ console.log(props);
   }
 
   const handleSubmit=(e)=>{
-    e.preventDefault();
-    if(file!==""){
-      const uploadTask = storage.ref(`profile/${firebase.auth().currentUser.email}`).put(file);
-      uploadTask.on(
-          "state_changed",
-          snapshot => {
-            // const progress = Math.round(
-            //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            // );
-            // this.setState({progress: progress});
-          },
-          error => {
-            console.log(error);
-          },
-          () => {
-            storage
-                .ref("profile")
-                .child(firebase.auth().currentUser.email)
-                .getDownloadURL()
-                .then(url => {
-                  setUrl(url);
-                  console.log(url);
-                  setProfile(file.name);
-                  console.log(profile);
+    if(window.confirm("변경사항을 저장하시겠습니까 ?") === true){
+      alert("등록되었습니다");
+      e.preventDefault();
+      if(file!==""){
+        const uploadTask = storage.ref(`profile/${firebase.auth().currentUser.email}`).put(file);
+        uploadTask.on(
+            "state_changed",
+            snapshot => {
+              // const progress = Math.round(
+              //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              // );
+              // this.setState({progress: progress});
+            },
+            error => {
+              console.log(error);
+            },
+            () => {
+              storage
+                  .ref("profile")
+                  .child(firebase.auth().currentUser.email)
+                  .getDownloadURL()
+                  .then(url => {
+                    setUrl(url);
+                    console.log(url);
+                    setProfile(file.name);
+                    console.log(profile);
+                    dispatch(modify_mypage(inputs,url,fullAddress,zoneCode));
 
-                })
-          }
-      )
+                  })
+            }
+        )
+      }
+      else{
+        dispatch(modify_mypage(inputs,profile,fullAddress,zoneCode));
+      }
     }
+    else{
+      e.preventDefault();
+      alert("취소되었습니다.");
+    }
+
+
   };
   const handleCancel=()=>{
 
@@ -239,7 +259,11 @@ console.log(props);
                     file!=="" ?
                       <Avatar style={{  width: "150px", height: "150px", marginLeft:"250px"}} alt="Remy Sharp" src={previewURL}/>
                       :
-                        <Avatar style={{  width: "150px", height: "150px", marginLeft:"250px"}} alt="Remy Sharp"/>
+                        user[0].profile!==null ?
+                        <Avatar style={{  width: "150px", height: "150px", marginLeft:"250px"}} alt="Remy Sharp" src={user[0].profile}/>
+                        :
+                            <Avatar style={{  width: "150px", height: "150px", marginLeft:"250px"}} alt="Remy Sharp" />
+
                   }
 
                 </Badge>
@@ -319,16 +343,21 @@ console.log(props);
                 </Modal>
 
                 <FormGroup>
+
                   {
-                    zoneCode === false ? <Input type="zoneCode" name="zoneCode" id="zoneCode"
-                                                placeholder="우편번호"
-                                                onChange={handleChange}
-                        /> :
-                        <Input type="zoneCode" name="zoneCode" id="zoneCode"
-                               value={zoneCode}
-                               onChange={handleChange}
-                        />
+                    user[0].zipcode ? <Input type="zoneCode" name="zoneCode" id="zoneCode" value={user[0].zipcode}  onChange={handleChange}></Input> :
+
+                        zoneCode === false ? <Input type="zoneCode" name="zoneCode" id="zoneCode"
+                                                    placeholder="우편번호"
+                                                    onChange={handleChange}
+                          /> :
+                          <Input type="zoneCode" name="zoneCode" id="zoneCode"
+                                 value={zoneCode}
+                                 onChange={handleChange}
+                          />
+
                   }
+
                 </FormGroup>
 
                 <FormGroup>
