@@ -1,6 +1,6 @@
 import firebase from "firebase";
 
-export const loadAppliedFundings = (recruit_id) => {
+export const loadAppliedFundings = (doc_ids) => {
     return (dispatch, getState) => {
         const firestore = firebase.firestore();
         // const user=firebase.auth().currentUser.uid;
@@ -10,7 +10,9 @@ export const loadAppliedFundings = (recruit_id) => {
         let rows=[];
         firestore
             .collection("recruitCompanies")
-            .doc(recruit_id)
+            .where(firebase.firestore.FieldPath.documentId(), "in", doc_ids)
+            // .where(firebase.firestore.FieldPath.documentId, "array-contains", applications)
+            // .whereArrayContains(firebase.firestore.FieldPath.documentId, applications)
             // .where("user_uid","==",uid)
             .get()
             .then(function (querySnapshot) {
@@ -24,6 +26,10 @@ export const loadAppliedFundings = (recruit_id) => {
                 })
 
             })
+            // .then((snapshot) => {
+            //     const documents = snapshot.docs.map(doc=>doc.data());
+            //     console.log(documents);
+            // })
             .then(()=> {
                 dispatch({type:"setMyAppliedFunding",payload: {
                         user_data:rows
