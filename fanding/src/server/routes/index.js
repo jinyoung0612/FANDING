@@ -3,6 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const request = require('request');
 const config = require('../../config/finConfig');
+const nodemailer = require('nodemailer');
 //const check_deposit = require('../../store/actions/userActions');
 
 router.get('/api', (req,res)=> res.json({username:"jinyoung2"}));
@@ -192,6 +193,33 @@ router.get('/api/oobToken', function(req, res) {
         var result = JSON.parse(body);
         var oob_token = result.access_token;
         console.log(oob_token);
+    });
+})
+
+//이메일 전송
+router.post('/sendEmail', async function (req,res){
+    var user_email = req.body.email;
+    var funding_title = req.body.funding_title;
+    console.log('user_email',user_email);
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        port: 587,
+        host: 'stmp.gmail.com',
+        secure: false,
+        requireTLS: true,
+        auth: {
+            // 실제 아이디와 비번으로 바꿔서 사용하세요! 
+            user: '아이디',
+            pass: '비밀번호'
+        }
+    });
+
+    transporter.sendMail({
+        from: 'fandingkorea@gmail.com',
+        to: user_email,
+        subject: '[FANDING]'+ funding_title+'의 새로운 공지글이 올라왔습니다.',
+        text: '안녕하세요. 팬딩입니다. 공지사항이 업데이트되었으니 확인부탁드립니다!'
     });
 })
 

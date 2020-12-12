@@ -20,6 +20,7 @@ import { firebase_notice_save, firebase_notice_delete, show_snackbar } from '../
 import {Dialog,DialogTitle,DialogContent,makeStyles,
     Toolbar, AppBar, Typography, IconButton, Divider, withStyles, DialogActions} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { post } from 'jquery';
 
 const styles = theme => ({
     appBar: {
@@ -52,6 +53,7 @@ class NoticeForm extends Component{
             ntccontents: '',
         };
         this.handleNoticeSave.bind(this);
+        this.handleSendEmail.bind(this);
     }
 
     handleChangeValue = (e) => {
@@ -93,6 +95,24 @@ class NoticeForm extends Component{
     handleDialogClose = () => {
         this.props.handleDialogClose();
     };  
+
+    handleSendEmail = (e) => {
+        e.preventDefault();
+        const data = {
+            email : '이메일을 전송할 아이디',
+            funding_title : '펀딩 제목'
+        }
+
+        fetch('http://localhost:3001/sendEmail',{
+            method: "post",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify(data),
+        })
+        .then(res => res.json())
+        .then(json => {
+
+        })
+    }
 
     editorRef = React.createRef();
     viewerRef = React.createRef();
@@ -148,6 +168,8 @@ class NoticeForm extends Component{
                     }
                     <Button className={classes.button} color="warning" size="sm"
                     onClick={this.handleNoticeSave} >저장하기</Button>
+                    <Button className={classes.button} color="warning" size="sm"
+                    onClick={this.handleSendEmail} >이메일 전송</Button>
                     </DialogActions>
                 </DialogContent>
                 </Dialog>
