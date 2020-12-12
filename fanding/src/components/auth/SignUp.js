@@ -18,6 +18,7 @@ import firebase from "firebase/app";
 
 var check_click = false;
 var nickname_check = false;
+var email_check = false;
 const style = {
   control: (base) => ({
     ...base,
@@ -37,6 +38,8 @@ class SignUp extends Component {
     nickname_Success: false,
     isNoPassWord: false,
     isPassWordCheck: false,
+    isEmailCheck: true,
+    isPassWordLengthCheck: false,
   };
   options = [
     { value: "BTS", label: "BTS" },
@@ -54,6 +57,45 @@ class SignUp extends Component {
 
   animatedComponents = makeAnimated();
 
+  handleEmailCheck = () => {
+    if (email_check) {
+      this.setState({ isEmailCheck: false });
+    } else {
+      this.setState({ isEmailCheck: true });
+    }
+    email_check = false;
+  };
+  email_Checking = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+    setTimeout(() => {
+      firebase
+        .firestore()
+        .collection("users")
+        .where("user_email", "==", this.state.email)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            email_check = true;
+          });
+        });
+      firebase
+        .firestore()
+        .collection("companies")
+        .where("email", "==", this.state.email)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            email_check = true;
+          });
+        });
+    }, 200);
+    setTimeout(() => {
+      console.log("email duplicate check", email_check);
+      this.handleEmailCheck();
+    }, 500);
+  };
   //handle click
   handleChange = (e) => {
     this.setState({
@@ -72,12 +114,23 @@ class SignUp extends Component {
         this.state.password != "" &&
         this.state.password_check != ""
       ) {
-        if (this.state.isNoPassWord == true && this.state.isPassWordCheck) {
+        if (
+          this.state.isNoPassWord &&
+          this.state.isPassWordCheck &&
+          this.state.isEmailCheck &&
+          this.state.isPassWordLengthCheck
+        ) {
           var msg = "이메일인증 메일 전송되었습니다.";
           this.props.signUp(this.state);
           alert(msg);
         } else if (this.state.password_check != this.state.password) {
           var msg = "비밀번호 확인을 해주세요";
+          alert(msg);
+        } else if (!this.state.isEmailCheck) {
+          var msg = "이미 가입한 이메일입니다";
+          alert(msg);
+        } else if (!this.state.isPassWordLengthCheck) {
+          var msg = "비밀번호는 최소 6자리 이상으로 해주세요";
           alert(msg);
         }
       } else if (this.state.email == "") {
@@ -115,23 +168,23 @@ class SignUp extends Component {
   };
   handleClick = () => {
     firebase
-        .firestore()
-        .collection("users")
-        .where("nickname", "==", this.state.nickname)
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            console.log(doc.id, "=>", doc.data());
-            console.log("Duplicate Appears");
-            nickname_check = true;
-          });
-        })
-        .then(() => {
-          this.handleClick_Change();
-        })
-        .catch(function (error) {
-          console.log("Error getting documents: ", error);
+      .firestore()
+      .collection("users")
+      .where("nickname", "==", this.state.nickname)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          console.log(doc.id, "=>", doc.data());
+          console.log("Duplicate Appears");
+          nickname_check = true;
         });
+      })
+      .then(() => {
+        this.handleClick_Change();
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
     check_click = true;
   };
   password_Checking = (e) => {
@@ -150,6 +203,11 @@ class SignUp extends Component {
           this.setState({ isPassWordCheck: false });
           this.setState({ isNoPassWord: true });
         }
+      }
+      if (this.state.password.length >= 6) {
+        this.setState({ isPassWordLengthCheck: true });
+      } else {
+        this.setState({ isPassWordLengthCheck: false });
       }
     }, 200);
   };
@@ -223,7 +281,7 @@ class SignUp extends Component {
                 name="email"
                 id="email"
                 placeholder="이메일을 입력하세요"
-                onChange={this.handleChange}
+                onChange={this.email_Checking}
               />
             </FormGroup>
           </Form>

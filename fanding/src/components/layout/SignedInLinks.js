@@ -42,7 +42,7 @@ const SignedInLinks = (props) => {
   const adminLogin = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        if (user.email === "admin@gmail.com") {
+        if (user.email === "fandingkorea@gmail.com") {
           setisadminView(true);
           setisCompanyView(false);
         } else {
