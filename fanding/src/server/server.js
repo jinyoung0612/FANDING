@@ -9,8 +9,8 @@ app.use(cors({
     origin:true,
     credentials:true
 }));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({limit: 5000000, extended: true, parameterLimit:50000}));
+app.use(bodyParser.json({limit: 5000000}));
 app.use('/',require('./routes/index'));
 
 

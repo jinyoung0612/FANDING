@@ -23,6 +23,7 @@ import QuestionChat from "./components/chatting/questionchat/QuestionChat";
 import TotalChat from "./components/chatting/totalchat/TotalChat";
 import CompanyChat from "./components/chatting/companychat/CompanyChat";
 import createFundingDefault from "./components/layout/CreateFunding";
+import AdminPaymentList from "./components/payment/AdminPaymentList";
 
 // import test from './components/layout/test';
 import FundingDetails from "./components/layout/FundingDetails";
@@ -41,6 +42,9 @@ import NoticeList from "./components/notice/NoticeList";
 import Search from "./components/layout/Search";
 import MyCompany from './components/layout/company/MyCompany';
 import FanAuth from './components/layout/FanAuth';
+import MyApplied from './components/layout/company/MyApplied';
+import MyOngoing from './components/layout/company/MyOngoing';
+import AdminDashBoard from "./components/layout/admin/AdminDashBoard";
 
 class App extends Component {
   render() {
@@ -48,10 +52,12 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Navbar />
+          
+          
           <Switch>
             {/*<Route exact path="/" component={MainPage} />*/}
             <Route exact path="/" component={MainPageDefault} />
-            <Route path="/search" component={Search}/>
+            <Route path="/search" component={Search} />
             <Route path="/signup" component={SignUp} />
             <Route path="/signupcom" component={SignUpCom} />
             <Route path="/signin" component={SignIn} />
@@ -87,11 +93,15 @@ class App extends Component {
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />
 
-            <Route path="/notice/list/:id" component={NoticeList}/>
+            <Route path="/notice/list/:id" component={NoticeList} />
 
             <Route path="/companychat" component={CompanyChat} />
             <Route path="/myCompany" component={MyCompany} />
             <Route exact path="/fan_auth" component={FanAuth} />
+            <Route exact path="/myAppliedFunding" component={MyApplied} />
+            <Route path="/adminpaymentlist" component={AdminPaymentList} />
+            <Route path="/admindashboard" component={AdminDashBoard} />
+            <Route path="/myOngoingFunding" component={MyOngoing} />
           </Switch>
         </div>
       </BrowserRouter>

@@ -37,7 +37,29 @@ const SignedInLinks = (props) => {
       where: [["email", "==", firebase.auth().currentUser.email]],
     },
   ]);
-
+  const [isCompanyView, setisCompanyView] = useState(true);
+  const [isadminView, setisadminView] = useState(false);
+  const adminLogin = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (user.email === "fandingkorea@gmail.com") {
+          setisadminView(true);
+          setisCompanyView(false);
+        } else {
+          firebase
+            .firestore()
+            .collection("users")
+            .where("user_email", "==", user.email)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                setisCompanyView(false);
+              });
+            });
+        }
+      }
+    });
+  };
   const [chatnotice, setChatnotice] = useState(false);
   const chatalert = () => {
     firebase
@@ -59,14 +81,14 @@ const SignedInLinks = (props) => {
         console.log("error getting document :", error);
       });
   };
+  // const [isCompanyView, setisCompanyView] = useState(false);
+  const company = useSelector((state) => state.firestore.ordered.companies);
   useEffect(() => {
     chatalert();
+    adminLogin();
   }, []);
   const chongdae = useSelector((state) => state.firestore.ordered.chongdaes);
-  const company = useSelector((state) => state.firestore.ordered.companies);
-
-  console.log(chongdae);
-  console.log("company: ", company);
+  // const company = useSelector((state) => state.firestore.ordered.companies);
 
   const checkVerificationHandler = () => {
     if (chongdae.length > 0) {
@@ -89,110 +111,124 @@ const SignedInLinks = (props) => {
       window.location.href = "http://localhost:3000/chongdae";
     }
   };
-  if (isLoaded(company) && company.length !== 0) {
-    //업체일 때
-    console.log("업체");
-    return (
-      <div>
-        <ul class="navbar-nav ml-auto">
-          <div class="icons-menu">
-            {chatnotice === false ? (
-              <NavItem>
-                <NavLink href="/totalchat">
-                  <BsBell
-                    size={28}
-                    style={{ fill: "black" }}
-                    className="mr-3"
-                  />
-                </NavLink>
-              </NavItem>
-            ) : (
-              <NavItem>
-                <NavLink href="/totalchat">
-                  <BsBellFill
-                    size={28}
-                    style={{ fill: "red" }}
-                    className="mr-3"
-                  />
-                </NavLink>
-              </NavItem>
-            )}
+  // if (isLoaded(company) && company.length !== 0) {
+  // console.log("업체");
+  return (
+    <div>
+      <ul class="navbar-nav ml-auto">
+        <div class="icons-menu">
+          {chatnotice === false ? (
+            <NavItem>
+              <NavLink href="/totalchat">
+                <BsBell size={28} style={{ fill: "black" }} className="mr-3" />
+              </NavLink>
+            </NavItem>
+          ) : (
+            <NavItem>
+              <NavLink href="/totalchat">
+                <BsBellFill
+                  size={28}
+                  style={{ fill: "red" }}
+                  className="mr-3"
+                />
+              </NavLink>
+            </NavItem>
+          )}
+          {isCompanyView === true ? (
             <NavItem>
               <NavLink href="/myCompany">
                 <BsPeopleCircle style={{ fill: "black" }} size={28} />
               </NavLink>
             </NavItem>
-          </div>
-          {/* <div class="navbar-buttons mbr-section-btn">
-        <a class="btn btn-info display-4" onClick={checkVerificationHandler}>
-          펀딩 생성
-        </a>
-      </div> */}
-          <li className="nav-item mt-3">
-            <a
-              className="nav-link link text-black display-4"
-              href="/"
-              onClick={props.signOut}
-            >
-              로그아웃
-            </a>
-          </li>
-        </ul>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <ul class="navbar-nav ml-auto">
-          <div class="icons-menu">
-            {chatnotice === false ? (
-              <NavItem>
-                <NavLink href="/totalchat">
-                  <BsBell
-                    size={28}
-                    style={{ fill: "black" }}
-                    className="mr-3"
-                  />
-                </NavLink>
-              </NavItem>
-            ) : (
-              <NavItem>
-                <NavLink href="/totalchat">
-                  <BsBellFill
-                    size={28}
-                    style={{ fill: "red" }}
-                    className="mr-3"
-                  />
-                </NavLink>
-              </NavItem>
-            )}
+          ) : isadminView === false ? (
             <NavItem>
               <NavLink href="/myaccount">
                 <BsPeopleCircle style={{ fill: "black" }} size={28} />
               </NavLink>
             </NavItem>
-          </div>
-          <div class="navbar-buttons mbr-section-btn">
+          ) : (
+            <NavItem>
+              <NavLink href="/admindashboard">
+                <BsPeopleCircle style={{ fill: "black" }} size={28} />
+              </NavLink>
+            </NavItem>
+          )}
+        </div>
+        <div class="navbar-buttons mbr-section-btn">
+          {isCompanyView === true ? null : (
             <a
               class="btn btn-info display-4"
               onClick={checkVerificationHandler}
             >
               펀딩 생성
             </a>
-          </div>
-          <li className="nav-item mt-3">
-            <a
-              className="nav-link link text-black display-4"
-              href="/"
-              onClick={props.signOut}
-            >
-              로그아웃
-            </a>
-          </li>
-        </ul>
-      </div>
-    );
-  }
+          )}
+        </div>
+        <li className="nav-item mt-3">
+          <a
+            className="nav-link link text-black display-4"
+            href="/"
+            onClick={props.signOut}
+          >
+            로그아웃
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
+  // } else {
+  //   return (
+  //     <div>
+  //       <ul class="navbar-nav ml-auto">
+  //         <div class="icons-menu">
+  //           {chatnotice === false ? (
+  //             <NavItem>
+  //               <NavLink href="/totalchat">
+  //                 <BsBell
+  //                   size={28}
+  //                   style={{ fill: "black" }}
+  //                   className="mr-3"
+  //                 />
+  //               </NavLink>
+  //             </NavItem>
+  //           ) : (
+  //             <NavItem>
+  //               <NavLink href="/totalchat">
+  //                 <BsBellFill
+  //                   size={28}
+  //                   style={{ fill: "red" }}
+  //                   className="mr-3"
+  //                 />
+  //               </NavLink>
+  //             </NavItem>
+  //           )}
+  //           <NavItem>
+  //             <NavLink href="/myaccount">
+  //               <BsPeopleCircle style={{ fill: "black" }} size={28} />
+  //             </NavLink>
+  //           </NavItem>
+  //         </div>
+  //         <div class="navbar-buttons mbr-section-btn">
+  //           <a
+  //             class="btn btn-info display-4"
+  //             onClick={checkVerificationHandler}
+  //           >
+  //             펀딩 생성
+  //           </a>
+  //         </div>
+  //         <li className="nav-item mt-3">
+  //           <a
+  //             className="nav-link link text-black display-4"
+  //             href="/"
+  //             onClick={props.signOut}
+  //           >
+  //             로그아웃
+  //           </a>
+  //         </li>
+  //       </ul>
+  //     </div>
+  //   );
+  // }
 };
 
 const mapDispatchToProps = (dispatch) => {

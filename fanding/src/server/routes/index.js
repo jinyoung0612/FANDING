@@ -68,9 +68,9 @@ router.post('/api/account/transaction', (req,res) => {
 
     var accessToken = req.body.access_token;
     var finNum = req.body.fintech_use_num;
-    console.log('req.body.access_token: ',accessToken);
-    console.log('req.body.fintech_use_num: ', finNum);
-    
+    // console.log('req.body.access_token: ',accessToken);
+    // console.log('req.body.fintech_use_num: ', finNum);
+
 
     var countnum = Math.floor((Math.random()*(1000000000-1)+1));
 
@@ -113,6 +113,7 @@ router.post('/api/account/transaction/check', (req,res) => {
     
     var participants = req.body.participants;
 
+    // console.log(participants)
     var countnum = Math.floor((Math.random()*(1000000000-1)+1));
 
     var bankTranID = "T991666810U" + countnum;
@@ -136,6 +137,7 @@ router.post('/api/account/transaction/check', (req,res) => {
     }
 
     function changeState(transactions,participants){
+        // console.log(participants)
         if(transactions!=null){
             var count = transactions.length;
             

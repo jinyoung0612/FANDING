@@ -151,11 +151,13 @@ export const signUpCom = (newCompany) => {
               .collection("payments")
               .doc(newCompany.email)
               .set({
-                isPaymentOpen: false,
+                isPaymentOpen: true,
                 totalFundingAmount: 0,
                 buyer_email: newCompany.email,
                 buyer_name: newCompany.companyName,
                 paymentFundingList: [],
+                adminPaymentList: [],
+                isSaved: false,
               });
           });
       });
@@ -222,19 +224,5 @@ export const twitterSignIn = (credentials) => {
         .catch((err) => {
           console.log("error", err);
         });
-    });
-};
-
-export const company_reg_num_check = (credentials) => {
-  var docRef = firebase.firestore.collection("companies").where();
-  docRef
-    .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        console.log(doc.id, " => ", doc.data());
-      });
-    })
-    .catch(function (error) {
-      console.log("Error getting documnets: ", error);
     });
 };
