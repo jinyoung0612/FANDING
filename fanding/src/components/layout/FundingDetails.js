@@ -413,7 +413,6 @@ const FundingDetails = (props)=>{
                                                             <Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" onClick={(e)=>handleDislike(e,funding)} block><BsFillHeartFill className="mr-2"/>{funding.like}</Button>
                                                             :
                                                             <Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" onClick={(e)=>handleLike(e,funding)} block><BsHeart className="mr-2"/>{funding.like}</Button>
-
                                                     }
                                                     {/*<Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" onClick={(e)=>handleLike(e,funding)} block><BsHeart className="mr-2"/>{funding.like}</Button>*/}
                                                 </Col>
