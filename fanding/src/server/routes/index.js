@@ -195,38 +195,5 @@ router.get('/api/oobToken', function(req, res) {
     });
 })
 
-//이메일 전송
-router.post('/api/sendEmail', function (req,res){
-    var user_data = req.body.user_data;
-    var funding_title = req.body.funding_title;
-    console.log('user_data',user_data);
-    console.log('funding_title', funding_title);
-    var url = 'http://118.67.131.132:3000/'
-
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        port: 587,
-        host: 'stmp.gmail.com',
-        secure: false,
-        requireTLS: true,
-        auth: {
-            // 실제 아이디와 비번으로 바꿔서 사용하세요! 
-            //user: '아이디',
-            //pass: '비밀번호'
-        }
-    });
-
-    user_data.map((user)=>{
-        transporter.sendMail({
-            from: 'fandingkorea@gmail.com',
-            to: user.email,
-            subject: '[FANDING] < '+ funding_title+' > 공지사항 업데이트.',
-            text: '안녕하세요. 팬딩입니다. <' + funding_title  +'> 공지사항이 업데이트되었으니 확인부탁드립니다! \n\n'
-               + '▼▼▼ FANDING ▼▼▼ \n ' + url
-        });
-    })
-
-    res.send('finish');
-})
 
 module.exports=router;
