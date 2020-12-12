@@ -32,7 +32,6 @@ import MainPage from "./components/layout/MainPage";
 import ReactDOM from "react-dom";
 import MainPageDefault from "./components/layout/MainPageDefault";
 // import MainPage from "./components/layout/MainPage";
-import TransactionList from "./components/layout/TransactionList";
 import MyFunding from "./components/layout/MyFunding";
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
@@ -70,7 +69,6 @@ class App extends Component {
             <Route exact path="/find_company" component={CompanyRecruit} />
             <Route path="/find_company_form" component={FindCompanyForm} />
             <Route path="/payment" component={Payment} />
-            <Route path="/transaction_list" component={TransactionList} />
 
             <Route exact path="/reward_funding" component={RewardFunding} />
             <Route
