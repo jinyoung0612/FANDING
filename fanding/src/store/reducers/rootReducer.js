@@ -3,7 +3,6 @@ import formReducer from "./formReducer";
 import paymentReducer from "./paymentReducer";
 import verifyReducer from "./chongdaeReducer";
 import adminReducer from "./adminReducer";
-import noticeReducer2 from "./noticeReducer"
 import noticeReducer from "../actions/noticeAction"
 import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
