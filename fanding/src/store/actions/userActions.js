@@ -112,7 +112,7 @@ export const loadParticipants = (id) => {
             })
             .then(()=> {
                 dispatch({type:"LoadParticipants",payload: {
-                        user_data:rows
+                        participants:rows
                     }})
             });
 
@@ -240,6 +240,30 @@ export const check_deposit2 = (user) => {
         .catch((err)=>{
             console.log("참여자 입금확인 실패",err)
         })
+    }
+}
+
+export const modify_mypage = (data) =>{
+
+    console.log("modify_mypage")
+    // console.log(inputs, profile, fullAddress, zoneCode)
+    return (dispatch, getState) => {
+        const firestore = firebase.firestore();
+
+            firestore
+                .collection("users")
+                .doc(firebase.auth().currentUser.email)
+                .update(
+                    data
+                )
+                .then(() => {
+                    dispatch({ type: "CHANGE_SUCCESS" });
+                })
+                .catch((err) => {
+                    dispatch({ type: "CHANGE_ERROR", err });
+                });
+
+
     }
 }
 

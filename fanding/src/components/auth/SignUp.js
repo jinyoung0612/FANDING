@@ -115,23 +115,23 @@ class SignUp extends Component {
   };
   handleClick = () => {
     firebase
-      .firestore()
-      .collection("users")
-      .where("nickname", "==", this.state.nickname)
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          console.log(doc.id, "=>", doc.data());
-          console.log("Duplicate Appears");
-          nickname_check = true;
+        .firestore()
+        .collection("users")
+        .where("nickname", "==", this.state.nickname)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            console.log(doc.id, "=>", doc.data());
+            console.log("Duplicate Appears");
+            nickname_check = true;
+          });
+        })
+        .then(() => {
+          this.handleClick_Change();
+        })
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
         });
-      })
-      .then(() => {
-        this.handleClick_Change();
-      })
-      .catch(function (error) {
-        console.log("Error getting documents: ", error);
-      });
     check_click = true;
   };
   password_Checking = (e) => {
