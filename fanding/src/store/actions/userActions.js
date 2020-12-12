@@ -267,6 +267,77 @@ export const modify_mypage = (data) =>{
     }
 }
 
+export const add_cart=(fid,like)=>{
+    return (dispatch, getState) => {
+        const firestore = firebase.firestore();
+        firestore
+            .collection("fundings")
+            .doc(fid)
+            .update(
+                {
+                    like:like+1
+                }
+            )
+            .then(() => {
+                console.log("Increment Like")
+            })
+            .catch((err) => {
+               console.log("err",err)
+            });
+        firestore
+            .collection("users")
+            .doc(firebase.auth().currentUser.email)
+            .update(
+                {
+                    like:firebase.firestore.FieldValue.arrayUnion(fid)
+                }
+            )
+            .then(() => {
+                console.log("Add Cart")
+            })
+            .catch((err) => {
+                console.log("err",err)
+            });
+
+    }
+}
+export const remove_cart=(fid,like)=>{
+    return (dispatch, getState) => {
+        const firestore = firebase.firestore();
+        firestore
+            .collection("fundings")
+            .doc(fid)
+            .update(
+                {
+                    like:like-1
+                }
+            )
+            .then(() => {
+                console.log("Decrement Like")
+            })
+            .catch((err) => {
+                console.log("err",err)
+            });
+
+        firestore
+            .collection("users")
+            .doc(firebase.auth().currentUser.email)
+            .update(
+                {
+                    like:firebase.firestore.FieldValue.arrayRemove(fid)
+                }
+            )
+            .then(() => {
+                console.log("Remove Cart")
+            })
+            .catch((err) => {
+                console.log("err",err)
+            });
+
+    }
+}
+
+
 // import { createAction, handleActions } from 'redux-actions';
 // import firebase from "firebase/app";
 //

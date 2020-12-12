@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container,
-    Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input } from 'reactstrap';
+    Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input} from 'reactstrap';
 import {connect, useSelector, useDispatch} from "react-redux";
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import { Link } from 'react-router-dom';
@@ -8,17 +8,18 @@ import {isLoaded, useFirestoreConnect} from "react-redux-firebase";
 import firebase from "firebase/app"
 import ReactHtmlParser from 'react-html-parser';
 import ModalPortal from "../../ModalPortal";
-//import MyModal from "../../MyModal";
+
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer} from '@toast-ui/react-editor';
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { BsHeart, BsChatSquareDots, BsFillBellFill } from "react-icons/bs";
+import { BsHeart, BsChatSquareDots, BsFillBellFill , BsFillHeartFill} from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
-import {Participate_save} from "../../store/actions/userActions";
+import {Participate_save, add_cart, remove_cart} from "../../store/actions/userActions";
 import RewardFundingDetail from "./funding/reward/RewardFundingDetail";
 import DaumPostCode from 'react-daum-postcode';
 import QuestionChat from "../chatting/questionchat/QuestionChat";
 import {close_funding} from "../../store/actions/formActions";
+
 
 let imgStyle = {
     maxHeight: '500px',
@@ -30,11 +31,27 @@ const FundingDetails = (props)=>{
     const viewerRef = React.createRef();
 
     const doc_id=props.match.params.id;
-    // console.log(doc_id)
-       useFirestoreConnect([{
+    const user_email= props.auth.email == null ? "none" : props.auth.email
+    // console.log(user_email)
+       useFirestoreConnect([
+           {
         collection: 'fundings',
         doc: doc_id
-            }]);
+            },
+           {
+               collection: 'users',
+               doc:user_email
+           },
+            ]
+       );
+
+    const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
+    const user=useSelector(({firestore:{data}})=>data.users && data.users[user_email]);
+
+    var like=false;
+    if(user&&user.like.indexOf(doc_id)>-1){
+       like=true;
+    }
 
         const [inputs, setInputs]=useState({
 
@@ -71,7 +88,7 @@ const FundingDetails = (props)=>{
     const [fullAddress, setFullAdd] = useState(false);
     const [zoneCode, setZoneCode] = useState(false);
 
-    const [isClosed, setClose]=useState(false);
+    const [likes, setLike]=useState(false);
 
     const toggleNested = () => {
         setNestedModal(!nestedModal);
@@ -152,25 +169,23 @@ const FundingDetails = (props)=>{
     }
 
    const HandleClose=()=>{
-
-            // setClose(true);
             dispatch(close_funding(inputs.fid))
-
-            // useEffect(()=>{
-            //     if(period<0){
-            //        return dispatch(close_funding(inputs.fid))
-            //     }
-            //     else{
-            //         return null
-            //     }
-            //
-            // },[dispatch])
-
-
     }
 
-    const funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[doc_id]);
+    function handleLike(e,funding){
 
+        // console.log("좋아요",doc_id,funding.like);
+        dispatch(add_cart(doc_id,funding.like));
+        setLike(!likes)
+    }
+
+    function handleDislike(e,funding){
+        // console.log("취소",doc_id,funding.like);
+        dispatch(remove_cart(doc_id,funding.like));
+        setLike(!likes)
+
+    }
+    // const user=useSelector(({firestore:{data}})=>data.users&&data.users);
     const url=window.location.href;
 
 
@@ -392,7 +407,16 @@ const FundingDetails = (props)=>{
                                                 </Form>
                                             </Modal>
                                             <Row xs="12">
-                                                <Col><Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" block><BsHeart className="mr-2"/>  350</Button></Col>
+                                                <Col>
+                                                    {
+                                                        like === true ?
+                                                            <Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" onClick={(e)=>handleDislike(e,funding)} block><BsFillHeartFill className="mr-2"/>{funding.like}</Button>
+                                                            :
+                                                            <Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" onClick={(e)=>handleLike(e,funding)} block><BsHeart className="mr-2"/>{funding.like}</Button>
+
+                                                    }
+                                                    {/*<Button className="btn-responsive" style={{backgroundColor: '#bfbfbf', borderColor:"#bfbfbf"}} size="xs" onClick={(e)=>handleLike(e,funding)} block><BsHeart className="mr-2"/>{funding.like}</Button>*/}
+                                                </Col>
 
                                                 {firebase.auth().currentUser.uid===funding.user_uid ?
                                                     (
