@@ -112,7 +112,7 @@ export const loadParticipants = (id) => {
             })
             .then(()=> {
                 dispatch({type:"LoadParticipants",payload: {
-                        user_data:rows
+                        participants:rows
                     }})
             });
 
@@ -263,7 +263,7 @@ export const modify_mypage = (data) =>{
                     dispatch({ type: "CHANGE_ERROR", err });
                 });
 
-       
+
     }
 }
 

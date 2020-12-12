@@ -3,7 +3,8 @@ const initState = {
   authError: null,
   user_data:[],
   user_type:[],
-  recruits:[]
+  recruits:[],
+  participants:[]
 
 };
 const authReducer = (state = initState, action) => {
@@ -62,7 +63,7 @@ const authReducer = (state = initState, action) => {
     case "LoadParticipants":
       return{
         ...state,
-        user_data:action.payload.user_data
+        participants:action.payload.participants
       };
 
     case "loadMainPage":

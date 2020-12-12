@@ -50,9 +50,11 @@ const FundingState = (props) => {
     dispatch(loadParticipants(doc_id));
   }, [dispatch]);
 
-  const participants = props.user_data;
+  const participants = props.participants;
   const transactionLists = props.transactionLists;
   console.log("transactionLists: ", transactionLists);
+  console.log("transactionLists: ", participants);
+
 
   const handleClick = () => {
     window.location.reload();
@@ -141,58 +143,113 @@ const FundingState = (props) => {
       }
     }
   };
-  if (!isLoaded(transactionLists)) {
-    console.log("transactionLists 로드 안됨");
-    return <div>페이지 오류</div>;
-  } else {
-    if (transactionLists[0] !== null) {
-      if (participants.length !== 0 && participants) {
-        check(transactionLists, participants);
 
-        return (
+
+
+  if(isLoaded(transactionLists)&&isLoaded(participants)){
+    if(transactionLists[0]!==null&&participants.length!==0){
+      check(transactionLists, participants);
+      // console.log(participants)
+
+      return (
           <div>
-            {participants.map((participant, i) =>
-              array.push({
-                email: participant.email,
-                name: participant.name,
-                account: participant.bank,
-                deposit_date: participant.date,
-                deposit_time: participant.time,
-                deposit_price: participant.price,
-                check_deposit: participant.isChecked,
-              })
-            )}
+            {
+              participants.map((participant, i) =>
+                  array.push({
+                    email: participant.email,
+                    name: participant.name,
+                    account: participant.bank,
+                    deposit_date: participant.date,
+                    deposit_time: participant.time,
+                    deposit_price: participant.price,
+                    check_deposit: participant.isChecked,
+                  })
+              )}
             <Grid
-              data={array}
-              columns={columns}
-              rowHeight={25}
-              bodyHeight={100}
-              heightResizable={true}
-              rowHeaders={["rowNum"]}
+                data={array}
+                columns={columns}
+                rowHeight={25}
+                bodyHeight={100}
+                heightResizable={true}
+                rowHeaders={["rowNum"]}
             />
             <div>
               {fundingStateAmount === "" ? null : (
-                <div align="right">
-                  <strong>펀딩 총 금액 : {fundingStateAmount} 원</strong>
-                </div>
+                  <div align="right">
+                    <strong>펀딩 총 금액 : {fundingStateAmount} 원</strong>
+                  </div>
               )}
             </div>
             <Button onClick={handleClick}>새로고침</Button>
             <Button onClick={handleClicksumPrice}> 펀딩금액합산</Button>
           </div>
-        );
-      } else {
-        return <div>참여자가 없습니다.</div>;
-      }
+      );
+    }
+    else{
+      return null;
     }
   }
+  else{
+    return(
+        null
+    )
+  }
+  // if (!isLoaded(transactionLists)) {
+  //   console.log("transactionLists 로드 안됨");
+  //   return <div>페이지 오류</div>;
+  // }
+  // if(isLoaded(participants)&&isLoaded(transactionLists)){
+  //   if (transactionLists[0] !== null) {
+  //     if (participants.length !== 0 && participants) {
+  //
+  //       check(transactionLists, participants);
+  //       console.log(participants)
+  //
+  //       return (
+  //         <div>
+  //           {
+  //             participants.map((participant, i) =>
+  //             array.push({
+  //               email: participant.email,
+  //               name: participant.name,
+  //               account: participant.bank,
+  //               deposit_date: participant.date,
+  //               deposit_time: participant.time,
+  //               deposit_price: participant.price,
+  //               check_deposit: participant.isChecked,
+  //             })
+  //           )}
+  //           <Grid
+  //             data={array}
+  //             columns={columns}
+  //             rowHeight={25}
+  //             bodyHeight={100}
+  //             heightResizable={true}
+  //             rowHeaders={["rowNum"]}
+  //           />
+  //           <div>
+  //             {fundingStateAmount === "" ? null : (
+  //               <div align="right">
+  //                 <strong>펀딩 총 금액 : {fundingStateAmount} 원</strong>
+  //               </div>
+  //             )}
+  //           </div>
+  //           <Button onClick={handleClick}>새로고침</Button>
+  //           <Button onClick={handleClicksumPrice}> 펀딩금액합산</Button>
+  //         </div>
+  //       );
+  //     } else {
+  //       return <div>참여자가 없습니다.</div>;
+  //     }
+  //   }
+  // }
 };
 
 const mapStateToProps = (state) => {
   return {
     authError: state.auth.authError,
     auth: state.firebase.auth,
-    user_data: state.auth.user_data,
+    participants: state.auth.participants,
     transactionLists: state.firestore.ordered.transactionLists,
   };
 };
@@ -213,10 +270,12 @@ export default compose(
 )(FundingState);
 
 async function check(transactionLists, participants) {
-  if (transactionLists !== null) {
+  console.log("check",participants)
+  if (transactionLists !== null  && participants) {
     const access_token = transactionLists[0].access_token;
     const fintech_use_num = transactionLists[0].fintech_use_num;
 
+    console.log(access_token,fintech_use_num)
     axios
       .post("/api/account/transaction/check", {
         access_token: access_token,
@@ -225,7 +284,7 @@ async function check(transactionLists, participants) {
       })
       .then((res) => {
         if (res.data) {
-          console.log(res.data);
+          console.log("res.data",res.data);
           const pState = res.data;
           for (var i = 0; i < participants.length; i++) {
             const uid = participants[i].uid;

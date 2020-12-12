@@ -157,7 +157,7 @@ console.log(props);
 
   var nickname_check=false;
   const handleNickName=()=>{
-    console.log(inputs.nickname)
+    // console.log(inputs.nickname)
     firebase
         .firestore()
         .collection("users")
@@ -343,7 +343,7 @@ console.log(props);
                   modify===true ?
                       (
                           <div>
-                            <Input placeholder={user[0].nickname} name="nickname" onChange={handleChange}/>
+                            <Input name="nickname" onChange={handleChange}/>
                             <Button onClick={handleModify}>닫기</Button>
                             <Button onClick={handleNickName}>완료</Button>
                           </div>
