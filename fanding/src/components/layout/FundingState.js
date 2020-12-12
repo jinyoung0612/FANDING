@@ -81,7 +81,7 @@ const FundingState = (props) => {
         funding_name = doc.data().fundingTitle;
       });
     await participants.forEach(function (element) {
-      if (element.isChecked == "확인") {
+      if (element.isChecked === "확인") {
         var data = element.price;
         data *= 1;
         totalamount += data;
@@ -103,13 +103,13 @@ const FundingState = (props) => {
         .doc(companyEmail)
         .get()
         .then(function (doc) {
-          if (doc.data().totalFundingAmount != 0) {
+          if (doc.data().totalFundingAmount !== 0) {
             isCompanySaved = true;
             saveAmount = doc.data().totalFundingAmount;
             // console.log(saveAmount);
           }
         });
-      if (isCompanySaved == true) {
+      if (isCompanySaved === true) {
         //before saved
         tempAmount = totalamount;
         totalamount += saveAmount;

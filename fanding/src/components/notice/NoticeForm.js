@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
+import axios from 'axios';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 //toast-ui
 import { Editor, Viewer } from '@toast-ui/react-editor';
@@ -16,11 +17,14 @@ import 'tui-chart/dist/tui-chart.css';
 import chart from '@toast-ui/editor-plugin-chart';
 
 import { firebase_notice_save, firebase_notice_delete, show_snackbar } from '../../store/actions/noticeAction';
+import { loadParticipants } from '../../store/actions/userActions';
+
 //material-ui
-import {Dialog,DialogTitle,DialogContent,makeStyles,
+import {Dialog,DialogContent,
     Toolbar, AppBar, Typography, IconButton, Divider, withStyles, DialogActions} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { post } from 'jquery';
+
+
 
 const styles = theme => ({
     appBar: {
@@ -53,14 +57,17 @@ class NoticeForm extends Component{
             ntccontents: '',
         };
         this.handleNoticeSave.bind(this);
-        this.handleSendEmail.bind(this);
+    }
+
+    componentDidMount(){
+        this.props.dispatch(loadParticipants(this.props.FundingID));
     }
 
     handleChangeValue = (e) => {
         this.setState({
             [e.target.id]: e.target.value,
         });
-        console.log("in NoticeForm2 this.state: ", this.state);
+        console.log("in NoticeForm this.state: ", this.state);
     }
 
     handleChangeEditor = (e) => {
@@ -76,14 +83,32 @@ class NoticeForm extends Component{
     handleNoticeSave = () => {
         let data = this.state;
 
-        if(this.props.selectedNotice.ntcno){
+        if(this.props.selectedNotice.ntcno!==''){
             data.ntcno = this.props.selectedNotice.ntcno;
             data.ntcdate = this.props.selectedNotice.ntcdate;
         }
 
         this.props.dispatch(firebase_notice_save(data));
-        this.props.handleDialogClose();
-        this.props.dispatch(show_snackbar({ message: 'Saved your input.', snackbarOpen: true }) );        
+    
+        const array = [];
+        const participants = this.props.user_data;
+        participants.map((participant) => 
+            array.push({
+                email: participant.email
+            })
+        )
+      
+        if(array !== null){
+            axios.post('/api/sendEmail',{
+                user_data : array,
+                funding_title: this.props.fundingTitle,
+            })
+            .then(res => {
+                alert('저장되었습니다.');
+                this.props.handleDialogClose();
+                this.props.dispatch(show_snackbar({ message: 'Saved your input.', snackbarOpen: true }) );        
+            })
+        }
     }
 
     handleNoticeDelete = () => {
@@ -96,30 +121,13 @@ class NoticeForm extends Component{
         this.props.handleDialogClose();
     };  
 
-    handleSendEmail = (e) => {
-        e.preventDefault();
-        const data = {
-            email : '이메일을 전송할 아이디',
-            funding_title : '펀딩 제목'
-        }
-
-        fetch('http://localhost:3001/sendEmail',{
-            method: "post",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify(data),
-        })
-        .then(res => res.json())
-        .then(json => {
-
-        })
-    }
-
+    
     editorRef = React.createRef();
     viewerRef = React.createRef();
 
     render(){
         const {selectedNotice, DialogOpen, auth, classes} = this.props;
-        
+
         return(
             <div> 
                 {selectedNotice.uid===auth.uid || !selectedNotice.uid
@@ -137,6 +145,7 @@ class NoticeForm extends Component{
                     <Form className="mt-5">
                         <FormGroup>
                             <Label for="ntcTitle"><strong>제목</strong></Label>
+                            <h6>공지사항 수정 시, 원 제목 옆에 '(수정)'을 붙여주세요!</h6>
                             <Input type="text" name="ntctitle" 
                             id = "ntctitle"
                             defaultValue={selectedNotice.ntctitle}
@@ -161,15 +170,19 @@ class NoticeForm extends Component{
                     </Form>
                     
                     <DialogActions>
+                    <h6>공지사항 저장 및 수정 시 참여자들에게 메일이 전송됩니다. 신중한 작성 부탁드립니다.</h6>
                     <Button onClick={this.handleDialogClose} 
-                            color="warning" size="sm"  className={classes.button}>작성 취소</Button>
+                            color="warning" size="sm"  className={classes.button}>취소</Button>
                     {selectedNotice.ntcno &&
                                 <Button className={classes.button} onClick={this.handleNoticeDelete} color="warning" size="sm" > 삭제 </Button>
                     }
+                    {selectedNotice.ntcno 
+                    ?
+                        <Button className={classes.button} color="warning" size="sm" onClick={this.handleNoticeSave}>수정</Button>
+                    :
                     <Button className={classes.button} color="warning" size="sm"
-                    onClick={this.handleNoticeSave} >저장하기</Button>
-                    <Button className={classes.button} color="warning" size="sm"
-                    onClick={this.handleSendEmail} >이메일 전송</Button>
+                    onClick={this.handleNoticeSave} >저장</Button>
+                    }
                     </DialogActions>
                 </DialogContent>
                 </Dialog>
@@ -227,7 +240,8 @@ let mapStateToProps = (state) => {
     return {
         auth: state.firebase.auth,
         authError: state.auth.authError,
-        selectedNotice: state.notice.selectedNotice
+        selectedNotice: state.notice.selectedNotice,
+        user_data: state.auth.user_data,
     };
 }
 
