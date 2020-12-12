@@ -43,6 +43,7 @@ import Search from "./components/layout/Search";
 import MyCompany from './components/layout/company/MyCompany';
 import FanAuth from './components/layout/FanAuth';
 import MyApplied from './components/layout/company/MyApplied';
+import MyOngoing from './components/layout/company/MyOngoing';
 import AdminDashBoard from "./components/layout/admin/AdminDashBoard";
 
 class App extends Component {
@@ -100,6 +101,7 @@ class App extends Component {
             <Route exact path="/myAppliedFunding" component={MyApplied} />
             <Route path="/adminpaymentlist" component={AdminPaymentList} />
             <Route path="/admindashboard" component={AdminDashBoard} />
+            <Route path="/myOngoingFunding" component={MyOngoing} />
           </Switch>
         </div>
       </BrowserRouter>

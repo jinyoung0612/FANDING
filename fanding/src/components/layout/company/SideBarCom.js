@@ -93,7 +93,7 @@ const submenus = [
       target: "myAppliedFunding",
     },
     {
-      title: "진행 중인 펀딩 관리",
+      title: "진행한 펀딩 관리",
       target: "myOngoingFunding",
     },
   ],

@@ -3,11 +3,11 @@ import {connect} from 'react-redux';
 import {Container, Row, Col} from "reactstrap";
 import SideBarCom from "./SideBarCom";
 import {firestoreConnect, isLoaded} from 'react-redux-firebase';
-
 import { compose } from 'redux';
-import MyAppliedFunding from "./MyAppliedFunding";
+import FundingList from "../FundingList"
+// import MyAppliedFunding from "./MyAppliedFunding";
 
-class MyApplied extends Component {
+class MyOngoing extends Component {
 
     constructor(props) {
         super(props);
@@ -19,25 +19,25 @@ class MyApplied extends Component {
     render(){
         console.log("render");
 
-        const {auth, applied}=this.props;
+        const {auth, fundings}=this.props;
         
-        if(!isLoaded(auth) || !isLoaded(applied)){
+        if(!isLoaded(auth) || !isLoaded(fundings)){
             return(
                 <div>Loading...</div>
             )
         }
         console.log(this.props);
-        console.log(this.props.applied);
+        console.log(this.props.fundings);
         // console.log(this.props.applied[0].recruit_id);
-        if(this.props.applied !==0){
+        if(this.props.fundings !==0){
             // console.log(user_data);
-            const array = [];
-            const test = applied.map(ids =>{
+            // const array = [];
+            // const test = applied.map(ids =>{
                 
-                array.push(ids.recruit_id);
-                return array
-            })
-            console.log('Myapplied_array:', array);
+            //     array.push(ids.recruit_id);
+            //     return array
+            // })
+            // console.log('Myapplied_array:', array);
             
             return(
 
@@ -49,7 +49,7 @@ class MyApplied extends Component {
                             <SideBarCom />
                             </Col>
                             <Col>
-                            <MyAppliedFunding doc_array={array} />
+                            <FundingList fundings={this.props.fundings}/>
                             </Col>
                         </Row>
                     </Container>
@@ -68,7 +68,7 @@ class MyApplied extends Component {
                             <SideBarCom />
                             </Col>
                             <Col>
-                            <h2 style={{paddingTop:'90px'}}>지원한 펀딩이 없습니다.</h2>
+                            <h2 style={{paddingTop:'90px'}}>참여한 펀딩이 없습니다.</h2>
                             </Col>
                         </Row>
                     </Container>
@@ -87,7 +87,8 @@ const mapStateToProps = (state) => {
     return{
         authError: state.auth.authError,
         auth: state.firebase.auth,
-        applied: state.firestore.ordered.applications
+        // applied: state.firestore.ordered.applications
+        fundings:state.firestore.ordered.fundings
     }
 };
 export default compose(
@@ -100,14 +101,14 @@ export default compose(
         // console.log('uid:', uid);
         return[
             {
-                collection: 'applications',
+                collection: 'fundings',
                 where:[
-                ["company_email","==",user_email]
+                ["selectedCom.value","==", user_email]
                 ]
             }
             
         ]
         
     })
-)(MyApplied);
+)(MyOngoing);
 
