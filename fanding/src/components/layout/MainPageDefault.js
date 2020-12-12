@@ -135,7 +135,8 @@ class MainPageDefault extends Component {
                 return(
                     <div>
                         <DefaultLayout />
-                        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q"
+                        >
 
                         <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
                           <SearchBar history={this.props.history}/>

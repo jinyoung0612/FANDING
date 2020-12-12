@@ -8,7 +8,8 @@ const MyCompany = (props) => {
         return (
           <>
           
-          <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+          <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" 
+          id="gallery5-q" style={{paddingTop:'25px'}}>
           <Container>
             <Row>
               <SideBarCom />

@@ -40,8 +40,9 @@ import MyRecruit from "./components/layout/MyRecruit";
 import NoticeList from "./components/notice/NoticeList";
 
 import Search from "./components/layout/Search";
-import MyCompany from "./components/layout/company/MyCompany";
-import FanAuth from "./components/layout/FanAuth";
+import MyCompany from './components/layout/company/MyCompany';
+import FanAuth from './components/layout/FanAuth';
+import MyApplied from './components/layout/company/MyApplied';
 import AdminDashBoard from "./components/layout/admin/AdminDashBoard";
 
 class App extends Component {
@@ -50,6 +51,8 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Navbar />
+          
+          
           <Switch>
             {/*<Route exact path="/" component={MainPage} />*/}
             <Route exact path="/" component={MainPageDefault} />
@@ -94,6 +97,7 @@ class App extends Component {
             <Route path="/companychat" component={CompanyChat} />
             <Route path="/myCompany" component={MyCompany} />
             <Route exact path="/fan_auth" component={FanAuth} />
+            <Route exact path="/myAppliedFunding" component={MyApplied} />
             <Route path="/adminpaymentlist" component={AdminPaymentList} />
             <Route path="/admindashboard" component={AdminDashBoard} />
           </Switch>
