@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
 const request = require('request');
 const config = require('../../config/finConfig');
 const nodemailer = require('nodemailer');
-//const check_deposit = require('../../store/actions/userActions');
 
 router.get('/api', (req,res)=> res.json({username:"jinyoung2"}));
 
@@ -59,46 +57,6 @@ router.post('/api/user/me', (req,res) =>{
         var result2 = JSON.parse(body);
        
        res.send(result2);
-    })
-})
-
-// 거래내역 조회
-router.post('/api/account/transaction', (req,res) => {
-    console.log('/api/account/transaction');
-
-    var accessToken = req.body.access_token;
-    var finNum = req.body.fintech_use_num;
-    // console.log('req.body.access_token: ',accessToken);
-    // console.log('req.body.fintech_use_num: ', finNum);
-
-
-    var countnum = Math.floor((Math.random()*(1000000000-1)+1));
-
-    var bankTranID = "T991666810U" + countnum;
-
-    var option3 = {
-        method: "GET",
-        url: "https://testapi.openbanking.or.kr/v2.0/account/transaction_list/fin_num",
-        headers: {
-            Authorization: "Bearer " + accessToken
-        },
-        qs: {
-            bank_tran_id: bankTranID,
-            fintech_use_num: finNum,
-            inquiry_type: "A",
-            inquiry_base: "D",
-            from_date: "20201020",
-            to_date: "20201119",
-            sort_order: "D",
-            tran_dtime: "20201116170400"
-        }
-    }
-    request(option3,function(error,response,body){
-        console.log('/account/transaction');
-        var result3 = JSON.parse(body);
-        console.log('transaction list : ',result3);
-
-        res.send(result3);
     })
 })
 

@@ -8,7 +8,6 @@ import SignIn from "./components/auth/SignIn";
 import SignUpCom from "./components/auth/SignUpCom";
 import MyAccount from "./components/layout/MyAccount";
 import Chongdae_auth from "./components/layout/Chongdae_auth";
-import Identity_auth from "./components/auth/Identity_auth";
 import Account_auth from "./components/auth/Account_auth";
 import CreateFunding from "./components/layout/CreateFunding";
 import FindCompanyForm from "./components/layout/company/FindCompanyForm";
@@ -32,7 +31,6 @@ import MainPage from "./components/layout/MainPage";
 import ReactDOM from "react-dom";
 import MainPageDefault from "./components/layout/MainPageDefault";
 // import MainPage from "./components/layout/MainPage";
-import TransactionList from "./components/layout/TransactionList";
 import MyFunding from "./components/layout/MyFunding";
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
@@ -65,12 +63,10 @@ class App extends Component {
             <Route path="/myaccount" component={MyAccount} />
             <Route path="/create_funding" component={createFundingDefault} />
             <Route path="/chongdae" component={Chongdae_auth} />
-            <Route path="/identity_auth" component={Identity_auth} />
             <Route path="/account_auth" component={Account_auth} />
             <Route exact path="/find_company" component={CompanyRecruit} />
             <Route path="/find_company_form" component={FindCompanyForm} />
             <Route path="/payment" component={Payment} />
-            <Route path="/transaction_list" component={TransactionList} />
 
             <Route exact path="/reward_funding" component={RewardFunding} />
             <Route
