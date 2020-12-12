@@ -80,6 +80,13 @@ const authReducer = (state = initState, action) => {
         ...state,
         recruits:{...action.payload.recruits}
       }
+    case "setMyAppliedFunding":
+      console.log("setMyAppliedFunding reducer");
+      return{
+        ...state,
+        user_data:action.payload.user_data,
+        doc_id:action.payload.doc_id
+      };  
 
 
     default:

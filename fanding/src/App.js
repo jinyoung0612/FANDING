@@ -42,6 +42,8 @@ import NoticeMain from "./components/notice/NoticeMain";
 import Search from "./components/layout/Search";
 import MyCompany from './components/layout/company/MyCompany';
 import FanAuth from './components/layout/FanAuth';
+import MyAppliedFunding from './components/layout/company/MyAppliedFunding';
+
 
 class App extends Component {
   render() {
@@ -49,6 +51,8 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Navbar />
+          
+          
           <Switch>
             {/*<Route exact path="/" component={MainPage} />*/}
             <Route exact path="/" component={MainPageDefault} />
@@ -94,6 +98,7 @@ class App extends Component {
             <Route path="/companychat" component={CompanyChat} />
             <Route path="/myCompany" component={MyCompany} />
             <Route exact path="/fan_auth" component={FanAuth} />
+            <Route exact path="/myAppliedFunding" component={MyAppliedFunding} />
           </Switch>
         </div>
       </BrowserRouter>
