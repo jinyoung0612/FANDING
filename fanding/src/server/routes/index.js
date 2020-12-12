@@ -216,8 +216,6 @@ router.post('/api/sendEmail', function (req,res){
             // 실제 아이디와 비번으로 바꿔서 사용하세요! 
             //user: '아이디',
             //pass: '비밀번호'
-            user: 'fandingkorea@gmail.com',
-            pass: 'fanding?00'
         }
     });
 
