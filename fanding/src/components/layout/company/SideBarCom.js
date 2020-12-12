@@ -52,7 +52,7 @@ const SideBarCom = ({ isOpen, toggle }) => (
     <div className="side-menu">
       <Nav vertical className="list-unstyled pb-3">
         <NavItem>
-          <NavLink size={12} className="inactive" activeClassName="active" tag={Link} to={"/myaccount"}>
+          <NavLink size={12} className="inactive" activeClassName="active" tag={Link} to={"/myCompany"}>
             <BsPersonCheckFill className="mr-2" />
             {/* <FontAwesomeIcon icon={faBriefcase} className="mr-2" /> */}
             내 업체 관리
@@ -90,11 +90,11 @@ const submenus = [
   [
     {
       title: "지원한 펀딩 관리",
-      target: "myFunding_applied",
+      target: "myAppliedFunding",
     },
     {
-      title: "진행 중인 펀딩 관리",
-      target: "myFunding_ing",
+      title: "진행한 펀딩 관리",
+      target: "myOngoingFunding",
     },
   ],
 ];

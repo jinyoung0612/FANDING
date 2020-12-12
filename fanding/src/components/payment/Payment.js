@@ -15,7 +15,8 @@ import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 import TuiGrid from "tui-grid";
 import axios from "axios";
-import { loadPaymentInfo } from "../../store/actions/paymentAction";
+// import { loadPaymentInfo } from "../../store/actions/paymentAction";
+import "./Payment.css";
 
 TuiGrid.setLanguage("ko");
 //TuiGrid.applyTheme('striped');
@@ -28,13 +29,13 @@ const columns = [
 
 const Payment = (props) => {
   var array = [];
-
   var totalFundingAmount = "0";
   var buyerEmail = "";
   var buyerName = "";
-  var realPayAmount = "0";
+  var feesPayAmount = "0";
   const paymentList = props.paymentInfo;
-  const isAmountView = false;
+  var isAmountView = true;
+  var rissArray = [];
 
   const handleClickPayment = () => {
     IMP.request_pay(
@@ -43,12 +44,12 @@ const Payment = (props) => {
         pay_method: "card",
         merchant_uid: "FANDING" + new Date().getTime(),
         name: "FANDING",
-        amount: realPayAmount,
+        amount: feesPayAmount,
         buyer_email: buyerEmail,
         buyer_name: buyerName,
         // buyer_tel: this.state.buyer_tel,
-        // buyer_addr: this.state.buyer_addr, //
-        // buyer_postcode: this.state.buyer_postcode, //
+        // buyer_addr: this.state.buyer_addr,
+        // buyer_postcode: this.state.buyer_postcode,
         m_redirect_url: "http://localhost:3000/",
       },
       function (rsp) {
@@ -58,69 +59,87 @@ const Payment = (props) => {
           msg += "상점 거래ID : " + rsp.merchant_uid;
           msg += "결제 금액 : " + rsp.paid_amount;
           msg += "카드 승인번호 : " + rsp.apply_num;
-          // this.props.paymentInput(this.state);
-          // imp_uid = rsp.imp_uid;
-          //   payment_success = true;
-          // this.setState({ payment_success: true });
+          handleChangePayment();
         } else {
           var msg = "결제에 실패하였습니다.";
           msg += "에러내용 : " + rsp.error_msg;
-          //   payment_success = false;
-          // this.setState({ payment_success: false });
         }
         alert(msg);
-        // this.props.paymentInput(this.state);
-        // console.log(payment_success);
       }
     );
-    // if (payment_success === true) {
-    //   this.setState({ payment_success: true });
-    //   console.log(this.state.payment_success);
-    // } else {
-    //   this.setState({ payment_success: false });
-    //   console.log(this.state.payment_success);
-    // }
-    // if (payment_success) {
-    //   this.handleClickPaymentInput();
-    // }
   };
 
+  const handleChangePayment = () => {
+    var deleteArray = [];
+    paymentList.map((list) =>
+      list.adminPaymentList.map((list2) =>
+        rissArray.push({
+          companyName: list2.companyName,
+          feesPayment: list2.feesPayment,
+          fundingName: list2.fundingName,
+          isPayment: "결제 완료",
+        })
+      )
+    );
+    if (!isAmountView) {
+      firebase.firestore().collection("payments").doc(props.auth.email).update({
+        isPaymentOpen: true,
+        paymentFundingList: deleteArray,
+        adminPaymentList: rissArray,
+        totalFundingAmount: "0",
+      });
+    }
+  };
   if (isLoaded(paymentList)) {
     paymentList.map(
       (list) => (
         (totalFundingAmount = list.totalFundingAmount),
         (buyerName = list.buyer_name),
-        (buyerEmail = list.buyer_email)
+        (buyerEmail = list.buyer_email),
+        (isAmountView = list.isPaymentOpen)
       )
     );
-    realPayAmount = totalFundingAmount * 0.05;
-    return (
-      <div>
-        {paymentList.map((list, i) =>
-          list.paymentFundingList.map((list2) =>
-            array.push({
-              fundingName: list2.fundingName,
-              fundingAmount: list2.fundingAmount,
-            })
-          )
-        )}
-        <Grid
-          data={array}
-          columns={columns}
-          rowHeight={25}
-          bodyHeight={100}
-          heightResizable={true}
-          rowHeaders={["rowNum"]}
-        />
-        <div align="right">
-          <strong>총 금액 : {totalFundingAmount} 원 </strong>
+    feesPayAmount = totalFundingAmount * 0.05;
+    if (!isAmountView) {
+      return (
+        <div>
+          {paymentList.map((list, i) =>
+            list.paymentFundingList.map((list2) =>
+              array.push({
+                fundingName: list2.fundingName,
+                fundingAmount: list2.fundingAmount,
+              })
+            )
+          )}
+          <Grid
+            data={array}
+            columns={columns}
+            rowHeight={25}
+            bodyHeight={100}
+            heightResizable={true}
+            rowHeaders={["rowNum"]}
+          />
+          <div className="payment-amount">
+            <div align="right">
+              <strong>총 금액 : {totalFundingAmount} 원 </strong>
+            </div>
+            <div align="right">
+              <strong>수수료 결제 금액 : {feesPayAmount} 원</strong>
+            </div>
+          </div>
+          <Button onClick={handleClickPayment}>결제</Button>
+          {/* <Button onClick={handleChangePayment}>결제 테스트</Button> */}
         </div>
-        <div align="right">
-          <strong>수수료 결제 금액 : {realPayAmount} 원</strong>
+      );
+    } else {
+      return (
+        <div>
+          <div className="no-payment" align="center">
+            <strong>결제할 금액이 없습니다.</strong>
+          </div>
         </div>
-        <Button onClick={handleClickPayment}>결제</Button>
-      </div>
-    );
+      );
+    }
   } else {
     return <div>페이지 오류</div>;
   }
@@ -132,11 +151,6 @@ const mapStateToProps = (state) => {
     auth: state.firebase.auth,
     user_data: state.auth.user_data,
     paymentInfo: state.firestore.ordered.payments,
-    //
-    paymentInfo_amount: state.payment.paymentInfo_amount,
-    paymentInfo_name: state.payment.paymentInfo_name,
-    paymentInfo_email: state.payment.paymentInfo_email,
-    paymentInfo_list: state.payment.paymentInfo_list,
   };
 };
 

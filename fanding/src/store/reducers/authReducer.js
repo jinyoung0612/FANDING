@@ -3,7 +3,8 @@ const initState = {
   authError: null,
   user_data:[],
   user_type:[],
-  recruits:[]
+  recruits:[],
+  participants:[]
 
 };
 const authReducer = (state = initState, action) => {
@@ -62,7 +63,7 @@ const authReducer = (state = initState, action) => {
     case "LoadParticipants":
       return{
         ...state,
-        user_data:action.payload.user_data
+        participants:action.payload.participants
       };
 
     case "loadMainPage":
@@ -79,6 +80,23 @@ const authReducer = (state = initState, action) => {
       return{
         ...state,
         recruits:{...action.payload.recruits}
+      }
+    case "setMyAppliedFunding":
+      console.log("setMyAppliedFunding reducer");
+      return{
+        ...state,
+        user_data:action.payload.user_data,
+        doc_id:action.payload.doc_id
+      };  
+
+    case "CHANGE_SUCCESS":
+      return{
+        ...state
+      }
+
+    case "CHANGE_ERROR":
+      return{
+        ...state
       }
 
 

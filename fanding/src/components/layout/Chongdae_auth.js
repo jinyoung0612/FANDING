@@ -68,7 +68,8 @@ class Chongdae_auth extends Component{
 
             if(access_token!=='error'&&access_token!=null){
               return(
-                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q"
+                style={{paddingTop:'25px'}}>
                   <Container>
                 <Card body>
                   <Row>
@@ -99,7 +100,7 @@ class Chongdae_auth extends Component{
           }
           else{
             return(
-              <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+              <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" style={{paddingTop:'25px'}} id="gallery5-q">
                 {/* <div class="mbr-section-head pb-10"></div> */}
                         
                         

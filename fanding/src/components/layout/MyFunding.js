@@ -48,7 +48,8 @@ class MyFunding extends Component {
             // console.log(user_data);
             return(
 
-                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q"
+                style={{paddingTop:'25px'}}>
                     <Container>
                         <Row>
                             <Col sm={3}>
@@ -67,14 +68,16 @@ class MyFunding extends Component {
 
             return(
 
-                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q"
+                style={{paddingTop:'25px'}}>
                     <Container>
                         <Row>
                             <Col sm={3}>
                             <SideBar />
                             </Col>
                             <Col>
-                    <h2>생성한 펀딩이 없습니다.</h2>
+                            
+                    <h2 style={{paddingTop:'90px'}}>생성한 펀딩이 없습니다.</h2>
                     </Col>
                         </Row>
                     </Container>

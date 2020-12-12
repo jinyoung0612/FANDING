@@ -14,6 +14,8 @@ import {Link,animateScroll as scroll} from "react-scroll";
 import {BsSearch } from "react-icons/bs";
 import {Link as Link2}from "react-router-dom";
 import Search from "./Search";
+import PDF from './example.pdf'
+
 
 
 const DefaultLayout= () => {
@@ -35,9 +37,19 @@ const DefaultLayout= () => {
                         </strong></p>
                         
                     <div class="mbr-section-btn mt-3">
-                        <a class="btn btn-success-outline display-4" href="/">메뉴얼 &gt;</a>
+                        {/* <a class="btn btn-success-outline display-4" href="/example.pdf" download>
+                        <Link to="/example.pdf" target="_blank"></Link>
+                            메뉴얼 &gt;</a> */}
+                            <a  href={PDF} without rel="noopener noreferrer" targe="_blank">
+                                <button className="btn btn-success-outline display-4" trailingIcon="picture_as_pdf" label="Manual">
+                                <strong>메뉴얼 &gt;</strong>
+                                </button>
+                            </a>
+                            
+      
+   
                         <a class="btn btn-success-outline display-4" href="/">
-                            <Link activeClass="active" to="gallery5-q" spy={true} smooth={true}>둘러보기 &gt;</Link>
+                            <Link activeClass="active" to="gallery5-q" spy={true} smooth={true}><strong>둘러보기 &gt;</strong></Link>
                             </a>
                     </div>
                 </div>
@@ -123,7 +135,8 @@ class MainPageDefault extends Component {
                 return(
                     <div>
                         <DefaultLayout />
-                        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                        <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q"
+                        >
 
                         <Container fluid style={{dispaly:'flex', flexFlow:'row wrap'}}>
                           <SearchBar history={this.props.history}/>

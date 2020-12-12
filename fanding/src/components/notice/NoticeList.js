@@ -79,8 +79,7 @@ class NoticeList extends Component {
     }
 
     handleSelectProgress = (e) => {
-      const location = window.location.href.split('/');
-      const funding_id = location[5];
+      const funding_id = this.props.match.params.id;
       let data = {
         funding_id: funding_id,
         state: e.value,
@@ -270,7 +269,8 @@ class NoticeList extends Component {
               </List>
               
               <FloatingButton qualification={qualification} handleClick={this.handleDialogOpen}/>
-              <NoticeForm qualification={qualification} DialogOpen={DialogOpen} FundingID = {funding_id} handleDialogClose={this.handleDialogClose}/>
+              <NoticeForm qualification={qualification} DialogOpen={DialogOpen} FundingID = {funding_id} 
+              fundingTitle = {funding[0].fundingTitle} handleDialogClose={this.handleDialogClose}/>
               </div>
             </div> 
           </div>
@@ -304,10 +304,7 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
   connect(mapStateToProps,mapDispatchToProps),
   firestoreConnect(props => {
-    const location = window.location.href.split('/');
-    const funding_id = location[5];
-    console.log("funding_id: ",funding_id);
-    
+    const funding_id = props.match.params.id;
     return[
       {
         collection: 'fundings',
