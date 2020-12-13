@@ -45,7 +45,7 @@ const FundingDetails = (props)=>{
     const user=useSelector(({firestore:{data}})=>data.users && data.users[user_email]);
 
     var like=false;
-    if(user&&user.like.indexOf(doc_id)>-1){
+    if(user&&user.like&&user.like.indexOf(doc_id)>-1){
        like=true;
     }
 
