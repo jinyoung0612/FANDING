@@ -132,7 +132,7 @@ async function token(currentComponent){
   }
   else{
     alert("본인인증에 실패했습니다. 다시 인증하세요.");
-    window.location.href = "http://localhost:3000/chongdae";
+    window.location.href = "/chongdae";
   }
 }
 

@@ -322,7 +322,7 @@ const MyAccount = (props) => {
         .delete()
         .then(function () {
           alert("회원탈퇴 처리 되었습니다.");
-          window.location.href = "http://localhost:3000/";
+          window.location.href = "/";
         })
         .catch(function (error) {
           console.log(error.message);

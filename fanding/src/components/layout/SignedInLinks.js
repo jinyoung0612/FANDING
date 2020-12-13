@@ -97,18 +97,18 @@ const SignedInLinks = (props) => {
       console.log(accessToken);
 
       if (accessToken != null && accessToken != "error") {
-        window.location.href = "http://localhost:3000/create_funding";
+        window.location.href = "/create_funding";
       } else {
         alert(
           "총대인증이 안돼있습니다. 펀딩을 생성 하기 위해선 총대 인증을 먼저 하세요."
         );
-        window.location.href = "http://localhost:3000/chongdae";
+        window.location.href = "/chongdae";
       }
     } else {
       alert(
         "총대인증이 안돼있습니다. 펀딩을 생성 하기 위해선 총대 인증을 먼저 하세요."
       );
-      window.location.href = "http://localhost:3000/chongdae";
+      window.location.href = "/chongdae";
     }
   };
   // if (isLoaded(company) && company.length !== 0) {

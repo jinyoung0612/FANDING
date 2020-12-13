@@ -42,7 +42,7 @@ const ColoredLine = ({ color }) => (
                                     <BsFillPeopleFill size={150} style={{ fill: "orange" }} className="mr-3" />
                                     <Button outline color="secondary" href="/signup"> 가입하기 </Button>
                                 </Col>
-                                <Col><ColoredLine color="#dedede"/></Col>
+                                
                                 <Col className="align-center">
                                 <h4 className="mbr-fonts-style align-center">
                                     <strong> 업체 </strong></h4>
