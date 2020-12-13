@@ -8,12 +8,14 @@ import ParticipationList from "./ParticipationList";
 import FundingContents from "./FundingContents";
 import {CardDeck, Container, Row, Col} from 'reactstrap';
 import SideBar from './SideBar';
-const MyParticipation =()=> {
+const MyParticipation =(props)=> {
+
+    const uid= props.auth.uid == null ? "none" : props.auth.uid
 
     useFirestoreConnect([{
         collection: 'participation',
         where:[
-            ["uid","==",firebase.auth().currentUser.uid]
+            ["uid","==",uid]
         ]
     }]);
 
@@ -31,7 +33,6 @@ return(
             <SideBar/>
             </Col>
             <Col>
-    
 
         {
             participations ?

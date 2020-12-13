@@ -101,7 +101,7 @@ const FundingDetails = (props)=>{
             ...inputs,
             [name]:value
         })
-        console.log(inputs)
+        // console.log(inputs)
     };
 
      // postcode
