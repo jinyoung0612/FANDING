@@ -367,17 +367,32 @@ console.log(props);
                 }
 
                 <CardText><b>선호 아티스트</b></CardText>
-                <Select
-                    styles={style}
-                    id="artistSelect"
-                    components={animatedComponents}
-                    options={options}
-                    menuPortalTarget={document.body}
-                    style={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-                    isMulti
-                    defaultValue={user[0].artistSelect.map(artist=>artist)}
-                    onChange={handleChangeSelect}
-                />
+                {
+                  user[0].artistSelect ?
+                      <Select
+                          styles={style}
+                          id="artistSelect"
+                          components={animatedComponents}
+                          options={options}
+                          menuPortalTarget={document.body}
+                          style={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                          isMulti
+                          defaultValue={user[0].artistSelect.map(artist=>artist)}
+                          onChange={handleChangeSelect}
+                      />
+                      :
+                      <Select
+                          styles={style}
+                          id="artistSelect"
+                          components={animatedComponents}
+                          options={options}
+                          menuPortalTarget={document.body}
+                          style={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                          isMulti
+                          onChange={handleChangeSelect}
+                      />
+                }
+
 
 
                 <CardText><b>배송지 정보</b></CardText>
