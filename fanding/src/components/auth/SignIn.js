@@ -130,7 +130,7 @@ class SignIn extends Component {
                   <br/>
                   <div className="col-auto mbr-section-btn align-center">
                     <Alert color="dark"><a onClick={this.handleClickPasswordSearch} className="alert-link"> 비밀번호 찾기 </a> 
-                       | <a href='/signup' className="alert-link"> 회원가입 </a></Alert>
+                       | <a href='/signuproot' className="alert-link"> 회원가입 </a></Alert>
                   </div>
                 </Form>
               </div>
