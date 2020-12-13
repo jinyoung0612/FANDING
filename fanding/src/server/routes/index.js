@@ -19,7 +19,7 @@ router.post('/api/token', (req,res) =>{
             client_id: config.client_id,
             client_secret: config.client_secret,
             //redirect_uri: "http://localhost:3000/account_auth",
-            redirect_uri:"http://118.67.131.132:3000/",
+            redirect_uri:"http://118.67.131.132:3000/account_auth",
             grant_type: "authorization_code"
         }
     }
