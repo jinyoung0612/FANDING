@@ -59,46 +59,20 @@ class MainPage extends Component {
                 if(isLoaded(fundings)){
                     return(
 
-                        <CardDeck style={{display: 'grid', flexDirection: 'row', justifyContent: 'center', margin:'10px', 
-                        alignItems:'center', flexFlow:'row wrap'}}>
+                        <div>
+                            <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'center',
+                                margin:'10px', flexFlow:'row wrap', alignItems:'center'}}>
+                                {
+                                    fundings.map((funding,i)=>{
+                                        return(
+                                            <FundingContents funding={funding} key={i}></FundingContents>
+                                        )
+                                    })
 
+                                }
 
-                            {
-                                fundings.map((funding,i)=>{
-                                    return(
-                                        <FundingContents funding={funding} key={i}></FundingContents>
-                                    )
-
-                                })
-
-                            }
-                        </CardDeck>
-
-                        // <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', margin:'10px'}}>
-                        //     {
-                        //         fundings.map((funding,i)=>{
-                        //             if(funding.fundingType==="reward"){
-                        //                 return(
-                        //                     <Link to={'reward_funding/' + funding.id}>
-                        //                         <FundingSummary funding={funding} key={funding.id} />
-                        //                     </Link>
-                        //                 )
-                        //             }
-                        //             else {
-                        //                 return(
-                        //                     <Link to={'collect_funding/' + funding.id}>
-                        //                         <CollectFundingSummary funding={funding} key={funding.id} />
-                        //                     </Link>
-                        //                 )
-                        //             }
-                        //
-                        //         })
-                        //
-                        //
-                        //     }
-                        // </CardDeck>
-
-                        
+                            </CardDeck>
+                        </div>
 
                     )
 

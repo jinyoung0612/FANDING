@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {connect, useSelector} from 'react-redux';
 import {useFirestoreConnect} from "react-redux-firebase";
-import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle} from 'reactstrap';
+import {Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardDeck} from 'reactstrap';
 import SideBar from './SideBar';
 import {Link} from "react-router-dom";
+
 
 const MyList=({fid})=>{
     // console.log(fid)
@@ -14,8 +15,8 @@ const MyList=({fid})=>{
     var funding=useSelector(({firestore:{data}})=>data.fundings && data.fundings[fid]);
 
     return(
+
             funding ?
-                <div>
                     <Link className="inactive" activeClassName="active" to={'funding_detail/'+fid} funding={funding}>
                         <Card className="col-sm-12 col-12 align-items-sm-stretch card-bigger border-custom"
                               body style={{width:'18em',flex: '1', height:'20em', margin: '8px', paddingTop:'10px',
@@ -27,7 +28,6 @@ const MyList=({fid})=>{
                             </CardBody>
                         </Card>
                     </Link>
-                </div>
             : null
     )
 
@@ -53,23 +53,28 @@ const MyCart =(props)=> {
     }
     return(
         <>
-            <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
-
+            <section className="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q"
+                     style={{paddingTop: '25px'}}>
                 <Container>
                     <Row>
                         <Col sm={3}>
                             <SideBar/>
                         </Col>
                         <Col>
+                            <CardDeck style={{display: 'flex', flexDirection: 'row',
+                                justifyContent: 'left', margin:'10px'}}>
                             {
-                                likes!=="" ?
+                                likes ?
                                     likes.map(like=>{
                                         return(
                                             <MyList fid={like}/>
                                         )
                                     })
-                                    : null
+                                    : <div>
+                                        <h2 style={{paddingTop:'90px'}}>마이 위시리스트가 없습니다.</h2>
+                                    </div>
                             }
+                            </CardDeck>
                         </Col>
                     </Row>
                 </Container>

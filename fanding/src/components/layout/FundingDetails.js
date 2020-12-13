@@ -47,8 +47,9 @@ const FundingDetails = (props)=>{
 
     var like=false;
     if(user&&user.like&&user.like.indexOf(doc_id)>-1){
-        like=true;
-     }
+       like=true;
+    }
+
 
         const [inputs, setInputs]=useState({
 
@@ -104,7 +105,7 @@ const FundingDetails = (props)=>{
             ...inputs,
             [name]:value
         })
-        console.log(inputs)
+        // console.log(inputs)
     };
 
      // postcode
