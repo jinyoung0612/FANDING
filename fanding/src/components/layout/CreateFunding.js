@@ -698,6 +698,54 @@ class CreateFunding extends Component{
                                    onChange={this.handleChange}
                             />
                         </FormGroup> : null}
+                        <Form className="mb-10" inline>
+                            <FormGroup>
+                                <Label for="bankName" className="mr-2"><b>은행 이름</b></Label>
+                                {/*<Input  type="text" name="text" id="bankName"*/}
+                                {/*       onChange={this.handleChange}*/}
+                                {/*    //    placeholder={bank.bank_name}*/}
+                                {/*/>*/}
+                                {isLoaded(this.props.bank) ? <Label>{bank[0].bank_name}</Label> : <Label>loading...</Label>}
+
+                            </FormGroup>
+
+                            <FormGroup className="ml-5">
+                                <Label for="accountNum" className="mr-2"><b>계좌번호</b></Label>
+                                {isLoaded(this.props.bank) ? <Label>{bank[0].account_num}</Label> : <Label>loading...</Label>}
+                            </FormGroup>
+
+                            <FormGroup className="ml-5">
+                                <Label for="accountName" className="mr-2">예금주(초성만)</Label>
+                                <Input  type="text" name="text" id="accountName"
+                                        onChange={this.handleChange}
+                                />
+                            </FormGroup>
+                        </Form>
+
+                        <FormGroup className="mb-10" style={{marginTop:"30px"}}>
+                            <Accordion>
+                                <AccordionSummary
+                                    expandIcon={<BsArrowDown />}
+                                    aria-label="Expand"
+                                    aria-controls="additional-actions1-content"
+                                    id="additional-actions1-header">
+                                    <FormControlLabel
+                                        aria-label="Acknowledge"
+                                        onClick={(event) => event.stopPropagation()}
+                                        onFocus={(event) => event.stopPropagation()}
+                                        control={<Checkbox onChange={this.handleAgree}/>}
+                                        label="약관에 동의합니다."
+                                    />
+
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Typography color="textSecondary">
+                                        FANDING은 통신판매중개자이며 통신판매의 당사자가 아닙니다.
+                                        따라서 개별 판매자가 등록하여 판매한 모든 상품에 대한 거래 정보 및 거래에 대한 책임은 각 판매자가 부담하고, 이에 대하여 FANDING은 일체 책임지지 않습니다.
+                                    </Typography>
+                                </AccordionDetails>
+                            </Accordion>
+                        </FormGroup>
 
                     </Form>
 
