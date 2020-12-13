@@ -35,6 +35,7 @@ import MyRecruit from "./MyRecruit";
 import { connect, useDispatch, useSelector } from "react-redux";
 import MyParticipation from "./MyParticipation";
 import SideBar from "./SideBar";
+import TopNavbar from "./TopNavbar";
 import { storage } from "../../config/fbConfig";
 import firebase from "firebase";
 import { useFirestoreConnect } from "react-redux-firebase";
@@ -354,8 +355,11 @@ const MyAccount = (props) => {
         >
           <Container>
             <Row>
+              
               <Col>
+              <TopNavbar />
                 <SideBar />
+                
               </Col>
               {/*<SideBar />*/}
               <Col>
@@ -386,7 +390,7 @@ const MyAccount = (props) => {
                           style={{
                             width: "150px",
                             height: "150px",
-                            marginLeft: "250px",
+                            marginLeft: "100px",
                           }}
                           alt="Remy Sharp"
                           src={previewURL}
@@ -396,7 +400,7 @@ const MyAccount = (props) => {
                           style={{
                             width: "150px",
                             height: "150px",
-                            marginLeft: "250px",
+                            marginLeft: "100px",
                           }}
                           alt="Remy Sharp"
                           src={user[0].profile}
@@ -406,7 +410,7 @@ const MyAccount = (props) => {
                           style={{
                             width: "150px",
                             height: "150px",
-                            marginLeft: "250px",
+                            marginLeft: "100px",
                           }}
                           alt="Remy Sharp"
                         />
