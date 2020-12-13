@@ -44,8 +44,9 @@ export default compose(
     connect(mapStateToProps),
     firestoreConnect([//data sync
         { 
-        collection: 'fundings',orderBy: ['createTime', 'desc'],
+        collection: 'fundings',
           where: ['fundingType', '==', 'reward'],
+          orderBy: ['createTime', 'desc'],
           
         } 
     ])

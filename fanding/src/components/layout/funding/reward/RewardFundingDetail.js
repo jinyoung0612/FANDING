@@ -4,7 +4,7 @@ import { firestoreConnect, isLoaded } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container, 
-  Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input } from 'reactstrap';
+  Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input, Tooltip } from 'reactstrap';
 //import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Editor, Viewer} from '@toast-ui/react-editor';
@@ -35,6 +35,7 @@ class FundingDetail extends Component{
       funding: this.props.funding,
       modal: false,
       postModal:false,
+      tooltipOpen:false,
       name:'',
       price:'',
       date:'',
@@ -54,8 +55,9 @@ class FundingDetail extends Component{
     };
     this.toggle = this.toggle.bind(this);
     this.togglePost = this.togglePost.bind(this);
-    
+    this.toggleTooltip = this.toggleTooltip.bind(this);
   }
+  
   toggle() {
     console.log(this.props)
       this.setState({
@@ -66,6 +68,12 @@ class FundingDetail extends Component{
     console.log(this.props)
       this.setState({
           modal: !this.state.modal
+      });
+  }
+  toggleTooltip() {
+    console.log(this.props)
+      this.setState({
+          tooltip: !this.state.tooltipOpen
       });
   }
   //  handleOpenModal=()=>{
@@ -292,7 +300,11 @@ handleClickChatView = () => {
                   </Col>
                 <Col style={{paddingLeft:"32px", paddingRight:'0px'}}>
                 <CopyToClipboard text={url}>
-                <Button color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                <Button color="secondary" size="xs" block id="Tooltip"><FaShareAlt className="mr-2" />  공유</Button>
+                <Tooltip
+                   placement = "bottom" isOpen={this.state.tooltipOpen} target="Tooltip" toggle={this.toggleTooltip}>
+                    Hello!
+                </Tooltip>
                 </CopyToClipboard>
                 </Col>
               </Row>
