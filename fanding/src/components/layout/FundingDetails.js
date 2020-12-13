@@ -405,10 +405,15 @@ const FundingDetails = (props)=>{
                                                     )
                                                 }
                                                 <Col>
-                                                    <CopyToClipboard text={url}>
-                                                        <Button className="btn-responsive" color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                                                    <CopyToClipboard text={url} toggle={toggleTooltip} id="Tooltip">
+                                                        <Button className="btn-responsive" color="secondary" size="xs" block ><FaShareAlt className="mr-2" />  
+                                                        공유</Button>
+                                                        
                                                     </CopyToClipboard>
-                                                </Col>
+                                                </Col><Tooltip
+                                                        placement = "bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggleTooltip}>
+                                                            클립보드에 복사되었습니다.
+                                                        </Tooltip>
                                             </Row>
                                             <Row xs="2">
                                                 <Col xs="12">
@@ -721,17 +726,17 @@ const FundingDetails = (props)=>{
                                                 }
                                                 {/*<Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>*/}
                                                 <Col>
-                                                    <CopyToClipboard text={url}>
-                                                        <Button className="btn-responsive" color="secondary" size="xs" block id="Tooltip">
+                                                    <CopyToClipboard text={url} id="Tooltip" toggle={toggleTooltip}>
+                                                        <Button className="btn-responsive" color="secondary" size="xs" block>
                                                             <FaShareAlt className="mr-2" />  
                                                         공유</Button>
-                                                        <Tooltip
-                                                        placement = "bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggleTooltip}>
-                                                            Hello!
-                                                        </Tooltip>
+                                                       
                                                     </CopyToClipboard>
 
-                                                </Col>
+                                                </Col> <Tooltip
+                                                        placement = "bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggleTooltip}>
+                                                           클립보드에 복사되었습니다.
+                                                        </Tooltip>
                                             </Row>
                                             <Row xs="2">
                                                 <Col xs="12">
@@ -904,10 +909,16 @@ const FundingDetails = (props)=>{
                                                 </Col>
 
                                                 <Col>
-                                                    <CopyToClipboard text={url}>
-                                                        <Button className="btn-responsive" color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
-                                                    </CopyToClipboard>
-                                                </Col>
+                                                    <CopyToClipboard text={url} toggle={toggleTooltip} id="Tooltip">
+                                                        <Button className="btn-responsive" color="secondary" size="xs" block ><FaShareAlt className="mr-2" />
+                                                          공유
+                                                        </Button>
+                                                       
+                                                    </CopyToClipboard> 
+                                                </Col><Tooltip
+                                                        placement = "bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggleTooltip}>
+                                                            클립보드에 복사되었습니다.
+                                                        </Tooltip>
                                             </Row>
                                             <Row xs="2">
                                                 <Col xs="12">
