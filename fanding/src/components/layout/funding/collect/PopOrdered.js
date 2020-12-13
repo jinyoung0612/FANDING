@@ -1,18 +1,31 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 //import Dropdown from './Dropdown';
 import { compose } from 'redux';
 import CollectFundingList from './CollectFundingList';
 
 class PopOrdered extends Component {
-
+    constructor({someProp}){
+        super()
+        this.state = {someProp}
+    }
     render()
-    {
+    {   
+        console.log("Pop Ordered");
         const { fundings } = this.props;
+        console.log(fundings);
+
+        if(!isLoaded(fundings))
+        {
+         return (<div>Loading...</div>)
+        }
         
+
         return(
+            <div onClick={this.props.onClick}>
             <CollectFundingList fundings={fundings} />
+            </div>
         )
     }
 }
@@ -28,7 +41,7 @@ export default compose(
     firestoreConnect([//data sync
         { collection: 'fundings',
           where: ['fundingType', '==', 'collect'],
-          orderedBy: ['fundingRate', 'desc'],
+          orderBy: ['like', 'desc'],
         } 
     ])
 )(PopOrdered);
