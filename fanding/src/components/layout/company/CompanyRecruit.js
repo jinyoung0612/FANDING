@@ -25,16 +25,16 @@ class CompanyRecruit extends Component {
         console.log(accessToken);
         
             if(accessToken!=null && accessToken!=='error'){
-                window.location.href = "http://localhost:3000/find_company_form";
+                window.location.href = "/find_company_form";
             }
             else{
                 alert("총대인증이 안돼있습니다. 업체모집을 하기 위해선 총대 인증을 먼저 하세요.");
-                window.location.href = "http://localhost:3000/chongdae";    
+                window.location.href = "/chongdae";    
             }
         }
         else{
             alert("총대인증이 안돼있습니다. 업체모집을 하기 위해선 총대 인증을 먼저 하세요.");
-            window.location.href = "http://localhost:3000/chongdae";
+            window.location.href = "/chongdae";
         }
     }
 
