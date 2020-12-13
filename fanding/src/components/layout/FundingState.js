@@ -56,7 +56,6 @@ const FundingState = (props) => {
   console.log("transactionLists: ", transactionLists);
   console.log("transactionLists: ", participants);
 
-
   const handleClick = () => {
     window.location.reload();
   };
@@ -169,55 +168,54 @@ const FundingState = (props) => {
     }
   };
 
-
-
-  if(isLoaded(transactionLists)&&isLoaded(participants)){
-    if(transactionLists[0]!==null&&participants.length!==0){
+  if (isLoaded(transactionLists) && isLoaded(participants)) {
+    if (transactionLists[0] !== null && participants.length !== 0) {
       check(transactionLists, participants);
       // console.log(participants)
 
       return (
-          <div>
-            {
-              participants.map((participant, i) =>
-                  array.push({
-                    email: participant.email,
-                    name: participant.name,
-                    account: participant.bank,
-                    deposit_date: participant.date,
-                    deposit_time: participant.time,
-                    deposit_price: participant.price,
-                    check_deposit: participant.isChecked,
-                  })
-              )}
-            <Grid
-                data={array}
-                columns={columns}
-                rowHeight={25}
-                bodyHeight={100}
-                heightResizable={true}
-                rowHeaders={["rowNum"]}
-            />
-            <div className="total-amount">
-              {fundingStateAmount === "" ? null : (
-                  <div align="right">
-                    <strong>펀딩 총 금액 : {fundingStateAmount} 원</strong>
-                  </div>
-              )}
-            </div>
-            <Button onClick={handleClick}>새로고침</Button>
-            <Button onClick={handleClicksumPrice}> 펀딩금액합산</Button>
+        <div>
+          {participants.map((participant, i) =>
+            array.push({
+              email: participant.email,
+              name: participant.name,
+              account: participant.bank,
+              deposit_date: participant.date,
+              deposit_time: participant.time,
+              deposit_price: participant.price,
+              check_deposit: participant.isChecked,
+            })
+          )}
+          <Grid
+            data={array}
+            columns={columns}
+            rowHeight={25}
+            bodyHeight={100}
+            heightResizable={true}
+            rowHeaders={["rowNum"]}
+          />
+          <div className="total-amount">
+            {fundingStateAmount === "" ? null : (
+              <div align="right">
+                <strong>펀딩 총 금액 : {fundingStateAmount} 원</strong>
+              </div>
+            )}
           </div>
+          <Button onClick={handleClick}>새로고침</Button>
+          <Button onClick={handleClicksumPrice}> 펀딩금액합산</Button>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="no-participation" align="center">
+            <strong>펀딩에 참여한 참여자가 없습니다.</strong>
+          </div>
+        </div>
       );
     }
-    else{
-      return null;
-    }
-  }
-  else{
-    return(
-        null
-    )
+  } else {
+    return null;
   }
   // if (!isLoaded(transactionLists)) {
   //   console.log("transactionLists 로드 안됨");
@@ -295,12 +293,12 @@ export default compose(
 )(FundingState);
 
 async function check(transactionLists, participants) {
-  console.log("check",participants)
-  if (transactionLists !== null  && participants) {
+  console.log("check", participants);
+  if (transactionLists !== null && participants) {
     const access_token = transactionLists[0].access_token;
     const fintech_use_num = transactionLists[0].fintech_use_num;
 
-    console.log(access_token,fintech_use_num)
+    console.log(access_token, fintech_use_num);
     axios
       .post("/api/account/transaction/check", {
         access_token: access_token,
@@ -309,7 +307,7 @@ async function check(transactionLists, participants) {
       })
       .then((res) => {
         if (res.data) {
-          console.log("res.data",res.data);
+          console.log("res.data", res.data);
           const pState = res.data;
           for (var i = 0; i < participants.length; i++) {
             const uid = participants[i].uid;
