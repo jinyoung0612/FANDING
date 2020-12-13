@@ -6,6 +6,7 @@ import Navbar from "./components/layout/Navbar";
 import SignUp from "./components/auth/SignUp";
 import SignIn from "./components/auth/SignIn";
 import SignUpCom from "./components/auth/SignUpCom";
+import SignUpRoot from "./components/auth/SignUpRoot";
 import MyAccount from "./components/layout/MyAccount";
 import Chongdae_auth from "./components/layout/Chongdae_auth";
 import Account_auth from "./components/auth/Account_auth";
@@ -56,6 +57,7 @@ class App extends Component {
             {/*<Route exact path="/" component={MainPage} />*/}
             <Route exact path="/" component={MainPageDefault} />
             <Route path="/search" component={Search} />
+            <Route path="/signuproot" component={SignUpRoot} />
             <Route path="/signup" component={SignUp} />
             <Route path="/signupcom" component={SignUpCom} />
             <Route path="/signin" component={SignIn} />
