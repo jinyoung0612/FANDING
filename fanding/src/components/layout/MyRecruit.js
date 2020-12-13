@@ -67,7 +67,8 @@ class MyRecruit extends Component {
                         <TopNavbar />
                         <SideBar />
                         </Col>
-                        <h2>생성한 업체 모집글이 없습니다</h2>
+                        <Col><h2>생성한 업체 모집글이 없습니다</h2></Col>
+                        
                     </Row>
                     </Container>
                     </section>

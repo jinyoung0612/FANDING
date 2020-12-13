@@ -36,7 +36,7 @@ return(
             <Col>
 
         {
-            participations ?
+            participations && participations.length!==0?
             participations.map(participation=>{
             // console.log(funding)
             return(
