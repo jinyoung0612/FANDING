@@ -76,7 +76,7 @@ const SideBar = ({ isOpen, toggle }) => (
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink className="inactive" activeClassName="active" tag={Link} to={"/myaccount"}>
+          <NavLink className="inactive" activeClassName="active" tag={Link} to={"/myCart"}>
             <BsFillHeartFill className="mr-2" />
             마이 위시리스트
           </NavLink>

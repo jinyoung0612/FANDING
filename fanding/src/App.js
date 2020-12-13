@@ -34,6 +34,8 @@ import MainPageDefault from "./components/layout/MainPageDefault";
 import MyFunding from "./components/layout/MyFunding";
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
+import MyCart from "./components/layout/MyCart";
+
 
 import NoticeList from "./components/notice/NoticeList";
 
@@ -85,6 +87,7 @@ class App extends Component {
             <Route path="/funding_state/:id" component={FundingState} />
             <Route path="/myFunding_created" component={MyFunding} />
             <Route path="/myFunding_participated" component={MyParticipation} />
+            <Route path="/myCart" component={MyCart}/>
             <Route path="/questionchat" component={QuestionChat} />
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />

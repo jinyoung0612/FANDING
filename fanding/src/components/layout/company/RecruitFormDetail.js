@@ -475,6 +475,7 @@ class ApplicationList extends Component {
       console.log("선정완료");
       alert("이미 업체를 선정하였습니다.");
     } else {
+      alert("업체럴 선정하였습니다.");
       this.setState(
         {
           select_name: name,
