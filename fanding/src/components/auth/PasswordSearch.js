@@ -74,7 +74,8 @@ class PasswordSearch extends Component {
                     onClick={this.handleClickPasswordSearch}
                     size="lg"
                     block
-                    className="btn btn-info display-4"
+                    //className="btn btn-info display-4"
+                    color="primary"
                   >
                     비밀번호찾기
                   </Button>

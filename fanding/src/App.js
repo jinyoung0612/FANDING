@@ -6,9 +6,9 @@ import Navbar from "./components/layout/Navbar";
 import SignUp from "./components/auth/SignUp";
 import SignIn from "./components/auth/SignIn";
 import SignUpCom from "./components/auth/SignUpCom";
+import SignUpRoot from "./components/auth/SignUpRoot";
 import MyAccount from "./components/layout/MyAccount";
 import Chongdae_auth from "./components/layout/Chongdae_auth";
-import Identity_auth from "./components/auth/Identity_auth";
 import Account_auth from "./components/auth/Account_auth";
 import CreateFunding from "./components/layout/CreateFunding";
 import FindCompanyForm from "./components/layout/company/FindCompanyForm";
@@ -32,10 +32,11 @@ import MainPage from "./components/layout/MainPage";
 import ReactDOM from "react-dom";
 import MainPageDefault from "./components/layout/MainPageDefault";
 // import MainPage from "./components/layout/MainPage";
-import TransactionList from "./components/layout/TransactionList";
 import MyFunding from "./components/layout/MyFunding";
 import MyParticipation from "./components/layout/MyParticipation";
 import MyRecruit from "./components/layout/MyRecruit";
+import MyCart from "./components/layout/MyCart";
+
 
 import NoticeList from "./components/notice/NoticeList";
 
@@ -58,6 +59,7 @@ class App extends Component {
             {/*<Route exact path="/" component={MainPage} />*/}
             <Route exact path="/" component={MainPageDefault} />
             <Route path="/search" component={Search} />
+            <Route path="/signuproot" component={SignUpRoot} />
             <Route path="/signup" component={SignUp} />
             <Route path="/signupcom" component={SignUpCom} />
             <Route path="/signin" component={SignIn} />
@@ -65,12 +67,10 @@ class App extends Component {
             <Route path="/myaccount" component={MyAccount} />
             <Route path="/create_funding" component={createFundingDefault} />
             <Route path="/chongdae" component={Chongdae_auth} />
-            <Route path="/identity_auth" component={Identity_auth} />
             <Route path="/account_auth" component={Account_auth} />
             <Route exact path="/find_company" component={CompanyRecruit} />
             <Route path="/find_company_form" component={FindCompanyForm} />
             <Route path="/payment" component={Payment} />
-            <Route path="/transaction_list" component={TransactionList} />
 
             <Route exact path="/reward_funding" component={RewardFunding} />
             <Route
@@ -89,6 +89,7 @@ class App extends Component {
             <Route path="/funding_state/:id" component={FundingState} />
             <Route path="/myFunding_created" component={MyFunding} />
             <Route path="/myFunding_participated" component={MyParticipation} />
+            <Route path="/myCart" component={MyCart}/>
             <Route path="/questionchat" component={QuestionChat} />
             <Route path="/totalchat" component={TotalChat} />
             <Route path="/myRecruit" component={MyRecruit} />

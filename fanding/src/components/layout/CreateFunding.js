@@ -51,10 +51,11 @@ class createFundingDefault extends Component{
         }
         this.handler=this.handler.bind(this)
     }
+
     handler=(urls)=>{
         this.setState({
             isFan:true,
-            urls:urls
+            urls:urls,
         })
         console.log("parent",this.state.urls)
     }
@@ -103,7 +104,7 @@ class CreateFunding extends Component{
             accountNum:'',
             gift:false,
            isAgreed:false,
-            urls:this.props.urls
+            fan_auth:this.props.urls
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -141,10 +142,10 @@ class CreateFunding extends Component{
         });
         this.handleAccount()
         // console.log(e.target.value);
-        console.log(this.state)
+        // console.log(this.state)
     };
     handleChangeSelect = e => {
-        console.log(e)
+        // console.log(e)
         this.setState({
             artistSelect:e.value
         });
@@ -159,7 +160,7 @@ class CreateFunding extends Component{
         this.setState({
             fundingType: e.target.value
         });
-        console.log(this.state.fundingType);
+        // console.log(this.state.fundingType);
     }
 
     handleCheckChange = e =>{
@@ -171,7 +172,7 @@ class CreateFunding extends Component{
     handleChangeEditor = e =>
     {
         const content = this.editorRef.current.getInstance().getHtml();
-        console.log("I am editor" + content)
+        // console.log("I am editor" + content)
 
         this.setState({
             content: content
@@ -179,7 +180,7 @@ class CreateFunding extends Component{
     }
 
     handleAccount(){
-        console.log("handleAccount")
+        // console.log("handleAccount")
         if(isLoaded(this.props.bank)){
             console.log(this.props.bank[0])
             this.setState({
@@ -194,20 +195,24 @@ class CreateFunding extends Component{
         this.setState({
             isAgreed:!this.state.isAgreed
         })
-        console.log(this.state.isAgreed)
+        // console.log(this.state.isAgreed)
     }
 
     handleSubmit = e => {
 
         e.preventDefault();
+        var random=Math.random();
+        var num=Math.floor(random*10000000000);
+        var name=this.state.image.name.split(".");
+        const image_name=name[0]+num+"."+name[1];
 
-        console.log(this.state);
+        // console.log(this.state);
         if(this.state.isAgreed===false) {
             alert("약관에 동의해주세요");
         }
         else{
             if(this.state.image!=null){
-                const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
+                const uploadTask = storage.ref(`images/${image_name}`).put(this.state.image);
                 uploadTask.on(
                     "state_changed",
                     snapshot => {
@@ -222,13 +227,13 @@ class CreateFunding extends Component{
                     () => {
                         storage
                             .ref("images")
-                            .child(this.state.image.name)
+                            .child(image_name)
                             .getDownloadURL()
                             .then(url => {
                                 this.setState({url:url});
                                 console.log(this.state.url)
                                 // console.log(this.state);
-                                this.setState({image:this.state.image.name})
+                                this.setState({image:image_name})
                                 console.log(this.state);
                                 this.props.firebase_funding_save(this.state)
                                 this.setState({redirectToReferrer: true})
@@ -258,9 +263,9 @@ class CreateFunding extends Component{
     {
 
 
-        console.log(this.props.user);
+        // console.log(this.props.user);
         const {bank}= this.props;
-        console.log(this.props.bank);
+        // console.log(this.props.bank);
 
         // console.log("urlurlurl",this.props.urls)
 
@@ -698,6 +703,54 @@ class CreateFunding extends Component{
                                    onChange={this.handleChange}
                             />
                         </FormGroup> : null}
+                        <Form className="mb-10" inline>
+                            <FormGroup>
+                                <Label for="bankName" className="mr-2"><b>은행 이름</b></Label>
+                                {/*<Input  type="text" name="text" id="bankName"*/}
+                                {/*       onChange={this.handleChange}*/}
+                                {/*    //    placeholder={bank.bank_name}*/}
+                                {/*/>*/}
+                                {isLoaded(this.props.bank) ? <Label>{bank[0].bank_name}</Label> : <Label>loading...</Label>}
+
+                            </FormGroup>
+
+                            <FormGroup className="ml-5">
+                                <Label for="accountNum" className="mr-2"><b>계좌번호</b></Label>
+                                {isLoaded(this.props.bank) ? <Label>{bank[0].account_num}</Label> : <Label>loading...</Label>}
+                            </FormGroup>
+
+                            <FormGroup className="ml-5">
+                                <Label for="accountName" className="mr-2">예금주(초성만)</Label>
+                                <Input  type="text" name="text" id="accountName"
+                                        onChange={this.handleChange}
+                                />
+                            </FormGroup>
+                        </Form>
+
+                        <FormGroup className="mb-10" style={{marginTop:"30px"}}>
+                            <Accordion>
+                                <AccordionSummary
+                                    expandIcon={<BsArrowDown />}
+                                    aria-label="Expand"
+                                    aria-controls="additional-actions1-content"
+                                    id="additional-actions1-header">
+                                    <FormControlLabel
+                                        aria-label="Acknowledge"
+                                        onClick={(event) => event.stopPropagation()}
+                                        onFocus={(event) => event.stopPropagation()}
+                                        control={<Checkbox onChange={this.handleAgree}/>}
+                                        label="약관에 동의합니다."
+                                    />
+
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Typography color="textSecondary">
+                                        FANDING은 통신판매중개자이며 통신판매의 당사자가 아닙니다.
+                                        따라서 개별 판매자가 등록하여 판매한 모든 상품에 대한 거래 정보 및 거래에 대한 책임은 각 판매자가 부담하고, 이에 대하여 FANDING은 일체 책임지지 않습니다.
+                                    </Typography>
+                                </AccordionDetails>
+                            </Accordion>
+                        </FormGroup>
 
                     </Form>
 

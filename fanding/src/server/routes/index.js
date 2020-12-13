@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
 const request = require('request');
 const config = require('../../config/finConfig');
-//const check_deposit = require('../../store/actions/userActions');
+const nodemailer = require('nodemailer');
+const emailConfig = require('../../config/emailConfig');
 
 router.get('/api', (req,res)=> res.json({username:"jinyoung2"}));
 
@@ -18,8 +18,8 @@ router.post('/api/token', (req,res) =>{
             code: authCode,
             client_id: config.client_id,
             client_secret: config.client_secret,
-            redirect_uri: "http://localhost:3000/account_auth",
-            //redirect_uri:"http://118.67.131.132:3000/",
+            //redirect_uri: "http://localhost:3000/account_auth",
+            redirect_uri:"http://118.67.131.132:3000/account_auth",
             grant_type: "authorization_code"
         }
     }
@@ -58,46 +58,6 @@ router.post('/api/user/me', (req,res) =>{
         var result2 = JSON.parse(body);
        
        res.send(result2);
-    })
-})
-
-// 거래내역 조회
-router.post('/api/account/transaction', (req,res) => {
-    console.log('/api/account/transaction');
-
-    var accessToken = req.body.access_token;
-    var finNum = req.body.fintech_use_num;
-    // console.log('req.body.access_token: ',accessToken);
-    // console.log('req.body.fintech_use_num: ', finNum);
-
-
-    var countnum = Math.floor((Math.random()*(1000000000-1)+1));
-
-    var bankTranID = "T991666810U" + countnum;
-
-    var option3 = {
-        method: "GET",
-        url: "https://testapi.openbanking.or.kr/v2.0/account/transaction_list/fin_num",
-        headers: {
-            Authorization: "Bearer " + accessToken
-        },
-        qs: {
-            bank_tran_id: bankTranID,
-            fintech_use_num: finNum,
-            inquiry_type: "A",
-            inquiry_base: "D",
-            from_date: "20201020",
-            to_date: "20201119",
-            sort_order: "D",
-            tran_dtime: "20201116170400"
-        }
-    }
-    request(option3,function(error,response,body){
-        console.log('/account/transaction');
-        var result3 = JSON.parse(body);
-        console.log('transaction list : ',result3);
-
-        res.send(result3);
     })
 })
 
@@ -195,6 +155,39 @@ router.get('/api/oobToken', function(req, res) {
         var oob_token = result.access_token;
         console.log(oob_token);
     });
+})
+
+//이메일 전송
+router.post('/api/sendEmail', function (req,res){
+    var user_data = req.body.user_data;
+    var funding_title = req.body.funding_title;
+    console.log('user_data',user_data);
+    console.log('funding_title', funding_title);
+    var url = 'http://118.67.131.132:3000/'
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        port: 587,
+        host: 'stmp.gmail.com',
+        secure: false,
+        requireTLS: true,
+        auth: {
+            user: emailConfig.user,
+            pass: emailConfig.pass
+        }
+    });
+
+    user_data.map((user)=>{
+        transporter.sendMail({
+            from: 'fandingkorea@gmail.com',
+            to: user.email,
+            subject: '[FANDING] < '+ funding_title+' > 공지사항 업데이트.',
+            text: '안녕하세요. 팬딩입니다. <' + funding_title  +'> 공지사항이 업데이트되었으니 확인부탁드립니다! \n\n'
+               + '▼▼▼ FANDING ▼▼▼ \n ' + url
+        });
+    })
+
+    res.send('finish');
 })
 
 

@@ -13,6 +13,7 @@ import {
   Input,
   FormText,
   Container,
+  Alert,
 } from "reactstrap";
 import { render } from "react-dom";
 import { AvForm, AvField } from "availity-reactstrap-validation";
@@ -113,29 +114,24 @@ class SignIn extends Component {
                   </FormGroup>
 
                   <div className="col-auto mbr-section-btn align-center">
-                    <Button size="lg" block className="btn btn-info display-4">
+                    <Button size="sm" block className="btn btn-info display-4">
                       로그인
                     </Button>
                   </div>
-                  <br></br>
-                  <div className="col-auto mbr-section-btn align-center">
-                    <Button
-                      onClick={this.handleClickPasswordSearch}
-                      size="lg"
-                      block
-                      className="btn btn-info display-4"
-                    >
-                      비밀번호찾기
-                    </Button>
-                  </div>
                   <ColoredLine color="#dedede" />
-
+                  <div className="col-auto mbr-section-btn align-center">
                   <TwitterLoginButton
                     className="twitter mt-15"
                     onClick={this.handleTwitter}
                   >
                     <span>트위터로 로그인하기</span>
                   </TwitterLoginButton>
+                  </div>
+                  <br/>
+                  <div className="col-auto mbr-section-btn align-center">
+                    <Alert color="dark"><a onClick={this.handleClickPasswordSearch} className="alert-link"> 비밀번호 찾기 </a> 
+                       | <a href='/signuproot' className="alert-link"> 회원가입 </a></Alert>
+                  </div>
                 </Form>
               </div>
             </div>

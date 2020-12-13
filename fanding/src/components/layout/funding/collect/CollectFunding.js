@@ -65,6 +65,9 @@ class CollectFunding extends Component {
                     <DropdownItem>
                         <div onClick={this.changeValue}>최신순</div>
                     </DropdownItem>
+                    <DropdownItem>
+                        <div onClick={this.changeValue}>인기순</div>
+                    </DropdownItem>
                     {/* <DropdownItem>
                         <div onClick={this.changeValue}>인기순</div>  */}
                             {/* 참여퍼센테이지가 높은 순*/}

@@ -50,7 +50,7 @@ const Payment = (props) => {
         // buyer_tel: this.state.buyer_tel,
         // buyer_addr: this.state.buyer_addr,
         // buyer_postcode: this.state.buyer_postcode,
-        m_redirect_url: "http://localhost:3000/",
+        m_redirect_url: "/",
       },
       function (rsp) {
         if (rsp.success) {
@@ -86,7 +86,7 @@ const Payment = (props) => {
         isPaymentOpen: true,
         paymentFundingList: deleteArray,
         adminPaymentList: rissArray,
-        totalFundingAmount: "0",
+        totalFundingAmount: "",
       });
     }
   };

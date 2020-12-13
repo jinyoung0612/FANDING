@@ -269,7 +269,8 @@ class NoticeList extends Component {
               </List>
               
               <FloatingButton qualification={qualification} handleClick={this.handleDialogOpen}/>
-              <NoticeForm qualification={qualification} DialogOpen={DialogOpen} FundingID = {funding_id} handleDialogClose={this.handleDialogClose}/>
+              <NoticeForm qualification={qualification} DialogOpen={DialogOpen} FundingID = {funding_id} 
+              fundingTitle = {funding[0].fundingTitle} handleDialogClose={this.handleDialogClose}/>
               </div>
             </div> 
           </div>
