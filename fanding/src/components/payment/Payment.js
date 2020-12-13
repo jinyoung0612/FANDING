@@ -86,7 +86,7 @@ const Payment = (props) => {
         isPaymentOpen: true,
         paymentFundingList: deleteArray,
         adminPaymentList: rissArray,
-        totalFundingAmount: "0",
+        totalFundingAmount: "",
       });
     }
   };
