@@ -241,7 +241,7 @@ let mapStateToProps = (state) => {
         auth: state.firebase.auth,
         authError: state.auth.authError,
         selectedNotice: state.notice.selectedNotice,
-        user_data: state.auth.user_data,
+        user_data: state.auth.participants,
     };
 }
 
