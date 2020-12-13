@@ -337,6 +337,31 @@ export const remove_cart=(fid,like)=>{
     }
 }
 
+export const modify_participation = (pid,data) => {
+    // console.log(fid)
+
+    return (dispatch, getState) => {
+        // make async call to database
+        const firestore = firebase.firestore();
+
+        firestore
+            .collection("participation")
+            .doc(pid)
+            .update(
+                data
+            )
+            .then(() => {
+                console.log("modify success");
+            })
+            .catch((err) => {
+                console.log("modify error",err);
+        })
+
+
+    };
+
+};
+
 
 // import { createAction, handleActions } from 'redux-actions';
 // import firebase from "firebase/app";
