@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody, Container,
-    Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input} from 'reactstrap';
+    Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Button, Progress, Form, FormGroup, Label, Input, Tooltip} from 'reactstrap';
 import {connect, useSelector, useDispatch} from "react-redux";
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import { Link } from 'react-router-dom';
@@ -21,6 +21,7 @@ let imgStyle = {
     maxHeight: '500px',
     maxWidth: '700px'
 }
+const tooltipText = '클립보드에 링크가 복사됩니다';
 
 const FundingDetails = (props)=>{
 
@@ -45,9 +46,9 @@ const FundingDetails = (props)=>{
     const user=useSelector(({firestore:{data}})=>data.users && data.users[user_email]);
 
     var like=false;
-    if(user&&user.like.indexOf(doc_id)>-1){
-       like=true;
-    }
+    if(user&&user.like&&user.like.indexOf(doc_id)>-1){
+        like=true;
+     }
 
         const [inputs, setInputs]=useState({
 
@@ -73,11 +74,12 @@ const FundingDetails = (props)=>{
 
     // const [isModalOpen,setModal]=useState(false);
     const dispatch = useDispatch();
-
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     const [modal, setModal] = useState(false);
     const [nestedModal, setNestedModal] = useState(false);
-    
+
+
     const [isChatView, setChat]=useState(false);
     const [progress, setProgress]=useState(0);
     // const [address, setAdd] = useState(false);
@@ -89,12 +91,13 @@ const FundingDetails = (props)=>{
     const toggleNested = () => {
         setNestedModal(!nestedModal);
     }
+    
 
     const [currentDate,setDate]=useState(new Date());
 
     const toggle = () => {setModal(!modal);handleEmail()}
 
-
+    const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
     const handleChange = e => {
         const {value, name}=e.target;
         setInputs({
@@ -143,6 +146,9 @@ const FundingDetails = (props)=>{
         setProgress(progress+funding.progress)
     };
 
+
+
+    
     const handleClickChatView=()=>{
         console.log("chatview");
         setChat(true);
@@ -716,8 +722,15 @@ const FundingDetails = (props)=>{
                                                 {/*<Col><Button color="secondary" size="xs" block><BsChatSquareDots className="mr-2"/>  문의</Button></Col>*/}
                                                 <Col>
                                                     <CopyToClipboard text={url}>
-                                                        <Button className="btn-responsive" color="secondary" size="xs" block><FaShareAlt className="mr-2" />  공유</Button>
+                                                        <Button className="btn-responsive" color="secondary" size="xs" block id="Tooltip">
+                                                            <FaShareAlt className="mr-2" />  
+                                                        공유</Button>
+                                                        <Tooltip
+                                                        placement = "bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggleTooltip}>
+                                                            Hello!
+                                                        </Tooltip>
                                                     </CopyToClipboard>
+
                                                 </Col>
                                             </Row>
                                             <Row xs="2">
