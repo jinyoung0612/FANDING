@@ -51,10 +51,11 @@ class createFundingDefault extends Component{
         }
         this.handler=this.handler.bind(this)
     }
+
     handler=(urls)=>{
         this.setState({
             isFan:true,
-            urls:urls
+            urls:urls,
         })
         console.log("parent",this.state.urls)
     }
@@ -103,7 +104,7 @@ class CreateFunding extends Component{
             accountNum:'',
             gift:false,
            isAgreed:false,
-            urls:this.props.urls
+            fan_auth:this.props.urls
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -141,10 +142,10 @@ class CreateFunding extends Component{
         });
         this.handleAccount()
         // console.log(e.target.value);
-        console.log(this.state)
+        // console.log(this.state)
     };
     handleChangeSelect = e => {
-        console.log(e)
+        // console.log(e)
         this.setState({
             artistSelect:e.value
         });
@@ -159,7 +160,7 @@ class CreateFunding extends Component{
         this.setState({
             fundingType: e.target.value
         });
-        console.log(this.state.fundingType);
+        // console.log(this.state.fundingType);
     }
 
     handleCheckChange = e =>{
@@ -171,7 +172,7 @@ class CreateFunding extends Component{
     handleChangeEditor = e =>
     {
         const content = this.editorRef.current.getInstance().getHtml();
-        console.log("I am editor" + content)
+        // console.log("I am editor" + content)
 
         this.setState({
             content: content
@@ -179,7 +180,7 @@ class CreateFunding extends Component{
     }
 
     handleAccount(){
-        console.log("handleAccount")
+        // console.log("handleAccount")
         if(isLoaded(this.props.bank)){
             console.log(this.props.bank[0])
             this.setState({
@@ -194,20 +195,24 @@ class CreateFunding extends Component{
         this.setState({
             isAgreed:!this.state.isAgreed
         })
-        console.log(this.state.isAgreed)
+        // console.log(this.state.isAgreed)
     }
 
     handleSubmit = e => {
 
         e.preventDefault();
+        var random=Math.random();
+        var num=Math.floor(random*10000000000);
+        var name=this.state.image.name.split(".");
+        const image_name=name[0]+num+"."+name[1];
 
-        console.log(this.state);
+        // console.log(this.state);
         if(this.state.isAgreed===false) {
             alert("약관에 동의해주세요");
         }
         else{
             if(this.state.image!=null){
-                const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
+                const uploadTask = storage.ref(`images/${image_name}`).put(this.state.image);
                 uploadTask.on(
                     "state_changed",
                     snapshot => {
@@ -222,13 +227,13 @@ class CreateFunding extends Component{
                     () => {
                         storage
                             .ref("images")
-                            .child(this.state.image.name)
+                            .child(image_name)
                             .getDownloadURL()
                             .then(url => {
                                 this.setState({url:url});
                                 console.log(this.state.url)
                                 // console.log(this.state);
-                                this.setState({image:this.state.image.name})
+                                this.setState({image:image_name})
                                 console.log(this.state);
                                 this.props.firebase_funding_save(this.state)
                                 this.setState({redirectToReferrer: true})
@@ -258,9 +263,9 @@ class CreateFunding extends Component{
     {
 
 
-        console.log(this.props.user);
+        // console.log(this.props.user);
         const {bank}= this.props;
-        console.log(this.props.bank);
+        // console.log(this.props.bank);
 
         // console.log("urlurlurl",this.props.urls)
 
