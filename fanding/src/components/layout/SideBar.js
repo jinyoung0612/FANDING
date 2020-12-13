@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, Component} from "react";
 import { NavItem, NavLink, Nav, Collapse } from "reactstrap";
 import { FaTools } from "react-icons/fa";
 import { BsPersonCheckFill, BsFileText, BsFillHeartFill, BsBuilding } from "react-icons/bs";
@@ -86,6 +86,7 @@ const SideBar = ({ isOpen, toggle }) => (
   </div>
 );
 
+
 const submenus = [
   [
     {
@@ -99,5 +100,7 @@ const submenus = [
   ],
 ];
 
-export default SideBar;
+
+
+ export default SideBar;
 
