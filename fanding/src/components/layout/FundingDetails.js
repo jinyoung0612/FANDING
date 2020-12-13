@@ -429,11 +429,11 @@ const FundingDetails = (props) => {
                     <Modal
                       style={{ height: "1240px" }}
                       isOpen={modal}
-                      toggle={toggle}
+                      toggle={modalClosed}
                     >
                       <Form>
                         {/* onSubmit={(e) => handleSubmit(e, funding)} */}
-                        <ModalHeader toggle={toggle} charCode="x">
+                        <ModalHeader toggle={modalClosed} charCode="x">
                           입금폼
                         </ModalHeader>
                         <ModalBody>
@@ -1004,11 +1004,11 @@ const FundingDetails = (props) => {
                     <Modal
                       style={{ height: "1240px" }}
                       isOpen={modal}
-                      toggle={toggle}
+                      toggle={modalClosed}
                     >
                       <Form>
                         {/* onSubmit={(e) => handleSubmit(e, funding)} */}
-                        <ModalHeader toggle={toggle} charCode="x">
+                        <ModalHeader toggle={modalClosed} charCode="x">
                           입금폼
                         </ModalHeader>
                         <ModalBody>
