@@ -3,6 +3,7 @@ const router = express.Router();
 const request = require('request');
 const config = require('../../config/finConfig');
 const nodemailer = require('nodemailer');
+const emailConfig = require('../../config/emailConfig');
 
 router.get('/api', (req,res)=> res.json({username:"jinyoung2"}));
 
@@ -171,9 +172,8 @@ router.post('/api/sendEmail', function (req,res){
         secure: false,
         requireTLS: true,
         auth: {
-            // 실제 아이디와 비번으로 바꿔서 사용하세요! 
-            //user: '아이디',
-            //pass: '비밀번호'
+            user: emailConfig.user,
+            pass: emailConfig.pass
         }
     });
 
