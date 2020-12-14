@@ -18,7 +18,7 @@ import {
 } from "reactstrap";
 import {Link} from "react-router-dom";
 import DaumPostCode from "react-daum-postcode";
-import {modify_mypage, modify_participation} from "../../store/actions/userActions";
+import { modify_participation} from "../../store/actions/userActions";
 
 let imgStyle = {
     maxHeight: '200px',
@@ -125,7 +125,7 @@ const ParticipationList=({participation})=>{
 
         return(
             <CardDeck style={{display: 'flex', flexDirection: 'row', 
-            justifyContent: 'left', margin:'10px'}}>
+            justifyContent: 'left', margin:'10px', flexFlow:'row wrap'}}>
 
                 <Link className="inactive" activeClassName="active" to={'funding_detail/'+fid} funding={funding}>
                 <Card className="col-sm-12 col-12 align-items-sm-stretch card-bigger border-custom"

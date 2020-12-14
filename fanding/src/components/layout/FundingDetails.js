@@ -1,11 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
 import {
-  Card,
   CardImg,
-  CardTitle,
-  CardSubtitle,
   CardText,
-  CardBody,
   Container,
   Modal,
   ModalHeader,
@@ -14,7 +10,6 @@ import {
   Row,
   Col,
   Button,
-  Progress,
   Form,
   FormGroup,
   Label,
@@ -109,7 +104,6 @@ const FundingDetails = (props) => {
     { label: "albumImage", value: "앨범 인증" },
   ];
 
-  // const [isModalOpen,setModal]=useState(false);
   const dispatch = useDispatch();
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
@@ -118,7 +112,6 @@ const FundingDetails = (props) => {
 
   const [isChatView, setChat] = useState(false);
   const [progress, setProgress] = useState(0);
-  // const [address, setAdd] = useState(false);
   const [fullAddress, setFullAdd] = useState(false);
   const [zoneCode, setZoneCode] = useState(false);
 
@@ -168,10 +161,7 @@ const FundingDetails = (props) => {
     }
     setFullAdd(AllAddress);
     setZoneCode(zoneCodes);
-    // this.setState ({
-    //     fullAddress: AllAddress,
-    //     zoneCode : zoneCodes
-    // })
+
   };
   const handleAgree = () => {
     setisAgreed(!isAgreed);
@@ -419,13 +409,6 @@ const FundingDetails = (props) => {
                       </Row>
                     )}
 
-                    {/*<Row xs="2">*/}
-                    {/*<Button color="info" onClick={toggle}>펀딩 참여하기</Button>*/}
-                    {/*<Col><Button>수정하기</Button></Col>*/}
-                    {/*<Link to ={'../funding_state/'+doc_id} funding={funding}>*/}
-                    {/*    <Col><Button>참여 현황 보기</Button></Col>*/}
-                    {/*</Link>*/}
-                    {/*</Row>*/}
                     <Modal
                       style={{ height: "1240px" }}
                       isOpen={modal}

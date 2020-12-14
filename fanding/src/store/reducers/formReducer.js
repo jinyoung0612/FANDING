@@ -1,5 +1,3 @@
-
-// import firebase from 'firebase/app';
 const initState = {
   createError: null,
   user_data:[]

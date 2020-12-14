@@ -1,8 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/storage';
-import { connect } from 'react-redux';
 import {createAction} from 'redux-actions';
-import {loadFundings} from './userActions';
 
 const CHONGDAE_SAVE = 'CHONGDAE_SAVE';
 

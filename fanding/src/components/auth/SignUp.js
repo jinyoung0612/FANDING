@@ -8,10 +8,8 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   Container,
 } from "reactstrap";
-import { render } from "react-dom";
 import Select from "react-select";
 import makeAnimated from "react-select/animated/dist/react-select.esm";
 import firebase from "firebase/app";

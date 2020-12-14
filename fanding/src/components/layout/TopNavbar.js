@@ -1,9 +1,8 @@
 import React, {useState, Component} from "react";
-import { NavItem, NavLink, Nav, Collapse, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from "reactstrap";
+import { NavItem, NavLink, Nav, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from "reactstrap";
 import { FaTools } from "react-icons/fa";
 import { BsPersonCheckFill, BsFileText, BsFillHeartFill, BsBuilding } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import styles from './SideBar.css';
 
 
   
@@ -67,7 +66,7 @@ const TopNavbar = (props) => {
            
         </Dropdown>
         <NavItem className="ml-4">
-            <NavLink className="inactive" activeClassName="active" tag={Link} to={"/myaccount"}>
+            <NavLink className="inactive" activeClassName="active" tag={Link} to={"/myCart"}>
               <BsFillHeartFill className="mr-2" />
               위시리스트
             </NavLink>

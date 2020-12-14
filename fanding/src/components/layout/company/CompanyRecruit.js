@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import {NavLink, Button, Container} from 'reactstrap';
+import { Button, Container} from 'reactstrap';
 import { compose } from 'redux';
 import RecruitFormList from './RecruitFormList';
-import firebase from 'firebase';
 
 class CompanyRecruit extends Component {
     

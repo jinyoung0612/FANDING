@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {firestoreConnect, isLoaded} from 'react-redux-firebase'
 import { compose } from 'redux'
-import { Redirect } from 'react-router-dom'
-import { Container, Button,Row, Col, Card, CardImg, CardTitle, CardSubtitle, CardText, 
-  CardBody, Modal, ModalHeader, ModalBody, ModalFooter, Progress, Form, FormGroup, Label, 
+import { Container, Button,Row, Col, CardImg, Modal, ModalBody, ModalFooter, Progress, Form, FormGroup, Label,
   Input } from 'reactstrap';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer} from '@toast-ui/react-editor';

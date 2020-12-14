@@ -4,7 +4,6 @@ import { FaTools } from "react-icons/fa";
 import { BsPersonCheckFill, BsFileText, BsFillHeartFill, BsBuilding } from "react-icons/bs";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import styles from './SideBar.css';
 
 const SubMenu = (props) => {
   const [collapsed, setCollapsed] = useState(true);

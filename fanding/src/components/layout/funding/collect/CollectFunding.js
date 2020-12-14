@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
-import { compose } from 'redux';
-import FundingList from './CollectFundingList';
 import NewOrdered from './NewOrdered';
 import DefaultOrdered from './DeafaultOrdered';
 import PopOrdered from './PopOrdered';
@@ -56,9 +52,7 @@ class CollectFunding extends Component {
                     {this.state.dropDownValue}
                 </DropdownToggle>
                 <DropdownMenu>
-                        {/* {this.state.actions.map(e => {
-                            return <DropdownItem id={e.id} key={e.id} onClick={this.changeValue}>{e.name}</DropdownItem>
-                        })} */}
+
                     <DropdownItem>
                         <div onClick={this.changeValue}>보기 방식</div>
                     </DropdownItem>
@@ -68,10 +62,6 @@ class CollectFunding extends Component {
                     <DropdownItem>
                         <div onClick={this.changeValue}>인기순</div>
                     </DropdownItem>
-                    {/* <DropdownItem>
-                        <div onClick={this.changeValue}>인기순</div>  */}
-                            {/* 참여퍼센테이지가 높은 순*/}
-                    {/* </DropdownItem> */}
                         
 
                 </DropdownMenu>
@@ -87,19 +77,5 @@ class CollectFunding extends Component {
         )
     }
 }
-// const mapStateToProps = (state) => {
-//     console.log(state);
-//     return {
-//         fundings: state.firestore.ordered.fundings
-//     }
-// }
-// export default compose(
-//     connect(mapStateToProps),
-//     firestoreConnect([//data sync
-//         { collection: 'fundings',
-//         where: ['fundingType', '==', 'collect'],
-//         } 
-//     ])
-// )(CollectFunding);
 
 export default CollectFunding;

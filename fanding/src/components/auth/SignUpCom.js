@@ -8,7 +8,6 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   Container,
 } from "reactstrap";
 import firebase from "firebase/app";

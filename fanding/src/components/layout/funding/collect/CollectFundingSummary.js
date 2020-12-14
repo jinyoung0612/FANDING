@@ -11,8 +11,9 @@ const CollectFundingSummary = ({funding}) => {
             paddingBottom:'10px', paddingLeft:'10px', paddingRight:'10px'}} >
             <CardImg top width="100%" src={funding.url} style={{height:"194px"}} alt="Card image cap" />
             <CardBody>
-            <CardTitle>{funding.fundingTitle}</CardTitle>
-            <CardSubtitle>{funding.fundingType}</CardSubtitle>
+            {/*<CardTitle>{funding.fundingTitle}</CardTitle>*/}
+                <CardTitle>[{funding.artistSelect}] {funding.fundingTitle}</CardTitle>
+                <CardSubtitle> {funding.fundingStartDate} {funding.fundingStartTime} ~ {funding.fundingEndDate} {funding.fundingEndTime}</CardSubtitle>
             <CardText></CardText>
             {/*<Button>Button</Button>*/}
             </CardBody>

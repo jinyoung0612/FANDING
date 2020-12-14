@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from "react-router-dom";
-import { Button, NavLink, Col, Form, FormGroup, Label, Input, 
-    Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText,
-    FormText, CustomInput } from 'reactstrap';
+import { Button, NavLink, Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText} from 'reactstrap';
 import { connect, useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import firebase from 'firebase';

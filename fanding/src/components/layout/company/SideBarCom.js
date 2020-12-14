@@ -1,10 +1,8 @@
 import React, {useState} from "react";
 import { NavItem, NavLink, Nav, Collapse } from "reactstrap";
-import { FaTools } from "react-icons/fa";
 import { BsPersonCheckFill, BsFileText, BsCreditCard, BsBuilding } from "react-icons/bs";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import styles from '../SideBar.css'
 
 const SubMenu = (props) => {
   const [collapsed, setCollapsed] = useState(true);
@@ -69,18 +67,6 @@ const SideBarCom = ({ isOpen, toggle }) => (
           <NavLink className="inactive" activeClassName="active" tag={Link} to={"/faq"}>
           </NavLink>
         </NavItem>
-        {/* <NavItem>
-          <NavLink className="inactive" activeClassName="active" tag={Link} to={"/"}>
-            <BsBuilding className="mr-2" />
-            지원한 펀딩 관리
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink className="inactive" activeClassName="active" tag={Link} to={"/"}>
-            <BsBuilding className="mr-2" />
-            진행 중인 펀딩 관리
-          </NavLink>
-        </NavItem> */}
       </Nav>
     </div>
   </div>

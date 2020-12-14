@@ -62,7 +62,7 @@ const MyCart =(props)=> {
                         </Col>
                         <Col>
                             <CardDeck style={{display: 'flex', flexDirection: 'row',
-                                justifyContent: 'left', margin:'10px'}}>
+                                justifyContent: 'left', margin:'10px',flexFlow:'row wrap'}}>
                             {
                                 likes ?
                                     likes.map(like=>{

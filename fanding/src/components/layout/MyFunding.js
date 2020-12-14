@@ -25,8 +25,6 @@ class MyFunding extends Component {
     componentWillUnmount(){
         console.log("unmount")
     }
-
-
     // componentDidUpdate(prevProps, prevState, snapshot) {
     //     if(this.props.auth !== prevProps.auth){
     //             this.props.dispatch(loadFundings(this.props.auth.uid))
@@ -57,8 +55,9 @@ class MyFunding extends Component {
                             <SideBar />
                             </Col>
                             <Col>
+
+                                    <FundingList fundings={user_data}/>
                             
-                            <FundingList fundings={user_data}/>
                             </Col>
                         </Row>
                     </Container>

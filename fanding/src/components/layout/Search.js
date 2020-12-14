@@ -1,10 +1,9 @@
-import React, { useState, Component, PureComponent } from "react";
-import {Button, Container, Input, InputGroup, InputGroupAddon, Media} from 'reactstrap';
+import React, { Component} from "react";
+import { Container} from 'reactstrap';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-import {firebaseConnect, isLoaded, isEmpty} from "react-redux-firebase";
+import { isLoaded} from "react-redux-firebase";
 import {connect} from "react-redux";
-import SelectedArtist from "./SelectedArtist";
 import FundingContents from "./FundingContents";
 import {CardDeck, CardText, Row} from 'reactstrap';
 import queryString from 'query-string';
