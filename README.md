@@ -37,7 +37,7 @@
 - 1:1 채팅 기능
 ---------------------------------------
 ## Framework & Language
-- **Web **
+- **Web**
   - Frontend: Reat, Reactstrap, BootStrap, Material-UI (HTML, CSS, javascript)
   - Backend: Node.js (Language: javacript)
   - DataBase: Firebase
