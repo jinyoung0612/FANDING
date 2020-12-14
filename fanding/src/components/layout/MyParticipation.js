@@ -8,6 +8,7 @@ import ParticipationList from "./ParticipationList";
 import FundingContents from "./FundingContents";
 import {CardDeck, Container, Row, Col} from 'reactstrap';
 import SideBar from './SideBar';
+import TopNavbar from "./TopNavbar"
 const MyParticipation =(props)=> {
 
     const uid= props.auth.uid == null ? "none" : props.auth.uid
@@ -21,28 +22,28 @@ const MyParticipation =(props)=> {
 
     const participations=useSelector((state)=>state.firestore.ordered.participation);
     console.log(participations);
-
-
+ 
 return(
     <>
-    <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+    <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q" style={{paddingTop:'25px'}}>
         
     <Container> 
         <Row>
             <Col sm={3}>
+                <TopNavbar />
             <SideBar/>
             </Col>
             <Col>
 
         {
-            participations ?
+            participations && participations.length!==0?
             participations.map(participation=>{
             // console.log(funding)
             return(
                 <ParticipationList participation={participation} key={participation.id}/>
             )
         })
-            : console.log("no")
+            : <div><h2 style={{paddingTop:'90px'}}>참여한 펀딩이 없습니다.</h2></div>
         }
         </Col>
     </Row>

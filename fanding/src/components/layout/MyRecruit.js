@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import RecruitFormSummary from "./company/RecruitFormSummary";
 import {Container, Row, Col} from 'reactstrap';
 import SideBar from './SideBar';
-
+import TopNavbar from "./TopNavbar"
 class MyRecruit extends Component {
 
     constructor(props) {
@@ -36,10 +36,11 @@ class MyRecruit extends Component {
             const recruits=Object.values(this.props.recruits);
 
             return(
-                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q">
+                <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q" style={{paddingTop:'25px'}}>
                     <Container>
                     <Row>
                         <Col sm={3}>
+                            <TopNavbar />
                             <SideBar />
                         </Col>
                     { recruits && recruits.map(recruit => {
@@ -59,7 +60,18 @@ class MyRecruit extends Component {
             return(
 
                 <div>
-                    <h2>생성한 업체 모집글이 없습니다</h2>
+                    <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q" style={{paddingTop:'25px'}}>
+                    <Container>
+                    <Row>
+                        <Col sm={3}>
+                        <TopNavbar />
+                        <SideBar />
+                        </Col>
+                        <Col><h2>생성한 업체 모집글이 없습니다</h2></Col>
+                        
+                    </Row>
+                    </Container>
+                    </section>
                 </div>
 
 

@@ -4,7 +4,7 @@ import {loadFundings} from "../../store/actions/userActions";
 import FundingList from "./FundingList";
 import {Container, Row, Col} from "reactstrap";
 import SideBar from "./SideBar"
-
+import TopNavbar from "./TopNavbar"
 class MyFunding extends Component {
 
     constructor(props) {
@@ -53,6 +53,7 @@ class MyFunding extends Component {
                     <Container>
                         <Row>
                             <Col sm={3}>
+                            <TopNavbar />
                             <SideBar />
                             </Col>
                             <Col>
@@ -73,6 +74,7 @@ class MyFunding extends Component {
                     <Container>
                         <Row>
                             <Col sm={3}>
+                            <TopNavbar />
                             <SideBar />
                             </Col>
                             <Col>

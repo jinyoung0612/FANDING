@@ -8,7 +8,7 @@ import axios from 'axios';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import {verifyChongdae, getTransactionList} from '../../store/actions/chongdaeAction';
 import SideBar from './SideBar';
-
+import TopNavbar from './TopNavbar';
 class Chongdae_auth extends Component{
 
     constructor(props){
@@ -74,6 +74,7 @@ class Chongdae_auth extends Component{
                 <Card body>
                   <Row>
                   <Col sm="3">
+                    <TopNavbar />
                     <SideBar />
                   </Col>
                   <Col sm="4">
@@ -110,6 +111,7 @@ class Chongdae_auth extends Component{
               
               <Row>
                 <Col sm="3">
+                <TopNavbar />
                 <SideBar />
                 </Col>
                 <Col sm="4">
