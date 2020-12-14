@@ -25,3 +25,6 @@ yarn-error.log*
 .idea/
 
 /src/config/emailConfig.js
+.firebase/
+.firebaserc
+firebase.json
