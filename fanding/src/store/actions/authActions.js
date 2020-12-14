@@ -11,9 +11,9 @@ export const signIn = (credentials) => {
           .signInWithEmailAndPassword(credentials.email, credentials.password)
           .then((data) => {
             if (data.user.emailVerified) {
-              // firebase
-              //   .auth()
-              //   .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+              firebase
+                .auth()
+                .setPersistence(firebase.auth.Auth.Persistence.SESSION);
               dispatch({ type: "LOGIN_SUCCESS" });
             } else {
               var msg = "이메일인증을 확인해주세요";
@@ -21,7 +21,8 @@ export const signIn = (credentials) => {
               // firebase
               //   .auth()
               //   .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-              // firebase.auth().signOut();
+              firebase.auth().signOut();
+              window.location.href = "/";
             }
           })
           .catch((err) => {
@@ -88,9 +89,10 @@ export const signUp = (newUser) => {
                 firebase
                   .auth()
                   .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-                //   firebase.auth().signOut();
+                firebase.auth().signOut();
 
                 dispatch({ type: "EMAIL_SPENT_SUCCESS" });
+                window.location.href = "/";
               })
               .catch((err) => {
                 dispatch({ type: "NOT_EMAIL_SPENT", err });
@@ -138,7 +140,8 @@ export const signUpCom = (newCompany) => {
                 firebase
                   .auth()
                   .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-                //   firebase.auth().signOut();
+                firebase.auth().signOut();
+                window.location.href = "/";
                 dispatch({ type: "EMAIL_SPENT_SUCCESS" });
               })
               .catch((err) => {
