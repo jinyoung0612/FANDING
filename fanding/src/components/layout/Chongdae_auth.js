@@ -43,10 +43,11 @@ class Chongdae_auth extends Component{
 
     render()
     {
-      const {auth, chongdaes} = this.props;
+      const {auth, chongdaes, transactionLists} = this.props;
       console.log('auth', auth);
       console.log('chongdaes', chongdaes);
-      
+      console.log('transactionLists', transactionLists);
+
       if(!isLoaded(auth)){
         return <div>Loading...</div>
       }
@@ -80,13 +81,24 @@ class Chongdae_auth extends Component{
                     <Card body>
                       <CardTitle class="jb-x-large"><h3><strong>본인 인증 step3</strong></h3> </CardTitle>
                       <CardText>본인인증이 완료되었습니다. 계좌 정보 최종 확인을 위한 단계로 하단의 '최종 확인' 버튼을 클릭해주세요.</CardText>
-                      <CardText style={{color:'red'}}>※최종 확인 버튼은 한번만 누르면 됩니다!!※</CardText>
                       <Form onSubmit = {this.handleSubmit}>
                         <Input type="hidden" id="access_token" placeholder={this.state.access_token} onChange={this.handleChange}/>
                         <Input type="hidden" id="fintech_use_num" placeholder={this.state.fintech_use_num} onChange={this.handleChange}/>
                         <Input type="hidden" id="user_name" placeholder={this.state.user_name} onChange={this.handleChange}/>
                         <Input type="hidden" id="bank_name" placeholder={this.state.bank_name} onChange={this.handleChange}/>
-                        <Button>최종 확인</Button>
+                        {
+                          transactionLists===null
+                          ?
+                          <>
+                          <CardText style={{color:'red'}}>※최종 확인 버튼은 한번만 누르면 됩니다!!※</CardText>
+                          <Button>최종 확인</Button>
+                          </>
+                          :
+                          <>
+                          <CardText style={{color:'red'}}>본인인증을 완료하셨습니다.</CardText>
+                          </>
+                        }
+                        
                       </Form>
                     </Card>
                   </Col>
@@ -150,6 +162,7 @@ const mapStateToProps = (state) => {
     chongdaes : state.firestore.ordered.chongdaes,
     auth : state.firebase.auth,
     authError : state.auth.authError,
+    transactionLists : state.firestore.ordered.transactionLists
   }
 }
 
@@ -170,6 +183,10 @@ export default compose(
       {
         collection: 'chongdaes',
         where: [['user_email', '==', user_email]]
+      },
+      {
+        collection: 'transactionLists',
+        where: [['chongdae_email','==',user_email]]
       }
     ]
   }),

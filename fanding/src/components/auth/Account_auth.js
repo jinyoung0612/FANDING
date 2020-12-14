@@ -39,11 +39,17 @@ class Account_auth extends Component{
     
         console.log(this.state.access_token);
         console.log(this.state);
-        this.props.verifyChongdae(this.state);
-        alert("본인인증이 완료되었습니다.");
-        if(this.state){
-          this.props.history.push("/chongdae");
+        if(this.state.bank_name!==null && this.state.account_num!==null){
+          this.props.verifyChongdae(this.state);
+          alert("본인인증이 완료되었습니다.");
+          if(this.state){
+            this.props.history.push("/chongdae");
+          }  
         }
+        else{
+          alert("은행과 계좌번호를 모두 입력하세요.");
+        }
+        
       };
 
       
