@@ -19,7 +19,6 @@ class Chongdae_auth extends Component{
         fintech_use_num: '',
         user_name: '',
         bank_name: '',
-        //transaction_list: ''
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -129,20 +128,7 @@ class Chongdae_auth extends Component{
                     >본인 인증</Button>
                 </div>
                 </Col>
-                {/* <Col sm="4">
-
-                <div style={{paddingTop:'90px'}}>
-                <h4 class="mbr-section-title mbr-fonts-style align-center mb-10 display-2 "><strong>팬 인증</strong></h4>
-
-                    <p>펀딩생성 및 업체 모집을 하려면 팬 인증이 필요합니다.</p>
                     
-                </div>
-                <Button block id="verButton" color="success" 
-                    href='/fan_auth'>팬 인증</Button>
-                </Col> */}
-                
-                    
-                
               </Row>
               
               
