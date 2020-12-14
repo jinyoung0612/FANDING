@@ -39,7 +39,7 @@ class Account_auth extends Component{
     
         console.log(this.state.access_token);
         console.log(this.state);
-        if(this.state.bank_name!==null && this.state.account_num!==null){
+        if(this.state.bank_name!=="" && this.state.account_num!==""){
           this.props.verifyChongdae(this.state);
           alert("본인인증이 완료되었습니다.");
           if(this.state){
@@ -68,10 +68,13 @@ class Account_auth extends Component{
                   <Input type="hidden" id="access_token" placeholder={this.state.access_token} onChange={this.handleChange}/>
                   <Input type="hidden" id="refresh_token" placeholder={this.state.refresh_token} onChange={this.handleChange} />
                   <Input type="hidden" id="user_seq_no" placeholder={this.state.user_seq_no} onChange={this.handleChange} />
-                  <Label>은행</Label>
-                  <Input type="text" id="bank_name" placeholder="정확한 은행이름을 입력하세요." onChange={this.handleChange} />
-                  <Label>계좌번호</Label>
-                  <Input type="text" id="account_num" placeholder="기호없이 숫자만 입력하세요." onChange={this.handleChange} />
+                  <Label><strong>은행</strong></Label>
+                  <p>정확한 은행이름을 입력하세요.</p>
+                  <Input type="text" id="bank_name" onChange={this.handleChange} />
+                  <br></br>
+                  <Label><strong>계좌번호</strong></Label>
+                  <p>기호없이 숫자만 입력하세요.</p>
+                  <Input type="text" id="account_num" onChange={this.handleChange} />
                   <br />
                 <Button id='verifyButton' color="warning" >완료</Button>
                 </Form>
