@@ -5,7 +5,7 @@ const FundingList=({fundings})=>{
     console.log(fundings)
     return(
         <CardDeck style={{display: 'flex', flexDirection: 'row', 
-                    justifyContent: 'left', margin:'10px'}}>
+                    justifyContent: 'left', margin:'10px',flexFlow:'row wrap'}}>
             {fundings.map(funding=>{
                 // console.log(funding)
                 return(

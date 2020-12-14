@@ -67,7 +67,7 @@ const TopNavbar = (props) => {
            
         </Dropdown>
         <NavItem className="ml-4">
-            <NavLink className="inactive" activeClassName="active" tag={Link} to={"/myaccount"}>
+            <NavLink className="inactive" activeClassName="active" tag={Link} to={"/myCart"}>
               <BsFillHeartFill className="mr-2" />
               위시리스트
             </NavLink>

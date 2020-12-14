@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loadFundings} from "../../store/actions/userActions";
 import FundingList from "./FundingList";
-import {Container, Row, Col} from "reactstrap";
+import {Container, Row, Col, CardDeck} from "reactstrap";
 import SideBar from "./SideBar"
 import TopNavbar from "./TopNavbar"
 class MyFunding extends Component {
@@ -57,8 +57,9 @@ class MyFunding extends Component {
                             <SideBar />
                             </Col>
                             <Col>
+
+                                    <FundingList fundings={user_data}/>
                             
-                            <FundingList fundings={user_data}/>
                             </Col>
                         </Row>
                     </Container>
