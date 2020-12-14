@@ -19,7 +19,8 @@ router.post('/api/token', (req,res) =>{
             client_id: config.client_id,
             client_secret: config.client_secret,
             //redirect_uri: "http://localhost:3000/account_auth",
-            redirect_uri:"http://118.67.131.132:3000/account_auth",
+            //redirect_uri:"http://118.67.131.132:3000/account_auth",
+            redirect_uri: "https://test-a81ab.firebaseapp.com/account_auth",
             grant_type: "authorization_code"
         }
     }
@@ -163,7 +164,7 @@ router.post('/api/sendEmail', function (req,res){
     var funding_title = req.body.funding_title;
     console.log('user_data',user_data);
     console.log('funding_title', funding_title);
-    var url = 'http://118.67.131.132:3000/'
+    var url = 'https://test-a81ab.firebaseapp.com'
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
