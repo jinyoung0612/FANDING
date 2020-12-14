@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Col, Form, FormGroup, Label, Input, FormText, CustomInput, Container } from 'reactstrap';
-import { Link } from "react-router-dom";
-import {BsStop} from "react-icons/bs"
+import { Button, Form, FormGroup, Label, Input,  CustomInput, Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import {firebase_funding_save} from '../../store/actions/formActions';
 import {storage} from "../../config/fbConfig";
@@ -20,7 +18,6 @@ import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highl
 import 'tui-chart/dist/tui-chart.css';
 import chart from '@toast-ui/editor-plugin-chart';
 import {compose} from "redux";
-import { firestore } from 'firebase';
 import {firestoreConnect, isLoaded} from "react-redux-firebase";
 import {BsArrowDown} from 'react-icons/bs'
 
@@ -286,18 +283,7 @@ class CreateFunding extends Component{
             style={{backgroundColor:"#fafafa", borderRadius:"10px", padding:"3em 2em"}}>
 
             <Form>
-                {/*<FormGroup>*/}
-                {/*<Label for="artistSelect">아티스트</Label>*/}
-                {/*<CustomInput type="select" id="artistSelect" name="customSelect" onChange={this.handleChange} multiple>*/}
-                {/*    {*/}
-                {/*        this.state.options.map((e,key) => {*/}
-                {/*            return <option value={e.value}>{e.name}</option>;*/}
-                {/*        })*/}
-                {/*        */}
-                {/*    }*/}
-                {/*    */}
-                {/*</CustomInput>*/}
-                {/*</FormGroup>*/}
+
                 <FormGroup>
                     <Label><strong>아티스트</strong></Label>
                     <Select
@@ -403,19 +389,6 @@ class CreateFunding extends Component{
                         onChange = {this.handleChangeEditor}
                         />
 
-
-                        {/* <div id="toastEditor">
-                            <h1>Toast UI Editor Example</h1>
-                            <div id="editSection"></div> */}
-                            {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
-                            {/* <button onChange={this.handleChangeEditor} className="btn_save">Save</button>
-                            <div>
-                                <h2>result</h2>
-                                <textarea className="tf_result" value={this.state.content} readOnly="readOnly"></textarea>
-                            </div>
-                        </div>   */}
-
-
                     </FormGroup>
                 </Form>
 
@@ -471,25 +444,17 @@ class CreateFunding extends Component{
 
                 <Label for="shipping" className="mt-5"><strong>계좌 정보</strong></Label>
 
-                {/*{isLoaded(this.props.bank) ? <Label>{bank[0].bank_name}</Label> : <Label>loading...</Label>}*/}
 
                 <Form className="mb-10" inline>
                     <FormGroup>
                     <Label for="bankName" className="mr-2"><b>은행 이름</b></Label>
-                    {/*<Input  type="text" name="text" id="bankName"*/}
-                    {/*       onChange={this.handleChange}*/}
-                    {/*    //    placeholder={bank.bank_name}*/}
-                    {/*/>*/}
                     {isLoaded(this.props.bank) ? <Label>{bank[0].bank_name}</Label> : <Label>loading...</Label>}
 
                     </FormGroup>
 
                     <FormGroup className="ml-5">
                     <Label for="accountNum" className="mr-2"><b>계좌번호</b></Label>
-                    {/*<Input  type="text" name="text" id="accountNum"*/}
-                    {/*       onChange={this.handleChange}*/}
-                    {/*    //    placeholder={bank.account_num}*/}
-                    {/*/>*/}
+
                     {isLoaded(this.props.bank) ? <Label>{bank[0].account_num}</Label> : <Label>loading...</Label>}
                     </FormGroup>
 
@@ -528,10 +493,6 @@ class CreateFunding extends Component{
 
 
                 <Form className="mt-10" onSubmit={this.handleSubmit} >
-                    {/*<Link to='/'>*/}
-
-                    {/*    <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>*/}
-                    {/*</Link>*/}
                     <Button color="warning" size="lg" block style={{marginTop:"50px"}}>펀딩 만들기</Button>
                 </Form>
             </Container>
@@ -579,10 +540,6 @@ class CreateFunding extends Component{
                     </div>
 
                 </FormGroup>
-                        {/*{console.log("user 정보",this.props.user)}*/}
-
-
-
                         <FormGroup>
                             <Label for="fundingTitle">업체목록 가져오기</Label>
                             {isLoaded(this.props.user) ? <Select id="selectedCom" components={this.animatedComponents} options={[{value:this.props.user[0].selectedCompany,label:this.props.user[0].selectedCompanyName}]}
@@ -666,21 +623,6 @@ class CreateFunding extends Component{
                                 onChange = {this.handleChangeEditor}
                             />
 
-
-
-                        {/* <div id="toastEditor">
-                            <h1>Toast UI Editor Example</h1>
-                            <div id="editSection"></div> */}
-                            {/*<button onClick={this.saveArticle} className="btn_save">Save</button>*/}
-                            {/* <button onChange={this.handleChangeEditor} className="btn_save">Save</button>
-                            <div>
-                                <h2>result</h2>
-                                <textarea className="tf_result" value={this.state.content} readOnly="readOnly"></textarea>
-                            </div>
-                        </div>   */}
-
-
-
                         </FormGroup>
                     </Form>
 
@@ -706,10 +648,6 @@ class CreateFunding extends Component{
                         <Form className="mb-10" inline>
                             <FormGroup>
                                 <Label for="bankName" className="mr-2"><b>은행 이름</b></Label>
-                                {/*<Input  type="text" name="text" id="bankName"*/}
-                                {/*       onChange={this.handleChange}*/}
-                                {/*    //    placeholder={bank.bank_name}*/}
-                                {/*/>*/}
                                 {isLoaded(this.props.bank) ? <Label>{bank[0].bank_name}</Label> : <Label>loading...</Label>}
 
                             </FormGroup>
@@ -756,10 +694,7 @@ class CreateFunding extends Component{
 
 
                     <Form className="mt-10" onSubmit={this.handleSubmit}>
-                        {/*<Link to='/'>*/}
 
-                        {/*    <Button color="warning" size="lg" block onChange={this.handleClick}>폼 만들기</Button>*/}
-                        {/*</Link>*/}
                         <Button color="warning" size="lg" block >펀딩 만들기</Button>
                     </Form>
               </Container>

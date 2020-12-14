@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { firestoreConnect, isLoaded } from "react-redux-firebase";
 import { compose } from "redux";
-import { Redirect } from "react-router-dom";
 import {
   CardImg,
   CardText,
@@ -10,18 +9,15 @@ import {
   Row,
   Col,
   Button,
-  Progress,
   Form,
   FormGroup,
   Label,
   Input,
   Table,
-  NavLink,
-  NavItem,
+
 } from "reactstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Badge } from "reactstrap";
 
-//import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import { Editor, Viewer } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
@@ -34,9 +30,7 @@ import { check_user_type } from "../../../store/actions/userActions";
 import { company_select } from "../../../store/actions/recruitCompanyActions";
 
 import firebase from "firebase";
-import App from "../../../App";
-//import moment from 'moment';
-import { Link } from "react-router-dom";
+
 import CompanyChat from "../../chatting/companychat/CompanyChat";
 
 let imgStyle = {
@@ -97,13 +91,6 @@ class RecruitFormDetail extends Component {
 
   viewerRef = React.createRef();
 
-  handleCommentChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value,
-    });
-    // console.log(e.target.value);
-  };
-
   handleClick = (Comp, e) => {
     this.setState({ render: Comp });
   };
@@ -126,12 +113,7 @@ class RecruitFormDetail extends Component {
     alert("지원서를 제출하였습니다");
     this.toggle();
   };
-  renderComments() {
-    switch (this.state.render) {
-      case "comments":
-        return <Comments comments={this.state.comments} />;
-    }
-  }
+
   render() {
     console.log("RecruitFormDetail");
 
@@ -282,19 +264,9 @@ class RecruitFormDetail extends Component {
                   </div>
                 </div>
 
-                {/*<div className='Reply_div'>*/}
-                {/*<h4> 댓글 </h4>*/}
-                {/*<div className='Reply_write'>*/}
-                {/*  <textarea id="comments" rows='3' placeholder='100자 이내의 글을 입력해주세요.'*/}
-                {/*    maxLength='100' name='write_reply' onChange={this.handleCommentChange}>*/}
-                {/*    </textarea>*/}
-                {/*    <input type='button' value='등록' id='reply_submit_button' onClick={this.handleClick.bind(this, 'comments')}/>*/}
-                {/*</div>*/}
-                {/*  </div>*/}
 
                 <div>
                   <h3>지원현황</h3>
-                  {/*<ApplicationList applications={this.props.application}></ApplicationList>*/}
 
                   <ApplicationList
                     applications={this.props.application}
@@ -306,8 +278,6 @@ class RecruitFormDetail extends Component {
                 </div>
 
                 <div>
-                  {/*{this.state.comments}*/}
-                  {this.renderComments()}
                 </div>
               </Container>
             </section>
@@ -372,15 +342,6 @@ class RecruitFormDetail extends Component {
                 </div>
                 <Row></Row>
 
-                {/*<div className='Reply_div'>*/}
-                {/*<h4> 댓글 </h4>*/}
-                {/*<div className='Reply_write'>*/}
-                {/*  <textarea id="comments" rows='3' placeholder='100자 이내의 글을 입력해주세요.'*/}
-                {/*    maxLength='100' name='write_reply' onChange={this.handleCommentChange}>*/}
-                {/*    </textarea>*/}
-                {/*    <input type='button' value='등록' id='reply_submit_button' onClick={this.handleClick.bind(this, 'comments')}/>*/}
-                {/*</div>*/}
-                {/*  </div>*/}
 
                 <div>
                   <h3 style={{ paddingTop: "50px" }}>지원현황</h3>
@@ -394,8 +355,7 @@ class RecruitFormDetail extends Component {
                 </div>
 
                 <div>
-                  {/*{this.state.comments}*/}
-                  {this.renderComments()}
+
                 </div>
               </Container>
             </section>
@@ -417,18 +377,6 @@ class RecruitFormDetail extends Component {
   }
 }
 
-class Comments extends Component {
-  constructor() {
-    super();
-    this.state = {
-      comments: "",
-    };
-  }
-
-  render() {
-    return <div>{this.props.comments}</div>;
-  }
-}
 
 class ApplicationList extends Component {
   constructor() {
@@ -454,14 +402,6 @@ class ApplicationList extends Component {
         apply_id: apply,
         modal: !this.state.modal,
       }
-      // },
-      //     ()=>{
-      //     //this.receive_apply(apply)}
-      //     console.log(this.state.modal)
-      //         if(this.state.modal===true){
-      //             this.receive_apply(apply)
-      //         }
-      //     }
     );
   }
 
@@ -486,11 +426,6 @@ class ApplicationList extends Component {
         () => this.props.dispatchFunc(this.state)
       );
 
-      // this.setState({
-      //     select_email:email,
-      //     recruit_id:recruit_id,
-      //     chongdae:this.props.chongdae
-      // })
     }
   }
   render() {
@@ -531,14 +466,12 @@ class ApplicationList extends Component {
                       >
                         {apply.company_name}
                       </td>
-                      {/*<td>지원서 제목</td>*/}
                       <td style={{ textAlign: "center" }}>
                         <Button onClick={() => this.toggle(apply)}>
                           지원서 보기
                         </Button>
                       </td>
                       <td>
-                        {/*{console.log("아이디",apply.id)}*/}
                         {firebase.auth().currentUser.email ===
                         this.props.chongdae ? (
                           <Button
@@ -580,11 +513,9 @@ class ApplicationList extends Component {
                       <td scope="row">{i + 1}</td>
                       <td>{apply.company_name}</td>
                       <td>
-                        {/*<Button onClick={this.noAuth}>지원서 보기</Button>*/}
                         열람 권한이 없습니다.
                       </td>
                       <td>
-                        {/*{console.log("아이디",apply.id)}*/}
                         <Button onClick={this.noAuth}>X</Button>
                       </td>
                     </tr>
@@ -617,14 +548,8 @@ class ApplicationList extends Component {
                     모든제품은 과세대상 상품입니다. 선택하신 제품가격에 부가세
                     10%가 별도로 청구되오니 제품구입시 확인 부탁드립니다.{" "}
                   </Label>
-                  {/*<Button color="primary" onSubmit={this.handleSubmit}>제출하기</Button>{' '}*/}
 
                   <ModalFooter>
-                    {/*{firebase.auth().currentUser.email==this.props.chongdae ?*/}
-                    {/*    <Button color="primary" onClick={()=>this.selectCompany(this.state.apply_id)}>업체 선정하기</Button>*/}
-                    {/*    : <Button color="primary" onClick={this.toggle}>확인</Button>*/}
-                    {/*}*/}
-                    {/*<Button color="primary" onClick={this.selectCompany}>업체 선정하기</Button>{' '}*/}
                     <Button color="secondary" onClick={this.toggle}>
                       닫기
                     </Button>
@@ -687,4 +612,3 @@ export default compose(
   })
 )(RecruitFormDetail);
 
-//export default FundingDetail;

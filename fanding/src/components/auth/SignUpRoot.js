@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { Button, Form, FormGroup, Label, Row, Col } from "reactstrap";
+import { Button, Row, Col } from "reactstrap";
 import { BsFillPeopleFill } from  "react-icons/bs";
 import { MdStore } from "react-icons/md"
 

@@ -167,21 +167,6 @@ export const signUpCom = (newCompany) => {
   };
 };
 
-// export const twitterSignIn = credentials =>{
-//   const provider = new firebase.auth.TwitterAuthProvider();
-//
-//   firebase
-//       .auth()
-//       .signInWithPopup(provider)
-//       .then(function (result) {
-//
-//         const token = result.credentials.accessToken;
-//         const secret = result.credentials.secret;
-//         const user = result.user;
-//   }).catch(function(error){
-//
-//   });
-// }
 
 export const twitterSignIn = (credentials) => {
   const provider = new firebase.auth.TwitterAuthProvider();

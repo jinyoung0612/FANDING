@@ -11,9 +11,6 @@ import { Editor, Viewer} from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { BsHeart, BsChatSquareDots, BsFillBellFill } from "react-icons/bs";
 import {FaShareAlt} from "react-icons/fa";
-import ModalPortal from "../../../../ModalPortal";
-import MyModal from "../../../../MyModal";
-import Test2 from "../../../../components/test2"
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {Participate_save} from '../../../../store/actions/userActions'
 import firebase from "firebase";

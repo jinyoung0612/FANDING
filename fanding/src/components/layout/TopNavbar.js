@@ -1,9 +1,8 @@
 import React, {useState, Component} from "react";
-import { NavItem, NavLink, Nav, Collapse, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from "reactstrap";
+import { NavItem, NavLink, Nav, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from "reactstrap";
 import { FaTools } from "react-icons/fa";
 import { BsPersonCheckFill, BsFileText, BsFillHeartFill, BsBuilding } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import styles from './SideBar.css';
 
 
   

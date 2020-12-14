@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loadFundings} from "../../store/actions/userActions";
 import FundingList from "./FundingList";
-import {Container, Row, Col, CardDeck} from "reactstrap";
+import {Container, Row, Col} from "reactstrap";
 import SideBar from "./SideBar"
 import TopNavbar from "./TopNavbar"
 class MyFunding extends Component {
@@ -25,8 +25,6 @@ class MyFunding extends Component {
     componentWillUnmount(){
         console.log("unmount")
     }
-
-
     // componentDidUpdate(prevProps, prevState, snapshot) {
     //     if(this.props.auth !== prevProps.auth){
     //             this.props.dispatch(loadFundings(this.props.auth.uid))

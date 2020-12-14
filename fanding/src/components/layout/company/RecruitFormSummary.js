@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
+import { Card, CardImg, CardTitle, CardText, CardBody } from 'reactstrap';
 let imgStyle = {
     maxHeight: '128px',
     maxWidth: '128px'
@@ -13,8 +13,6 @@ const RecruitFundingSummary = ({recruitCompany}) => {
             <CardBody>
             <CardTitle>{recruitCompany.itemTitle}</CardTitle>
             <CardText><p>원하는 가격: {recruitCompany.itemPrice}</p></CardText>
-            {/*<CardText><p>수량: {recruitCompany.itermRemain}</p></CardText>*/}
-            {/*<Button>Button</Button>*/}
             </CardBody>
         </Card>
     )

@@ -6,8 +6,6 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
-  Container,
 } from "reactstrap";
 
 class PasswordSearch extends Component {

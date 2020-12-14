@@ -1,5 +1,4 @@
 import React from 'react';
-//import { Card, CardImg, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
 import CollectFundingSummary from './CollectFundingSummary';
 import { Link } from 'react-router-dom';
 import { CardDeck } from 'reactstrap';

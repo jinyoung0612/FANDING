@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 import {connect, useSelector} from 'react-redux';
 import {useFirestoreConnect} from "react-redux-firebase";
-import firebase from 'firebase';
-import {loadFundings} from "../../store/actions/userActions";
-import FundingList from "./FundingList";
 import ParticipationList from "./ParticipationList";
-import FundingContents from "./FundingContents";
-import {CardDeck, Container, Row, Col} from 'reactstrap';
+import {Container, Row, Col} from 'reactstrap';
 import SideBar from './SideBar';
 import TopNavbar from "./TopNavbar"
 const MyParticipation =(props)=> {

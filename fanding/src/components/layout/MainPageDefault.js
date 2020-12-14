@@ -1,10 +1,7 @@
 import React, { useState, Component, PureComponent } from "react";
-import {Button, Input, InputGroup, InputGroupAddon, Media} from 'reactstrap';
-import main_image from './fanding_main_image.png';
+import {Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
 import {firestoreConnect, useFirestoreConnect} from 'react-redux-firebase';
 import { compose } from 'redux';
-import {firebase } from 'firebase';
-//import FundingList from './funding/reward/RewardFundingList';
 import {firebaseConnect, isLoaded, isEmpty} from "react-redux-firebase";
 import {connect, useSelector} from "react-redux";
 import MainPageUser from "./MainPage";
@@ -12,9 +9,7 @@ import MainPageCom from "./MainPageCom";
 import {CardDeck, Container} from 'reactstrap';
 import {Link,animateScroll as scroll} from "react-scroll";
 import {BsSearch } from "react-icons/bs";
-import {Link as Link2}from "react-router-dom";
-import Search from "./Search";
-import PDF from './example.pdf'
+import PDF from './manual.pdf'
 
 
 
@@ -37,9 +32,6 @@ const DefaultLayout= () => {
                         </strong></p>
                         
                     <div class="mbr-section-btn mt-3">
-                        {/* <a class="btn btn-success-outline display-4" href="/example.pdf" download>
-                        <Link to="/example.pdf" target="_blank"></Link>
-                            메뉴얼 &gt;</a> */}
                             <a  href={PDF} without rel="noopener noreferrer" targe="_blank">
                                 <button className="btn btn-success-outline display-4" trailingIcon="picture_as_pdf" label="Manual">
                                 <strong>메뉴얼 &gt;</strong>
@@ -113,11 +105,6 @@ class MainPageDefault extends Component {
         console.log("companies", company);
         // console.log("fundings", fundings);
 
-
-        // const artist1 = user.artist1;
-        //console.log(artist1);
-        //this.props.auth.isLoaded
-        //if (this.props.auth.isLoaded) //logined user -> show interested artists' funding
         if(!isLoaded(auth) || !isLoaded(user) || !isLoaded(company)) {
             return (
 

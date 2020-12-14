@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardDeck, Col, Container, Row } from 'reactstrap';
+import { CardDeck} from 'reactstrap';
 
 import { Link } from 'react-router-dom';
 import RewardFundingSummary from './RewardFundingSummary';

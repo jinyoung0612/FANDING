@@ -18,7 +18,7 @@ import {
 } from "reactstrap";
 import {Link} from "react-router-dom";
 import DaumPostCode from "react-daum-postcode";
-import {modify_mypage, modify_participation} from "../../store/actions/userActions";
+import { modify_participation} from "../../store/actions/userActions";
 
 let imgStyle = {
     maxHeight: '200px',

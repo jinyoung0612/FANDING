@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Form, Input, Label, Card, CardHeader, CardText, FormGroup } from 'reactstrap';
-import { Link, Redirect } from "react-router-dom";
+import { Button, Form, Input, Label, Card, CardHeader, CardText } from 'reactstrap';
 import {connect,useSelector} from 'react-redux';
 import axios from 'axios';
 import {verifyChongdae} from '../../store/actions/chongdaeAction';

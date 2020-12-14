@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Card,
-  Input,
-  Button,
-  Form,
+  Button
 } from "reactstrap";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { compose } from "redux";
-import { Link } from "react-router-dom";
 import {
   firestoreConnect,
   useFirestoreConnect,
@@ -26,11 +17,9 @@ import Grid from "@toast-ui/react-grid";
 import TuiGrid from "tui-grid";
 import axios from "axios";
 import { check_deposit } from "../../store/actions/userActions";
-import logo from "../../assets/images/reload.png";
 import "./FundingState.css";
 
 TuiGrid.setLanguage("ko");
-//TuiGrid.applyTheme('striped');
 
 const columns = [
   { name: "email", header: "참여자 이메일" },

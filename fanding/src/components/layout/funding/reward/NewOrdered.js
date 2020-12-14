@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-//import Dropdown from './Dropdown';
 import { compose } from 'redux';
 import FundingList from './RewardFundingList';
 

@@ -1,6 +1,4 @@
-import firebase from 'firebase/app';
 import 'firebase/storage';
-import {createAction} from 'redux-actions';
 
 export const addAdmin = ((newAdmin) => {
     return (dispatch, getFirestore) => {

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { signIn } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 import { TwitterLoginButton } from "react-social-login-buttons";
-import firebase from "firebase/app";
 import { twitterSignIn } from "../../store/actions/authActions";
 import {
   Button,
@@ -11,17 +10,9 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
-  Container,
   Alert,
 } from "reactstrap";
-import { render } from "react-dom";
-import { AvForm, AvField } from "availity-reactstrap-validation";
 import PasswordSearch from "./PasswordSearch";
-// let divColor = {
-//   border-radius: 10px,
-//   backgroundColor: '#fafafa';
-// }
 
 const ColoredLine = ({ color }) => (
   <hr
@@ -159,33 +150,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
-
-// style={{borderRadius:'10px',backgroundColor: '#fafafa'}}
-// return (
-//   <Container className="signform mt-auto">
-//     <h2>로그인</h2>
-//     <Form onSubmit={this.handleSubmit}>
-//       <FormGroup>
-//         <Label for="Email">이메일</Label>
-//         <Input type="email" name="email" id="email"
-//         placeholder="이메일을 입력하세요"
-//         onChange={this.handleChange}/>
-//       </FormGroup>
-//       <FormGroup>
-//         <Label for="Password">비밀번호</Label>
-//         <Input type="password" name="password" id="password"
-//         placeholder="비밀번호를 입력하세요"
-//         onChange={this.handleChange}/>
-//       </FormGroup>
-
-//       <Button>Submit</Button>
-
-//       <ColoredLine color="#696861" />
-
-//       <TwitterLoginButton className="twitter mt-10" onClick={this.handleTwitter}>
-//         <span>트위터로 로그인하기</span>
-//       </TwitterLoginButton>
-//     </Form>
-//   </Container>
-
-// );

@@ -2,10 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import RecruitFormList from "./RecruitFormList";
 import {Container, Row, Col} from "reactstrap";
-import SideBarCom from "./SideBarCom";
 import {loadAppliedFundings} from "../../../store/actions/companyAction";
-import {firestoreConnect, isLoaded} from 'react-redux-firebase';
-import {firebase, firestore } from 'firebase';
 import { compose } from 'redux';
 class MyAppliedFunding extends Component {
 
@@ -23,7 +20,7 @@ class MyAppliedFunding extends Component {
     //    componentDidUpdate(prevProps, prevState, snapshot) {
     //     if(this.props.auth !== prevProps.auth){
     //             this.props.dispatch(loadAppliedFundings(this.props.applied[0].recruit_id))
-    
+
     //     }
     //     }
     componentDidMount() {
@@ -39,15 +36,7 @@ class MyAppliedFunding extends Component {
 
         const {auth,user_data}=this.props;
         // console.log(this.state.recruit_id);
-        // console.log(this.state.applied.length);
-        // if(!isLoaded(auth) || !isLoaded(user_data) || !isLoaded(applied)) {
-        //     return(
-        //         <div>Loading...</div>
-        //     )
-        // }
-        
-        // if(this.props.user_data.length!==0){
-            // console.log(user_data);
+
             return(
 
                 <section class="gallery5 mbr-gallery cid-sgtDmxvlJH" id="gallery5-q"
@@ -83,13 +72,5 @@ const mapStateToProps = (state) => {
 };
 export default compose(
     connect(mapStateToProps),
-    // firestoreConnect(props=>{
-    //     console.log(props.test);
-    //     return[
-    //         {
-    //             collection:'recruitCompanies',
-    //             where: 
-    //         }
-    //     ]
-    // })
+
 )(MyAppliedFunding);
